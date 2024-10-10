@@ -2,20 +2,14 @@ pipeline {
     agent any
 
     environment {
-      	DOCKER_REGISTRY = credentials('docker-registry-secret')
+      	DOCKER_REGISTRY = credentials('docker-registry-staging')
       	REPOSITORY_USER = credentials('repository-user')
-      	REPOSITORY_NAME = credentials('repository-name-perta-be')
-      	IMAGE_NAME = credentials('image-name-perta-be')
+      	REPOSITORY_NAME = 'hcms-admin-rework-fe'
+      	IMAGE_NAME = 'admin-hrcms-rework'
         DOCKER_IMAGE = "${DOCKER_REGISTRY}/${IMAGE_NAME}"
         DOCKER_CREDENTIALS = 'docker-credentials'  
-        SSH_CREDENTIALS = 'ssh-credentials-id'        
-	      DB_HOST = credentials('host-secret')
+        SSH_CREDENTIALS = 'ssh-credentials-staging'        
         DISCORD_WEBHOOK = credentials('discord-webhook')  
-        DB_NAME = credentials('db-name-perta')
-        DB_USERNAME = credentials('ssh-username-secret')
-        DB_PASSWORD = credentials('db-password')
-        DB_PORT = credentials('db-port-perta')
-        BASE_URL = credentials('base-url-perta-be')
         GIT_REPOSITORY = "${REPOSITORY_USER}/${REPOSITORY_NAME}" 
         GIT_REF = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
         EVENT = 'PUSH' // Sesuaikan dengan event yang relevan
@@ -25,36 +19,26 @@ pipeline {
         WORKFLOW_FILE = 'Jenkinsfile'
         DATE = sh(script: 'date +"%m/%d/%Y %I:%M %p"', returnStdout: true).trim()
       	SSH_USERNAME = credentials('ssh-username-secret')
-      	SSH_HOST = credentials('host-secret')
-      	EMAIL_SMTP_HOST = credentials('email-host')
-      	EMAIL_SMTP_USER = credentials('email-user')
-      	EMAIL_SMTP_PASS = credentials('email-pass')
+      	SSH_HOST = credentials('host-staging')
+	ENV_FILE = credentials('env-admin-hcms-rework-fe')
     }
     stages {
-	      stage('Checkout') {
+	stage('Checkout') {
             steps {
                 checkout scm
             }
         }
 
-        stage('Update .env') {
+        stage('Use .env file') {
             steps {
                 script {
-                    sh '''
-                    sed -i "s|database.default.hostname = .*|database.default.hostname = ${DB_HOST}|g" .env &&
-                    sed -i "s|database.default.database = .*|database.default.database = ${DB_NAME}|g" .env &&
-                    sed -i "s|database.default.username = .*|database.default.username = ${DB_USERNAME}|g" .env &&
-                    sed -i "s|database.default.password = .*|database.default.password = ${DB_PASSWORD}|g" .env &&
-                    sed -i "s|database.default.port = .*|database.default.port = ${DB_PORT}|g" .env &&
-                    sed -i "s|app.baseURL = '.*'|app.baseURL = '${BASE_URL}'|g" .env &&
-            		    sed -i "s|email.SMTPHost = .*|email.SMTPHost = ${EMAIL_SMTP_HOST}|g" .env &&
-            		    sed -i "s|email.SMTPUser = .*|email.SMTPUser = ${EMAIL_SMTP_USER}|g" .env &&
-                    sed -i "s|email.SMTPPass = .*|email.SMTPPass = ${EMAIL_SMTP_PASS}|g" .env 
-                    '''
+                    // Copy secret file ke direktori kerja
+                    sh 'cat ${ENV_FILE} > .env'
                 }
+                sh 'cat .env'  // Lihat isi file (opsional)
             }
         }
-
+	    
         stage('Get New Dev Version') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'DOCKER_CREDENTIALS_USR', passwordVariable: 'DOCKER_CREDENTIALS_PSW')]) {
@@ -88,7 +72,7 @@ pipeline {
             }
         }
       
-	      stage('Build Docker Image') {
+	stage('Build Docker Image') {
             steps {
                 script {
                     sh "docker build -t ${DOCKER_IMAGE}:${env.NEW_DEV_VERSION} ."
@@ -160,7 +144,7 @@ pipeline {
                 }
             }
         }    
-	      stage('Deploy Application') {
+	stage('Deploy Application') {
             steps {
         	sshagent([SSH_CREDENTIALS]) {
             		script {
