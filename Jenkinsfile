@@ -6,12 +6,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm  // Checkout kode dari repository
-            }
-        }
-
         stage('Run Jenkinsfile') {
             steps {
                 script {
