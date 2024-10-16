@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    environment {
+   environment {
         DOCKER_REGISTRY = credentials('docker-registry-staging')
         REPOSITORY_USER = credentials('repository-user')
         REPOSITORY_NAME = 'hcms-admin-rework-fe'
@@ -53,9 +53,9 @@ pipeline {
                         // Store the result in a non-sensitive environment variable
                         env.LAST_DEV_VERSION = lastDevVersion ?: "dev-v0"
 
-                        // Extract the numeric part of the last version
-                        def lastVersionNumber = env.LAST_DEV_VERSION.replaceAll(/^dev-v/, '')
-                        echo "Last version number: ${lastVersionNumber}"
+                         // Extract the numeric part of the last version
+                         def lastVersionNumber = env.LAST_DEV_VERSION.replaceAll(/^dev-v/, '')
+                         echo "Last version number: ${lastVersionNumber}"
 
                         // Increment the version number
                         def newVersionNumber = "${lastVersionNumber.toInteger() + 1}"
@@ -82,10 +82,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                    script {
-                        sh "echo \$DOCKER_PASSWORD | docker login ${DOCKER_REGISTRY} -u \$DOCKER_USERNAME --password-stdin"
-                        sh "docker push ${DOCKER_IMAGE}:${env.NEW_DEV_VERSION}"
-                    }
+                    sh "echo $DOCKER_PASSWORD | docker login ${DOCKER_REGISTRY} -u $DOCKER_USERNAME --password-stdin"
+                    sh "docker push ${DOCKER_IMAGE}:${env.NEW_DEV_VERSION}"
                 }
             }
         }
@@ -102,8 +100,12 @@ pipeline {
                             | sort -rV
                         ''', returnStdout: true).trim()
 
+                        //echo "Raw tags output: ${tagsOutput}"
+
                         // Convert the raw output to a list of tags
                         def tags = tagsOutput.split('\n').collect { it.trim() }
+
+                        //echo "Parsed tags list: ${tags}"
 
                         // Keep the 3 most recent tags
                         def keepTags = sh(script: '''
@@ -118,7 +120,6 @@ pipeline {
                         // Identify tags to delete by filtering out the ones to keep
                         def deleteTags = tags.findAll { tag -> !keepTags.contains(tag) }
                         echo "Tags to delete: ${deleteTags}"
-
                         // Delete old tags
                         deleteTags.each { tag ->
                             // First, get the digest for the current tag
@@ -142,11 +143,10 @@ pipeline {
                 }
             }
         }
-
         stage('Deploy Application') {
             steps {
                 sshagent([SSH_CREDENTIALS]) {
-                    script {
+                        script {
                         // Define the SSH username and host if not already defined
                         def sshUsername = env.SSH_USERNAME
                         def sshHost = env.SSH_HOST
@@ -160,16 +160,17 @@ pipeline {
                                 docker rm -f $IMAGE_NAME || true
 
                                 # Run the new container with the specified version
-                                sudo docker run -d -it --restart always -p 3004:3000 --name $IMAGE_NAME $DOCKER_IMAGE:${env.NEW_DEV_VERSION}
+                                sudo docker run -d -it --restart always -p 3004:3000 --name $IMAGE_NAME $DOCKER_IMAGE:$NEW_DEV_VERSION
 
                                 # Clean up old Docker images, keeping only the 2 most recent ones
                                 docker images --filter=reference='$DOCKER_IMAGE:*' --format '{{.Repository}}:{{.Tag}}' | sort -rV | tail -n +3 | xargs -r docker rmi -f
-                        EOF
+                        << EOF
                         """
-                    }
+                        }
                 }
-            }
+           }
         }
+
 
         stage('Send Notification to Discord') {
             steps {
@@ -218,22 +219,20 @@ pipeline {
                                             inline: true
                                         ]
                                     ],
-                                    color: 3066993 // 0x00FF00
+                                    color: 65280 // Green color
                                 ]
                             ]
                         ]
 
-                        sh "curl -H 'Content-Type: application/json' -d '${groovy.json.JsonOutput.toJson(payload)}' $DISCORD_WEBHOOK"
+                        def jsonPayload = groovy.json.JsonOutput.toJson(payload)
+
+                        echo "Payload JSON: ${jsonPayload}"
+
+                        sh """
+                        curl -X POST -H "Content-Type: application/json" -d '${jsonPayload}' ${DISCORD_WEBHOOK}
+                        """
                     }
                 }
-            }
-        }
-    }
-
-    post {
-        always {
-            node {
-                cleanWs()
             }
         }
     }
