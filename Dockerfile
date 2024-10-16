@@ -8,7 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies including tailwindcss
-RUN npm install --production
+RUN npm install tailwindcss --save-dev
+RUN npm install --production --omit=dev
 RUN npm i sharp
 
 # Copy the rest of your application code
