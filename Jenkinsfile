@@ -4,7 +4,7 @@ pipeline {
         DOCKER_REGISTRY = credentials('docker-registry-staging')
         REPOSITORY_USER = credentials('repository-user')
         REPOSITORY_NAME = 'hcms-admin-rework-fe'
-        IMAGE_NAME = 'admin-hrcms-rework'
+        IMAGE_NAME = 'admin-hcms-rework'
         DOCKER_IMAGE = "${DOCKER_REGISTRY}/${IMAGE_NAME}"
         DOCKER_CREDENTIALS = 'docker-credentials'
         SSH_CREDENTIALS = 'ssh-credentials-staging'
