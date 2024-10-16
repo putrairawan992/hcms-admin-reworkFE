@@ -8,8 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies including tailwindcss
-RUN npm install --production
 RUN npm install tailwindcss
+RUN npm install --production
 
 # Copy the rest of your application code
 COPY . .
