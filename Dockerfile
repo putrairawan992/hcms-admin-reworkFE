@@ -5,7 +5,7 @@ FROM node:18
 WORKDIR /app
 
 # Copy package.json and package-lock.json first to leverage Docker cache
-COPY package*.json ./
+COPY package.json ./
 
 # Install dependencies including tailwindcss
 RUN npm install tailwindcss --save-dev
