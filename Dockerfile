@@ -7,8 +7,8 @@ WORKDIR /app
 # Menyalin file package.json dan package-lock.json
 COPY package*.json ./
 
-# Menginstall dependensi
-RUN npm install --production
+# Menginstall semua dependensi (termasuk devDependencies)
+RUN npm install
 
 # Menyalin sisa aplikasi
 COPY . .
