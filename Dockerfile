@@ -1,34 +1,24 @@
-# Menggunakan image Node.js sebagai base image
-FROM node:18 AS builder
+# Use the official Node.js image as a base
+FROM node:18
 
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Menyalin file package.json dan package-lock.json
+# Copy package.json and package-lock.json first to leverage Docker cache
 COPY package*.json ./
 
-# Menginstall semua dependensi (termasuk devDependencies)
-RUN npm install
+# Install dependencies including tailwindcss
+RUN npm install --production
+RUN npm install tailwindcss
 
-# Menyalin sisa aplikasi
+# Copy the rest of your application code
 COPY . .
 
-# Build aplikasi Next.js
+# Build your application
 RUN npm run build
 
-# -----------------------------------------------
-# Stage untuk menjalankan aplikasi
-# -----------------------------------------------
-FROM node:18 AS runner
-
-# Set working directory
-WORKDIR /app
-
-# Menyalin hasil build dari stage builder
-COPY --from=builder /app ./
-
-# Mengatur port yang akan digunakan oleh aplikasi
+# Expose the desired port (if applicable)
 EXPOSE 3000
 
-# Menjalankan aplikasi
+# Command to run your application
 CMD ["npm", "start"]
