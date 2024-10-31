@@ -1,23 +1,35 @@
 # Use the official Node.js image as a base
-FROM node:18
+FROM node:18 AS builder
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json first to leverage Docker cache
+# Copy package.json and package-lock.json files
 COPY package*.json ./
 
-RUN npm install 
-RUN npm i sharp
+# Install dependencies
+RUN npm install
 
-# Copy the rest of your application code
+# Copy the rest of the application files
 COPY . .
 
-# Build your application
+# Build the Next.js application
 RUN npm run build
 
-# Expose the desired port (if applicable)
+# Production stage
+FROM node:18-slim AS runner
+
+# Set working directory
+WORKDIR /app
+
+# Copy only necessary files from the builder stage
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/node_modules ./node_modules
+
+# Expose port
 EXPOSE 3000
 
-# Command to run your application
-CMD ["npm", "start"]
+# Start the Next.js application
+CMD ["npm", "run", "start"]
