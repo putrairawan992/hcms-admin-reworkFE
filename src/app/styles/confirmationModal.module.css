@@ -1,0 +1,60 @@
+.modal-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-info {
+  width: 60px;
+  height: 60px;
+}
+
+.modal-text {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 21px;
+  text-align: center;
+  color: #5d5c5d;
+  margin: 1.5rem 0;
+  width: 257px;
+}
+
+.modal-reject {
+  width: 103px;
+  height: 36px !important;
+  padding: 10px 32px;
+  border-radius: 8px !important;
+  border: 1px solid #ae445a;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  text-align: center;
+  color: #ae445a !important;
+  background: inherit !important;
+  margin-right: 1rem;
+}
+
+.modal-approve {
+  width: 103px;
+  height: 36px !important;
+  padding: 10px;
+  border-radius: 10px !important;
+  background: linear-gradient(90deg, #f39f5a 0%, #ae445a 100%) !important;
+  box-shadow: 5px 0px 5px 0px #b3b9c5;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  text-align: center;
+  color: #ffffff !important;
+}
+
+.modal-notes-wrapper {
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-notes-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ae445a;
+}
