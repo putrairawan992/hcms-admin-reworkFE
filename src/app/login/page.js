@@ -1,6 +1,6 @@
 "use client";
 import { Box, Button, Divider, Flex, Input, Text } from "@chakra-ui/react";
-import styles from "../styles/loginpage.module.css";
+import styles from "../styles/loginPage.module.css";
 import Image from "next/image";
 import LoginRightSide from "../../../public/images/login-right.png";
 import ScalaLogo from "../../../public/images/scala.png";

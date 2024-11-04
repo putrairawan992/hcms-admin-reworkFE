@@ -1,6 +1,6 @@
 import { Box, Button, Divider, Flex, Input, Text } from "@chakra-ui/react";
 import SidebarLayout from "../components/sidebarLayout";
-import styles from "../styles/editprofile.module.css";
+import styles from "../styles/editProfile.module.css";
 import DummyImage from "../../../public/images/dummy-image.png";
 import Image from "next/image";
 
