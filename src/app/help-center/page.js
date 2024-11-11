@@ -6,6 +6,7 @@ import {
   Input,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import SidebarLayout from "../components/sidebarLayout";
 import styles from "../styles/helpCenter.module.css";
@@ -16,18 +17,30 @@ import CloudIcon from "../../../public/images/Download From Cloud.png";
 import UploadIcon from "../../../public/images/Group (4).png";
 import UploadedFileIcon from "../../../public/images/doc.circle.png";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { ArrowUpIcon } from "../components/icons";
 import ChangeContactModal from "./components/changeContactModal";
+import { useEditHelpCenter, useGetHelpCenter } from "../api/help-center";
+import { useForm } from "react-hook-form";
 
 const HelpCenter = () => {
+  const toast = useToast();
+  const { mutate } = useEditHelpCenter();
+  const { data, isPending } = useGetHelpCenter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isEditQuestion, setIsEditQuestion] = useState(false);
-  const [text, setText] = useState("");
   const [storedFile, setStoredFile] = useState();
   const fileInputRef = useRef(null);
+  const { setValue, watch, handleSubmit } = useForm({
+    defaultValues: {
+      file: "",
+      content: "",
+      category: "",
+      id: "",
+    },
+  });
 
   const handleClick = () => {
     fileInputRef.current.click();
@@ -36,8 +49,63 @@ const HelpCenter = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      setValue("file", file);
       setStoredFile(file);
     }
+  };
+
+  useEffect(() => {
+    if (!isPending) {
+      setValue("file", data[0].file);
+      setValue("content", data[0].content);
+      setValue("category", data[0].category);
+      setValue("id", data[0].id);
+    }
+  }, [data, isPending]);
+
+  const currentContentHandler = (item) => {
+    setValue("file", item.file);
+    setValue("content", item.content);
+    setValue("category", item.category);
+    setValue("id", item.id);
+  };
+
+  const onSubmit = (data) => {
+    const formData = new FormData();
+    formData.append("file", data.file);
+    formData.append("content", data.content);
+    formData.append("category", data.category);
+
+    mutate(
+      {
+        dataContent: formData,
+        id: data.id,
+      },
+      {
+        onSuccess: () => {
+          toast({
+            title: "Success",
+            description: "Berhasil mengupdate help-center!",
+            duration: 3000,
+            status: "success",
+            position: "top",
+            isClosable: true,
+          });
+          window.location.reload();
+        },
+        onError: (err) => {
+          console.error(err);
+          toast({
+            title: "Error",
+            description: err?.response?.data?.errors || `Something went wrong!`,
+            duration: 3000,
+            status: "error",
+            position: "top",
+            isClosable: true,
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -45,7 +113,7 @@ const HelpCenter = () => {
       <ChangeContactModal isOpen={isOpen} onClose={onClose} />
       <SidebarLayout>
         <Box className={styles["help-center-container"]}>
-          <Flex align={"center"} height={"100%"}>
+          <Flex align={"start"} height={"100%"}>
             <Box className={styles["help-center-left-wrapper"]}>
               <Box>
                 <Text className={styles["help-center-title"]}>Help Center</Text>
@@ -55,21 +123,20 @@ const HelpCenter = () => {
                   width={500}
                   height={500}
                 />
-                <Text className={styles["help-center-active-text"]}>
-                  Pertanyaan Populer
-                </Text>
-                <Text className={styles["help-center-inactive-text"]}>
-                  Memulai Scala
-                </Text>
-                <Text className={styles["help-center-inactive-text"]}>
-                  Scala untuk Bisnis
-                </Text>
-                <Text className={styles["help-center-inactive-text"]}>
-                  Privasi & Keamanan
-                </Text>
-                <Text className={styles["help-center-inactive-text"]}>
-                  Peraturan Perusahaan
-                </Text>
+                {!isPending &&
+                  data?.map((item, index) => (
+                    <Text
+                      onClick={() => currentContentHandler(item)}
+                      key={index}
+                      className={
+                        watch("id") === item?.id
+                          ? styles["help-center-active-text"]
+                          : styles["help-center-inactive-text"]
+                      }
+                    >
+                      {item.category}
+                    </Text>
+                  ))}
               </Box>
               <Box>
                 <Button
@@ -132,7 +199,7 @@ const HelpCenter = () => {
                       mb={"3rem"}
                     >
                       <Text className={styles["help-center-right-title"]}>
-                        Pertanyaan Populer
+                        {watch("category")}
                       </Text>
                       <Flex align={"center"}>
                         <Button
@@ -143,18 +210,18 @@ const HelpCenter = () => {
                           Back
                         </Button>
                         <Button
-                          onClick={() => setIsEditQuestion(true)}
+                          onClick={handleSubmit(onSubmit)}
                           mb={"0"}
                           className={styles["help-center-edit-btn"]}
                         >
-                          Edit
+                          Save
                         </Button>
                       </Flex>
                     </Flex>
                     <ReactQuill
                       theme="snow"
-                      value={text}
-                      onChange={setText}
+                      value={watch("content")}
+                      onChange={(value) => setValue("content", value)}
                       style={{ margin: "1.5rem 0 4rem", height: "526px" }}
                     />
                   </Box>
@@ -231,7 +298,7 @@ const HelpCenter = () => {
                       mb={"3rem"}
                     >
                       <Text className={styles["help-center-right-title"]}>
-                        Pertanyaan Populer
+                        {watch("category")}
                       </Text>
                       <Button
                         onClick={() => setIsEditQuestion(true)}
@@ -242,58 +309,38 @@ const HelpCenter = () => {
                       </Button>
                     </Flex>
                     <Box mb={"2rem"}>
-                      <Text className={styles["help-center-right-header"]}>
-                        Pertanyaan Satu
-                      </Text>
-                      <Text className={styles["help-center-right-text"]}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam
-                      </Text>
-                    </Box>
-                    <Box mb={"2rem"}>
-                      <Text className={styles["help-center-right-header"]}>
-                        Pertanyaan Dua
-                      </Text>
-                      <Text className={styles["help-center-right-text"]}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam
-                      </Text>
-                    </Box>
-                    <Box mb={"2rem"}>
-                      <Text className={styles["help-center-right-header"]}>
-                        Pertanyaan Tiga
-                      </Text>
-                      <Text className={styles["help-center-right-text"]}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam
-                      </Text>
+                      <Text
+                        dangerouslySetInnerHTML={{
+                          __html: watch("content"),
+                        }}
+                        className={styles["help-center-right-text"]}
+                      />
                     </Box>
                   </Box>
-                  <Flex className={styles["help-center-file-container"]}>
-                    <Image
-                      className={styles["help-center-pdf-icon"]}
-                      src={PDFIcon}
-                      width={300}
-                      height={300}
-                    />
-                    <Box margin={"0 1.5rem 0 0.1rem"}>
-                      <Text className={styles["help-center-file-title"]}>
-                        Pertanyaan Populer
-                      </Text>
-                      <Text className={styles["help-center-file-text"]}>
+                  {watch("file") && (
+                    <Flex className={styles["help-center-file-container"]}>
+                      <Image
+                        className={styles["help-center-pdf-icon"]}
+                        src={PDFIcon}
+                        width={300}
+                        height={300}
+                      />
+                      <Box margin={"0 1.5rem 0 0.1rem"}>
+                        <Text className={styles["help-center-file-title"]}>
+                          {watch("file")}
+                        </Text>
+                        {/* <Text className={styles["help-center-file-text"]}>
                         2.4MB / 10MB
-                      </Text>
-                    </Box>
-                    <Image
-                      className={styles["help-center-cloud-icon"]}
-                      src={CloudIcon}
-                      width={300}
-                      height={300}
-                    />
-                  </Flex>
+                      </Text> */}
+                      </Box>
+                      <Image
+                        className={styles["help-center-cloud-icon"]}
+                        src={CloudIcon}
+                        width={300}
+                        height={300}
+                      />
+                    </Flex>
+                  )}
                 </>
               )}
             </Box>

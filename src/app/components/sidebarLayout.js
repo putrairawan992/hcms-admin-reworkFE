@@ -1,8 +1,10 @@
+"use client";
 import {
   Accordion,
   AccordionButton,
   AccordionIcon,
   AccordionItem,
+  AccordionPanel,
   Box,
   Divider,
   Flex,
@@ -10,18 +12,41 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import ScalaLogo from "../../../public/images/scala-sidebar.png";
-import DummyImage from "../../../public/images/dummy-image.png";
 import styles from "../styles/dashboard.module.css";
 import { NotificationLogo } from "./logo";
+import { useGetProfile } from "../api/profile";
+import { usePathname, useRouter } from "next/navigation";
 
 const SidebarLayout = ({ children }) => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const { data } = useGetProfile();
+
   return (
     <Flex className={styles["homepage-container"]}>
       <Box className={styles["sidebar-container"]}>
         <Image src={ScalaLogo} width={132} height={100} />
         <Box className={styles["divider-sidebar"]} />
-        <Text className={styles["active-sidebar"]}>Dashboard</Text>
-        <Text className={styles["nonactive-sidebar"]}>Help Center</Text>
+        <Text
+          onClick={() => router.push("/")}
+          className={
+            pathname === "/"
+              ? styles["active-sidebar"]
+              : styles["nonactive-sidebar"]
+          }
+        >
+          Dashboard
+        </Text>
+        <Text
+          onClick={() => router.push("/help-center")}
+          className={
+            pathname === "/help-center"
+              ? styles["active-sidebar"]
+              : styles["nonactive-sidebar"]
+          }
+        >
+          Help Center
+        </Text>
         <Divider className={styles["sidebar-content-divider"]} />
         <Accordion allowToggle>
           <AccordionItem border="none" marginBottom={"2rem"}>
@@ -94,6 +119,23 @@ const SidebarLayout = ({ children }) => {
                 <AccordionIcon />
               </AccordionButton>
             </h2>
+            <AccordionPanel pb={4}>
+              <Flex
+                onClick={() => router.push("/approval/job-post")}
+                className={styles["nonactive-sidebar"]}
+                justify={"center"}
+                mb={2}
+              >
+                Job Post
+              </Flex>
+              <Flex
+                className={styles["nonactive-sidebar"]}
+                justify={"center"}
+                mb={2}
+              >
+                Remuneration
+              </Flex>
+            </AccordionPanel>
           </AccordionItem>
         </Accordion>
         <Text className={styles["nonactive-sidebar"]}>Send Document</Text>
@@ -111,8 +153,16 @@ const SidebarLayout = ({ children }) => {
               <Text className={styles["notification-counter-text"]}>4</Text>
             </Box>
           </Box>
-          <Box className={styles["profile-container"]}>
-            <Image src={DummyImage} width={100} height={100} />
+          <Box
+            onClick={() => router.push("/edit-profile")}
+            className={styles["profile-container"]}
+          >
+            <Image
+              src={data?.photo}
+              width={100}
+              height={100}
+              alt="profile-pict"
+            />
           </Box>
         </Flex>
         {children}
