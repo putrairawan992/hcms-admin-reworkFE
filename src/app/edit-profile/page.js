@@ -24,6 +24,7 @@ const EditProfile = () => {
   const companyFileInputRef = useRef(null);
   const [profileImagePreview, setProfileImagePreview] = useState();
   const [companyImagePreview, setCompanyImagePreview] = useState();
+  const [reload, setReload] = useState(false);
   const { mutate } = useEditProfile();
   const { register, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
@@ -49,6 +50,12 @@ const EditProfile = () => {
       setCompanyImagePreview(profile.companyPhoto || "");
     }
   }, [profile, setValue]);
+
+  useEffect(() => {
+    if (reload) {
+      window.location.reload();
+    }
+  }, [reload]);
 
   const handleTextClick = (type) => {
     if (type === "profile") {
@@ -105,7 +112,7 @@ const EditProfile = () => {
               position: "top",
               isClosable: true,
             });
-            window.location.reload();
+            setReload(true);
           },
           onError: (err) => {
             console.error(err);

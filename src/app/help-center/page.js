@@ -32,6 +32,7 @@ const HelpCenter = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isEditQuestion, setIsEditQuestion] = useState(false);
   const [storedFile, setStoredFile] = useState();
+  const [reload, setReload] = useState(false);
   const fileInputRef = useRef(null);
   const { setValue, watch, handleSubmit } = useForm({
     defaultValues: {
@@ -53,6 +54,12 @@ const HelpCenter = () => {
       setStoredFile(file);
     }
   };
+
+  useEffect(() => {
+    if (reload) {
+      window.location.reload();
+    }
+  }, [reload]);
 
   useEffect(() => {
     if (!isPending) {
@@ -91,7 +98,7 @@ const HelpCenter = () => {
             position: "top",
             isClosable: true,
           });
-          window.location.reload();
+          setReload(true);
         },
         onError: (err) => {
           console.error(err);
