@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+.admin-role-container {
+  background: linear-gradient(90deg, #f1f5fe 0%, #ffffff 98.82%);
+  box-shadow: 5px 0px 10px 0px #b3b9c5;
+  border-radius: 30px;
+  width: 100%;
+  height: max-content;
+  padding: 3rem 3rem 2rem;
+}
+
+.admin-role-title {
+  font-size: 26px;
+  font-weight: 900;
+  text-align: left;
+  color: #ae445a;
+}
+
+.admin-role-search-text {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: left;
+  color: #404041;
+  margin-bottom: 8px;
+}
+
+.admin-role-input-container {
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid #ae445a !important;
+}
+
+.admin-role-input {
+  border: none !important;
+  border-radius: 12px !important;
+}
+
+.admin-role-input::placeholder {
+  font-style: italic;
+}
+
+.admin-role-search-btn {
+  width: 158px;
+  height: 40px !important;
+  padding: 10px;
+  border-radius: 10px !important;
+  background: linear-gradient(90deg, #f39f5a 0%, #ae445a 100%) !important;
+  box-shadow: 5px 0px 5px 0px #b3b9c5;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 18px !important;
+  color: #ffffff !important;
+  margin-left: 1.5rem;
+}
+
+.admin-role-table-header-container {
+  border-top: 3px solid #404041;
+  border-bottom: 3px solid #404041;
+}
+
+.admin-role-table-header {
+  font-family: "Nunito", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: 19px !important;
+  text-align: center !important;
+  color: #ae445a !important;
+  text-transform: capitalize !important;
+}
+
+.admin-role-table-data {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 19px;
+  text-align: center !important;
+  color: #404041;
+}
+
+.admin-new-admin-input {
+  background: #ffffff !important;
+  border: 1px solid #ae445a !important;
+  border-radius: 12px !important;
+  width: 30vw !important;
+}
+
+.admin-new-admin-divider {
+  border: 2px solid #ae445a !important;
+}
+
+.admin-new-admin-bottom-wrapper {
+  margin-top: 3rem;
+}
+
+.admin-new-admin-input-wrapper {
+  margin-bottom: 2rem;
+}
+
+.admin-new-admin-checkbox {
+  margin-right: 2rem;
+}
+
+.admin-new-admin-text {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: left;
+  color: #ae445a;
+  margin-right: 2rem;
+}
+
+.admin-new-admin-btn {
+  width: 101px;
+  height: 33px !important;
+  padding: 10px;
+  border-radius: 10px !important;
+  background: linear-gradient(90deg, #f39f5a 0%, #ae445a 100%) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 18px !important;
+  color: #ffffff !important;
+}

@@ -1,16 +1,61 @@
 "use client";
-import { Box, Button, Divider, Flex, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Input,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import styles from "../styles/loginPage.module.css";
 import Image from "next/image";
 import LoginRightSide from "../../../public/images/login-right.png";
 import ScalaLogo from "../../../public/images/scala.png";
 import { useRouter } from "next/navigation";
+import { useLogin } from "../api/auth";
+import { useState } from "react";
 
 const LoginPage = () => {
+  const toast = useToast();
+  const { mutate } = useLogin();
   const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const loginHandler = () => {
-    router.push("/");
+    mutate(
+      {
+        username,
+        password,
+      },
+      {
+        onSuccess: async (res) => {
+          toast({
+            title: "Success",
+            description: "Anda berhasil login",
+            status: "success",
+            duration: 3000,
+            position: "top",
+            isClosable: true,
+          });
+          document.cookie = `userToken=${res.data.token}; path=/; max-age=86400; SameSite=Lax`;
+          setTimeout(() => {
+            router.push("/");
+          }, 1500);
+        },
+        onError: () => {
+          toast({
+            title: "Error",
+            description: "Email atau password salah, silahkan coba lagi",
+            status: "error",
+            duration: 3000,
+            position: "top",
+            isClosable: true,
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -24,13 +69,15 @@ const LoginPage = () => {
           <Box className={styles["login-section-wrapper"]}>
             <Input
               className={styles["input-container"]}
-              type="email"
-              placeholder="Masukkan e-mail"
+              type="text"
+              placeholder="Masukkan e-mail atau username"
+              onChange={(e) => setUsername(e.target.value)}
             />
             <Input
               className={styles["input-container"]}
               type="password"
               placeholder="Masukkan password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Button onClick={loginHandler} className={styles["login-button"]}>
               Login
