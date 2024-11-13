@@ -18,7 +18,6 @@ import UploadIcon from "../../../public/images/Group (4).png";
 import UploadedFileIcon from "../../../public/images/doc.circle.png";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { ArrowUpIcon } from "../components/icons";
 import { useEditHelpCenter, useGetHelpCenter } from "../api/help-center";
@@ -26,6 +25,7 @@ import { useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
 
 const HelpCenter = () => {
+  const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
   const ChangeContactModalWithNoSSR = dynamic(
     () => import("../components/changeContactModal"),
     { ssr: false }

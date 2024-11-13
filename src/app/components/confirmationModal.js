@@ -12,10 +12,10 @@ import styles from "../styles/confirmationModal.module.css";
 import InfoIcon from "../../../public/images/Info Circle.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const ConfirmationModal = ({ modalText, isOpen, onClose }) => {
+  const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
   const [size, setSize] = useState("sm");
   const [openText, setOpenText] = useState(false);
   const [text, setText] = useState("");
