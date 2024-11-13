@@ -58,7 +58,11 @@ const SidebarLayout = ({ children }) => {
                 _hover={{ background: "none" }}
               >
                 <Box
-                  className={styles["nonactive-sidebar"]}
+                  className={
+                    pathname.includes("/setup")
+                      ? styles["active-sidebar"]
+                      : styles["nonactive-sidebar"]
+                  }
                   marginBottom={0}
                   as="span"
                   flex="1"
@@ -69,6 +73,44 @@ const SidebarLayout = ({ children }) => {
                 <AccordionIcon />
               </AccordionButton>
             </h2>
+            <AccordionPanel pb={4}>
+              <Flex
+                onClick={() => router.push("/setup/admin-role")}
+                className={styles["nonactive-sidebar"]}
+                justify={"center"}
+                mb={2}
+              >
+                Admin
+              </Flex>
+              <Flex
+                className={styles["nonactive-sidebar"]}
+                justify={"center"}
+                mb={2}
+              >
+                Account
+              </Flex>
+              <Flex
+                className={styles["nonactive-sidebar"]}
+                justify={"center"}
+                mb={2}
+              >
+                Document
+              </Flex>
+              <Flex
+                className={styles["nonactive-sidebar"]}
+                justify={"center"}
+                mb={2}
+              >
+                Remuneration
+              </Flex>
+              <Flex
+                className={styles["nonactive-sidebar"]}
+                justify={"center"}
+                mb={2}
+              >
+                Payslip
+              </Flex>
+            </AccordionPanel>
           </AccordionItem>
         </Accordion>
         <Text className={styles["nonactive-sidebar"]}>Blast Notification</Text>

@@ -96,7 +96,7 @@ const EditProfile = () => {
       formData.append("address", data.address);
       formData.append("password", data.confirmPassword);
       formData.append("photo", data.photo);
-      // formData.append("companyPhoto", data.companyPhoto);
+      formData.append("companyPhoto", data.companyPhoto);
 
       mutate(
         {
