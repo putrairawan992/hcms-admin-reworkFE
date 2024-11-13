@@ -5,7 +5,6 @@ import styles from "../../styles/approvalJobPost.module.css";
 import DummyImage from "../../../../public/images/dummy-image.png";
 import Image from "next/image";
 import { ApproveIcon, RejectIcon, ShareIcon } from "@/app/components/icons";
-import ConfirmationModal from "@/app/components/confirmationModal";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGetApprovalJobPost } from "@/app/api/approval";
@@ -15,6 +14,10 @@ import "moment/locale/id";
 moment.locale("id");
 
 const ApprovalJobPost = () => {
+  const ConfirmationModalWithNoSSR = dynamic(
+    () => import("../../components/confirmationModal"),
+    { ssr: false }
+  );
   const { data, isPending } = useGetApprovalJobPost();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,7 +34,11 @@ const ApprovalJobPost = () => {
 
   return (
     <>
-      <ConfirmationModal modalText={text} isOpen={isOpen} onClose={onClose} />
+      <ConfirmationModalWithNoSSR
+        modalText={text}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
       <SidebarLayout>
         <Box className={styles["job-post-container"]}>
           <Flex className={styles["job-post-header"]}>
@@ -104,23 +111,24 @@ const ApprovalJobPost = () => {
                     <Box className={styles["job-post-content-wrapper"]}>
                       <Flex className={styles["job-post-time-status-wrapper"]}>
                         <Text className={styles["job-post-time"]}>
-                          {moment(item.start_date)
+                          {moment(item?.start_date)
                             .utcOffset("+07:00")
                             .format("D MMMM YYYY | HH:mm") + " WIB"}
                         </Text>
                         <Box className={styles["job-post-status"]}>
-                          {item.status_approve}
+                          {item?.status_approve}
                         </Box>
                       </Flex>
                       <Box>
                         <Text className={styles["job-post-role"]}>
-                          {item.job_title}
+                          {item?.job_title}
                         </Text>
                         <Text className={styles["job-post-rest"]}>
                           PT. Gema Insani Group
                         </Text>
                         <Text className={styles["job-post-rest"]}>
-                          IDR {item.start_from_salary} - {item.end_from_salary}
+                          IDR {item?.start_from_salary} -{" "}
+                          {item?.end_from_salary}
                         </Text>
                         <Text className={styles["job-post-rest"]}>3 Orang</Text>
                       </Box>

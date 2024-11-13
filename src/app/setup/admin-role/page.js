@@ -22,10 +22,14 @@ import {
 import { AddIcon, EditIcon, Search2Icon } from "@chakra-ui/icons";
 import styles from "../../styles/adminRole.module.css";
 import { useState } from "react";
-import ConfirmationModal from "@/app/components/confirmationModal";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 
 const AdminRole = () => {
+  const ConfirmationModalWithNoSSR = dynamic(
+    () => import("../../components/confirmationModal"),
+    { ssr: false }
+  );
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [text, setText] = useState("");
@@ -41,7 +45,11 @@ const AdminRole = () => {
 
   return (
     <>
-      <ConfirmationModal modalText={text} isOpen={isOpen} onClose={onClose} />
+      <ConfirmationModalWithNoSSR
+        modalText={text}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
       <SidebarLayout>
         <Box className={styles["admin-role-container"]}>
           <Text className={styles["admin-role-title"]}>Setup - Admin</Text>

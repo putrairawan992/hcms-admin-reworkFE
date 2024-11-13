@@ -9,7 +9,7 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import styles from "../../styles/helpCenter.module.css";
+import styles from "../styles/helpCenter.module.css";
 
 const ChangeContactModal = ({ isOpen, onClose }) => {
   return (

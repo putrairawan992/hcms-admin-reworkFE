@@ -21,11 +21,15 @@ import { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { ArrowUpIcon } from "../components/icons";
-import ChangeContactModal from "./components/changeContactModal";
 import { useEditHelpCenter, useGetHelpCenter } from "../api/help-center";
 import { useForm } from "react-hook-form";
+import dynamic from "next/dynamic";
 
 const HelpCenter = () => {
+  const ChangeContactModalWithNoSSR = dynamic(
+    () => import("../components/changeContactModal"),
+    { ssr: false }
+  );
   const toast = useToast();
   const { mutate } = useEditHelpCenter();
   const { data, isPending } = useGetHelpCenter();
@@ -63,10 +67,10 @@ const HelpCenter = () => {
 
   useEffect(() => {
     if (!isPending) {
-      setValue("file", data[0].file);
-      setValue("content", data[0].content);
-      setValue("category", data[0].category);
-      setValue("id", data[0].id);
+      setValue("file", data[0]?.file);
+      setValue("content", data[0]?.content);
+      setValue("category", data[0]?.category);
+      setValue("id", data[0]?.id);
     }
   }, [data, isPending]);
 
@@ -79,14 +83,14 @@ const HelpCenter = () => {
 
   const onSubmit = (data) => {
     const formData = new FormData();
-    formData.append("file", data.file);
-    formData.append("content", data.content);
-    formData.append("category", data.category);
+    formData.append("file", data?.file);
+    formData.append("content", data?.content);
+    formData.append("category", data?.category);
 
     mutate(
       {
         dataContent: formData,
-        id: data.id,
+        id: data?.id,
       },
       {
         onSuccess: () => {
@@ -117,7 +121,7 @@ const HelpCenter = () => {
 
   return (
     <>
-      <ChangeContactModal isOpen={isOpen} onClose={onClose} />
+      <ChangeContactModalWithNoSSR isOpen={isOpen} onClose={onClose} />
       <SidebarLayout>
         <Box className={styles["help-center-container"]}>
           <Flex align={"start"} height={"100%"}>
