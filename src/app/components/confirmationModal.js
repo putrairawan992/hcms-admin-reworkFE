@@ -13,6 +13,7 @@ import InfoIcon from "../../../public/images/Info Circle.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
 
 const ConfirmationModal = ({ modalText, isOpen, onClose }) => {
   const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
