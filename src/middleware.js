@@ -20,5 +20,6 @@ export const config = {
     "/approval/remuneration",
     "/setup/admin-role",
     "/setup/new-admin",
+    "/setup/remuneration",
   ],
 };

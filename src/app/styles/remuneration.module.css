@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+.remuneration-container {
+  background: linear-gradient(90deg, #f1f5fe 0%, #ffffff 98.82%);
+  box-shadow: 5px 0px 10px 0px #b3b9c5;
+  border-radius: 30px;
+  width: 100%;
+  height: max-content;
+  padding: 3rem 3rem 2rem;
+}
+
+.remuneration-title {
+  font-size: 26px;
+  font-weight: 900;
+  text-align: left;
+  color: #ae445a;
+}
+
+.remuneration-subtitle {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+  color: #ae445a;
+}
+
+.remuneration-form-title {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+  color: #3ab471;
+}
+
+.remuneration-form-title-2 {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+  color: #718199;
+}
+
+.remuneration-divider {
+  opacity: 1;
+  border-width: 2px;
+  border-color: #ae445a;
+}
+
+.remuneration-search-text {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: left;
+  color: #404041;
+}
+
+.remuneration-input-container {
+  display: block !important;
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid #ae445a !important;
+  width: 60% !important;
+}
+
+.remuneration-input {
+  border: none !important;
+  border-radius: 12px !important;
+  height: 47px !important;
+  text-align: right !important;
+}
+
+.remuneration-input::placeholder {
+  font-style: italic;
+}
+
+.remuneration-input:focus-visible {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.remuneration-input-suffix {
+  color: #404041 !important;
+  height: 47px !important;
+}
+
+.remuneration-btn {
+  width: 101px;
+  height: 33px !important;
+  padding: 10px;
+  border-radius: 10px !important;
+  background: linear-gradient(90deg, #f39f5a 0%, #ae445a 100%) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 18px !important;
+  color: #ffffff !important;
+}
+
+.remuneration-success {
+  margin: 40px;
+}

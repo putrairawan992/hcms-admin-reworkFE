@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useGetApprovalJobPost } from "@/app/api/approval";
 import moment from "moment";
 import "moment/locale/id";
+import dynamic from "next/dynamic";
 
 moment.locale("id");
 
