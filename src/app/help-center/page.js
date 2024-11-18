@@ -23,9 +23,9 @@ import { ArrowUpIcon } from "../components/icons";
 import { useEditHelpCenter, useGetHelpCenter } from "../api/help-center";
 import { useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
-import ReactQuill from "react-quill";
 
 const HelpCenter = () => {
+  const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
   const ChangeContactModalWithNoSSR = dynamic(
     () => import("../components/changeContactModal"),
     { ssr: false }
