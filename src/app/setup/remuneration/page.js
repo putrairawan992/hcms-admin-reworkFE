@@ -25,45 +25,40 @@ import { useForm } from "react-hook-form";
 import { useRef } from "react";
 import Image from "next/image";
 import CheckIcon from "../../../../public/images/Success-Circle.png";
+import { useSetupRemuneration } from "@/app/api/setup";
 
 const Remuneration = () => {
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
+  const { mutate } = useSetupRemuneration();
   const { setValue, handleSubmit } = useForm({
     defaultValues: {
-      renumerasi_per_bulan: {
-        penambah_gaji: {
-          basic_salary: 0,
-          tunjangan_posisi: 0,
-          bpjstk_iuran_jkk: 0,
-          bpjstk_iuran_jkm: 0,
-          bpjstk_iuran_jht: 0,
-          bpjstk_iuran_jp: 0,
-          premi_bpjskes: 0,
-          pajak: 0,
-        },
-        pengurang_gaji: {
-          bpjstk_iuran_jht: 0,
-          bpjstk_iuran_jp: 0,
-          premi_bpjskes: 0,
-        },
+      bulan: {
+        basic_salary: 0,
+        position_allowance: 0,
+        bpjstk_jkk_company: 0,
+        bpjstk_jkm_company: 0,
+        bpjstk_jht_company: 0,
+        bpjstk_jp_company: 0,
+        premi_bpjskes_company: 0,
+        tax_company: 0,
+        bpjstk_jht_employee: 0,
+        bpjstk_jp_employee: 0,
+        premi_bpjskes_employee: 0,
       },
-      renumerasi_sisa_kontrak: {
-        penambah_gaji: {
-          basic_salary: 0,
-          tunjangan_posisi: 0,
-          bpjstk_iuran_jkk: 0,
-          bpjstk_iuran_jkm: 0,
-          bpjstk_iuran_jht: 0,
-          bpjstk_iuran_jp: 0,
-          premi_bpjskes: 0,
-          pajak: 0,
-        },
-        pengurang_gaji: {
-          bpjstk_iuran_jht: 0,
-          bpjstk_iuran_jp: 0,
-          premi_bpjskes: 0,
-        },
+      kontrak: {
+        basic_salary: 0,
+        position_allowance: 0,
+        bpjstk_jkk_company: 0,
+        bpjstk_jkm_company: 0,
+        bpjstk_jht_company: 0,
+        bpjstk_jp_company: 0,
+        premi_bpjskes_company: 0,
+        tax_company: 0,
+        bpjstk_jht_employee: 0,
+        bpjstk_jp_employee: 0,
+        premi_bpjskes_employee: 0,
       },
     },
   });
@@ -83,7 +78,25 @@ const Remuneration = () => {
   };
 
   const onSubmit = (data) => {
-    onOpen();
+    mutate(
+      { dataRemun: data },
+      {
+        onSuccess: async (res) => {
+          onOpen();
+        },
+        onError: (err) => {
+          console.error(err);
+          toast({
+            title: "Error",
+            description: err?.response?.data?.errors || `Something went wrong!`,
+            duration: 3000,
+            status: "error",
+            position: "top",
+            isClosable: true,
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -139,7 +152,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_per_bulan.penambah_gaji.basic_salary"
+                          name="bulan.basic_salary"
                           min={0}
                           max={100}
                           step="any"
@@ -171,7 +184,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_per_bulan.penambah_gaji.tunjangan_posisi"
+                          name="bulan.position_allowance"
                           min={0}
                           max={100}
                           step="any"
@@ -203,7 +216,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_per_bulan.penambah_gaji.bpjstk_iuran_jkk"
+                          name="bulan.bpjstk_jkk_company"
                           min={0}
                           max={100}
                           step="any"
@@ -235,7 +248,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_per_bulan.penambah_gaji.bpjstk_iuran_jkm"
+                          name="bulan.bpjstk_jkm_company"
                           min={0}
                           max={100}
                           step="any"
@@ -267,7 +280,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_per_bulan.penambah_gaji.bpjstk_iuran_jht"
+                          name="bulan.bpjstk_jht_company"
                           min={0}
                           max={100}
                           step="any"
@@ -299,7 +312,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_per_bulan.penambah_gaji.bpjstk_iuran_jp"
+                          name="bulan.bpjstk_jp_company"
                           min={0}
                           max={100}
                           step="any"
@@ -331,7 +344,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_per_bulan.penambah_gaji.premi_bpjskes"
+                          name="bulan.premi_bpjskes_company"
                           min={0}
                           max={100}
                           step="any"
@@ -363,7 +376,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_per_bulan.penambah_gaji.pajak"
+                          name="bulan.tax_company"
                           min={0}
                           max={100}
                           step="any"
@@ -408,7 +421,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_per_bulan.pengurang_gaji.bpjstk_iuran_jht"
+                          name="bulan.bpjstk_jht_employee"
                           min={0}
                           max={100}
                           step="any"
@@ -440,7 +453,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_per_bulan.pengurang_gaji.bpjstk_iuran_jp"
+                          name="bulan.bpjstk_jp_employee"
                           min={0}
                           max={100}
                           step="any"
@@ -472,7 +485,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_per_bulan.pengurang_gaji.premi_bpjskes"
+                          name="bulan.premi_bpjskes_employee"
                           min={0}
                           max={100}
                           step="any"
@@ -528,7 +541,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_sisa_kontrak.penambah_gaji.basic_salary"
+                          name="kontrak.basic_salary"
                           min={0}
                           max={100}
                           step="any"
@@ -560,7 +573,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_sisa_kontrak.penambah_gaji.tunjangan_posisi"
+                          name="kontrak.position_allowance"
                           min={0}
                           max={100}
                           step="any"
@@ -592,7 +605,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_sisa_kontrak.penambah_gaji.bpjstk_iuran_jkk"
+                          name="kontrak.bpjstk_jkk_company"
                           min={0}
                           max={100}
                           step="any"
@@ -624,7 +637,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_sisa_kontrak.penambah_gaji.bpjstk_iuran_jkm"
+                          name="kontrak.bpjstk_jkm_company"
                           min={0}
                           max={100}
                           step="any"
@@ -656,7 +669,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_sisa_kontrak.penambah_gaji.bpjstk_iuran_jht"
+                          name="kontrak.bpjstk_jht_company"
                           min={0}
                           max={100}
                           step="any"
@@ -688,7 +701,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_sisa_kontrak.penambah_gaji.bpjstk_iuran_jp"
+                          name="kontrak.bpjstk_jp_company"
                           min={0}
                           max={100}
                           step="any"
@@ -720,7 +733,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_sisa_kontrak.penambah_gaji.premi_bpjskes"
+                          name="kontrak.premi_bpjskes_company"
                           min={0}
                           max={100}
                           step="any"
@@ -752,7 +765,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_sisa_kontrak.penambah_gaji.pajak"
+                          name="kontrak.tax_company"
                           min={0}
                           max={100}
                           step="any"
@@ -797,7 +810,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_sisa_kontrak.pengurang_gaji.bpjstk_iuran_jht"
+                          name="kontrak.bpjstk_jht_employee"
                           min={0}
                           max={100}
                           step="any"
@@ -829,7 +842,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_sisa_kontrak.pengurang_gaji.bpjstk_iuran_jp"
+                          name="kontrak.bpjstk_jp_employee"
                           min={0}
                           max={100}
                           step="any"
@@ -861,7 +874,7 @@ const Remuneration = () => {
                         className={styles["remuneration-input-container"]}
                       >
                         <NumberInput
-                          name="renumerasi_sisa_kontrak.pengurang_gaji.premi_bpjskes"
+                          name="kontrak.premi_bpjskes_employee"
                           min={0}
                           max={100}
                           step="any"
