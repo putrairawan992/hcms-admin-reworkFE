@@ -11,17 +11,14 @@ import {
 import styles from '../../styles/approvalRemuneration.module.css';
 import DummyImage from '../../../../public/images/dummy-image.png';
 import Image from 'next/image';
-import {
-  ApproveIcon,
-  RejectIcon,
-  ShareIcon,
-  ChatIcon,
-} from '@/app/components/icons';
-import { useState } from 'react';
+import { ChatIcon } from '@/app/components/icons';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import moment from 'moment';
 import 'moment/locale/id';
 import dynamic from 'next/dynamic';
+import { useGetApprovalRemuneration } from '@/app/api/approval';
+import { useGetProductDigital } from '@/app/api/common';
 
 moment.locale('id');
 
@@ -34,26 +31,46 @@ const ApprovalRemuneration = () => {
     () => import('../../components/noteModal'),
     { ssr: false }
   );
-  const data = [
-    {
-      id: 1,
-      name: 'Burung Emas Group',
-      status: 'Approved',
-      date: 'Jun 2023',
-    },
-    {
-      id: 2,
-      name: 'Burung Emas Group',
-      status: 'Rejected',
-      date: 'Jun 2023 ',
-    },
-    {
-      id: 3,
-      name: 'Burung Emas Group',
-      status: '',
-      date: 'Jun 2023 ',
-      isCancelApprove: true,
-    },
+  const [years, setYears] = useState('2024');
+  const [month, setMonth] = useState('10');
+  const [productDigital, setProductDigital] = useState('pt 1');
+  const [status, setStatus] = useState('approved');
+  const { data, isPending, refetch } = useGetApprovalRemuneration({
+    status,
+    product_digital_name: productDigital,
+    month,
+    years,
+  });
+  const { data: productDigitalData } = useGetProductDigital();
+  const yearOptions = [
+    { value: '2024', label: '2024' },
+    { value: '2023', label: '2023' },
+    { value: '2022', label: '2022' },
+    { value: '2021', label: '2021' },
+    { value: '2020', label: '2020' },
+    { value: '2019', label: '2019' },
+    { value: '2018', label: '2018' },
+    { value: '2017', label: '2017' },
+    { value: '2016', label: '2016' },
+    { value: '2015', label: '2015' },
+  ];
+  const monthOptions = [
+    { value: '1', label: 'Januari' },
+    { value: '2', label: 'Februari' },
+    { value: '3', label: 'Maret' },
+    { value: '4', label: 'April' },
+    { value: '5', label: 'Mei' },
+    { value: '6', label: 'Juni' },
+    { value: '7', label: 'Juli' },
+    { value: '8', label: 'Agustus' },
+    { value: '9', label: 'September' },
+    { value: '10', label: 'Oktober' },
+    { value: '11', label: 'November' },
+    { value: '12', label: 'Desember' },
+  ];
+  const statusOptions = [
+    { value: 'approved', label: 'Approved' },
+    { value: 'rejected', label: 'Rejected' },
   ];
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -64,15 +81,13 @@ const ApprovalRemuneration = () => {
   } = useDisclosure();
   const [text, setText] = useState('');
 
-  const openConfirmationModalHandler = (str) => {
-    setText(str);
-    onOpen();
-  };
-
   const openNoteModalHandler = () => {
     onOpenNote();
   };
 
+  useEffect(() => {
+    refetch();
+  }, [years, month, productDigital, status]);
 
   return (
     <>
@@ -109,103 +124,139 @@ const ApprovalRemuneration = () => {
               <Text className={styles['approval-remuneration-filter-text']}>
                 Tahun
               </Text>
-              <Select className={styles['approval-remuneration-filter-select']}>
+              <Select
+                value={years}
+                onChange={(e) => setYears(e.target.value)}
+                className={styles['approval-remuneration-filter-select']}
+              >
                 <option value="" selected disabled hidden>
                   Tahun
                 </option>
-                <option>Value 1</option>
+                {yearOptions.map((item, index) => (
+                  <option key={index} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
               </Select>
             </Box>
             <Box>
               <Text className={styles['approval-remuneration-filter-text']}>
                 Bulan
               </Text>
-              <Select className={styles['approval-remuneration-filter-select']}>
+              <Select
+                value={month}
+                onChange={(e) => setMonth(e.target.value)}
+                className={styles['approval-remuneration-filter-select']}
+              >
                 <option value="" selected disabled hidden>
                   Pilih Bulan
                 </option>
-                <option>Value 1</option>
+                {monthOptions.map((item, index) => (
+                  <option key={index} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
               </Select>
             </Box>
             <Box>
               <Text className={styles['approval-remuneration-filter-text']}>
                 Digital Product
               </Text>
-              <Select className={styles['approval-remuneration-filter-select']}>
+              <Select
+                value={productDigital}
+                onChange={(e) => setProductDigital(e.target.value)}
+                className={styles['approval-remuneration-filter-select']}
+              >
                 <option value="" selected disabled hidden>
                   Pilih Digital Product
                 </option>
-                <option>Value 1</option>
+                {productDigitalData?.map((item, index) => (
+                  <option key={index} value={item.product_digital_name}>
+                    {item.product_digital_name}
+                  </option>
+                ))}
               </Select>
             </Box>
             <Box>
               <Text className={styles['approval-remuneration-filter-text']}>
                 Status
               </Text>
-              <Select className={styles['approval-remuneration-filter-select']}>
+              <Select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className={styles['approval-remuneration-filter-select']}
+              >
                 <option value="" selected disabled hidden>
                   Pilih Status
                 </option>
-                <option>Value 1</option>
+                {statusOptions.map((item, index) => (
+                  <option key={index} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
               </Select>
             </Box>
           </Flex>
           <Box className={styles['approval-remuneration-wrapper']}>
-            {data?.map((item, index) => (
-              <Flex
-                key={index}
-                className={styles['approval-remuneration-card']}
-              >
-                <Flex className={styles['approval-remuneration-card-inner']}>
-                  <Box
-                    className={styles['approval-remuneration-image-wrapper']}
-                  >
-                    <Image
-                      className={styles['approval-remuneration-image']}
-                      src={DummyImage}
-                      width={100}
-                      height={100}
-                    />
-                  </Box>
-                  <Box
-                    className={styles['approval-remuneration-content-wrapper']}
-                  >
-                    <Text>{item.name}</Text>
-                  </Box>
-                  <Box
-                    className={styles['approval-remuneration-content-wrapper']}
-                  >
-                    <Text>{item.date}</Text>
-                  </Box>
-                  <Box
-                    className={styles['approval-remuneration-content-status']}
-                  >
-                    <Text>{item.status || 'Status'}</Text>
-                  </Box>
-                  <Box
-                    className={styles['approval-remuneration-content-wrapper']}
-                  >
-                    <ChatIcon
-                      onClick={() => openNoteModalHandler()}
-                      style={{
-                        width: '28px',
-                        height: '28px',
-                        margin: '0 12px',
-                        cursor: 'pointer',
-                      }}
-                    />
-                  </Box>
-                  <Box
-                    className={styles['approval-remuneration-content-wrapper']}
-                  >
-                    <Button
-                      onClick={() => router.push('/approval/remuneration/details')}
-                      className={styles['approval-remuneration-content-btn']}
+            {!isPending &&
+              data?.length > 0 &&
+              data?.map((item, index) => (
+                <Flex
+                  key={index}
+                  className={styles['approval-remuneration-card']}
+                >
+                  <Flex className={styles['approval-remuneration-card-inner']}>
+                    <Box
+                      className={styles['approval-remuneration-image-wrapper']}
                     >
-                      Detail
-                    </Button>
-                  </Box>
-                  {item.isCancelApprove && (
+                      <Image
+                        className={styles['approval-remuneration-image']}
+                        src={DummyImage}
+                        width={100}
+                        height={100}
+                      />
+                    </Box>
+                    <Box
+                      className={
+                        styles['approval-remuneration-content-wrapper']
+                      }
+                    >
+                      <Text>{item.product_digital_name}</Text>
+                    </Box>
+                    <Box
+                      className={
+                        styles['approval-remuneration-content-wrapper']
+                      }
+                    >
+                      <Text>
+                        {moment(item.created_at)
+                          .utcOffset('+07:00')
+                          .format('MMM YYYY')}
+                      </Text>
+                    </Box>
+                    <Box
+                      className={styles['approval-remuneration-content-status']}
+                    >
+                      <Text>
+                        {item.status.charAt(0).toUpperCase() +
+                          item.status.slice(1) || 'Status'}
+                      </Text>
+                    </Box>
+                    <Box
+                      className={
+                        styles['approval-remuneration-content-wrapper']
+                      }
+                    >
+                      <ChatIcon
+                        onClick={() => openNoteModalHandler()}
+                        style={{
+                          width: '28px',
+                          height: '28px',
+                          margin: '0 12px',
+                          cursor: 'pointer',
+                        }}
+                      />
+                    </Box>
                     <Box
                       className={
                         styles['approval-remuneration-content-wrapper']
@@ -213,19 +264,36 @@ const ApprovalRemuneration = () => {
                     >
                       <Button
                         onClick={() =>
-                          openConfirmationModalHandler(
-                            'Anda akan membatalkan permintaan remunerasi Product Digital. Apakah anda yakin?'
-                          )
+                          router.push(`/approval/remuneration/${item.remuneration_id}`)
                         }
                         className={styles['approval-remuneration-content-btn']}
                       >
-                        Cancel Approve
+                        Detail
                       </Button>
                     </Box>
-                  )}
+                    {/* {item.isCancelApprove && (
+                      <Box
+                        className={
+                          styles['approval-remuneration-content-wrapper']
+                        }
+                      >
+                        <Button
+                          onClick={() =>
+                            openConfirmationModalHandler(
+                              'Anda akan membatalkan permintaan remunerasi Product Digital. Apakah anda yakin?'
+                            )
+                          }
+                          className={
+                            styles['approval-remuneration-content-btn']
+                          }
+                        >
+                          Cancel Approve
+                        </Button>
+                      </Box>
+                    )} */}
+                  </Flex>
                 </Flex>
-              </Flex>
-            ))}
+              ))}
           </Box>
         </Box>
       </SidebarLayout>

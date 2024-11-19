@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -21,4 +21,70 @@ export const useGetApprovalJobPost = () => {
     staleTime: 0,
     gcTime: 0,
   });
+};
+
+export const useGetApprovalRemuneration = ({
+  status,
+  product_digital_name,
+  month,
+  years,
+}) => {
+  return useQuery({
+    queryKey: ["status", "product_digital_name", "month", "years"],
+    queryFn: async () => {
+      const res = await axios({
+        method: "GET",
+        url: baseURL + "/api/admin/remuneration/list",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("userToken")}`,
+        },
+        params: {
+          status,
+          product_digital_name,
+          month,
+          years
+        },
+      });
+
+      return res.data.data;
+    },
+    staleTime: 0,
+    gcTime: 0,
+  });
+}
+
+export const useGetApprovalRemunerationDetail = ({ id }) => {
+  return useQuery({
+    queryKey: ["id"],
+    queryFn: async () => {
+      const res = await axios({
+        method: "GET",
+        url: baseURL + `/api/admin/remuneration/detail/${id}`,
+        headers: {
+          Authorization: `Bearer ${Cookies.get("userToken")}`,
+        },
+      });
+
+      return res.data.data;
+    },
+    staleTime: 0,
+    gcTime: 0,
+  });
+}
+
+export const useApproveRemuneration = () => {
+  return useMutation({
+    mutationFn: async ({ id, data, isApprove }) => {
+      const res = await axios({
+        method: "POST",
+        url: baseURL + `/api/admin/remuneration/update/employee/${id}/${isApprove ? "approved" : "rejected"}`,
+        headers: {
+          Authorization: `Bearer ${Cookies.get("userToken")}`,
+        },
+        data,
+      });
+
+      return res.data;
+    },
+  })
 };
