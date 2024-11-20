@@ -35,7 +35,7 @@ const EditProfile = () => {
       password: "****************",
       photo: "",
       currentPhoto: "",
-      companyPhoto: "",
+      company_photo: "",
       currentCompanyPhoto: "",
     },
   });
@@ -47,7 +47,7 @@ const EditProfile = () => {
       setValue("phone_number", profile.phone_number || "-");
       setValue("address", profile.address || "-");
       setProfileImagePreview(profile.photo || "");
-      setCompanyImagePreview(profile.companyPhoto || "");
+      setCompanyImagePreview(profile.company_photo || "");
     }
   }, [profile, setValue]);
 
@@ -72,7 +72,7 @@ const EditProfile = () => {
         setValue("photo", file);
         setProfileImagePreview(URL.createObjectURL(file));
       } else if (type === "company") {
-        setValue("companyPhoto", file);
+        setValue("company_photo", file);
         setCompanyImagePreview(URL.createObjectURL(file));
       }
     }
@@ -96,7 +96,7 @@ const EditProfile = () => {
       formData.append("address", data.address);
       formData.append("password", data.confirmPassword);
       formData.append("photo", data.photo);
-      formData.append("companyPhoto", data.companyPhoto);
+      formData.append("company_photo", data.company_photo);
 
       mutate(
         {
