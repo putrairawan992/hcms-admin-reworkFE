@@ -19,11 +19,11 @@ import {
   Text,
   useDisclosure,
   useToast,
+  Image,
 } from "@chakra-ui/react";
 import styles from "../../styles/remuneration.module.css";
 import { useForm } from "react-hook-form";
 import { useRef } from "react";
-import Image from "next/image";
 import CheckIcon from "../../../../public/images/Success-Circle.png";
 import { useSetupRemuneration } from "@/app/api/setup";
 

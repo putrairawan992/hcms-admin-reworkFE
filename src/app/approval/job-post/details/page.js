@@ -1,9 +1,8 @@
 "use client";
 import { CalenderIcon } from "@/app/components/icons";
 import SidebarLayout from "@/app/components/sidebarLayout";
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text, Image } from "@chakra-ui/react";
 import DummyImg from "../../../../../public/images/dummy-image.png";
-import Image from "next/image";
 import styles from "../../../styles/jobPostDetails.module.css";
 import { useRouter } from "next/navigation";
 
@@ -66,12 +65,7 @@ const JobPostDetails = () => {
           <Flex align={"start"} justify={"space-between"}>
             <Flex align={"center"}>
               <Box className={styles["job-details-img-wrapper"]}>
-                <Image
-                  className={styles["job-details-img"]}
-                  src={DummyImg}
-                  width={100}
-                  height={100}
-                />
+                <Image className={styles["job-details-img"]} src={DummyImg} />
               </Box>
               <Box marginLeft={"1.5rem"}>
                 <Text className={styles["job-details-company-header"]}>

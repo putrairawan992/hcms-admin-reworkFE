@@ -7,25 +7,19 @@ import {
   Text,
   useDisclosure,
   useToast,
+  Image,
 } from "@chakra-ui/react";
 import SidebarLayout from "../components/sidebarLayout";
 import styles from "../styles/helpCenter.module.css";
-import AskImg from "../../../public/images/faq-icon.png";
-import WhatsappIcon from "../../../public/images/Whatsapp.png";
-import PDFIcon from "../../../public/images/PDF.png";
-import CloudIcon from "../../../public/images/Download From Cloud.png";
-import UploadIcon from "../../../public/images/Group (4).png";
-import UploadedFileIcon from "../../../public/images/doc.circle.png";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import { ArrowUpIcon } from "../components/icons";
 import { useEditHelpCenter, useGetHelpCenter } from "../api/help-center";
 import { useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const HelpCenter = () => {
-  const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
   const ChangeContactModalWithNoSSR = dynamic(
     () => import("../components/changeContactModal"),
     { ssr: false }
@@ -130,9 +124,7 @@ const HelpCenter = () => {
                 <Text className={styles["help-center-title"]}>Help Center</Text>
                 <Image
                   className={styles["help-center-img"]}
-                  src={AskImg}
-                  width={500}
-                  height={500}
+                  src={"/images/faq-icon.png"}
                 />
                 {!isPending &&
                   data?.map((item, index) => (
@@ -180,9 +172,7 @@ const HelpCenter = () => {
                 <Flex align={"center"} mt={"1.5rem"}>
                   <Image
                     className={styles["help-center-whatsapp-icon"]}
-                    src={WhatsappIcon}
-                    width={100}
-                    height={100}
+                    src={"/images/Whatsapp.png"}
                   />
                   <Text
                     className={styles["help-center-info"]}
@@ -243,9 +233,7 @@ const HelpCenter = () => {
                     >
                       <Image
                         className={styles["help-container-upload-img"]}
-                        src={UploadIcon}
-                        width={300}
-                        height={300}
+                        src={"/images/Group (4).png"}
                       />
                       <Box marginLeft={"1rem"}>
                         <Text className={styles["help-container-upload-title"]}>
@@ -271,9 +259,7 @@ const HelpCenter = () => {
                       <Flex align={"center"}>
                         <Image
                           className={styles["help-center-uploaded-img"]}
-                          src={UploadedFileIcon}
-                          width={300}
-                          height={300}
+                          src={"/images/doc.circle.png"}
                         />
                         <Text className={styles["help-center-uploaded-text"]}>
                           {storedFile.name}
@@ -332,9 +318,7 @@ const HelpCenter = () => {
                     <Flex className={styles["help-center-file-container"]}>
                       <Image
                         className={styles["help-center-pdf-icon"]}
-                        src={PDFIcon}
-                        width={300}
-                        height={300}
+                        src={"/images/PDF.png"}
                       />
                       <Box margin={"0 1.5rem 0 0.1rem"}>
                         <Text className={styles["help-center-file-title"]}>
@@ -346,9 +330,7 @@ const HelpCenter = () => {
                       </Box>
                       <Image
                         className={styles["help-center-cloud-icon"]}
-                        src={CloudIcon}
-                        width={300}
-                        height={300}
+                        src={"/images/Download From Cloud.png"}
                       />
                     </Flex>
                   )}

@@ -7,11 +7,9 @@ import {
   Input,
   Text,
   useToast,
+  Image,
 } from "@chakra-ui/react";
 import styles from "../styles/loginPage.module.css";
-import Image from "next/image";
-import LoginRightSide from "../../../public/images/login-right.png";
-import ScalaLogo from "../../../public/images/scala.png";
 import { useRouter } from "next/navigation";
 import { useLogin } from "../api/auth";
 import { useState } from "react";
@@ -64,7 +62,7 @@ const LoginPage = () => {
         <Text className={styles["login-left-title"]}>Welcome to Scala!</Text>
         <Box className={styles["input-section-container"]}>
           <Box className={styles["logo-container"]}>
-            <Image src={ScalaLogo} width={100} height={100} />
+            <Image src={"/images/scala.png"} width={"87px"} height={"44px"} />
           </Box>
           <Box className={styles["login-section-wrapper"]}>
             <Input
@@ -79,7 +77,11 @@ const LoginPage = () => {
               placeholder="Masukkan password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button onClick={loginHandler} className={styles["login-button"]}>
+            <Button
+              background={username && password ? "#F39F5A" : "#b6b6b6"}
+              onClick={loginHandler}
+              className={styles["login-button"]}
+            >
               Login
             </Button>
             <Text className={styles["forgot-password-text"]}>
@@ -103,7 +105,7 @@ const LoginPage = () => {
           “Every problem is a gift - without problems we would not grow.”
         </Text>
         <Image
-          src={LoginRightSide}
+          src={"/images/login-right.png"}
           alt="Login Right Side"
           width={500}
           height={500}

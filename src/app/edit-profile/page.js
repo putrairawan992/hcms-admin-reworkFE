@@ -7,10 +7,10 @@ import {
   Input,
   Text,
   useToast,
+  Image,
 } from "@chakra-ui/react";
 import SidebarLayout from "../components/sidebarLayout";
 import styles from "../styles/editProfile.module.css";
-import Image from "next/image";
 import { useProfileStore } from "@/stores/profileStore";
 import { isEmpty } from "lodash";
 import { useEffect, useRef, useState } from "react";
@@ -90,13 +90,23 @@ const EditProfile = () => {
       });
     } else {
       const formData = new FormData();
-      formData.append("username", data.username);
-      formData.append("email", data.email);
-      formData.append("phone_number", data.phone_number);
-      formData.append("address", data.address);
-      formData.append("password", data.confirmPassword);
-      formData.append("photo", data.photo);
-      formData.append("company_photo", data.company_photo);
+      console.log(data, "<<< data");
+      formData.append("username", data.username ? data.username : "-");
+      formData.append("email", data.email ? data.email : "-");
+      formData.append(
+        "phone_number",
+        data.phone_number ? data.phone_number : ""
+      );
+      formData.append("address", data.address ? data.address : "");
+      formData.append(
+        "password",
+        data.confirmPassword ? data.confirmPassword : ""
+      );
+      formData.append("photo", data.photo ? data.photo : "");
+      formData.append(
+        "company_photo",
+        data.company_photo ? data.company_photo : ""
+      );
 
       mutate(
         {
@@ -142,8 +152,6 @@ const EditProfile = () => {
                 <Image
                   className={styles["editProfile-img"]}
                   src={profileImagePreview}
-                  width={100}
-                  height={100}
                   alt="profile-pict"
                 />
               </Box>
@@ -166,8 +174,6 @@ const EditProfile = () => {
                 <Image
                   className={styles["editProfile-img"]}
                   src={companyImagePreview}
-                  width={100}
-                  height={100}
                   alt="company-profile-pict"
                 />
               </Box>
@@ -236,6 +242,7 @@ const EditProfile = () => {
                   Password:
                 </Text>
                 <Input
+                  readOnly
                   className={styles["editProfile-input"]}
                   type="password"
                   {...register("password")}

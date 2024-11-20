@@ -5,8 +5,8 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "api-admin-rework.scalastaging.online",
-        port: "8080", // Include the port separately if it's part of the URL
-        pathname: "/download/company_profile/**", // Add a specific pattern if needed
+        port: "8080", // Include the port separately
+        pathname: "/download/**", // Match any dynamic path under /download
       },
     ],
   },

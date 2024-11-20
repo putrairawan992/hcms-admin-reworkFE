@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Box,
   Button,
@@ -10,33 +10,33 @@ import {
   ModalOverlay,
   Text,
   useToast,
-} from '@chakra-ui/react';
-import styles from '../styles/confirmationModal.module.css';
-import { useEffect, useRef, useState } from 'react';
-import InfoIcon from '../../../public/images/Info Circle.png';
-import UploadIcon from '../../../public/images/Group (4).png';
-import UploadedFileIcon from '../../../public/images/doc.circle.png';
-import 'react-quill/dist/quill.snow.css';
-import dynamic from 'next/dynamic';
-import { useForm } from 'react-hook-form';
-import Image from 'next/image';
-import { ArrowUpIcon } from './icons';
-import { useApproveRemuneration } from '../api/approval';
-import { useRouter } from 'next/navigation';
+  Image,
+} from "@chakra-ui/react";
+import styles from "../styles/confirmationModal.module.css";
+import { useEffect, useRef, useState } from "react";
+import InfoIcon from "../../../public/images/Info Circle.png";
+import UploadIcon from "../../../public/images/Group (4).png";
+import UploadedFileIcon from "../../../public/images/doc.circle.png";
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+import { useForm } from "react-hook-form";
+import { ArrowUpIcon } from "./icons";
+import { useApproveRemuneration } from "../api/approval";
+import { useRouter } from "next/navigation";
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const NoteModal = ({ modalText, isOpen, onClose, id, isApprove }) => {
   const toast = useToast();
   const router = useRouter();
   const { mutate } = useApproveRemuneration();
-  const [size] = useState('xl');
+  const [size] = useState("xl");
   const [storedFile, setStoredFile] = useState();
   const fileInputRef = useRef(null);
   const { setValue, watch, handleSubmit } = useForm({
     defaultValues: {
-      note: '',
-      file: '',
+      note: "",
+      file: "",
     },
   });
 
@@ -47,15 +47,15 @@ const NoteModal = ({ modalText, isOpen, onClose, id, isApprove }) => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setValue('file', file);
+      setValue("file", file);
       setStoredFile(file);
     }
   };
 
   const onSubmit = (data) => {
     const formData = new FormData();
-    formData.append('file', data?.file);
-    formData.append('note', data?.note);
+    formData.append("file", data?.file);
+    formData.append("note", data?.note);
 
     mutate(
       {
@@ -66,25 +66,25 @@ const NoteModal = ({ modalText, isOpen, onClose, id, isApprove }) => {
       {
         onSuccess: () => {
           toast({
-            title: 'Success',
+            title: "Success",
             description: `Anda ${
-              isApprove ? 'Menyetujui' : 'Menolak'
+              isApprove ? "Menyetujui" : "Menolak"
             } Remunerasi Digital Product A`,
             duration: 3000,
-            status: 'success',
-            position: 'top',
+            status: "success",
+            position: "top",
             isClosable: true,
           });
-          router.push('/approval/remuneration');
+          router.push("/approval/remuneration");
         },
         onError: (err) => {
           console.error(err);
           toast({
-            title: 'Error',
+            title: "Error",
             description: err?.response?.data?.errors || `Something went wrong!`,
             duration: 3000,
-            status: 'error',
-            position: 'top',
+            status: "error",
+            position: "top",
             isClosable: true,
           });
         },
@@ -95,48 +95,41 @@ const NoteModal = ({ modalText, isOpen, onClose, id, isApprove }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={size} isCentered>
       <ModalOverlay />
-      <ModalContent style={{ padding: '2rem 0' }}>
-        <ModalBody className={styles['modal-wrapper']}>
-          <Image
-            className={styles['modal-info']}
-            src={InfoIcon}
-            width={100}
-            height={100}
-          />
-          <Text className={styles['modal-title']}>{modalText}</Text>
-          <Flex className={styles['modal-notes-wrapper']}>
-            <Text className={styles['modal-notes-text']}>Notes</Text>
+      <ModalContent style={{ padding: "2rem 0" }}>
+        <ModalBody className={styles["modal-wrapper"]}>
+          <Image className={styles["modal-info"]} src={InfoIcon} />
+          <Text className={styles["modal-title"]}>{modalText}</Text>
+          <Flex className={styles["modal-notes-wrapper"]}>
+            <Text className={styles["modal-notes-text"]}>Notes</Text>
             <ReactQuill
               theme="snow"
-              value={watch('note')}
-              onChange={(value) => setValue('note', value)}
-              style={{ margin: '1.5rem 0 4rem', height: '249px' }}
+              value={watch("note")}
+              onChange={(value) => setValue("note", value)}
+              style={{ margin: "1.5rem 0 4rem", height: "249px" }}
             />
             <>
               {isApprove &&
                 (!storedFile ? (
                   <Flex
                     onClick={handleClick}
-                    className={styles['modal-upload-container']}
+                    className={styles["modal-upload-container"]}
                   >
                     <Image
-                      className={styles['modal-container-upload-img']}
+                      className={styles["modal-container-upload-img"]}
                       src={UploadIcon}
-                      width={300}
-                      height={300}
                     />
-                    <Box marginLeft={'1rem'}>
-                      <Text className={styles['modal-container-upload-title']}>
+                    <Box marginLeft={"1rem"}>
+                      <Text className={styles["modal-container-upload-title"]}>
                         Drop files her or click to upload
                       </Text>
-                      <Text className={styles['modal-container-upload-text']}>
+                      <Text className={styles["modal-container-upload-text"]}>
                         File supported : PDF, Maksimal 1 file and 10 MB
                       </Text>
                     </Box>
                     <Input
                       type="file"
                       ref={fileInputRef}
-                      style={{ display: 'none' }}
+                      style={{ display: "none" }}
                       onChange={handleFileChange}
                       accept=".pdf"
                     />
@@ -144,29 +137,27 @@ const NoteModal = ({ modalText, isOpen, onClose, id, isApprove }) => {
                 ) : (
                   <Flex
                     onClick={handleClick}
-                    className={styles['modal-uploaded-container']}
+                    className={styles["modal-uploaded-container"]}
                   >
-                    <Flex align={'center'}>
+                    <Flex align={"center"}>
                       <Image
-                        className={styles['modal-uploaded-img']}
+                        className={styles["modal-uploaded-img"]}
                         src={UploadedFileIcon}
-                        width={300}
-                        height={300}
                       />
-                      <Text className={styles['modal-uploaded-text']}>
+                      <Text className={styles["modal-uploaded-text"]}>
                         {storedFile.name}
                       </Text>
                     </Flex>
-                    <Flex flexDir={'column'} align={'center'}>
+                    <Flex flexDir={"column"} align={"center"}>
                       <ArrowUpIcon />
-                      <Text className={styles['modal-uploaded-reupload-text']}>
+                      <Text className={styles["modal-uploaded-reupload-text"]}>
                         Re-upload
                       </Text>
                     </Flex>
                     <Input
                       type="file"
                       ref={fileInputRef}
-                      style={{ display: 'none' }}
+                      style={{ display: "none" }}
                       onChange={handleFileChange}
                       accept=".pdf"
                     />
@@ -175,8 +166,8 @@ const NoteModal = ({ modalText, isOpen, onClose, id, isApprove }) => {
             </>
             <Button
               onClick={handleSubmit(onSubmit)}
-              alignSelf={'end'}
-              className={styles['modal-approve']}
+              alignSelf={"end"}
+              className={styles["modal-approve"]}
             >
               Submit
             </Button>

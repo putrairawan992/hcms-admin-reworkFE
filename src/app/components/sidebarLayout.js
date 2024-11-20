@@ -9,9 +9,8 @@ import {
   Divider,
   Flex,
   Text,
+  Image,
 } from "@chakra-ui/react";
-import Image from "next/image";
-import ScalaLogo from "../../../public/images/scala-sidebar.png";
 import styles from "../styles/dashboard.module.css";
 import { NotificationLogo } from "./logo";
 import { useGetProfile } from "../api/profile";
@@ -25,7 +24,11 @@ const SidebarLayout = ({ children }) => {
   return (
     <Flex className={styles["homepage-container"]}>
       <Box className={styles["sidebar-container"]}>
-        <Image src={ScalaLogo} width={132} height={100} />
+        <Image
+          src={"/images/scala-sidebar.png"}
+          width={"132px"}
+          height={"66px"}
+        />
         <Box className={styles["divider-sidebar"]} />
         <Text
           onClick={() => router.push("/")}

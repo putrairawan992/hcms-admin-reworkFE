@@ -1,17 +1,6 @@
 "use client";
-import { Box, Button, Flex, Select, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Select, Text, Image } from "@chakra-ui/react";
 import SidebarLayout from "./components/sidebarLayout";
-import Image from "next/image";
-import DashboardFront from "../../public/images/Dashboard/Rectangle 4164.png";
-import DashboardBack from "../../public/images/Dashboard/bg absen 1.png";
-import DashboardAdmin from "../../public/images/Dashboard/Frame.png";
-import DashboardAccount1 from "../../public/images/Dashboard/Group (2).png";
-import DashboardAccount2 from "../../public/images/Dashboard/Group (3).png";
-import DashboardAccount3 from "../../public/images/Dashboard/Group (4).png";
-import DashboardTalent from "../../public/images/Dashboard/Group.png";
-import DashboardPayslip1 from "../../public/images/Dashboard/image 6.png";
-import DashboardPayslip2 from "../../public/images/Dashboard/image 5.png";
-import DashboardPayslip3 from "../../public/images/Dashboard/image 4.png";
 import styles from "./styles/dashboard.module.css";
 import { useGetDashboard } from "./api/dashboard";
 import moment from "moment";
@@ -54,15 +43,11 @@ const Home = () => {
             </Box>
             <Image
               className={styles["dashboard-img-front"]}
-              src={DashboardFront}
-              width={100}
-              height={100}
+              src={"/images/Dashboard/Rectangle 4164.png"}
             />
             <Image
               className={styles["dashboard-img-back"]}
-              src={DashboardBack}
-              width={100}
-              height={100}
+              src={"/images/Dashboard/bg absen 1.png"}
             />
             <Flex>
               <Box className={styles["dashboard-info-left-container"]}>
@@ -124,9 +109,7 @@ const Home = () => {
                 </Box>
                 <Image
                   className={styles["dashboard-admin-img"]}
-                  src={DashboardAdmin}
-                  width={100}
-                  height={100}
+                  src={"/images/Dashboard/Frame.png"}
                 />
               </Flex>
               <Flex className={styles["dashboard-content-container"]}>
@@ -149,21 +132,15 @@ const Home = () => {
                 <Box>
                   <Image
                     className={styles["dashboard-account-img-1"]}
-                    src={DashboardAccount1}
-                    width={100}
-                    height={100}
+                    src={"/images/Dashboard/Group (2).png"}
                   />
                   <Image
                     className={styles["dashboard-account-img-2"]}
-                    src={DashboardAccount2}
-                    width={100}
-                    height={100}
+                    src={"/images/Dashboard/Group (3).png"}
                   />
                   <Image
                     className={styles["dashboard-account-img-3"]}
-                    src={DashboardAccount3}
-                    width={100}
-                    height={100}
+                    src={"/images/Dashboard/Group (4).png"}
                   />
                 </Box>
               </Flex>
@@ -189,9 +166,7 @@ const Home = () => {
                 </Box>
                 <Image
                   className={styles["dashboard-account-img"]}
-                  src={DashboardTalent}
-                  width={100}
-                  height={100}
+                  src={"/images/Dashboard/Group.png"}
                 />
               </Flex>
             </Box>
@@ -311,21 +286,15 @@ const Home = () => {
                 <Box width={"40%"} position={"relative"}>
                   <Image
                     className={styles["dashboard-payslip-img-1"]}
-                    src={DashboardPayslip1}
-                    width={100}
-                    height={100}
+                    src={"/images/Dashboard/image 6.png"}
                   />
                   <Image
                     className={styles["dashboard-payslip-img-2"]}
-                    src={DashboardPayslip2}
-                    width={100}
-                    height={100}
+                    src={"/images/Dashboard/image 5.png"}
                   />
                   <Image
                     className={styles["dashboard-payslip-img-3"]}
-                    src={DashboardPayslip3}
-                    width={100}
-                    height={100}
+                    src={"/images/Dashboard/image 4.png"}
                   />
                 </Box>
               </Box>

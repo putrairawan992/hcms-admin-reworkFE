@@ -1,9 +1,15 @@
 "use client";
 import SidebarLayout from "@/app/components/sidebarLayout";
-import { Box, Flex, Select, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Select,
+  Text,
+  useDisclosure,
+  Image,
+} from "@chakra-ui/react";
 import styles from "../../styles/approvalJobPost.module.css";
 import DummyImage from "../../../../public/images/dummy-image.png";
-import Image from "next/image";
 import { ApproveIcon, RejectIcon, ShareIcon } from "@/app/components/icons";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -105,8 +111,6 @@ const ApprovalJobPost = () => {
                       <Image
                         className={styles["job-post-image"]}
                         src={DummyImage}
-                        width={100}
-                        height={100}
                       />
                     </Box>
                     <Box className={styles["job-post-content-wrapper"]}>

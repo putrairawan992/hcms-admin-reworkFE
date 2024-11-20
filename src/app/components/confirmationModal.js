@@ -7,10 +7,10 @@ import {
   ModalContent,
   ModalOverlay,
   Text,
+  Image,
 } from "@chakra-ui/react";
 import styles from "../styles/confirmationModal.module.css";
 import InfoIcon from "../../../public/images/Info Circle.png";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
@@ -37,12 +37,7 @@ const ConfirmationModal = ({ modalText, isOpen, onClose }) => {
         <ModalBody className={styles["modal-wrapper"]}>
           {!openText ? (
             <>
-              <Image
-                className={styles["modal-info"]}
-                src={InfoIcon}
-                width={100}
-                height={100}
-              />
+              <Image className={styles["modal-info"]} src={InfoIcon} />
               <Text className={styles["modal-text"]}>{modalText}</Text>
               <Flex align={"center"}>
                 <Button onClick={onClose} className={styles["modal-reject"]}>
