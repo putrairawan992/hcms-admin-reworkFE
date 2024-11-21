@@ -86,6 +86,7 @@ const SidebarLayout = ({ children }) => {
                 Admin
               </Flex>
               <Flex
+                onClick={() => router.push("/setup/account")}
                 className={styles["nonactive-sidebar"]}
                 justify={"center"}
                 mb={2}

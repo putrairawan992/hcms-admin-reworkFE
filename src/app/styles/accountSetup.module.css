@@ -1,0 +1,141 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+.account-role-container {
+  background: linear-gradient(90deg, #f1f5fe 0%, #ffffff 98.82%);
+  box-shadow: 5px 0px 10px 0px #b3b9c5;
+  border-radius: 30px;
+  width: 100%;
+  height: max-content;
+  padding: 3rem 3rem 2rem;
+}
+
+.account-role-title {
+  font-size: 26px;
+  font-weight: 900;
+  text-align: left;
+  color: #ae445a;
+}
+
+.account-role-search-text {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: left;
+  color: #404041;
+  margin-bottom: 8px;
+}
+
+.account-role-input-container {
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid #ae445a !important;
+}
+
+.account-role-input {
+  border: none !important;
+  border-radius: 12px !important;
+}
+
+.account-role-input::placeholder {
+  font-style: italic;
+}
+
+.account-role-search-btn {
+  width: 158px;
+  height: 40px !important;
+  padding: 10px;
+  border-radius: 10px !important;
+  background: linear-gradient(90deg, #f39f5a 0%, #ae445a 100%) !important;
+  box-shadow: 5px 0px 5px 0px #b3b9c5;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 18px !important;
+  color: #ffffff !important;
+  margin-left: 1.5rem;
+}
+
+.account-role-table-header-container {
+  border-top: 3px solid #404041;
+  border-bottom: 3px solid #404041;
+}
+
+.account-role-table-header {
+  font-family: "Nunito", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: 19px !important;
+  text-align: center !important;
+  color: #ae445a !important;
+  text-transform: capitalize !important;
+}
+
+.account-role-table-data {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 19px;
+  text-align: center !important;
+  color: #404041;
+}
+
+.account-new-account-input {
+  background: #ffffff !important;
+  border: 1px solid #ae445a !important;
+  border-radius: 12px !important;
+  width: 30vw !important;
+}
+
+.account-new-account-divider {
+  border: 2px solid #ae445a !important;
+}
+
+.account-new-account-bottom-wrapper {
+  margin-top: 3rem;
+}
+
+.account-new-account-input-wrapper {
+  margin-bottom: 2rem;
+}
+
+.account-new-account-checkbox {
+  margin-right: 2rem;
+}
+
+.account-new-account-text {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: left;
+  color: #ae445a;
+  margin-right: 2rem;
+}
+
+.account-new-account-btn {
+  width: 101px;
+  height: 33px !important;
+  padding: 10px;
+  border-radius: 10px !important;
+  background: linear-gradient(90deg, #f39f5a 0%, #ae445a 100%) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 18px !important;
+  color: #ffffff !important;
+}
+
+.account-setup-img-wrapper {
+  width: 46px;
+  height: 46px;
+  border: 3px solid #ae445a;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+}
+
+.account-setup-img {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 100%;
+}
