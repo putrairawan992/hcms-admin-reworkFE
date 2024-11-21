@@ -61,3 +61,26 @@ export const useSubmitJobPostSetup = () => {
     },
   });
 };
+
+export const useGetAccountSetup = ({ username }) => {
+  return useQuery({
+    queryKey: ["username"],
+    queryFn: async () => {
+      const res = await axios({
+        method: "GET",
+        url: baseURL + `/api/admin/account_setup`,
+        headers: {
+          Authorization: `Bearer ${Cookies.get("userToken")}`,
+        },
+        params: {
+          username,
+          sort: "A-Z",
+        },
+      });
+
+      return res.data.data;
+    },
+    staleTime: 0,
+    gcTime: 0,
+  });
+};
