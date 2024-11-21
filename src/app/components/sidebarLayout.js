@@ -100,6 +100,14 @@ const SidebarLayout = ({ children }) => {
                 Document
               </Flex>
               <Flex
+                onClick={() => router.push("/setup/job-post")}
+                className={styles["nonactive-sidebar"]}
+                justify={"center"}
+                mb={2}
+              >
+                Job Post
+              </Flex>
+              <Flex
                 onClick={() => router.push("/setup/remuneration")}
                 className={styles["nonactive-sidebar"]}
                 justify={"center"}
