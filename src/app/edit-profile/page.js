@@ -90,7 +90,6 @@ const EditProfile = () => {
       });
     } else {
       const formData = new FormData();
-      console.log(data, "<<< data");
       formData.append("username", data.username ? data.username : "-");
       formData.append("email", data.email ? data.email : "-");
       formData.append(

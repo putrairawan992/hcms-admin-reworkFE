@@ -67,6 +67,7 @@
   width: 80.59px;
   height: 77.22px;
   object-fit: cover;
+  border-radius: 100%;
 }
 
 .job-details-company-header {
