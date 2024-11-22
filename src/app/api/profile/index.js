@@ -20,7 +20,29 @@ export const useGetProfile = () => {
       });
 
       setProfile(res.data.data);
-      return res.data.data;
+      const profileData = res.data.data;
+
+      const headers = {
+        Authorization: `Bearer ${Cookies.get("userToken")}`,
+      };
+
+      // Fetch the profile photo and company photo with headers
+      const profilePhotoResponse = await axios.get(profileData.profile_photo, {
+        responseType: "blob",
+        headers,
+        httpsAgent: new (require("https").Agent)({ rejectUnauthorized: false }),
+      });
+      const companyPhotoResponse = await axios.get(profileData.company_photo, {
+        responseType: "blob",
+        headers,
+        httpsAgent: new (require("https").Agent)({ rejectUnauthorized: false }),
+      });
+
+      // Create object URLs for the fetched images
+      const profilePhotoUrl = URL.createObjectURL(profilePhotoResponse.data);
+      const companyPhotoUrl = URL.createObjectURL(companyPhotoResponse.data);
+
+      return profileData;
     },
     staleTime: 0,
     gcTime: 0,

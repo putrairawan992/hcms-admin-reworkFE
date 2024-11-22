@@ -26,13 +26,15 @@ const EditProfile = () => {
   const [companyImagePreview, setCompanyImagePreview] = useState();
   const [reload, setReload] = useState(false);
   const { mutate } = useEditProfile();
-  const { register, handleSubmit, setValue, watch } = useForm({
+  const { register, handleSubmit, setValue, watch, getValues } = useForm({
     defaultValues: {
       username: "",
       email: "",
       phone_number: "",
       address: "",
-      password: "****************",
+      password: "",
+      new_password: "",
+      temp_password: "",
       photo: "",
       currentPhoto: "",
       company_photo: "",
@@ -79,7 +81,7 @@ const EditProfile = () => {
   };
 
   const onSubmit = (data) => {
-    if (watch("newPassword") !== watch("confirmPassword")) {
+    if (watch("temp_password") !== watch("new_password")) {
       toast({
         title: "Error",
         description: "Password tidak sama! Mohon ulangi",
@@ -97,15 +99,15 @@ const EditProfile = () => {
         data.phone_number ? data.phone_number : ""
       );
       formData.append("address", data.address ? data.address : "");
-      formData.append(
-        "password",
-        data.confirmPassword ? data.confirmPassword : ""
-      );
       formData.append("photo", data.photo ? data.photo : "");
       formData.append(
         "company_photo",
         data.company_photo ? data.company_photo : ""
       );
+      if (data.password) {
+        formData.append("password", data.password);
+        formData.append("new_password", data.new_password);
+      }
 
       mutate(
         {
@@ -241,9 +243,9 @@ const EditProfile = () => {
                   Password:
                 </Text>
                 <Input
-                  readOnly
                   className={styles["editProfile-input"]}
                   type="password"
+                  placeholder="Masukkan Password Lama"
                   {...register("password")}
                 />
               </Flex>
@@ -253,7 +255,7 @@ const EditProfile = () => {
                   className={styles["editProfile-input"]}
                   type="password"
                   placeholder="Ganti Password Baru"
-                  {...register("newPassword")}
+                  {...register("temp_password")}
                 />
               </Flex>
               <Flex className={styles["editProfile-input-wrapper"]}>
@@ -262,7 +264,7 @@ const EditProfile = () => {
                   className={styles["editProfile-input"]}
                   type="password"
                   placeholder="Ketik Ulang Password Baru"
-                  {...register("confirmPassword")}
+                  {...register("new_password")}
                 />
               </Flex>
             </Box>

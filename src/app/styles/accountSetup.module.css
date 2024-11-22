@@ -139,3 +139,42 @@
   object-fit: cover;
   border-radius: 100%;
 }
+
+.account-new-account-wrapper {
+  padding: 3rem 0;
+}
+
+.account-setup-subtitle {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  text-align: left;
+  color: #ae445a;
+}
+
+.account-setup-change-img-text {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 18px;
+  text-align: left;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.account-setup-header {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 21px;
+  text-align: left;
+  color: #404041;
+}
+
+.account-setup-input {
+  width: 100% !important;
+  height: 47px !important;
+  padding: 10px;
+  border-radius: 10px !important;
+  border: 1px solid #ae445a !important;
+}
