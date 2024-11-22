@@ -84,3 +84,20 @@ export const useGetAccountSetup = ({ username }) => {
     gcTime: 0,
   });
 };
+
+export const useCreateAccountSetup = () => {
+  return useMutation({
+    mutationFn: async ({ data }) => {
+      const res = await axios({
+        method: "POST",
+        url: baseURL + `/api/admin/account_setup`,
+        headers: {
+          Authorization: `Bearer ${Cookies.get("userToken")}`,
+        },
+        data,
+      });
+
+      return res.data;
+    },
+  });
+};

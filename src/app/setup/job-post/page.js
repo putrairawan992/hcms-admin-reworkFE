@@ -32,7 +32,7 @@ const SetupJobPost = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const jobPostOptions = [
     { label: "Lokasi Kerja", value: "work_location" },
-    { label: "Keuntungan dari Perusahaan", value: "benefit_company" },
+    { label: "Keuntungan dari Perusahaan", value: "benefits_company" },
     { label: "Pendidikan", value: "education" },
     { label: "Pengalaman", value: "experience" },
     { label: "Spesialisasi Pekerjaan", value: "job_specialization" },
@@ -135,7 +135,9 @@ const SetupJobPost = () => {
                       {item.experience_name ||
                         item.education_name ||
                         item.job_specialist_name ||
-                        item.job_level_name}
+                        item.job_level_name ||
+                        item.job_location_name ||
+                        item.benefit_name}
                     </Td>
                     <Td className={styles["job-post-table-data"]}>
                       <FormControl
