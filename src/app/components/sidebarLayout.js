@@ -202,7 +202,10 @@ const SidebarLayout = ({ children }) => {
       <Box className={styles["content-container"]}>
         <Flex className={styles["notification-container"]}>
           <Box className={styles["notification-wrapper"]}>
-            <Box className={styles["notification-button"]}>
+            <Box
+              onClick={() => router.push("/inbox")}
+              className={styles["notification-button"]}
+            >
               <NotificationLogo />
             </Box>
             <Box className={styles["notification-counter"]}>
