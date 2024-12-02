@@ -119,7 +119,6 @@ const SendMessageModal = ({ isOpen, onClose, currentData, refetch }) => {
                 theme="snow"
                 value={text}
                 onChange={setText}
-                style={{ margin: "1.5rem 0 4rem", height: "249px" }}
               />
             </Box>
             <Box mb="1rem">

@@ -1,0 +1,69 @@
+import { Box, Button, Flex, Icon, Image } from '@chakra-ui/react';
+import React from 'react'
+import styles from './DataTalentCard.styles';
+import Icons, { DownloadIcon, EyeIcon } from '../../icons';
+import { employeeTypeOptions } from './shared/general';
+
+const DataTalentCard = ({ data = [] }) => {
+  const { employee_type, username, photo } = data;
+
+  const employeeTypeBadge = employeeTypeOptions.find((item) => item.id === employee_type);
+
+  return (
+    <Flex style={styles.container}>
+      <Box>
+        <image
+          src={photo}
+          width={'450px'}
+          height={'66px'}
+        />
+      </Box>
+      <div style={{ width: '20px' }} />
+      <Box flex={1}>
+        <h2 style={styles.title}>{username || '-'}</h2>
+      </Box>
+      <Box md>
+        <Flex style={styles.content}>
+          <Box width={100} textAlign='center' fontSize={10} borderRightWidth={1} borderColor='#AE445A'>
+            -
+          </Box>
+          <Box width={100} textAlign='center' fontSize={10} borderRightWidth={1} borderColor='#AE445A'>
+            None
+          </Box>
+          <Box width={50}
+            textAlign="center"
+            fontSize={10}
+            borderRightWidth={1}
+            borderColor="#AE445A"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            flex={1}>
+            <EyeIcon />
+          </Box>
+          <Box width={50}
+            textAlign="center"
+            fontSize={10}
+            borderRightWidth={1}
+            borderColor="#AE445A"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            flex={1}>
+            <DownloadIcon />
+          </Box>
+          <Box width={100} textAlign='center' fontSize={10}>
+            non_selection
+          </Box>
+        </Flex>
+      </Box>
+      <Box flex={1}>
+        <div style={styles.button}>
+          <Button height={8} paddingX={8} fontSize={10} backgroundColor={employeeTypeBadge.color} color='#FFFFFF'>{employeeTypeBadge.name || '-'}</Button>
+        </div>
+      </Box>
+    </Flex>
+  )
+}
+
+export default DataTalentCard;

@@ -13,6 +13,9 @@ import styles from "../styles/loginPage.module.css";
 import { useRouter } from "next/navigation";
 import { useLogin } from "../api/auth";
 import { useState } from "react";
+import { httpClient } from "../utils/network";
+import { useProfileStore } from "@/stores/profileStore";
+import { saveUserData } from "../utils/localStorage";
 
 const LoginPage = () => {
   const toast = useToast();
@@ -20,6 +23,21 @@ const LoginPage = () => {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const setProfile = useProfileStore((state) => state.setProfile);
+
+  const fetchDataProfile = async () => {
+    try {
+      const response = await httpClient({
+        method: 'GET',
+        url: '/admin/detail/account',
+      });
+
+      const responseData = response?.data?.data || [];
+      saveUserData(responseData);
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
+  };
 
   const loginHandler = () => {
     mutate(
@@ -38,9 +56,11 @@ const LoginPage = () => {
             isClosable: true,
           });
           document.cookie = `userToken=${res.data.token}; path=/; max-age=86400; SameSite=Lax`;
+          fetchDataProfile();
+
           setTimeout(() => {
             router.push("/");
-          }, 1500);
+          }, 1000);
         },
         onError: () => {
           toast({

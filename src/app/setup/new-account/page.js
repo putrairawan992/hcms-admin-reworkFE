@@ -5,7 +5,6 @@ import {
   Button,
   Checkbox,
   Flex,
-  Image,
   Input,
   Radio,
   RadioGroup,
@@ -115,9 +114,19 @@ const NewAccountSetup = () => {
     setInputData(updatedData);
   };
 
+  const isProductEmpty = (product) => {
+    return !product.nama_pt.trim() && product.users.every(user =>
+      Object.values(user).every(value => !value.trim())
+    );
+  }
+
   const createAccountHandler = () => {
+    const filteredData = Object.fromEntries(
+      Object.entries(inputData).filter(([key, value]) => !isProductEmpty(value))
+    );
+
     mutate(
-      { data: inputData },
+      { data: filteredData },
       {
         onSuccess: () => {
           toast({
@@ -166,33 +175,6 @@ const NewAccountSetup = () => {
               <Text className={styles["account-setup-subtitle"]}>
                 Product Digital {productIndex + 1}
               </Text>
-              <Flex align={"center"}>
-                <Box
-                  w={"74px"}
-                  h={"74px"}
-                  className={styles["account-setup-img-wrapper"]}
-                >
-                  <Image
-                    w={"64px"}
-                    h={"64px"}
-                    src="/images/company-dummy.jpeg"
-                    className={styles["account-setup-img"]}
-                  />
-                </Box>
-                <Text
-                  onClick={() => handleTextClick()}
-                  className={styles["account-setup-change-img-text"]}
-                >
-                  Pilih Foto Perusahaan
-                </Text>
-                <input
-                  type="file"
-                  ref={companyFileInputRef}
-                  style={{ display: "none" }}
-                  onChange={(e) => handleFileChange(e)}
-                  accept="image/*"
-                />
-              </Flex>
             </Flex>
 
             {productData.users.map((user, userIndex) => (
@@ -285,7 +267,6 @@ const NewAccountSetup = () => {
                               color: "#404041 !important",
                             },
                           }}
-                          isChecked={user.inbox === "view"}
                           onChange={() =>
                             handleCheckboxChange(
                               userIndex,
@@ -306,7 +287,6 @@ const NewAccountSetup = () => {
                             },
                           }}
                           ml={"1rem"}
-                          isChecked={user.inbox === "reply"}
                           onChange={() =>
                             handleCheckboxChange(
                               userIndex,

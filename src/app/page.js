@@ -12,6 +12,9 @@ moment.locale("id");
 
 const Home = () => {
   const { profile } = useProfileStore((state) => state);
+
+  console.log(profile);
+
   const { data, isPending } = useGetDashboard();
   const [currentTime, setCurrentTime] = useState(moment());
 

@@ -16,22 +16,23 @@ import { isEmpty } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useEditProfile } from "../api/profile";
+import { getUserData, saveUserData } from "../utils/localStorage";
 
 const EditProfile = () => {
   const toast = useToast();
-  const { profile } = useProfileStore((state) => state);
+  const profile = getUserData();
   const profileFileInputRef = useRef(null);
   const companyFileInputRef = useRef(null);
   const [profileImagePreview, setProfileImagePreview] = useState();
   const [companyImagePreview, setCompanyImagePreview] = useState();
   const [reload, setReload] = useState(false);
   const { mutate } = useEditProfile();
-  const { register, handleSubmit, setValue, watch, getValues } = useForm({
+  const { register, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
-      username: "",
-      email: "",
-      phone_number: "",
-      address: "",
+      username: profile?.name || "", // Pastikan profil ada
+      email: profile?.email || "",
+      phone_number: profile?.phone || "",
+      address: profile?.address || "",
       password: "",
       new_password: "",
       temp_password: "",
@@ -42,22 +43,18 @@ const EditProfile = () => {
     },
   });
 
+
   useEffect(() => {
-    if (profile && !isEmpty(profile)) {
-      setValue("username", profile.username || "-");
+    if (profile && !isEmpty(profile) && !watch('username')) {
+      setValue("username", profile.name || "-");
       setValue("email", profile.email || "-");
-      setValue("phone_number", profile.phone_number || "-");
+      setValue("phone_number", profile.phone || "-");
       setValue("address", profile.address || "-");
       setProfileImagePreview(profile.photo || "");
       setCompanyImagePreview(profile.company_photo || "");
     }
-  }, [profile, setValue]);
+  }, [profile, setValue, watch]);
 
-  useEffect(() => {
-    if (reload) {
-      window.location.reload();
-    }
-  }, [reload]);
 
   const handleTextClick = (type) => {
     if (type === "profile") {
@@ -80,66 +77,48 @@ const EditProfile = () => {
     }
   };
 
-  const onSubmit = (data) => {
-    if (watch("temp_password") !== watch("new_password")) {
-      toast({
-        title: "Error",
-        description: "Password tidak sama! Mohon ulangi",
-        duration: 3000,
-        status: "error",
-        position: "top",
-        isClosable: true,
-      });
-    } else {
-      const formData = new FormData();
-      formData.append("username", data.username ? data.username : "-");
-      formData.append("email", data.email ? data.email : "-");
-      formData.append(
-        "phone_number",
-        data.phone_number ? data.phone_number : ""
-      );
-      formData.append("address", data.address ? data.address : "");
-      formData.append("photo", data.photo ? data.photo : "");
-      formData.append(
-        "company_photo",
-        data.company_photo ? data.company_photo : ""
-      );
-      if (data.password) {
-        formData.append("password", data.password);
-        formData.append("new_password", data.new_password);
-      }
+  const onSubmit = () => {
+    const formData = new FormData();
+    formData.append("username", watch('username'));
+    formData.append("email", watch('email'));
+    formData.append("phone_number", watch('phone_number'));
+    formData.append("address", watch('address'));
+    formData.append("photo", watch('photo'));
 
-      mutate(
-        {
-          dataProfile: formData,
-        },
-        {
-          onSuccess: () => {
-            toast({
-              title: "Success",
-              description: "Berhasil mengupdate data diri!",
-              duration: 3000,
-              status: "success",
-              position: "top",
-              isClosable: true,
-            });
-            setReload(true);
-          },
-          onError: (err) => {
-            console.error(err);
-            toast({
-              title: "Error",
-              description:
-                err?.response?.data?.errors || `Something went wrong!`,
-              duration: 3000,
-              status: "error",
-              position: "top",
-              isClosable: true,
-            });
-          },
-        }
-      );
+    if (watch('password') !== '') {
+      formData.append("new_password", watch('password'))
     }
+
+    mutate(
+      {
+        dataProfile: formData,
+      },
+      {
+        onSuccess: () => {
+          toast({
+            title: "Success",
+            description: "Berhasil mengupdate data diri!",
+            duration: 3000,
+            status: "success",
+            position: "top",
+            isClosable: true,
+          });
+          saveUserData(watch());
+        },
+        onError: (err) => {
+          console.error(err);
+          toast({
+            title: "Error",
+            description:
+              err?.response?.data?.errors || `Something went wrong!`,
+            duration: 3000,
+            status: "error",
+            position: "top",
+            isClosable: true,
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -167,28 +146,6 @@ const EditProfile = () => {
                 ref={profileFileInputRef}
                 style={{ display: "none" }}
                 onChange={(e) => handleFileChange(e, "profile")}
-                accept="image/*"
-              />
-            </Flex>
-            <Flex className={styles["editProfile-change-img-wrapper"]}>
-              <Box className={styles["editProfile-img-wrapper"]}>
-                <Image
-                  className={styles["editProfile-img"]}
-                  src={companyImagePreview}
-                  alt="company-profile-pict"
-                />
-              </Box>
-              <Text
-                onClick={() => handleTextClick("company")}
-                className={styles["editProfile-change-img-text"]}
-              >
-                Ganti Foto Perusahaan
-              </Text>
-              <input
-                type="file"
-                ref={companyFileInputRef}
-                style={{ display: "none" }}
-                onChange={(e) => handleFileChange(e, "company")}
                 accept="image/*"
               />
             </Flex>
@@ -236,41 +193,28 @@ const EditProfile = () => {
                 />
               </Flex>
             </Box>
+            <Flex className={styles["editProfile-btn-container"]}>
+              <Button type="submit" className={styles["editProfile-btn"]} paddingX={10}>
+                Save
+              </Button>
+            </Flex>
             <Divider className={styles["editProfile-divider"]} />
             <Box className={styles["editProfile-lower-input"]}>
               <Flex className={styles["editProfile-input-wrapper"]}>
                 <Text className={styles["editProfile-input-text"]}>
-                  Password:
+                  Ganti Password:
                 </Text>
                 <Input
                   className={styles["editProfile-input"]}
                   type="password"
-                  placeholder="Masukkan Password Lama"
+                  placeholder="Masukkan Password Baru"
                   {...register("password")}
-                />
-              </Flex>
-              <Flex className={styles["editProfile-input-wrapper"]}>
-                <Text className={styles["editProfile-input-text"]} />
-                <Input
-                  className={styles["editProfile-input"]}
-                  type="password"
-                  placeholder="Ganti Password Baru"
-                  {...register("temp_password")}
-                />
-              </Flex>
-              <Flex className={styles["editProfile-input-wrapper"]}>
-                <Text className={styles["editProfile-input-text"]} />
-                <Input
-                  className={styles["editProfile-input"]}
-                  type="password"
-                  placeholder="Ketik Ulang Password Baru"
-                  {...register("new_password")}
                 />
               </Flex>
             </Box>
             <Flex className={styles["editProfile-btn-container"]}>
-              <Button type="submit" className={styles["editProfile-btn"]}>
-                Save
+              <Button type="submit" className={styles["editProfile-btn"]} paddingX={6}>
+                Change Password
               </Button>
             </Flex>
           </form>
