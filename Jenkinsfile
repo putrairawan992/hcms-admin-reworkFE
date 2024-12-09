@@ -19,7 +19,7 @@ pipeline {
         DATE = sh(script: 'date +"%m/%d/%Y %I:%M %p"', returnStdout: true).trim()
         SSH_USERNAME = credentials('ssh-username-secret')
         SSH_HOST = credentials('host-staging')
-        ENV_FILE = credentials('env-admin-hcms-rework-fe')
+        ENV_FILE = credentials('env_admin-hcms-rework')
     }
     stages {
         stage('Checkout') {
@@ -160,7 +160,7 @@ pipeline {
                                 docker rm -f $IMAGE_NAME || true
 
                                 # Run the new container with the specified version
-                                sudo docker run -d -it --restart always -p 3004:3000 --name $IMAGE_NAME $DOCKER_IMAGE:$NEW_DEV_VERSION
+                                sudo docker run -d -it --restart always -p 3009:3000 --name $IMAGE_NAME $DOCKER_IMAGE:$NEW_DEV_VERSION
 
                                 # Clean up old Docker images, keeping only the 2 most recent ones
                                 docker images --filter=reference='$DOCKER_IMAGE:*' --format '{{.Repository}}:{{.Tag}}' | sort -rV | tail -n +3 | xargs -r docker rmi -f
