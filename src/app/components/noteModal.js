@@ -13,8 +13,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import styles from "../styles/confirmationModal.module.css";
-import { useEffect, useRef, useState } from "react";
-import InfoIcon from "../../../public/images/Info Circle.png";
+import { useRef, useState } from "react";
 import UploadIcon from "../../../public/images/Group (4).png";
 import UploadedFileIcon from "../../../public/images/doc.circle.png";
 import "react-quill/dist/quill.snow.css";
@@ -67,9 +66,8 @@ const NoteModal = ({ modalText, isOpen, onClose, id, isApprove }) => {
         onSuccess: () => {
           toast({
             title: "Success",
-            description: `Anda ${
-              isApprove ? "Menyetujui" : "Menolak"
-            } Remunerasi Digital Product A`,
+            description: `Anda ${isApprove ? "Menyetujui" : "Menolak"
+              } Remunerasi Digital Product A`,
             duration: 3000,
             status: "success",
             position: "top",
@@ -97,7 +95,7 @@ const NoteModal = ({ modalText, isOpen, onClose, id, isApprove }) => {
       <ModalOverlay />
       <ModalContent style={{ padding: "2rem 0" }}>
         <ModalBody className={styles["modal-wrapper"]}>
-          <Image className={styles["modal-info"]} src={InfoIcon} />
+          <Image className={styles["modal-info"]} src='/images/info-circle.png' />
           <Text className={styles["modal-title"]}>{modalText}</Text>
           <Flex className={styles["modal-notes-wrapper"]}>
             <Text className={styles["modal-notes-text"]}>Notes</Text>

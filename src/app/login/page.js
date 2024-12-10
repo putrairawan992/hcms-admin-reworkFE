@@ -33,6 +33,7 @@ const LoginPage = () => {
       });
 
       const responseData = response?.data?.data || [];
+      console.log(responseData);
       saveUserData(responseData);
     } catch (error) {
       console.error('Failed to fetch data:', error);

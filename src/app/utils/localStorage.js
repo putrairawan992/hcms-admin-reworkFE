@@ -12,8 +12,8 @@ export const saveUserData = (userData) => {
     if (userData.address) {
       localStorage.setItem('userAddress', userData.address);
     }
-    if (userData.photo || userData.phone_number) {
-      localStorage.setItem('userPhone', userData.photo || userData.phone_number);
+    if (userData.phone_number) {
+      localStorage.setItem('userPhone', userData.phone_number);
     }
   } catch (error) {
     console.error('Error saving user data to localStorage', error);

@@ -1,10 +1,5 @@
 "use client";
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
   Box,
   Button,
   Flex,
@@ -15,17 +10,13 @@ import {
 } from "@chakra-ui/react";
 import SidebarLayout from "../components/sidebarLayout";
 import styles from "../styles/inbox.module.css";
-import { useEffect, useState } from "react";
-import { useGetListRoles, useGetProductDigital } from "../api/common";
-import { useGetDetailInbox, useGetInbox } from "../api/inbox";
-import { DownloadIcon } from "@chakra-ui/icons";
+import { useState } from "react";
 import moment from "moment";
 import "moment/locale/id";
 import { isEmpty } from "lodash";
-import SendMessageModal from "../components/sendMessageModal";
-
-import { DataTalentCard } from "../components/molecules";
+import { DataTalentCard, ListEmpty } from "../components/molecules";
 import useDataTalent from "./useDataTalent";
+import { moveScreen } from "../utils/helpers";
 
 moment.locale("id");
 
@@ -64,12 +55,20 @@ const DataTalent = () => {
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
-  const { data } = useDataTalent();
+  const { data, loading, productDigitalData } = useDataTalent();
 
-  const renderData = () => {
-    return data.map((item) => {
-      return <DataTalentCard data={item} />
-    });
+  const RenderContent = () => {
+    if (!isEmpty(data)) {
+      return data.map((item) => {
+        return <DataTalentCard data={item} />
+      });
+    } else {
+      return (
+        <Flex align={"center"} justify={"center"}>
+          <Text>Tidak ada data inbox</Text>
+        </Flex>
+      )
+    }
   };
 
   return (
@@ -79,10 +78,10 @@ const DataTalent = () => {
           <Flex align={"center"} justify={"space-between"}>
             <Text className={styles["inbox-title"]}>Data Talent</Text>
             <Box>
-              <Button onClick={onOpen} className={styles["inbox-btn"]} marginRight={2}>
+              <Button onClick={() => moveScreen('/data-talent/history')} className={styles["inbox-btn"]} marginRight={2}>
                 History
               </Button>
-              <Button onClick={onOpen} className={styles["inbox-btn"]} ma>
+              <Button onClick={onOpen} className={styles["inbox-btn"]}>
                 Download All
               </Button>
             </Box>
@@ -95,11 +94,11 @@ const DataTalent = () => {
                 onChange={(e) => setYears(e.target.value)}
                 className={styles["inbox-filter-select"]}>
                 <option value="all" selected>Semua</option>
-                {/* {productDigitalData?.map((item, index) => (
+                {productDigitalData?.map((item, index) => (
                   <option key={index} value={item.product_digital_name}>
                     {item.product_digital_name}
                   </option>
-                ))} */}
+                ))}
               </Select>
             </Box>
             <Box marginRight={2} flex={1}>
@@ -152,12 +151,7 @@ const DataTalent = () => {
               </Select>
             </Box>
           </Flex>
-          {!isEmpty(data) ? renderData()
-            : (
-              <Flex align={"center"} justify={"center"}>
-                <Text>Tidak ada data inbox</Text>
-              </Flex>
-            )}
+          {loading ? <ListEmpty /> : <RenderContent />}
         </Box>
       </SidebarLayout>
     </>
