@@ -152,7 +152,7 @@ const EditProfile = () => {
               <Box className={styles["editProfile-img-wrapper"]}>
                 <Image
                   className={styles["editProfile-img"]}
-                  src={'https://api-admin-rework.scalastaging.online/download/profile_photo_admin/UUID-GENERATED-HERE'}
+                  src={profile?.photo}
                   alt="profile-pict"
                 />
               </Box>
