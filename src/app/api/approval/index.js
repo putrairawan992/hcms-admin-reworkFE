@@ -39,9 +39,8 @@ export const useJobPostMutation = () => {
     mutationFn: async ({ id, data, isApprove }) => {
       const res = await axios({
         method: "POST",
-        url: `${baseURL}/api/admin/job_post/${
-          isApprove ? "approve" : "rejected"
-        }/${id}`,
+        url: `${baseURL}/api/admin/job_post/${isApprove ? "approve" : "rejected"
+          }/${id}`,
         headers: {
           Authorization: `Bearer ${Cookies.get("userToken")}`,
         },
@@ -128,8 +127,7 @@ export const useApproveRemuneration = () => {
         method: "POST",
         url:
           baseURL +
-          `/api/admin/remuneration/update/employee/${id}/${
-            isApprove ? "approved" : "rejected"
+          `/api/admin/remuneration/update/employee/${id}/${isApprove ? "approved" : "rejected"
           }`,
         headers: {
           Authorization: `Bearer ${Cookies.get("userToken")}`,

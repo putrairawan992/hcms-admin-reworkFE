@@ -1,5 +1,4 @@
 "use client";
-import SidebarLayout from "@/app/components/sidebarLayout";
 import {
   Box,
   Flex,
@@ -97,183 +96,181 @@ const ApprovalJobPost = () => {
         id={selectedId}
         refetch={refetch}
       />
-      <SidebarLayout>
-        <Box className={styles["job-post-container"]}>
-          <Flex className={styles["job-post-header"]}>
-            <Text className={styles["job-post-title"]}>Approval Job Post</Text>
-            <Flex className={styles["job-post-header-wrapper"]}>
-              <Text className={styles["job-post-header-text"]}>
-                Perlu Ditinjau:
-              </Text>
-              <Text className={styles["job-post-header-text"]}>
-                {data?.length}
-              </Text>
-              <Text className={styles["job-post-header-text"]}>Submit</Text>
-            </Flex>
+      <Box className={styles["job-post-container"]}>
+        <Flex className={styles["job-post-header"]}>
+          <Text className={styles["job-post-title"]}>Approval Job Post</Text>
+          <Flex className={styles["job-post-header-wrapper"]}>
+            <Text className={styles["job-post-header-text"]}>
+              Perlu Ditinjau:
+            </Text>
+            <Text className={styles["job-post-header-text"]}>
+              {data?.length}
+            </Text>
+            <Text className={styles["job-post-header-text"]}>Submit</Text>
           </Flex>
-          <Flex className={styles["job-post-filter-container"]}>
-            <Box>
-              <Text className={styles["job-post-filter-text"]}>Tahun</Text>
-              <Select
-                value={years}
-                onChange={(e) => setYears(e.target.value)}
-                className={styles["job-post-filter-select"]}
-              >
-                <option value="" selected disabled hidden>
-                  Tahun
+        </Flex>
+        <Flex className={styles["job-post-filter-container"]}>
+          <Box>
+            <Text className={styles["job-post-filter-text"]}>Tahun</Text>
+            <Select
+              value={years}
+              onChange={(e) => setYears(e.target.value)}
+              className={styles["job-post-filter-select"]}
+            >
+              <option value="" selected disabled hidden>
+                Tahun
+              </option>
+              {yearOptions.map((item, index) => (
+                <option key={index} value={item.value}>
+                  {item.label}
                 </option>
-                {yearOptions.map((item, index) => (
-                  <option key={index} value={item.value}>
-                    {item.label}
-                  </option>
-                ))}
-              </Select>
-            </Box>
-            <Box>
-              <Text className={styles["job-post-filter-text"]}>Bulan</Text>
-              <Select
-                value={month}
-                onChange={(e) => setMonth(e.target.value)}
-                className={styles["job-post-filter-select"]}
-              >
-                <option value="" selected disabled hidden>
-                  Pilih Bulan
-                </option>
-                {monthOptions.map((item, index) => (
-                  <option key={index} value={item.value}>
-                    {item.label}
-                  </option>
-                ))}
-              </Select>
-            </Box>
-            <Box>
-              <Text className={styles["job-post-filter-text"]}>
-                Digital Product
-              </Text>
-              <Select
-                value={productDigital}
-                onChange={(e) => setProductDigital(e.target.value)}
-                className={styles["job-post-filter-select"]}
-              >
-                <option value="" selected disabled hidden>
-                  Pilih Digital Product
-                </option>
-                {productDigitalData?.map((item, index) => (
-                  <option key={index} value={item.product_digital_name}>
-                    {item.product_digital_name}
-                  </option>
-                ))}
-              </Select>
-            </Box>
-            <Box>
-              <Text className={styles["job-post-filter-text"]}>Status</Text>
-              <Select
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className={styles["job-post-filter-select"]}
-              >
-                <option value="" selected disabled hidden>
-                  Pilih Status
-                </option>
-                {statusOptions.map((item, index) => (
-                  <option key={index} value={item.value}>
-                    {item.label}
-                  </option>
-                ))}
-              </Select>
-            </Box>
-          </Flex>
-          <Box className={styles["job-post-wrapper"]}>
-            {!isPending &&
-              data?.map((item, index) => (
-                <Flex
-                  key={index}
-                  onClick={() => openJobPostDetails(item.id)}
-                  className={styles["job-post-card"]}
-                >
-                  <Flex className={styles["job-post-card-inner"]}>
-                    <Box className={styles["job-post-image-wrapper"]}>
-                      <Image
-                        className={styles["job-post-image"]}
-                        src={"/images/company-dummy.jpeg"}
-                      />
-                    </Box>
-                    <Box className={styles["job-post-content-wrapper"]}>
-                      <Flex className={styles["job-post-time-status-wrapper"]}>
-                        <Text className={styles["job-post-time"]}>
-                          {moment(item?.start_date)
-                            .utcOffset("+07:00")
-                            .format("D MMMM YYYY | HH:mm") + " WIB"}
-                        </Text>
-                        <Box className={styles["job-post-status"]}>
-                          {item?.status_approve}
-                        </Box>
-                      </Flex>
-                      <Box>
-                        <Text className={styles["job-post-role"]}>
-                          {item?.job_title}
-                        </Text>
-                        <Text className={styles["job-post-rest"]}>
-                          {item?.job_provider_name}
-                        </Text>
-                        <Text className={styles["job-post-rest"]}>
-                          IDR {item?.start_from_salary} -{" "}
-                          {item?.end_from_salary}
-                        </Text>
-                        <Text className={styles["job-post-rest"]}>3 Orang</Text>
-                      </Box>
-                      <Flex className={styles["job-post-button"]}>
-                        <ShareIcon
-                          style={{
-                            width: "16px",
-                            height: "16px",
-                            cursor: "pointer",
-                          }}
-                        />
-                        {item.status_approve !== "Approved" &&
-                          item.status_approve !== "Rejected" && (
-                            <>
-                              <RejectIcon
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  openConfirmationModalHandler(
-                                    "Anda akan menolak pengajuan. Anda yakin ingin menolak?",
-                                    false,
-                                    item.id
-                                  );
-                                }}
-                                style={{
-                                  width: "16px",
-                                  height: "16px",
-                                  margin: "0 12px",
-                                  cursor: "pointer",
-                                }}
-                              />
-                              <ApproveIcon
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  openConfirmationModalHandler(
-                                    "Anda akan menyetujui pengajuan. Anda yakin ingin menyetujui?",
-                                    true,
-                                    item.id
-                                  );
-                                }}
-                                style={{
-                                  width: "16px",
-                                  height: "16px",
-                                  cursor: "pointer",
-                                }}
-                              />
-                            </>
-                          )}
-                      </Flex>
-                    </Box>
-                  </Flex>
-                </Flex>
               ))}
+            </Select>
           </Box>
+          <Box>
+            <Text className={styles["job-post-filter-text"]}>Bulan</Text>
+            <Select
+              value={month}
+              onChange={(e) => setMonth(e.target.value)}
+              className={styles["job-post-filter-select"]}
+            >
+              <option value="" selected disabled hidden>
+                Pilih Bulan
+              </option>
+              {monthOptions.map((item, index) => (
+                <option key={index} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </Select>
+          </Box>
+          <Box>
+            <Text className={styles["job-post-filter-text"]}>
+              Digital Product
+            </Text>
+            <Select
+              value={productDigital}
+              onChange={(e) => setProductDigital(e.target.value)}
+              className={styles["job-post-filter-select"]}
+            >
+              <option value="" selected disabled hidden>
+                Pilih Digital Product
+              </option>
+              {productDigitalData?.map((item, index) => (
+                <option key={index} value={item.product_digital_name}>
+                  {item.product_digital_name}
+                </option>
+              ))}
+            </Select>
+          </Box>
+          <Box>
+            <Text className={styles["job-post-filter-text"]}>Status</Text>
+            <Select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className={styles["job-post-filter-select"]}
+            >
+              <option value="" selected disabled hidden>
+                Pilih Status
+              </option>
+              {statusOptions.map((item, index) => (
+                <option key={index} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </Select>
+          </Box>
+        </Flex>
+        <Box className={styles["job-post-wrapper"]}>
+          {!isPending &&
+            data?.map((item, index) => (
+              <Flex
+                key={index}
+                onClick={() => openJobPostDetails(item.id)}
+                className={styles["job-post-card"]}
+              >
+                <Flex className={styles["job-post-card-inner"]}>
+                  <Box className={styles["job-post-image-wrapper"]}>
+                    <Image
+                      className={styles["job-post-image"]}
+                      src={"/images/company-dummy.jpeg"}
+                    />
+                  </Box>
+                  <Box className={styles["job-post-content-wrapper"]}>
+                    <Flex className={styles["job-post-time-status-wrapper"]}>
+                      <Text className={styles["job-post-time"]}>
+                        {moment(item?.start_date)
+                          .utcOffset("+07:00")
+                          .format("D MMMM YYYY | HH:mm") + " WIB"}
+                      </Text>
+                      <Box className={styles["job-post-status"]}>
+                        {item?.status_approve}
+                      </Box>
+                    </Flex>
+                    <Box>
+                      <Text className={styles["job-post-role"]}>
+                        {item?.job_title}
+                      </Text>
+                      <Text className={styles["job-post-rest"]}>
+                        {item?.job_provider_name}
+                      </Text>
+                      <Text className={styles["job-post-rest"]}>
+                        IDR {item?.start_from_salary} -{" "}
+                        {item?.end_from_salary}
+                      </Text>
+                      <Text className={styles["job-post-rest"]}>3 Orang</Text>
+                    </Box>
+                    <Flex className={styles["job-post-button"]}>
+                      <ShareIcon
+                        style={{
+                          width: "16px",
+                          height: "16px",
+                          cursor: "pointer",
+                        }}
+                      />
+                      {item.status_approve !== "Approved" &&
+                        item.status_approve !== "Rejected" && (
+                          <>
+                            <RejectIcon
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openConfirmationModalHandler(
+                                  "Anda akan menolak pengajuan. Anda yakin ingin menolak?",
+                                  false,
+                                  item.id
+                                );
+                              }}
+                              style={{
+                                width: "16px",
+                                height: "16px",
+                                margin: "0 12px",
+                                cursor: "pointer",
+                              }}
+                            />
+                            <ApproveIcon
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openConfirmationModalHandler(
+                                  "Anda akan menyetujui pengajuan. Anda yakin ingin menyetujui?",
+                                  true,
+                                  item.id
+                                );
+                              }}
+                              style={{
+                                width: "16px",
+                                height: "16px",
+                                cursor: "pointer",
+                              }}
+                            />
+                          </>
+                        )}
+                    </Flex>
+                  </Box>
+                </Flex>
+              </Flex>
+            ))}
         </Box>
-      </SidebarLayout>
+      </Box>
     </>
   );
 };

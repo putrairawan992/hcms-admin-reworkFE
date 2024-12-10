@@ -17,6 +17,7 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useEditProfile } from "../api/profile";
 import { getUserData, saveUserData } from "../utils/localStorage";
+import { httpClient } from "../utils/network";
 
 const EditProfile = () => {
   const toast = useToast();
@@ -42,7 +43,6 @@ const EditProfile = () => {
       currentCompanyPhoto: "",
     },
   });
-
 
   useEffect(() => {
     if (profile && !isEmpty(profile) && !watch('username')) {
@@ -121,8 +121,29 @@ const EditProfile = () => {
     );
   };
 
+
+  const fetchDataImage = async () => {
+    try {
+      const response = await httpClient({
+        method: 'GET',
+        baseURL: 'https://api-admin-rework.scalastaging.online:8080',
+        url: '/download/profile_photo_admin/UUID-GENERATED-HERE',
+      });
+
+      // const responseData = response?.data?.data || [];
+      console.log(response);
+      // setData(responseData);
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataImage();
+  }, []);
+
   return (
-    <SidebarLayout>
+    <>
       {!isEmpty(profile) && (
         <Box className={styles["editProfile-container"]}>
           <Text className={styles["editProfile-title"]}>Edit Profil</Text>
@@ -131,7 +152,7 @@ const EditProfile = () => {
               <Box className={styles["editProfile-img-wrapper"]}>
                 <Image
                   className={styles["editProfile-img"]}
-                  src={profileImagePreview}
+                  src={profile?.photo}
                   alt="profile-pict"
                 />
               </Box>
@@ -220,7 +241,7 @@ const EditProfile = () => {
           </form>
         </Box>
       )}
-    </SidebarLayout>
+    </>
   );
 };
 

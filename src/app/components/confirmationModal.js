@@ -121,7 +121,7 @@ const ConfirmationModal = ({
             <>
               <Image
                 className={styles["modal-info"]}
-                src={"/images/Info Circle.png"}
+                src={"/images/info-circle.png"}
               />
               <Text className={styles["modal-text"]}>{modalText}</Text>
               <Flex align={"center"}>

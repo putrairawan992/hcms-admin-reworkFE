@@ -10,7 +10,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import styles from "../styles/confirmationModal.module.css";
-import InfoIcon from "../../../public/images/Info Circle.png";
+import InfoIcon from "../../../public/images/info-circle.png";
 import { useEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import CheckIcon from "../../../public/images/Success-Circle.png";

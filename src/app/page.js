@@ -6,16 +6,15 @@ import { useGetDashboard } from "./api/dashboard";
 import moment from "moment";
 import "moment/locale/id";
 import { useEffect, useState } from "react";
-import { useProfileStore } from "@/stores/profileStore";
+import { getUserData } from "./utils/localStorage";
 
 moment.locale("id");
 
 const Home = () => {
-  const { profile } = useProfileStore((state) => state);
+  const profile = getUserData();
 
-  console.log(profile);
-
-  const { data, isPending } = useGetDashboard();
+  const isPending = false;
+  // const { data, isPending } = useGetDashboard();
   const [currentTime, setCurrentTime] = useState(moment());
 
   useEffect(() => {
@@ -26,14 +25,18 @@ const Home = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const handleNavigate = (screen) => {
+    window.location.href = screen;
+  };
+
   return (
     <>
       {!isPending && (
-        <SidebarLayout>
+        <>
           <Box className={styles["dashboard-container"]}>
             <Box className={styles["dashboard-welcome-container"]}>
               <Text className={styles["dashboard-welcome-title"]}>
-                Halo, {profile?.username}!
+                Halo, {profile?.name}!
               </Text>
               <Box>
                 <Text className={styles["dashboard-welcome-day"]}>
@@ -106,7 +109,7 @@ const Home = () => {
                       78 orang
                     </Text>
                   </Box>
-                  <Text className={styles["dashboard-left-link"]}>
+                  <Text className={styles["dashboard-left-link"]} onClick={() => handleNavigate('/setup/admin-role')} cursor='pointer'>
                     View All
                   </Text>
                 </Box>
@@ -128,7 +131,7 @@ const Home = () => {
                       78 orang
                     </Text>
                   </Box>
-                  <Text className={styles["dashboard-left-link"]}>
+                  <Text className={styles["dashboard-left-link"]} onClick={() => handleNavigate('/setup/account')} cursor='pointer'>
                     View All
                   </Text>
                 </Box>
@@ -163,7 +166,7 @@ const Home = () => {
                       <option>Value 1</option>
                     </Select>
                   </Box>
-                  <Text className={styles["dashboard-left-link"]}>
+                  <Text className={styles["dashboard-left-link"]} onClick={() => handleNavigate('/data-talent')} cursor='pointer'>
                     View All
                   </Text>
                 </Box>
@@ -303,7 +306,7 @@ const Home = () => {
               </Box>
             </Box>
           </Flex>
-        </SidebarLayout>
+        </>
       )}
     </>
   );

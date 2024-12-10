@@ -32,16 +32,16 @@ export const RejectIcon = ({ style, onClick }) => {
       <path
         d="M10 3L2 11"
         stroke="#AE445A"
-        stroke-width="1.6"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M2 3L10 11"
         stroke="#AE445A"
-        stroke-width="1.6"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -61,9 +61,9 @@ export const ApproveIcon = ({ style, onClick }) => {
       <path
         d="M14 1.89844L5.0625 10.8984L1 6.80753"
         stroke="#AE445A"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -83,30 +83,30 @@ export const CalenderIcon = () => {
         clip-rule="evenodd"
         d="M1.75 3.50065C1.75 2.85632 2.27233 2.33398 2.91667 2.33398H11.0833C11.7277 2.33398 12.25 2.85632 12.25 3.50065V11.6673C12.25 12.3116 11.7277 12.834 11.0833 12.834H2.91667C2.27233 12.834 1.75 12.3116 1.75 11.6673V3.50065Z"
         stroke="#AE445A"
-        stroke-width="1.16667"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.16667"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9.3335 1.16602V3.49935"
         stroke="#AE445A"
-        stroke-width="1.16667"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.16667"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M4.6665 1.16602V3.49935"
         stroke="#AE445A"
-        stroke-width="1.16667"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.16667"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M1.75 5.83398H12.25"
         stroke="#AE445A"
-        stroke-width="1.16667"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.16667"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -142,14 +142,14 @@ export const EditIcon = () => {
         <path
           d="M5.5 2.43774H2C1.73478 2.43774 1.48043 2.5431 1.29289 2.73064C1.10536 2.91817 1 3.17253 1 3.43774V10.4377C1 10.703 1.10536 10.9573 1.29289 11.1449C1.48043 11.3324 1.73478 11.4377 2 11.4377H9C9.26522 11.4377 9.51957 11.3324 9.70711 11.1449C9.89464 10.9573 10 10.703 10 10.4377V6.93774"
           stroke="#AE445A"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M9.25 1.68774C9.44891 1.48882 9.7187 1.37708 10 1.37708C10.2813 1.37708 10.5511 1.48882 10.75 1.68774C10.9489 1.88665 11.0607 2.15643 11.0607 2.43774C11.0607 2.71904 10.9489 2.98882 10.75 3.18774L6 7.93774L4 8.43774L4.5 6.43774L9.25 1.68774Z"
           stroke="#AE445A"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <defs>

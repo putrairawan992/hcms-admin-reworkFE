@@ -1,6 +1,5 @@
 "use client";
 import { CalenderIcon } from "@/app/components/icons";
-import SidebarLayout from "@/app/components/sidebarLayout";
 import { Box, Button, Flex, Text, Image } from "@chakra-ui/react";
 import styles from "../../../styles/jobPostDetails.module.css";
 import { useParams, useRouter } from "next/navigation";
@@ -48,7 +47,7 @@ const JobPostDetails = () => {
   }, [data]);
 
   return (
-    <SidebarLayout>
+    <>
       {!isEmpty(data) && (
         <Box className={styles["job-details-container"]}>
           <Text className={styles["job-details-title"]}>Job Vacancy</Text>
@@ -221,7 +220,7 @@ const JobPostDetails = () => {
           </Flex>
         </Box>
       )}
-    </SidebarLayout>
+    </>
   );
 };
 
