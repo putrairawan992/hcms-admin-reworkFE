@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { httpClient } from "@/app/utils/network";
 import { useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
@@ -22,7 +22,7 @@ const useApprovalRemuneration = () => {
     status: ''
   });
 
-  const fetchData = async (params) => {
+  const fetchData = useCallback(async (params) => {
     const isFiltersEmpty = Object.values(filters).every(value => value === '');
 
     try {
@@ -38,7 +38,7 @@ const useApprovalRemuneration = () => {
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
-  };
+  }, [filters]);
 
   const fetchDataPD = async () => {
     try {

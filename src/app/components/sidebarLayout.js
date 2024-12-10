@@ -24,6 +24,7 @@ import { NotificationLogo } from "./logo";
 import { usePathname, useRouter } from "next/navigation";
 import { Container } from "reactstrap";
 import { clearUserData, getUserData } from "../utils/localStorage";
+import { memo } from "react";
 
 const SidebarLayout = ({ children }) => {
   const profile = getUserData();
@@ -489,4 +490,4 @@ const SidebarLayout = ({ children }) => {
   );
 };
 
-export default SidebarLayout;
+export default memo(SidebarLayout);

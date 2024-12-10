@@ -1,5 +1,4 @@
 "use client";
-import SidebarLayout from "@/app/components/sidebarLayout";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import styles from "../../styles/approvalRemuneration.module.css";
 import { useState } from "react";

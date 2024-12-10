@@ -1,5 +1,5 @@
+import React, { memo } from 'react'
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
-import React from 'react'
 import styles from './ApprvRemunCard.styles';
 import moment from 'moment';
 import { ChatIcon } from "@/app/components/icons";
@@ -42,4 +42,4 @@ const ApprvRemunCard = ({ data = [], onClickDetail = noop, onClickIcon = noop })
   );
 }
 
-export default ApprvRemunCard;
+export default memo(ApprvRemunCard);
