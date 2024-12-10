@@ -13,7 +13,8 @@ moment.locale("id");
 const Home = () => {
   const profile = getUserData();
 
-  const { data, isPending } = useGetDashboard();
+  const isPending = false;
+  // const { data, isPending } = useGetDashboard();
   const [currentTime, setCurrentTime] = useState(moment());
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const Home = () => {
   return (
     <>
       {!isPending && (
-        <SidebarLayout>
+        <>
           <Box className={styles["dashboard-container"]}>
             <Box className={styles["dashboard-welcome-container"]}>
               <Text className={styles["dashboard-welcome-title"]}>
@@ -305,7 +306,7 @@ const Home = () => {
               </Box>
             </Box>
           </Flex>
-        </SidebarLayout>
+        </>
       )}
     </>
   );

@@ -63,90 +63,86 @@ const Payslip = () => {
   };
 
   return (
-    <>
-      <SidebarLayout>
-        <Box className={styles["inbox-container"]}>
-          <Flex align={"center"} justify={"space-between"}>
-            <Text className={styles["inbox-title"]}>PaySlip</Text>
-            <Box>
-              <Button onClick={() => moveScreen('/data-talent/history')} className={styles["inbox-btn"]} marginRight={2}>
-                Manual Send
-              </Button>
-              <Button onClick={onOpen} className={styles["inbox-btn"]}>
-                Download All Filtered
-              </Button>
-            </Box>
-          </Flex>
-          <Gap height={6} />
-          <Flex>
-            <Flex borderWidth={1} borderColor='#AE445A' borderRadius={6} paddingX={4} paddingY={1}>
-              <Text marginRight={3} fontWeight='bold'>Total Karyawan: </Text>
-              <Text marginRight={3} color='#AE445A' fontWeight='bold'>3811</Text>
-              <Text fontWeight='bold'>Orang</Text>
-            </Flex>
-          </Flex>
-          <Flex marginBottom={4} marginTop={10}>
-            <Box marginRight={2} flex={1}>
-              <Text className={styles["inbox-filter-text"]}>Digital Product</Text>
-              <Select
-                value={years}
-                onChange={(e) => setYears(e.target.value)}
-                className={styles["inbox-filter-select"]}>
-                <option value="all" selected>Semua</option>
-                {productDigitalData?.map((item, index) => (
-                  <option key={index} value={item.product_digital_name}>
-                    {item.product_digital_name}
-                  </option>
-                ))}
-              </Select>
-            </Box>
-            <Box marginRight={2} flex={1}>
-              <Text className={styles["inbox-filter-text"]}>Tahun</Text>
-              <Select
-                value={years}
-                onChange={(e) => setYears(e.target.value)}
-                className={styles["inbox-filter-select"]}>
-                <option value="all" selected>Semua</option>
-                <option value="offering_letter_normal">Offering Letter Normal</option>
-                <option value="pkwt">PKWT</option>
-                <option value="offering_letter_khusus">Offering Letter Khusus</option>
-                <option value="amandemen_pkwt">Amandemen PKWT</option>
-                <option value="contract_freelance">Kontrak Freelance</option>
-              </Select>
-            </Box>
-            <Box marginRight={2} flex={1}>
-              <Text className={styles["inbox-filter-text"]}>Bulan</Text>
-              <Select
-                value={years}
-                onChange={(e) => setYears(e.target.value)}
-                className={styles["inbox-filter-select"]}>
-                <option value="all" selected>Semua</option>
-                <option value="sent">Sent</option>
-                <option value="employee_signed">Employee Signed</option>
-                <option value="full_signed">Full Signed</option>
-              </Select>
-            </Box>
-            <Box marginRight={2} flex={1}>
-              <Text className={styles["inbox-filter-text"]}>Nama Karyawan</Text>
-              <Select
-                value={years}
-                onChange={(e) => setYears(e.target.value)}
-                className={styles["inbox-filter-select"]}>
-                <option value="all" selected>Semua</option>
-                <option value="non_selection">Non Selection</option>
-                <option value="selection">Selection</option>
-              </Select>
-            </Box>
-          </Flex>
-          {!isEmpty(data) ? renderData()
-            : (
-              <Flex align={"center"} justify={"center"}>
-                <Text>Tidak ada data inbox</Text>
-              </Flex>
-            )}
+    <Box className={styles["inbox-container"]}>
+      <Flex align={"center"} justify={"space-between"}>
+        <Text className={styles["inbox-title"]}>PaySlip</Text>
+        <Box>
+          <Button onClick={() => moveScreen('/data-talent/history')} className={styles["inbox-btn"]} marginRight={2}>
+            Manual Send
+          </Button>
+          <Button onClick={onOpen} className={styles["inbox-btn"]}>
+            Download All Filtered
+          </Button>
         </Box>
-      </SidebarLayout>
-    </>
+      </Flex>
+      <Gap height={6} />
+      <Flex>
+        <Flex borderWidth={1} borderColor='#AE445A' borderRadius={6} paddingX={4} paddingY={1}>
+          <Text marginRight={3} fontWeight='bold'>Total Karyawan: </Text>
+          <Text marginRight={3} color='#AE445A' fontWeight='bold'>3811</Text>
+          <Text fontWeight='bold'>Orang</Text>
+        </Flex>
+      </Flex>
+      <Flex marginBottom={4} marginTop={10}>
+        <Box marginRight={2} flex={1}>
+          <Text className={styles["inbox-filter-text"]}>Digital Product</Text>
+          <Select
+            value={years}
+            onChange={(e) => setYears(e.target.value)}
+            className={styles["inbox-filter-select"]}>
+            <option value="all" selected>Semua</option>
+            {productDigitalData?.map((item, index) => (
+              <option key={index} value={item.product_digital_name}>
+                {item.product_digital_name}
+              </option>
+            ))}
+          </Select>
+        </Box>
+        <Box marginRight={2} flex={1}>
+          <Text className={styles["inbox-filter-text"]}>Tahun</Text>
+          <Select
+            value={years}
+            onChange={(e) => setYears(e.target.value)}
+            className={styles["inbox-filter-select"]}>
+            <option value="all" selected>Semua</option>
+            <option value="offering_letter_normal">Offering Letter Normal</option>
+            <option value="pkwt">PKWT</option>
+            <option value="offering_letter_khusus">Offering Letter Khusus</option>
+            <option value="amandemen_pkwt">Amandemen PKWT</option>
+            <option value="contract_freelance">Kontrak Freelance</option>
+          </Select>
+        </Box>
+        <Box marginRight={2} flex={1}>
+          <Text className={styles["inbox-filter-text"]}>Bulan</Text>
+          <Select
+            value={years}
+            onChange={(e) => setYears(e.target.value)}
+            className={styles["inbox-filter-select"]}>
+            <option value="all" selected>Semua</option>
+            <option value="sent">Sent</option>
+            <option value="employee_signed">Employee Signed</option>
+            <option value="full_signed">Full Signed</option>
+          </Select>
+        </Box>
+        <Box marginRight={2} flex={1}>
+          <Text className={styles["inbox-filter-text"]}>Nama Karyawan</Text>
+          <Select
+            value={years}
+            onChange={(e) => setYears(e.target.value)}
+            className={styles["inbox-filter-select"]}>
+            <option value="all" selected>Semua</option>
+            <option value="non_selection">Non Selection</option>
+            <option value="selection">Selection</option>
+          </Select>
+        </Box>
+      </Flex>
+      {!isEmpty(data) ? renderData()
+        : (
+          <Flex align={"center"} justify={"center"}>
+            <Text>Tidak ada data inbox</Text>
+          </Flex>
+        )}
+    </Box>
   );
 };
 

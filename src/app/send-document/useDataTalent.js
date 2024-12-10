@@ -23,7 +23,7 @@ const useDataTalent = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        baseURL: 'https://api-admin-rework.scalastaging.online:8080',
+        baseURL: 'http://api-admin-rework.scalastaging.online:8080',
         url: '/download/profile_photo_admin/UUID-GENERATED-HERE',
       });
 

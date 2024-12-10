@@ -143,7 +143,7 @@ const EditProfile = () => {
   }, []);
 
   return (
-    <SidebarLayout>
+    <>
       {!isEmpty(profile) && (
         <Box className={styles["editProfile-container"]}>
           <Text className={styles["editProfile-title"]}>Edit Profil</Text>
@@ -152,7 +152,7 @@ const EditProfile = () => {
               <Box className={styles["editProfile-img-wrapper"]}>
                 <Image
                   className={styles["editProfile-img"]}
-                  src={profileImagePreview}
+                  src={'https://api-admin-rework.scalastaging.online/download/profile_photo_admin/UUID-GENERATED-HERE'}
                   alt="profile-pict"
                 />
               </Box>
@@ -241,7 +241,7 @@ const EditProfile = () => {
           </form>
         </Box>
       )}
-    </SidebarLayout>
+    </>
   );
 };
 

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { httpClient } from "@/app/utils/network";
 import { useDisclosure } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 
-const useApprovalRemuneration = () => {
+const useRemunerationDetail = () => {
   const router = useRouter();
+  const params = useParams();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isOpen: isOpenNote,
@@ -22,17 +24,15 @@ const useApprovalRemuneration = () => {
     status: ''
   });
 
-  const fetchData = async (params) => {
-    const isFiltersEmpty = Object.values(filters).every(value => value === '');
-
+  const fetchData = async () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/admin/remuneration/list',
-        ...(isFiltersEmpty ? {} : { params })
+        url: `/admin/remuneration/detail/${params?.id}`,
       });
 
       const responseData = response?.data?.data || [];
+      console.log(responseData?.list_remuneration);
       setData(responseData);
       setLoading(false);
     } catch (error) {
@@ -71,16 +71,13 @@ const useApprovalRemuneration = () => {
   };
 
   useEffect(() => {
+    fetchData();
     fetchDataPD();
   }, []);
-
-  useEffect(() => {
-    fetchData(filters);
-  }, [filters]);
 
   return { data, loading, filters, productDigitalData, onChangeSelect, onPressDetail, onPressIcon, isOpen, onClose, onCloseNote, isOpenNote }
 
 };
 
-export default useApprovalRemuneration;
+export default useRemunerationDetail;
 

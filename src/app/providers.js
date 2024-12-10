@@ -2,6 +2,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import SidebarLayout from "./components/sidebarLayout";
 
 export function Providers({ children }) {
   const [isClient, setIsClient] = useState(false);
@@ -18,7 +19,11 @@ export function Providers({ children }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider>{children}</ChakraProvider>
+      <ChakraProvider>
+        <SidebarLayout>
+          {children}
+        </SidebarLayout>
+      </ChakraProvider>
     </QueryClientProvider>
   );
 }

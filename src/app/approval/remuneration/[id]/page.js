@@ -12,17 +12,20 @@ import {
 import styles from "../../../styles/approvalRemuneration.module.css";
 import DummyImage from "../../../../../public/images/dummy-image.png";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import moment from "moment";
 import "moment/locale/id";
 import dynamic from "next/dynamic";
 import OfficeLogo from "../../../../../public/images/Office-Logos.png";
 import { useGetApprovalRemunerationDetail } from "@/app/api/approval";
+import useApprovalRemuneration from "../useApprovalRemuneration";
+import useRemunerationDetail from "./useRemunerationDetail";
 
 moment.locale("id");
 
 const ApprovalRemunerationDetails = ({ params }) => {
   const id = params.id;
+  const { data } = useRemunerationDetail();
+
   const ConfirmationModalWithNoSSR = dynamic(
     () => import("../../../components/cancelApprovalConfirmationModal"),
     { ssr: false }
@@ -31,7 +34,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
     () => import("../../../components/noteModal"),
     { ssr: false }
   );
-  const { data, isPending } = useGetApprovalRemunerationDetail({
+  const { isPending } = useGetApprovalRemunerationDetail({
     id,
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -172,7 +175,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
               </Box>
             </Grid>
             <Box className={styles["approval-remuneration-wrapper"]}>
-              {data?.list_remuneration.map((item, index) => (
+              {data?.list_remuneration?.map((item, index) => (
                 <Flex
                   key={index}
                   className={styles["approval-remuneration-card"]}
@@ -202,14 +205,14 @@ const ApprovalRemunerationDetails = ({ params }) => {
                       <Box
                         className={
                           styles[
-                            "approval-remuneration-content-details-wrapper-header"
+                          "approval-remuneration-content-details-wrapper-header"
                           ]
                         }
                       >
                         <Flex
                           className={
                             styles[
-                              "approval-remuneration-content-details-header-inner"
+                            "approval-remuneration-content-details-header-inner"
                             ]
                           }
                         >
@@ -218,7 +221,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                         <Flex
                           className={
                             styles[
-                              "approval-remuneration-content-details-header-inner"
+                            "approval-remuneration-content-details-header-inner"
                             ]
                           }
                         >
@@ -227,7 +230,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                         <Flex
                           className={
                             styles[
-                              "approval-remuneration-content-details-header-inner"
+                            "approval-remuneration-content-details-header-inner"
                             ]
                           }
                         >
@@ -236,7 +239,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                         <Flex
                           className={
                             styles[
-                              "approval-remuneration-content-details-header-inner"
+                            "approval-remuneration-content-details-header-inner"
                             ]
                           }
                         >
@@ -245,7 +248,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                         <Flex
                           className={
                             styles[
-                              "approval-remuneration-content-details-header-inner"
+                            "approval-remuneration-content-details-header-inner"
                             ]
                           }
                         >
@@ -255,14 +258,14 @@ const ApprovalRemunerationDetails = ({ params }) => {
                       <Box
                         className={
                           styles[
-                            "approval-remuneration-content-details-wrapper-inner"
+                          "approval-remuneration-content-details-wrapper-inner"
                           ]
                         }
                       >
                         <Flex
                           className={
                             styles[
-                              "approval-remuneration-content-details-inner"
+                            "approval-remuneration-content-details-inner"
                             ]
                           }
                         >
@@ -271,7 +274,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                         <Flex
                           className={
                             styles[
-                              "approval-remuneration-content-details-inner"
+                            "approval-remuneration-content-details-inner"
                             ]
                           }
                         >
@@ -280,7 +283,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                         <Flex
                           className={
                             styles[
-                              "approval-remuneration-content-details-inner"
+                            "approval-remuneration-content-details-inner"
                             ]
                           }
                         >
@@ -293,7 +296,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                         <Flex
                           className={
                             styles[
-                              "approval-remuneration-content-details-inner"
+                            "approval-remuneration-content-details-inner"
                             ]
                           }
                         >
@@ -306,7 +309,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                         <Flex
                           className={
                             styles[
-                              "approval-remuneration-content-details-inner"
+                            "approval-remuneration-content-details-inner"
                             ]
                           }
                         >
@@ -335,7 +338,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                       <Text
                         className={
                           styles[
-                            "approval-remuneration-details-footer-inner-text"
+                          "approval-remuneration-details-footer-inner-text"
                           ]
                         }
                       >
@@ -350,7 +353,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                       <Text
                         className={
                           styles[
-                            "approval-remuneration-details-footer-inner-text"
+                          "approval-remuneration-details-footer-inner-text"
                           ]
                         }
                       >

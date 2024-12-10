@@ -72,6 +72,7 @@ const SidebarLayout = ({ children }) => {
             overflowY="auto"
             padding="0px 1rem">
             <Text
+              href="/"
               onClick={() => handleNavigate('/')}
               className={
                 pathname === "/"

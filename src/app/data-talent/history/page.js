@@ -7,7 +7,6 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import SidebarLayout from "../../components/sidebarLayout";
 import styles from "../../styles/inbox.module.css";
 import { useState } from "react";
 import moment from "moment";
@@ -68,40 +67,30 @@ const DataTalentHistory = () => {
   };
 
   return (
-    <>
-      <SidebarLayout>
-        <Box className={styles["inbox-container"]}>
-          <Flex align={"center"} justify={"space-between"}>
-            <Text className={styles["inbox-title"]}>Data Talent / History</Text>
+    <Box className={styles["inbox-container"]}>
+      <Flex align={"center"} justify={"space-between"}>
+        <Text className={styles["inbox-title"]}>Data Talent / History</Text>
+      </Flex>
+      <Flex marginBottom={4} marginTop={10}>
+        <Box marginRight={2} paddingX={2} paddingY={2} borderWidth={1} borderColor='#AE445A' borderRadius={6}>
+          <Flex justifyContent='space-between' flex={1} alignItems='flex-end'>
+            <Text className={styles["inbox-filter-text"]} marginRight={6}>Total Digital Product : </Text>
+            <Text className={styles["inbox-filter-text"]} color='#AE445A'>150</Text>
           </Flex>
-          <Flex marginBottom={4} marginTop={10}>
-            <Box marginRight={2} paddingX={2} paddingY={2} borderWidth={1} borderColor='#AE445A' borderRadius={6}>
-              <Flex justifyContent='space-between' flex={1} alignItems='flex-end'>
-                <Text className={styles["inbox-filter-text"]} marginRight={6}>Total Digital Product : </Text>
-                <Text className={styles["inbox-filter-text"]} color='#AE445A'>150</Text>
-              </Flex>
-            </Box>
-            <Box marginRight={2} paddingX={2} paddingY={2} borderWidth={1} borderColor='#AE445A' borderRadius={6}>
-              <Flex justifyContent='space-between' flex={1} alignItems='flex-end'>
-                <Text className={styles["inbox-filter-text"]} marginRight={6}>Total Karyawan : </Text>
-                <Text className={styles["inbox-filter-text"]} color='#AE445A'>150 Orang</Text>
-              </Flex>
-            </Box>
-          </Flex>
-          <Flex>
-            <HistoryTalentCard data={data[0]} />
-            <HistoryTalentCard data={data[0]} />
-            <HistoryTalentCard data={data[0]} />
-          </Flex>
-          {/* {!isEmpty(data) ? renderData()
-            : (
-              <Flex align={"center"} justify={"center"}>
-                <Text>Tidak ada data inbox</Text>
-              </Flex>
-            )} */}
         </Box>
-      </SidebarLayout>
-    </>
+        <Box marginRight={2} paddingX={2} paddingY={2} borderWidth={1} borderColor='#AE445A' borderRadius={6}>
+          <Flex justifyContent='space-between' flex={1} alignItems='flex-end'>
+            <Text className={styles["inbox-filter-text"]} marginRight={6}>Total Karyawan : </Text>
+            <Text className={styles["inbox-filter-text"]} color='#AE445A'>150 Orang</Text>
+          </Flex>
+        </Box>
+      </Flex>
+      <Flex>
+        <HistoryTalentCard data={data[0]} />
+        <HistoryTalentCard data={data[0]} />
+        <HistoryTalentCard data={data[0]} />
+      </Flex>
+    </Box>
   );
 };
 

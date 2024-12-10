@@ -7,7 +7,7 @@ import { noop } from '@/app/utils/helpers';
 
 const ApprvRemunCard = ({ data = [], onClickDetail = noop, onClickIcon = noop }) => {
   const onHandlePressDetail = () => {
-    onClickDetail()
+    onClickDetail(data?.remuneration_id);
   };
 
   const onHandlePressIcon = () => {

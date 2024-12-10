@@ -91,160 +91,158 @@ const Inbox = () => {
         currentData={currentData}
         refetch={refetch}
       />
-      <SidebarLayout>
-        <Box className={styles["inbox-container"]}>
-          <Flex align={"center"} justify={"space-between"}>
-            <Text className={styles["inbox-title"]}>Inbox</Text>
-            <Button onClick={onOpen} className={styles["inbox-btn"]}>
-              Write New Message
-            </Button>
-          </Flex>
-          <Flex className={styles["inbox-filter-container"]}>
-            <Box>
-              <Text className={styles["inbox-filter-text"]}>Tahun</Text>
-              <Select
-                value={years}
-                onChange={(e) => setYears(e.target.value)}
-                className={styles["inbox-filter-select"]}
-              >
-                <option value="" selected disabled hidden>
-                  Tahun
+      <Box className={styles["inbox-container"]}>
+        <Flex align={"center"} justify={"space-between"}>
+          <Text className={styles["inbox-title"]}>Inbox</Text>
+          <Button onClick={onOpen} className={styles["inbox-btn"]}>
+            Write New Message
+          </Button>
+        </Flex>
+        <Flex className={styles["inbox-filter-container"]}>
+          <Box>
+            <Text className={styles["inbox-filter-text"]}>Tahun</Text>
+            <Select
+              value={years}
+              onChange={(e) => setYears(e.target.value)}
+              className={styles["inbox-filter-select"]}
+            >
+              <option value="" selected disabled hidden>
+                Tahun
+              </option>
+              {yearOptions.map((item, index) => (
+                <option key={index} value={item.value}>
+                  {item.label}
                 </option>
-                {yearOptions.map((item, index) => (
-                  <option key={index} value={item.value}>
-                    {item.label}
-                  </option>
-                ))}
-              </Select>
-            </Box>
-            <Box>
-              <Text className={styles["inbox-filter-text"]}>Bulan</Text>
-              <Select
-                value={month}
-                onChange={(e) => setMonth(e.target.value)}
-                className={styles["inbox-filter-select"]}
-              >
-                <option value="" selected disabled hidden>
-                  Pilih Bulan
-                </option>
-                {monthOptions.map((item, index) => (
-                  <option key={index} value={item.value}>
-                    {item.label}
-                  </option>
-                ))}
-              </Select>
-            </Box>
-            <Box>
-              <Text className={styles["inbox-filter-text"]}>
-                Digital Product
-              </Text>
-              <Select
-                value={productDigital}
-                onChange={(e) => setProductDigital(e.target.value)}
-                className={styles["inbox-filter-select"]}
-              >
-                <option value="" selected disabled hidden>
-                  Pilih Digital Product
-                </option>
-                {productDigitalData?.map((item, index) => (
-                  <option key={index} value={item.product_digital_name}>
-                    {item.product_digital_name}
-                  </option>
-                ))}
-              </Select>
-            </Box>
-            <Box>
-              <Text className={styles["inbox-filter-text"]}>Akun User</Text>
-              <Select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className={styles["inbox-filter-select"]}
-              >
-                <option value="" selected disabled hidden>
-                  Pilih Role
-                </option>
-                {dataRoles?.map((item, index) => (
-                  <option key={index} value={item.product_digital_name}>
-                    {item.product_digital_name}
-                  </option>
-                ))}
-              </Select>
-            </Box>
-          </Flex>
-          {!isEmpty(dataInbox) ? (
-            <Accordion allowToggle>
-              {dataInbox?.map((item, index) => (
-                <AccordionItem key={index} border="none">
-                  <h2>
-                    <AccordionButton
-                      background={item.is_read ? "#718199" : "#8364BA"}
-                      className={styles["inbox-wrapper"]}
-                      onClick={() => {
-                        setIdInbox(item.room_message_id);
-                      }}
-                    >
-                      <Box className={styles["inbox-img-wrapper"]}>
-                        <Image
-                          className={styles["inbox-img"]}
-                          src="/images/company-dummy.jpeg"
-                          alt="image"
-                        />
-                      </Box>
-                      <Text className={styles["inbox-name"]}>
-                        {item.sender_name}
-                      </Text>
-                      <Text className={styles["inbox-text"]}>{item.title}</Text>
-                      <DownloadIcon w={"20px"} h={"20px"} color={"#ffffff"} />
-                      <Flex align={"center"}>
-                        <Text className={styles["inbox-text"]}>
-                          {moment(item.schedule).format("DD MMMM YYYY")}
-                        </Text>
-                        <Text
-                          className={styles["inbox-text"]}
-                          margin={"0 1rem"}
-                        >
-                          {moment(item.schedule).format("HH:mm")}
-                        </Text>
-                        <Text className={styles["inbox-text"]}>
-                          {moment(item.schedule).locale("en").format("A")}
-                        </Text>
-                      </Flex>
-                    </AccordionButton>
-                  </h2>
-                  {!isEmpty(dataInboxDetail) && (
-                    <AccordionPanel
-                      pb={4}
-                      className={styles["inbox-reply-container"]}
-                    >
-                      <Text
-                        dangerouslySetInnerHTML={{
-                          __html: dataInboxDetail[0]?.main_text,
-                        }}
-                      />
-                      {item.is_read && (
-                        <Flex justify={"end"}>
-                          <Button
-                            onClick={replyMessageHandler}
-                            className={styles["inbox-btn"]}
-                            alignSelf={"end"}
-                            mt={"1.5rem"}
-                          >
-                            Reply
-                          </Button>
-                        </Flex>
-                      )}
-                    </AccordionPanel>
-                  )}
-                </AccordionItem>
               ))}
-            </Accordion>
-          ) : (
-            <Flex align={"center"} justify={"center"}>
-              <Text>Tidak ada data inbox</Text>
-            </Flex>
-          )}
-        </Box>
-      </SidebarLayout>
+            </Select>
+          </Box>
+          <Box>
+            <Text className={styles["inbox-filter-text"]}>Bulan</Text>
+            <Select
+              value={month}
+              onChange={(e) => setMonth(e.target.value)}
+              className={styles["inbox-filter-select"]}
+            >
+              <option value="" selected disabled hidden>
+                Pilih Bulan
+              </option>
+              {monthOptions.map((item, index) => (
+                <option key={index} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </Select>
+          </Box>
+          <Box>
+            <Text className={styles["inbox-filter-text"]}>
+              Digital Product
+            </Text>
+            <Select
+              value={productDigital}
+              onChange={(e) => setProductDigital(e.target.value)}
+              className={styles["inbox-filter-select"]}
+            >
+              <option value="" selected disabled hidden>
+                Pilih Digital Product
+              </option>
+              {productDigitalData?.map((item, index) => (
+                <option key={index} value={item.product_digital_name}>
+                  {item.product_digital_name}
+                </option>
+              ))}
+            </Select>
+          </Box>
+          <Box>
+            <Text className={styles["inbox-filter-text"]}>Akun User</Text>
+            <Select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className={styles["inbox-filter-select"]}
+            >
+              <option value="" selected disabled hidden>
+                Pilih Role
+              </option>
+              {dataRoles?.map((item, index) => (
+                <option key={index} value={item.product_digital_name}>
+                  {item.product_digital_name}
+                </option>
+              ))}
+            </Select>
+          </Box>
+        </Flex>
+        {!isEmpty(dataInbox) ? (
+          <Accordion allowToggle>
+            {dataInbox?.map((item, index) => (
+              <AccordionItem key={index} border="none">
+                <h2>
+                  <AccordionButton
+                    background={item.is_read ? "#718199" : "#8364BA"}
+                    className={styles["inbox-wrapper"]}
+                    onClick={() => {
+                      setIdInbox(item.room_message_id);
+                    }}
+                  >
+                    <Box className={styles["inbox-img-wrapper"]}>
+                      <Image
+                        className={styles["inbox-img"]}
+                        src="/images/company-dummy.jpeg"
+                        alt="image"
+                      />
+                    </Box>
+                    <Text className={styles["inbox-name"]}>
+                      {item.sender_name}
+                    </Text>
+                    <Text className={styles["inbox-text"]}>{item.title}</Text>
+                    <DownloadIcon w={"20px"} h={"20px"} color={"#ffffff"} />
+                    <Flex align={"center"}>
+                      <Text className={styles["inbox-text"]}>
+                        {moment(item.schedule).format("DD MMMM YYYY")}
+                      </Text>
+                      <Text
+                        className={styles["inbox-text"]}
+                        margin={"0 1rem"}
+                      >
+                        {moment(item.schedule).format("HH:mm")}
+                      </Text>
+                      <Text className={styles["inbox-text"]}>
+                        {moment(item.schedule).locale("en").format("A")}
+                      </Text>
+                    </Flex>
+                  </AccordionButton>
+                </h2>
+                {!isEmpty(dataInboxDetail) && (
+                  <AccordionPanel
+                    pb={4}
+                    className={styles["inbox-reply-container"]}
+                  >
+                    <Text
+                      dangerouslySetInnerHTML={{
+                        __html: dataInboxDetail[0]?.main_text,
+                      }}
+                    />
+                    {item.is_read && (
+                      <Flex justify={"end"}>
+                        <Button
+                          onClick={replyMessageHandler}
+                          className={styles["inbox-btn"]}
+                          alignSelf={"end"}
+                          mt={"1.5rem"}
+                        >
+                          Reply
+                        </Button>
+                      </Flex>
+                    )}
+                  </AccordionPanel>
+                )}
+              </AccordionItem>
+            ))}
+          </Accordion>
+        ) : (
+          <Flex align={"center"} justify={"center"}>
+            <Text>Tidak ada data inbox</Text>
+          </Flex>
+        )}
+      </Box>
     </>
   );
 };
