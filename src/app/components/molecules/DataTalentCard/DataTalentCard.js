@@ -3,11 +3,16 @@ import React from 'react'
 import styles from './DataTalentCard.styles';
 import Icons, { DownloadIcon, EyeIcon } from '../../icons';
 import { employeeTypeOptions } from './shared/general';
+import { noop } from '@/app/utils/helpers';
 
-const DataTalentCard = ({ data = [] }) => {
-  const { employee_type, username, photo } = data;
+const DataTalentCard = ({ data = [], onPress = noop }) => {
+  const { employee_id, employee_type, username, photo } = data;
 
   const employeeTypeBadge = employeeTypeOptions.find((item) => item.id === employee_type);
+
+  const onHandlePress = () => {
+    onPress(employee_id);
+  };
 
   return (
     <Flex style={styles.container}>
@@ -20,7 +25,7 @@ const DataTalentCard = ({ data = [] }) => {
       </Box>
       <div style={{ width: '20px' }} />
       <Box flex={1}>
-        <h2 style={styles.title}>{username || '-'}</h2>
+        <h2 style={styles.title} onClick={onHandlePress}>{username || '-'}</h2>
       </Box>
       <Box md>
         <Flex style={styles.content}>

@@ -6,5 +6,6 @@ import DataTables from "./DataTables";
 import PayslipCard from "./PayslipCard";
 import ListEmpty from "./ListEmpty";
 import ApprvRemunCard from "./ApprvRemunCard";
+import BiodataField from "./BiodataField";
 
-export { DataTalentCard, HistoryTalentCard, SendDocumentCard, MasterDataBatchCard, DataTables, PayslipCard, ListEmpty, ApprvRemunCard };
+export { DataTalentCard, HistoryTalentCard, SendDocumentCard, MasterDataBatchCard, DataTables, PayslipCard, ListEmpty, ApprvRemunCard, BiodataField };

@@ -4,7 +4,7 @@ import styles from './PayslipCard.styles';
 import { DownloadIcon } from '../../icons';
 
 const PayslipCard = ({ data = [] }) => {
-  const { username } = data;
+  const { product_digital_name } = data;
 
   return (
     <Flex style={styles.container} justifyContent='space-between'>
@@ -18,7 +18,7 @@ const PayslipCard = ({ data = [] }) => {
         </Box>
         <div style={{ width: '20px' }} />
         <Box>
-          <h2 style={styles.title}>{username || '-'}</h2>
+          <h2 style={styles.title}>{product_digital_name}</h2>
         </Box>
       </Flex>
       <Flex marginRight={6}>

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { httpClient } from "../utils/network";
+import { useRouter } from "next/navigation";
 
 const useDataTalent = () => {
+  const router = useRouter();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [productDigitalData, setProductDigitalData] = useState([]);
@@ -52,13 +54,17 @@ const useDataTalent = () => {
     }
   };
 
+  const onHandlePress = (employeeId) => {
+    router.push(`/data-talent/${employeeId}`);
+  }
+
   useEffect(() => {
     fetchData();
     fetchDataImage();
     fetchDataPD();
   }, []);
 
-  return { data, loading, productDigitalData }
+  return { data, loading, productDigitalData, onHandlePress }
 
 };
 

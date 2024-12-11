@@ -53,12 +53,12 @@ const DataTalent = () => {
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
-  const { data, loading, productDigitalData } = useDataTalent();
+  const { data, loading, productDigitalData, onHandlePress } = useDataTalent();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
       return data.map((item) => {
-        return <DataTalentCard data={item} />
+        return <DataTalentCard data={item} onPress={onHandlePress} />
       });
     } else {
       return (

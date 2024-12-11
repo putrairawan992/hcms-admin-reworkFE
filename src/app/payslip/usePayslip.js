@@ -9,7 +9,7 @@ const usePayslip = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/admin/talent/list',
+        url: '/admin/payslip/list',
       });
 
       const responseData = response?.data?.data || [];

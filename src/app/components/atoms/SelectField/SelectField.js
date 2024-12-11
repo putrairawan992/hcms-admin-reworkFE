@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Box, Select, Text } from "@chakra-ui/react";
 import styles from './SelectField.styles';
 
@@ -23,4 +23,4 @@ const SelectField = ({ label = '', slug = '', value = '', options = [], onChange
   );
 }
 
-export default SelectField;
+export default memo(SelectField);
