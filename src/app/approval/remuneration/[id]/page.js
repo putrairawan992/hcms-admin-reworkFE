@@ -15,7 +15,6 @@ import { useState } from "react";
 import moment from "moment";
 import "moment/locale/id";
 import dynamic from "next/dynamic";
-import OfficeLogo from "../../../../../public/images/Office-Logos.png";
 import { useGetApprovalRemunerationDetail } from "@/app/api/approval";
 import useApprovalRemuneration from "../useApprovalRemuneration";
 import useRemunerationDetail from "./useRemunerationDetail";
@@ -375,7 +374,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                   <Flex
                     className={styles["approval-remuneration-card-inner"]}
                   >
-                    <Image src={OfficeLogo} />
+                    <Image src="/images/Office-Logos.png" />
                     <Text
                       className={
                         styles["approval-remuneration-details-footer-text"]

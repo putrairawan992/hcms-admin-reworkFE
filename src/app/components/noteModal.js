@@ -114,7 +114,7 @@ const NoteModal = ({ modalText, isOpen, onClose, id, isApprove }) => {
                   >
                     <Image
                       className={styles["modal-container-upload-img"]}
-                      src={UploadIcon}
+                      src={'/images/Group (4).png'}
                     />
                     <Box marginLeft={"1rem"}>
                       <Text className={styles["modal-container-upload-title"]}>
@@ -140,7 +140,7 @@ const NoteModal = ({ modalText, isOpen, onClose, id, isApprove }) => {
                     <Flex align={"center"}>
                       <Image
                         className={styles["modal-uploaded-img"]}
-                        src={UploadedFileIcon}
+                        src={'/images/doc.circle.png'}
                       />
                       <Text className={styles["modal-uploaded-text"]}>
                         {storedFile.name}
