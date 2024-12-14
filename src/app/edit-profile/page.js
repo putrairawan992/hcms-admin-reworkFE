@@ -18,14 +18,15 @@ import { useForm } from "react-hook-form";
 import { useEditProfile } from "../api/profile";
 import { getUserData, saveUserData } from "../utils/localStorage";
 import { httpClient } from "../utils/network";
+import axios from "axios";
 
 const EditProfile = () => {
   const toast = useToast();
   const profile = getUserData();
   const profileFileInputRef = useRef(null);
   const companyFileInputRef = useRef(null);
-  const [profileImagePreview, setProfileImagePreview] = useState();
-  const [companyImagePreview, setCompanyImagePreview] = useState();
+  const [profileImagePreview, setProfileImagePreview] = useState('');
+  const [companyImagePreview, setCompanyImagePreview] = useState('');
   const [reload, setReload] = useState(false);
   const { mutate } = useEditProfile();
   const { register, handleSubmit, setValue, watch } = useForm({
@@ -54,6 +55,8 @@ const EditProfile = () => {
       setCompanyImagePreview(profile.company_photo || "");
     }
   }, [profile, setValue, watch]);
+
+  console.log(profile?.photo);
 
 
   const handleTextClick = (type) => {
@@ -126,12 +129,22 @@ const EditProfile = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        baseURL: 'https://api-admin-rework.scalastaging.online:8080',
+        baseURL: 'https://api-admin-hcms-rework.scalastaging.online',
         url: '/download/profile_photo_admin/UUID-GENERATED-HERE',
+        responseType: 'blob'
       });
 
+      const profilePhotoUrl = URL.createObjectURL(response.data);
+
+      // const profilePhotoResponse = await axios.get('https://api-admin-hcms-rework.scalastaging.online/download/profile_photo_admin/UUID-GENERATED-HERE', {
+      //   responseType: "blob",
+      //   headers,
+      //   httpsAgent: new (require("https").Agent)({ rejectUnauthorized: false }),
+      // });
+
       // const responseData = response?.data?.data || [];
-      console.log(response);
+      // console.log(profilePhotoUrl);
+      setProfileImagePreview(profilePhotoUrl);
       // setData(responseData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -152,7 +165,7 @@ const EditProfile = () => {
               <Box className={styles["editProfile-img-wrapper"]}>
                 <Image
                   className={styles["editProfile-img"]}
-                  src={profile?.photo}
+                  src={profileImagePreview}
                   alt="profile-pict"
                 />
               </Box>
