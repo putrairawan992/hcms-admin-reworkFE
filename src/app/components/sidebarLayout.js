@@ -138,6 +138,7 @@ const SidebarLayout = ({ children }) => {
                     Account
                   </Flex>
                   <Flex
+                    onClick={() => handleNavigate('/setup/document')}
                     className={styles["nonactive-sidebar"]}
                     justify={"center"}
                     mb={2}
@@ -208,7 +209,7 @@ const SidebarLayout = ({ children }) => {
                     BPJSKES
                   </Flex>
                   <Flex
-                    onClick={() => router.push('/master-data/bpjsktk')}
+                    onClick={() => router.push('/master-data/bpjstk')}
                     className={styles["nonactive-sidebar"]}
                     justify={"center"}
                     mb={2}

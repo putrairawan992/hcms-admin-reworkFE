@@ -2,17 +2,18 @@ import React, { memo } from 'react'
 import { Box, Select, Text } from "@chakra-ui/react";
 import styles from './SelectField.styles';
 
-const SelectField = ({ label = '', slug = '', value = '', options = [], onChange = () => { } }) => {
+const SelectField = ({ label = '', slug = '', value = '', options = [], onChange = () => { }, marginRight = 2, disabled = false }) => {
   const onChangeValue = (e) => {
     onChange(slug, e.target.value);
   }
 
   return (
-    <Box marginRight={2} flex={1}>
+    <Box marginRight={marginRight} flex={1}>
       <Text className={styles.label}>{label}</Text>
       <Select
         value={value}
         onChange={onChangeValue}
+        disabled={disabled}
         style={styles.select}>
         <option value="" selected>Semua</option>
         {options.map((item) => (

@@ -327,6 +327,7 @@ const Remuneration = () => {
                   </InputGroup>
                 </Flex>
               </Box>
+
             </Flex>
             <Flex
               direction={"column"}
@@ -373,6 +374,7 @@ const Remuneration = () => {
                   </InputGroup>
                 </Flex>
               </Box>
+
               <Box>
                 <Flex
                   align={"center"}
@@ -439,6 +441,12 @@ const Remuneration = () => {
                   </InputGroup>
                 </Flex>
               </Box>
+
+              <Flex width={"100%"} justify={"end"} marginTop={"2rem"}>
+                <Button type="button" className={styles["remuneration-btn"]} onClick={onSubmit}>
+                  Save
+                </Button>
+              </Flex>
             </Flex>
           </GridItem>
           <GridItem>
@@ -840,13 +848,13 @@ const Remuneration = () => {
                 </Flex>
               </Box>
             </Flex>
+            <Flex width={"100%"} justify={"end"} marginTop={"2rem"}>
+              <Button type="button" className={styles["remuneration-btn"]} onClick={onSubmit}>
+                Save
+              </Button>
+            </Flex>
           </GridItem>
         </Grid>
-        <Flex width={"100%"} justify={"end"} marginTop={"2rem"}>
-          <Button type="button" className={styles["remuneration-btn"]} onClick={onSubmit}>
-            Save
-          </Button>
-        </Flex>
       </Box>
       <AlertDialog
         isOpen={isOpen}
