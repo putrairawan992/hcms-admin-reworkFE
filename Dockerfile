@@ -1,13 +1,16 @@
 # Gunakan image Node.js resmi dengan versi Alpine untuk build
-FROM node:18-alpine
+FROM node:20-alpine
 
 # Set working directory di dalam container
 WORKDIR /app
 
+# Perbarui npm ke versi terbaru
+RUN npm install -g npm@latest
+
 # Salin file package.json dan package-lock.json ke dalam container
 COPY package*.json ./
 
-# Instal dependensi menggunakan npm
+# Instal dependensi
 RUN npm install
 
 # Salin seluruh kode aplikasi ke dalam container
