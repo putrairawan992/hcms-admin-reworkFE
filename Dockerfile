@@ -1,26 +1,35 @@
-# Gunakan image Node.js resmi dengan versi Alpine untuk build
-FROM node:20-alpine
+# Use the official Node.js image as a base
+FROM node:18 AS builder
 
-# Set working directory di dalam container
+# Set working directory
 WORKDIR /app
 
-# Perbarui npm ke versi terbaru
-RUN npm install -g npm@latest
-
-# Salin file package.json dan package-lock.json ke dalam container
+# Copy package.json and package-lock.json files
 COPY package*.json ./
 
-# Instal dependensi
+# Install dependencies
 RUN npm install
 
-# Salin seluruh kode aplikasi ke dalam container
+# Copy the rest of the application files
 COPY . .
 
-# Build aplikasi (misalnya untuk aplikasi Next.js)
+# Build the Next.js application
 RUN npm run build
 
-# Tentukan port yang digunakan aplikasi
+# Production stage
+FROM node:18-slim AS runner
+
+# Set working directory
+WORKDIR /app
+
+# Copy only necessary files from the builder stage
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/node_modules ./node_modules
+
+# Expose port
 EXPOSE 3000
 
-# Jalankan aplikasi di container
+# Start the Next.js application
 CMD ["npm", "run", "start"]
