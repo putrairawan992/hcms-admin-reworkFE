@@ -15,6 +15,8 @@ import { isEmpty } from "lodash";
 import { DataTalentCard, ListEmpty } from "../components/molecules";
 import useDataTalent from "./useDataTalent";
 import { moveScreen } from "../utils/helpers";
+import { SelectField } from "../components/atoms";
+import { documentTrackingOptions, employeeTypeOptions, selectionTypeOptions, statusDocumentOptions } from "./Shared/General";
 
 moment.locale("id");
 
@@ -53,7 +55,7 @@ const DataTalent = () => {
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
-  const { data, loading, productDigitalData, onHandlePress } = useDataTalent();
+  const { data, filters, loading, productDigitalData, onHandlePress, onChangeSelect } = useDataTalent();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
@@ -83,69 +85,11 @@ const DataTalent = () => {
         </Box>
       </Flex>
       <Flex marginBottom={4} marginTop={10}>
-        <Box marginRight={2} flex={1}>
-          <Text className={styles["inbox-filter-text"]}>Digital Product</Text>
-          <Select
-            value={years}
-            onChange={(e) => setYears(e.target.value)}
-            className={styles["inbox-filter-select"]}>
-            <option value="all" selected>Semua</option>
-            {productDigitalData?.map((item, index) => (
-              <option key={index} value={item.product_digital_name}>
-                {item.product_digital_name}
-              </option>
-            ))}
-          </Select>
-        </Box>
-        <Box marginRight={2} flex={1}>
-          <Text className={styles["inbox-filter-text"]}>Berkas</Text>
-          <Select
-            value={years}
-            onChange={(e) => setYears(e.target.value)}
-            className={styles["inbox-filter-select"]}>
-            <option value="all" selected>Semua</option>
-            <option value="offering_letter_normal">Offering Letter Normal</option>
-            <option value="pkwt">PKWT</option>
-            <option value="offering_letter_khusus">Offering Letter Khusus</option>
-            <option value="amandemen_pkwt">Amandemen PKWT</option>
-            <option value="contract_freelance">Kontrak Freelance</option>
-          </Select>
-        </Box>
-        <Box marginRight={2} flex={1}>
-          <Text className={styles["inbox-filter-text"]}>Status Berkas</Text>
-          <Select
-            value={years}
-            onChange={(e) => setYears(e.target.value)}
-            className={styles["inbox-filter-select"]}>
-            <option value="all" selected>Semua</option>
-            <option value="sent">Sent</option>
-            <option value="employee_signed">Employee Signed</option>
-            <option value="full_signed">Full Signed</option>
-          </Select>
-        </Box>
-        <Box marginRight={2} flex={1}>
-          <Text className={styles["inbox-filter-text"]}>Jalur</Text>
-          <Select
-            value={years}
-            onChange={(e) => setYears(e.target.value)}
-            className={styles["inbox-filter-select"]}>
-            <option value="all" selected>Semua</option>
-            <option value="non_selection">Non Selection</option>
-            <option value="selection">Selection</option>
-          </Select>
-        </Box>
-        <Box marginRight={2} flex={1}>
-          <Text className={styles["inbox-filter-text"]}>Tipe Karyawan</Text>
-          <Select
-            value={years}
-            flex={1}
-            onChange={(e) => setYears(e.target.value)}
-            className={styles["inbox-filter-select"]}>
-            <option value="all" selected>Semua</option>
-            <option value="contract">Kontrak</option>
-            <option value="freelance">Freelance</option>
-          </Select>
-        </Box>
+        <SelectField label="Digital Product" options={productDigitalData} value={filters.digital_product} slug='digital_product' onChange={onChangeSelect} />
+        <SelectField label="Berkas" options={documentTrackingOptions} value={filters.document} slug='document_tracking' onChange={onChangeSelect} />
+        <SelectField label="Status Berkas" options={statusDocumentOptions} value={filters.document_tracking} slug='document_tracking' onChange={onChangeSelect} />
+        <SelectField label="Jalur" options={selectionTypeOptions} value={filters.selection_type} slug='selection_type' onChange={onChangeSelect} />
+        <SelectField label="Tipe Karyawan" options={employeeTypeOptions} value={filters.employee_type} slug='employee_type' onChange={onChangeSelect} />
       </Flex>
       {loading ? <ListEmpty /> : <RenderContent />}
     </Box>

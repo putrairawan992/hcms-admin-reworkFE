@@ -14,7 +14,7 @@ import { FormFieldsAmandementPKWT, FormFieldsContractFreelance, FormFieldsContra
 moment.locale("id");
 
 const SetupDocumentDetails = () => {
-  const { loading, form, productDigital, typeOptions, onChangeSelect, onHandlePress } = useSetupDocumentDetail();
+  const { data, loading, form, productDigital, typeOptions, onChangeSelect, onHandlePress } = useSetupDocumentDetail();
 
   const RenderData = () => {
     switch (form.type_document) {
@@ -31,7 +31,7 @@ const SetupDocumentDetails = () => {
       case 'PKWT Khusus & Normal':
         return <FormFieldsPKWT onClick={onHandlePress} loading={loading} />
       case 'Kontrak Perjanjian Pekerja Harian Lepas':
-        return <FormFieldsContractDays onClick={onHandlePress} loading={loading} />
+        return <FormFieldsContractDays onClick={onHandlePress} loading={loading} data={data} />
       default:
         break;
     }
@@ -50,8 +50,8 @@ const SetupDocumentDetails = () => {
               <Text fontSize={14} fontWeight='bold' color='#404041'>Atur Untuk Digital Product:</Text>
             </Box>
             <Flex flex={1}>
-              <SelectField options={productDigital} value={form.job_provider_id} slug="job_provider_id" onChange={onChangeSelect} />
-              <SelectField options={typeOptions} value={form.type_document} slug="type_document" onChange={onChangeSelect} />
+              <SelectField options={productDigital} value={form.job_provider_id} slug="job_provider_id" onChange={onChangeSelect} withOptionDefault={false} />
+              <SelectField options={typeOptions} value={form.type_document} slug="type_document" onChange={onChangeSelect} withOptionDefault={false} />
             </Flex>
           </Flex>
           <RenderData />

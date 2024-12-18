@@ -8,56 +8,68 @@ import {
   Button,
   Image,
 } from "@chakra-ui/react";
+import { useCallback, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
-import { useState } from "react";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { dataFormContractDays } from "../Shared/General";
-import { noop } from "lodash";
+import { noop } from "@/app/utils/helpers";
+import { FormFields } from "@/app/components/molecules";
 
-const FormFieldsContractDays = ({ loading = false, onClick = noop }) => {
+const FormFieldsContractDays = ({ data = [], loading = false, onClick = noop }) => {
   const [form, setForm] = useState({
-    responsible_person: '',
-    power_of_attorney_number: '',
-    power_of_attorney_date: '',
-    consideration: '',
-    clause_6: '',
-    clause_1: '',
-    clause_9: ''
+    responsible_person: data?.responsible_person || '',
+    responsible_role: data?.responsible_role || '',
+    clause_5: data?.clause_5 || '',
+    clause_6_2: data?.clause_6_2 || '',
+    clause_6_3: data?.clause_6_3 || ''
   });
 
   const onHandleSubmit = () => {
     onClick(form);
   };
 
-  const onChangeText = (slug, value) => {
+  const onChangeText = useCallback((slug, value) => {
     setForm(prevData => ({ ...prevData, [slug]: value }));
-  };
+  }, []);
 
-  const RenderForm = ({ data = [] }) => {
+  const RenderForm = useMemo(() => ({ data = [] }) => {
+    console.log(form[data.slug]);
     if (data.type === 'text') {
-      return <Input
-        flex={1} borderWidth={1} borderColor='#AE445A' borderRadius={10} padding='8px 16px'
-        type="text"
-        value={form[data.slug]}
-        onChange={(e) => onChangeText(data.slug, e.target.value)}
-      />
+      return (
+        <Input
+          key={data.slug}
+          id={data.slug}
+          flex={1} borderWidth={1} borderColor='#AE445A' borderRadius={10} padding='8px 16px'
+          type="text"
+          value={form[data.slug]}
+          onChange={(e) => onChangeText(data.slug, e.target.value)}
+        />
+      );
     } else if (data.type === 'textarea') {
-      return <ReactQuill
-        theme="snow"
-        style={{ height: "150px", flex: 1, marginBottom: 45 }}
-        value={form[data.slug]}
-        onChange={(value) => onChangeText(data.slug, value)}
-      />
+      return (
+        <ReactQuill
+          theme="snow"
+          key={data.slug}
+          id={data.slug}
+          style={{ height: "150px", flex: 1, marginBottom: 45 }}
+          value={form[data.slug]}
+          onChange={(value) => onChangeText(data.slug, value)}
+        />
+      );
     } else if (data.type === 'date') {
-      return <Input
-        flex={1} borderWidth={1} borderColor='#AE445A' borderRadius={10} padding='8px 16px'
-        type="date"
-        value={form[data.slug]}
-        onChange={(e) => onChangeText(data.slug, e.target.value)}
-      />
+      return (
+        <Input
+          key={data.slug}
+          id={data.slug}
+          flex={1} borderWidth={1} borderColor='#AE445A' borderRadius={10} padding='8px 16px'
+          type="date"
+          value={form[data.slug]}
+          onChange={(e) => onChangeText(data.slug, e.target.value)}
+        />
+      );
     }
-  };
+  }, [form]);
 
   return (
     <Box>
@@ -66,18 +78,71 @@ const FormFieldsContractDays = ({ loading = false, onClick = noop }) => {
       <Gap height={4} />
       <Flex>
         <Box flex={1}>
-          {dataFormContractDays.map((item) => {
-            return (
-              <Flex flex={1} alignItems={item.type === 'textarea' ? 'flex-start' : 'center'} marginBottom={2}>
-                <Box flex={0.5}>
-                  <Text fontSize={14} fontWeight='bold' color='#404041'>{item.label}:</Text>
-                </Box>
-                <Flex flex={1}>
-                  <RenderForm data={item} />
-                </Flex>
-              </Flex>
-            );
-          })}
+          <Flex flex={1} alignItems='center' marginBottom={2}>
+            <Box flex={0.5}>
+              <Text fontSize={14} fontWeight='bold' color='#404041'>Nama Penanggung Jawab:</Text>
+            </Box>
+            <Flex flex={1}>
+              <Input
+                flex={1} borderWidth={1} borderColor='#AE445A' borderRadius={10} padding='8px 16px'
+                type="text"
+                value={form.responsible_person}
+                onChange={(e) => onChangeText('responsible_person', e.target.value)}
+              />
+            </Flex>
+          </Flex>
+          <Flex flex={1} alignItems='center' marginBottom={2}>
+            <Box flex={0.5}>
+              <Text fontSize={14} fontWeight='bold' color='#404041'>Role Penanggung Jawab:</Text>
+            </Box>
+            <Flex flex={1}>
+              <Input
+                flex={1} borderWidth={1} borderColor='#AE445A' borderRadius={10} padding='8px 16px'
+                type="text"
+                value={form.responsible_role}
+                onChange={(e) => onChangeText('responsible_role', e.target.value)}
+              />
+            </Flex>
+          </Flex>
+          <Flex flex={1} alignItems='flex-start' marginBottom={2}>
+            <Box flex={0.5}>
+              <Text fontSize={14} fontWeight='bold' color='#404041'>Pasal 5 Honorium:</Text>
+            </Box>
+            <Flex flex={1}>
+              <ReactQuill
+                theme="snow"
+                style={{ height: "150px", flex: 1, marginBottom: 45 }}
+                value={form.clause_5}
+                onChange={(value) => onChangeText('clause_5', value)}
+              />
+            </Flex>
+          </Flex>
+          <Flex flex={1} alignItems='flex-start' marginBottom={2}>
+            <Box flex={0.5}>
+              <Text fontSize={14} fontWeight='bold' color='#404041'>Pasal 6, Nomor 2:</Text>
+            </Box>
+            <Flex flex={1}>
+              <ReactQuill
+                theme="snow"
+                style={{ height: "150px", flex: 1, marginBottom: 45 }}
+                value={form.clause_6_2}
+                onChange={(value) => onChangeText('clause_6_2', value)}
+              />
+            </Flex>
+          </Flex>
+          <Flex flex={1} alignItems='flex-start' marginBottom={2}>
+            <Box flex={0.5}>
+              <Text fontSize={14} fontWeight='bold' color='#404041'>Pasal 6, Nomor 3:</Text>
+            </Box>
+            <Flex flex={1}>
+              <ReactQuill
+                theme="snow"
+                style={{ height: "150px", flex: 1, marginBottom: 45 }}
+                value={form.clause_6_3}
+                onChange={(value) => onChangeText('clause_6_3', value)}
+              />
+            </Flex>
+          </Flex>
         </Box>
       </Flex>
       <Gap height={6} />

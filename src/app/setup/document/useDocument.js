@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { httpClient } from "../../utils/network";
 import { useRouter } from "next/navigation";
+import { useToast } from "@chakra-ui/react";
 
 const useDataTalent = () => {
   const router = useRouter();
+  const toast = useToast();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [productDigitalData, setProductDigitalData] = useState([]);
-  const [isActive, setIsActive] = useState('');
+  const [form, setForm] = useState({
+    productDigital: '',
+    documentType: '',
+  });
 
   const fetchData = async () => {
     try {
@@ -24,23 +29,6 @@ const useDataTalent = () => {
     }
   };
 
-  const fetchDataImage = async () => {
-    try {
-      const response = await httpClient({
-        method: 'GET',
-        baseURL: 'https://api-admin-rework.scalastaging.online:8080',
-        url: '/download/profile_photo_admin/UUID-GENERATED-HERE',
-      });
-
-      // const responseData = response?.data?.data || [];
-      console.log(response);
-      // setData(responseData);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
-  };
-
-
   const fetchDataPD = async () => {
     try {
       const response = await httpClient({
@@ -49,23 +37,58 @@ const useDataTalent = () => {
       });
 
       const responseData = response?.data?.data || [];
-      setProductDigitalData(responseData);
+      const transformedData = responseData?.map(({ id, product_digital_name }) => ({
+        id,
+        label: product_digital_name,
+        value: id
+      }));
+      setProductDigitalData(transformedData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
   };
 
   const onHandlePress = (value) => {
-    setIsActive(value)
+    setForm(prevData => ({ ...prevData, documentType: value }));
   }
+
+  const onHandleChange = (slug, value) => {
+    setForm(prevData => ({ ...prevData, productDigital: value }));
+  };
+
+  const validateForm = () => {
+    let newErrors = "";
+    if (!form.productDigital.trim()) {
+      newErrors = "Product Digital tidak boleh kosong";
+    }
+    if (!form.documentType.trim()) {
+      newErrors = "Document Type tidak boleh kosong";
+    }
+    return newErrors;
+  };
+
+  const onHandleSubmit = () => {
+    const validationErrors = validateForm();
+    if (validationErrors !== '') {
+      toast({
+        title: "Error",
+        description: validationErrors,
+        duration: 3000,
+        status: "error",
+        position: "top",
+        isClosable: true,
+      });
+    } else {
+      router.push(`/setup/document/detail?productDigital=${form.productDigital}&documentType=${form.documentType}`);
+    }
+  };
 
   useEffect(() => {
     fetchData();
-    fetchDataImage();
     fetchDataPD();
   }, []);
 
-  return { data, loading, productDigitalData, isActive, onHandlePress }
+  return { data, form, loading, productDigitalData, onHandlePress, onHandleChange, onHandleSubmit }
 
 };
 

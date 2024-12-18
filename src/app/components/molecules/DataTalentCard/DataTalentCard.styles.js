@@ -4,7 +4,8 @@ const styles = {
     borderColor: '#AE445A',
     borderRadius: '10px',
     padding: '18px 12px',
-    marginBottom: '12px'
+    marginBottom: '12px',
+    alignItems: 'center'
   },
   content: {
     borderWidth: 1,

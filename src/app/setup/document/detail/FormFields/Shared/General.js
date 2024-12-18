@@ -54,12 +54,12 @@ export const dataFormContractDays = [
   },
   {
     label: 'Pasal 6, Nomor 2',
-    slug: 'clause_6',
+    slug: 'clause_6_2',
     type: 'textarea',
   },
   {
     label: 'Pasal 6, Nomor 3',
-    slug: 'clause_6',
+    slug: 'clause_6_3',
     type: 'textarea',
   }
 ];

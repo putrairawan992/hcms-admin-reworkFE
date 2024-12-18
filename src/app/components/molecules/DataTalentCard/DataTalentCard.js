@@ -8,6 +8,8 @@ import { noop } from '@/app/utils/helpers';
 const DataTalentCard = ({ data = [], onPress = noop }) => {
   const { employee_id, employee_type, username, photo } = data;
 
+  console.log(photo);
+
   const employeeTypeBadge = employeeTypeOptions.find((item) => item.id === employee_type);
 
   const onHandlePress = () => {
@@ -16,18 +18,19 @@ const DataTalentCard = ({ data = [], onPress = noop }) => {
 
   return (
     <Flex style={styles.container}>
-      <Box>
-        <image
+      <Box borderWidth={3} borderColor='#AE445A' borderRadius='100%'>
+        <Image
           src={photo}
-          width={'450px'}
-          height={'66px'}
+          width={'38px'}
+          height={'38px'}
+          borderRadius={'100%'}
         />
       </Box>
       <div style={{ width: '20px' }} />
-      <Box flex={1}>
+      <Flex alignItems='center' flex={1}>
         <h2 style={styles.title} onClick={onHandlePress}>{username || '-'}</h2>
-      </Box>
-      <Box md>
+      </Flex>
+      <Box md alignItems='center'>
         <Flex style={styles.content}>
           <Box width={100} textAlign='center' fontSize={10} borderRightWidth={1} borderColor='#AE445A'>
             -

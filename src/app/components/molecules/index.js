@@ -8,5 +8,6 @@ import ListEmpty from "./ListEmpty";
 import ApprvRemunCard from "./ApprvRemunCard";
 import BiodataField from "./BiodataField";
 import DocumentFormField from "./DocumentFormField";
+import FormFields from "./FormFields";
 
-export { DataTalentCard, HistoryTalentCard, SendDocumentCard, MasterDataBatchCard, DataTables, PayslipCard, ListEmpty, ApprvRemunCard, BiodataField, DocumentFormField };
+export { DataTalentCard, HistoryTalentCard, SendDocumentCard, MasterDataBatchCard, DataTables, PayslipCard, ListEmpty, ApprvRemunCard, BiodataField, DocumentFormField, FormFields };
