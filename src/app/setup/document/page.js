@@ -60,7 +60,7 @@ const SetupDocument = () => {
       </Flex>
       <Flex marginTop={10} marginBottom={10}>
         <Box flex="0 0 25%">
-          <SelectField label="Masukan ke" marginRight={0} options={productDigitalData} onChange={onHandleChange} value={form.productDigital} slug="productDigital" />
+          <SelectField label="Masukan ke" marginRight={0} options={productDigitalData} onChange={onHandleChange} value={form.productDigital} slug="productDigital" disabled={true} />
           <Gap height={2} />
           <Box borderWidth={3} borderColor='#AE445A' borderRadius={10} height={628} paddingTop={8}>
             <DocumentFormField isActive={form.documentType} onPress={onHandlePress} />

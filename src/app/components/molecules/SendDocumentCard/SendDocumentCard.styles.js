@@ -1,11 +1,11 @@
 const styles = {
   wrapper: {
     width: '100%',
-    height: '73px',
+    height: '100%',
     border: '2px solid #ae445a',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '10px 3rem',
+    padding: '10px 1rem',
     borderRadius: '10px',
     marginBottom: '1rem',
     backgroundColor: '#FFFFFF'
@@ -30,7 +30,6 @@ const styles = {
     textAlign: 'left',
     color: '#404041',
   },
-
   subtitle: {
     fontSize: '14px',
     fontWeight: '400',
@@ -38,7 +37,6 @@ const styles = {
     textAlign: 'left',
     color: '#404041',
   },
-
   button: {
     height: '40px',
     padding: '10px',
@@ -49,6 +47,26 @@ const styles = {
     fontWeight: '700',
     lineHeight: '18px',
     color: '#ffffff',
+  },
+  buttonSend: {
+    height: '32px',
+    padding: '4px 20px',
+    borderRadius: '10px',
+    background: 'linear-gradient(90deg, #f39f5a 0%, #ae445a 100%)',
+    boxShadow: '5px 0px 5px 0px #b3b9c5',
+    fontSize: '12px',
+    fontWeight: '700',
+    lineHeight: '18px',
+    color: '#ffffff',
+  },
+  select: {
+    flex: 1,
+    borderRadius: '10px',
+    border: '1px solid #ae445a',
+    background: '#ffffff',
+    fontSize: '16px',
+    fontWeight: '700',
+    color: '#ae445a',
   }
 }
 

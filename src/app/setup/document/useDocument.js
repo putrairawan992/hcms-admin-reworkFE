@@ -58,9 +58,6 @@ const useDataTalent = () => {
 
   const validateForm = () => {
     let newErrors = "";
-    if (!form.productDigital.trim()) {
-      newErrors = "Product Digital tidak boleh kosong";
-    }
     if (!form.documentType.trim()) {
       newErrors = "Document Type tidak boleh kosong";
     }

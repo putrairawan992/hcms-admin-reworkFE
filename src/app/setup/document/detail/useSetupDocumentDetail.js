@@ -10,27 +10,24 @@ const useSetupDocumentDetail = () => {
   const params = useParams();
 
   const searchParams = new URLSearchParams(window.location.search);
-  const id = searchParams.get("productDigital");
   const documentType = searchParams.get("documentType");
-
 
   const [data, setData] = useState([]);
   const [typeOptions, setTypeOptions] = useState([]);
   const [productDigital, setProductDigitalData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const documentTypeValue = documentTypeOptions.find((item) => item.label === documentType);
 
   const [form, setForm] = useState({
-    job_provider_id: id || '',
-    type_document: documentTypeValue?.name || ''
+    job_provider_id: '',
+    type_document: ''
   });
 
+
   useEffect(() => {
-    if (!id && !documentType) {
-      console.log('Error');
-    }
-  }, [router]);
+    const documentTypeValue = documentTypeOptions.find((item) => item.label === documentType);
+    setForm((prev) => ({ ...prev, type_document: documentTypeValue?.name || 'Amandemen PKWT Khusus & Normal' }));
+  }, [documentType]);
 
   const fetchDataPD = async () => {
     try {
@@ -120,8 +117,8 @@ const useSetupDocumentDetail = () => {
       });
 
       const responseData = response?.data?.data || [];
-      if (responseData?.length > 0) {
-        setData(responseData[0]);
+      if (responseData?.data?.length > 0) {
+        setData(responseData?.data[0]);
       }
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -139,6 +136,7 @@ const useSetupDocumentDetail = () => {
 
   useEffect(() => {
     fetchDocumentDetail(form);
+    console.log(form)
   }, [form]);
 
   return { data, loading, form, typeOptions, productDigital, loading, onHandlePress, onChangeSelect }
