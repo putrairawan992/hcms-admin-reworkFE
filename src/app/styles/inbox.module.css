@@ -141,3 +141,30 @@
   text-align: left;
   color: #ae445a;
 }
+
+.button-send {
+  height: 32px;
+  padding: 4px 20px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #f39f5a 0%, #ae445a 100%);
+  box-shadow: 5px 0px 5px 0px #b3b9c5;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 18px;
+  color: #ffffff;
+}
+
+.input-container {
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid #ae445a !important;
+}
+
+.admin-role-input {
+  border: none !important;
+  border-radius: 12px !important;
+}
+
+.admin-role-input::placeholder {
+  font-style: italic;
+}

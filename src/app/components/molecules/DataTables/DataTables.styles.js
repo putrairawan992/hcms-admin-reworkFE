@@ -1,39 +1,46 @@
 const styles = {
   header: {
     style: {
-      backgroundColor: 'transparent', // Warna latar belakang header
-      color: '#AE445A',          // Warna teks header
-      fontSize: '16px',          // Ukuran font header
-      fontWeight: '700',        // Ketebalan font header
-      lineHeight: '19px'
+      backgroundColor: 'transparent',
+      color: '#AE445A',
+      fontSize: '16px',
+      fontWeight: '700',
+      lineHeight: '19px',
+      minWidth: '20px',
     },
   },
   headCells: {
     style: {
       backgroundColor: 'transparent',
-      padding: '10px',            // Jarak dalam
-      color: '#AE445A',          // Warna teks header
-      fontSize: '16px',          // Ukuran font header
-      fontWeight: '700',        // Ketebalan font header
-      lineHeight: '19px'
+      padding: '10px',
+      color: '#AE445A',
+      fontSize: '16px',
+      fontWeight: '700',
+      lineHeight: '19px',
+      minWidth: '20px',
     },
   },
   rows: {
     style: {
-      backgroundColor: 'transparent',  // Menghilangkan warna latar belakang
+      whiteSpace: "normal",
+      wordBreak: "break-word",
+      backgroundColor: 'transparent',
       '&:nth-of-type(odd)': {
-        backgroundColor: 'transparent', // Tidak ada warna untuk baris ganjil
+        backgroundColor: 'transparent',
       },
       '&:hover': {
-        backgroundColor: 'transparent', // Tidak ada warna saat di-hover
+        backgroundColor: 'transparent',
       },
     },
   },
   cells: {
     style: {
-      padding: '10px',           // Jarak dalam
-      color: '#333',            // Warna teks sel
-      fontSize: '16px',         // Ukuran font sel
+      padding: '10px',
+      color: '#333',
+      fontSize: '16px',
+      whiteSpace: "normal",
+      wordBreak: "break-word",
+
     },
   }
 };

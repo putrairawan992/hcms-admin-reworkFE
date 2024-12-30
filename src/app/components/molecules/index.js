@@ -9,5 +9,6 @@ import ApprvRemunCard from "./ApprvRemunCard";
 import BiodataField from "./BiodataField";
 import DocumentFormField from "./DocumentFormField";
 import FormFields from "./FormFields";
+import TalentListCard from "./TalentListCard";
 
-export { DataTalentCard, HistoryTalentCard, SendDocumentCard, MasterDataBatchCard, DataTables, PayslipCard, ListEmpty, ApprvRemunCard, BiodataField, DocumentFormField, FormFields };
+export { DataTalentCard, HistoryTalentCard, SendDocumentCard, MasterDataBatchCard, DataTables, PayslipCard, ListEmpty, ApprvRemunCard, BiodataField, DocumentFormField, FormFields, TalentListCard };

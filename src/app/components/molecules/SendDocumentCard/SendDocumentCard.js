@@ -1,7 +1,7 @@
 import { Accordion, AccordionButton, AccordionItem, AccordionPanel, Box, Button, Flex, Image, Select, Text, VStack } from '@chakra-ui/react';
 import React from 'react'
 import styles from './SendDocumentCard.styles';
-import { ChatIcon, DownloadIcon, EyeIcon } from '../../icons';
+import { ChatIcon, CloseIcon, DownloadIcon, EyeIcon, FileBadgeIcon, MessageIcon } from '../../icons';
 import moment from 'moment';
 import { Gap } from '../../atoms';
 
@@ -97,10 +97,10 @@ const SendDocumentCard = ({ data = [] }) => {
                     </Select>
                   </Box>
                 </Flex>
-                <Flex flex={1} alignItems='center' justifyContent='center'>
-                  <DownloadIcon />
-                  <DownloadIcon />
-                  <DownloadIcon />
+                <Flex flex={1} alignItems='center' justifyContent='space-around' marginLeft={4}>
+                  <FileBadgeIcon />
+                  <MessageIcon />
+                  <CloseIcon />
                 </Flex>
                 <Flex flex={1} alignItems='center' justifyContent='center'>
                   <Text fontWeight='bold' color='#AE445A'>None</Text>

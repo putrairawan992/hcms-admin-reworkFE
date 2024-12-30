@@ -9,6 +9,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Spinner,
   Switch,
   Table,
   Tbody,
@@ -21,11 +22,20 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon, EditIcon, Search2Icon } from "@chakra-ui/icons";
 import styles from "../../styles/adminRole.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import { httpClient } from "@/app/utils/network";
+import { DataTables, ListEmpty } from "@/app/components/molecules";
+import columns from "./columns";
+import { isEmpty } from "lodash";
 
 const AdminRole = () => {
+  const [page, setPage] = useState(1);
+  const [keyword, setKeyword] = useState('');
+  const [data, setData] = useState([]);
+  const [totalData, setTotalData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const ConfirmationModalWithNoSSR = dynamic(
     () => import("../../components/confirmationModal"),
     { ssr: false }
@@ -41,6 +51,43 @@ const AdminRole = () => {
       setText("Anda akan mengaktifkan akun ini. Apakah anda yakin?");
     }
     onOpen();
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await httpClient({
+        method: 'GET',
+        url: '/admin/account'
+      });
+
+      const responseData = response?.data?.data || [];
+      setData(responseData);
+      setTotalData(responseData?.length);
+      setLoading(false);
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+      setLoading(false);
+    }
+  };
+
+  const onChangeText = (e) => {
+    setKeyword(e.target.value);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const RenderContent = () => {
+    if (!isEmpty(data)) {
+      return <DataTables data={data} columns={columns(totalData, page)} totalData={totalData} page={page} keyword={keyword} />;
+    } else {
+      return (
+        <Flex align={"center"} justify={"center"}>
+          <Text>Tidak ada data inbox</Text>
+        </Flex>
+      )
+    }
   };
 
   return (
@@ -60,6 +107,8 @@ const AdminRole = () => {
                 className={styles["admin-role-input"]}
                 type="text"
                 placeholder="Ketikkan Nama"
+                value={keyword}
+                onChange={onChangeText}
               />
               <InputRightElement>
                 <Search2Icon />
@@ -74,57 +123,7 @@ const AdminRole = () => {
             New Admin
           </Button>
         </Flex>
-        <Table>
-          <Thead>
-            <Tr className={styles["admin-role-table-header-container"]}>
-              <Th className={styles["admin-role-table-header"]}>No</Th>
-              <Th className={styles["admin-role-table-header"]}>Admin ID</Th>
-              <Th className={styles["admin-role-table-header"]}>Nama</Th>
-              <Th className={styles["admin-role-table-header"]}>Email</Th>
-              <Th className={styles["admin-role-table-header"]}>Divisi</Th>
-              <Th className={styles["admin-role-table-header"]}>Jabatan</Th>
-              <Th className={styles["admin-role-table-header"]}>Action</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            <Tr>
-              <Td className={styles["admin-role-table-data"]}>1</Td>
-              <Td className={styles["admin-role-table-data"]}>0000506701</Td>
-              <Td className={styles["admin-role-table-data"]}>
-                Ananta Damar Kusuma
-              </Td>
-              <Td className={styles["admin-role-table-data"]}>
-                ananta@gmail.com
-              </Td>
-              <Td className={styles["admin-role-table-data"]}>
-                Human Capital
-              </Td>
-              <Td className={styles["admin-role-table-data"]}>
-                Human Capital
-              </Td>
-              <Td>
-                <FormControl
-                  display="flex"
-                  alignItems="center"
-                  justifyContent={"space-between"}
-                >
-                  <EditIcon />
-                  <Switch
-                    onChange={() => changeAdminStatusHandler("nonactive")}
-                    id="action"
-                  />
-                  <FormLabel
-                    className={styles["admin-role-table-data"]}
-                    htmlFor="action"
-                    mb="0"
-                  >
-                    Off
-                  </FormLabel>
-                </FormControl>
-              </Td>
-            </Tr>
-          </Tbody>
-        </Table>
+        {loading ? <ListEmpty /> : <RenderContent />}
       </Box>
     </>
   );

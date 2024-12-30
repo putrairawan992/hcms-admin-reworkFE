@@ -15,7 +15,7 @@ const useBpjstk = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/list/sheet1',
+        url: '/list/sheet2',
         params: { page: 1, size: 10 }
       });
 

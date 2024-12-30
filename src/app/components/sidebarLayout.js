@@ -25,6 +25,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { Container } from "reactstrap";
 import { clearUserData, getUserData } from "../utils/localStorage";
 import { memo } from "react";
+import { Navbar } from "./atoms";
+import { navbarDataOptions } from "@/shared/general";
 
 const SidebarLayout = ({ children }) => {
   const profile = getUserData();
@@ -33,6 +35,54 @@ const SidebarLayout = ({ children }) => {
 
   const handleNavigate = (path) => {
     router.push(path);
+  };
+
+  const RenderAccordion = ({ title, children }) => {
+    return (
+      <Accordion allowToggle>
+        <AccordionItem border="none" marginBottom={"1rem"}>
+          <AccordionButton
+            p={0}
+            _focus={{ boxShadow: "none", background: "none" }}
+            _active={{ background: "none" }}
+            _hover={{ background: "none" }}
+          >
+            <Flex
+              className={styles["nonactive-sidebar"]}
+              marginBottom={0}
+              as="span"
+              flex="1"
+              alignItems='center'
+              justifyContent='center'
+              textAlign="center"
+            >
+              <Text>
+                {title}
+              </Text>
+              <AccordionIcon />
+            </Flex>
+          </AccordionButton>
+          <AccordionPanel pb={0}>
+            {children.map((row) => (
+              <Navbar title={row.title} href={row.href} />
+            ))}
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
+    );
+  };
+
+  const RenderContent = () => {
+    return navbarDataOptions.map((item, index) => {
+      switch (item.type) {
+        case 'text':
+          return <Navbar key={index} title={item.title} href={item.href} />;
+        case 'accordion':
+          return <RenderAccordion key={index} title={item.title} children={item.children} />;
+        default:
+          return <Divider key={index} className={styles["sidebar-content-divider"]} />;
+      }
+    });
   };
 
   return (
@@ -69,254 +119,8 @@ const SidebarLayout = ({ children }) => {
             />
           </Box>
           <Box className={styles["divider-sidebar"]} />
-          <Box flex="1"
-            overflowY="auto"
-            padding="0px 1rem">
-            <Text
-              href="/"
-              onClick={() => handleNavigate('/')}
-              className={
-                pathname === "/"
-                  ? styles["active-sidebar"]
-                  : styles["nonactive-sidebar"]
-              }
-            >
-              Dashboard
-            </Text>
-            <Text
-              onClick={() => handleNavigate('/help-center')}
-              className={
-                pathname === "/help-center"
-                  ? styles["active-sidebar"]
-                  : styles["nonactive-sidebar"]
-              }
-            >
-              Help Center
-            </Text>
-            <Divider className={styles["sidebar-content-divider"]} />
-
-            <Accordion allowToggle>
-              <AccordionItem border="none" marginBottom={"1rem"}>
-                <h2>
-                  <AccordionButton
-                    p={0}
-                    _focus={{ boxShadow: "none", background: "none" }}
-                    _active={{ background: "none" }}
-                    _hover={{ background: "none" }}
-                  >
-                    <Flex
-                      className={styles["nonactive-sidebar"]}
-                      marginBottom={0}
-                      as="span"
-                      flex="1"
-                      alignItems='center'
-                      justifyContent='center'
-                      textAlign="center"
-                    >
-                      <Text>
-                        Setup
-                      </Text>
-                      <AccordionIcon />
-                    </Flex>
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={0}>
-                  <Flex
-                    onClick={() => handleNavigate('/setup/admin-role')}
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    Admin
-                  </Flex>
-                  <Flex
-                    onClick={() => handleNavigate('/setup/account')}
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    Account
-                  </Flex>
-                  <Flex
-                    onClick={() => handleNavigate('/setup/document')}
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    Document
-                  </Flex>
-                  <Flex
-                    onClick={() => handleNavigate('/setup/job-post')}
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    Job Post
-                  </Flex>
-                  <Flex
-                    onClick={() => handleNavigate('/setup/remuneration')}
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    Remuneration
-                  </Flex>
-                  <Flex
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    Payslip
-                  </Flex>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
-
-            <Text className={styles["nonactive-sidebar"]}>Blast Notification</Text>
-            <Divider className={styles["sidebar-content-divider"]} />
-            <Accordion allowToggle>
-              <AccordionItem border="none" marginBottom={"1rem"}>
-                <h2>
-                  <AccordionButton
-                    p={0}
-                    _focus={{ boxShadow: "none", background: "none" }}
-                    _active={{ background: "none" }}
-                    _hover={{ background: "none" }}
-                  >
-                    <Flex
-                      className={styles["nonactive-sidebar"]}
-                      marginBottom={0}
-                      as="span"
-                      flex="1"
-                      alignItems='center'
-                      justifyContent='center'
-                      textAlign="center"
-                    >
-                      <Text>
-                        Masterdata
-                      </Text>
-                      <AccordionIcon />
-                    </Flex>
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={0}>
-                  <Flex
-                    onClick={() => router.push('/master-data/bpjskes')}
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    BPJSKES
-                  </Flex>
-                  <Flex
-                    onClick={() => router.push('/master-data/bpjstk')}
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    BPJSTK
-                  </Flex>
-                  <Flex
-                    onClick={() => router.push('/master-data/saltab')}
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    SALTAB
-                  </Flex>
-                  <Flex
-                    onClick={() => handleNavigate('/master-data/pajak')}
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    PAJAK
-                  </Flex>
-                  <Flex
-                    onClick={() => handleNavigate('/setup/remuneration')}
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    MERGE ALL TA
-                  </Flex>
-                  <Flex
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    MERGE PRODUCT
-                  </Flex>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
-            <Text className={styles["nonactive-sidebar"]}>High Level</Text>
-            <Divider className={styles["sidebar-content-divider"]} />
-            <Accordion allowToggle>
-              <AccordionItem border="none" marginBottom={"1rem"}>
-                <h2>
-                  <AccordionButton
-                    p={0}
-                    _focus={{ boxShadow: "none", background: "none" }}
-                    _active={{ background: "none" }}
-                    _hover={{ background: "none" }}
-                  >
-                    <Flex
-                      className={styles["nonactive-sidebar"]}
-                      marginBottom={0}
-                      as="span"
-                      flex="1"
-                      alignItems='center'
-                      justifyContent='center'
-                      textAlign="center"
-                    >
-                      <Text>
-                        Approval
-                      </Text>
-                      <AccordionIcon />
-                    </Flex>
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={0}>
-                  <Flex
-                    onClick={() => handleNavigate('/approval/job-post')}
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    Job Post
-                  </Flex>
-                  <Flex
-                    onClick={() => handleNavigate('/approval/remuneration')}
-                    className={styles["nonactive-sidebar"]}
-                    justify={"center"}
-                    mb={2}
-                  >
-                    Remuneration
-                  </Flex>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
-            <Text
-              onClick={() => handleNavigate('/send-document')}
-              className={
-                pathname === "/send-document"
-                  ? styles["active-sidebar"]
-                  : styles["nonactive-sidebar"]
-              }>
-              Send Document
-            </Text>
-            <Text
-              onClick={() => handleNavigate('/data-talent')}
-              className={
-                pathname === "/data-talent"
-                  ? styles["active-sidebar"]
-                  : styles["nonactive-sidebar"]
-              }
-            >
-              Data Talent
-            </Text>
-            <Text className={styles["nonactive-sidebar"]} onClick={() => handleNavigate('/payslip')}>Payslip</Text>
+          <Box flex="1" overflowY="auto" padding="0px 1rem">
+            <RenderContent />
           </Box>
         </Box>
 

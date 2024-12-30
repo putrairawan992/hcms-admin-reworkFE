@@ -1,13 +1,13 @@
-import React, { memo, useMemo } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 import { Box, Flex, Input, Text } from '@chakra-ui/react';
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { noop } from '@/app/utils/helpers';
 
-const FormFields = ({ label = '', type = '', value = '', slug = '', onChangeText = noop }) => {
+const FormFields = ({ label = '', type = '', value = '', slug = '', theme = 'default', placeholder = '', onChangeText = noop }) => {
 
-  const RenderForm = useMemo(() => () => {
+  const RenderForm = useCallback(() => {
     if (type === 'text') {
       return (
         <Input
@@ -15,6 +15,7 @@ const FormFields = ({ label = '', type = '', value = '', slug = '', onChangeText
           id={slug}
           flex={1} borderWidth={1} borderColor='#AE445A' borderRadius={10} padding='8px 16px'
           type="text"
+          placeholder={placeholder}
           value={value}
           onChange={(e) => onChangeText(slug, e.target.value)}
         />
@@ -33,17 +34,32 @@ const FormFields = ({ label = '', type = '', value = '', slug = '', onChangeText
     }
   }, [value]);
 
-
-  return (
-    <Flex key={slug} flex={1} alignItems={type === 'textarea' ? 'flex-start' : 'center'} marginBottom={2}>
+  {
+    return theme === 'default' ? <Flex key={slug} flex={1} alignItems={type === 'textarea' ? 'flex-start' : 'center'} marginBottom={2}>
       <Box flex={0.5}>
         <Text fontSize={14} fontWeight='bold' color='#404041'>{label}:</Text>
       </Box>
       <Flex flex={1}>
         <RenderForm />
       </Flex>
-    </Flex>
-  );
+    </Flex> :
+      <Box flex={1}>
+        <Box flex={0.5}>
+          <Text fontSize={14} fontWeight='bold' color='#404041'>{label}:</Text>
+        </Box>
+        <Flex flex={1}>
+          <Input
+            key={slug}
+            id={slug}
+            flex={1} borderWidth={1} borderColor='#AE445A' borderRadius={10} padding='8px 16px'
+            type="text"
+            placeholder={placeholder}
+            value={value}
+            onChange={(e) => onChangeText(slug, e.target.value)}
+          />
+        </Flex>
+      </Box>
+  }
 }
 
 export default memo(FormFields);
