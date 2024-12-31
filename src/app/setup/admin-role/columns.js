@@ -1,7 +1,14 @@
+import { useRouter } from "next/navigation";
 import { EditIcon } from "@/app/components/icons";
-import { Flex, FormControl, FormLabel, Switch } from "@chakra-ui/react";
+import { Box, Flex, FormControl, FormLabel, Switch } from "@chakra-ui/react";
 
 const columns = (totalData, page) => {
+  const router = useRouter();
+
+  const onHandleDetail = (id) => {
+    router.push(`/setup/admin-role/${id}`);
+  };
+
   return [
     { name: 'No', selector: (row, index) => 10 * (page - 1) + index + 1, sortable: true, width: '70px' },
     { name: 'Admin ID', selector: (row) => row.id, width: '250px', wrap: true, },
@@ -12,15 +19,17 @@ const columns = (totalData, page) => {
     {
       name: 'Action',
       cell: (row) => (
-        <Flex alignItems='center'>
-          <EditIcon width={20} height={20} />
+        <Flex alignItems='center' justify='space-between'>
+          <Box onClick={() => onHandleDetail(row.id)}>
+            <EditIcon width={20} height={20} />
+          </Box>
           <FormControl
             display="flex"
             alignItems="center"
             marginLeft={2}
             justifyContent={"space-between"}>
             <Switch id="action" />
-            <FormLabel htmlFor="action" mb="0" fontSize={12}>
+            <FormLabel htmlFor="action" mb="0" marginLeft={2} fontSize={12}>
               Off
             </FormLabel>
           </FormControl>

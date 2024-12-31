@@ -26,6 +26,21 @@ export const monthOptions = [
   { value: "12", label: "Desember" },
 ];
 
+export const monthLabelOptions = [
+  { value: "Januari", label: "Januari" },
+  { value: "Februari", label: "Februari" },
+  { value: "Maret", label: "Maret" },
+  { value: "April", label: "April" },
+  { value: "Mei", label: "Mei" },
+  { value: "Juni", label: "Juni" },
+  { value: "Juni", label: "Juli" },
+  { value: "Agustus", label: "Agustus" },
+  { value: "September", label: "September" },
+  { value: "Oktober", label: "Oktober" },
+  { value: "November", label: "November" },
+  { value: "Desember", label: "Desember" },
+];
+
 export const statusRemunOptions = [
   { value: "approved", label: "Approved" },
   { value: "rejected", label: "Rejected" },
@@ -107,7 +122,7 @@ export const navbarDataOptions = [
       },
       {
         title: "Pajak",
-        href: "/master-data/paajak",
+        href: "/master-data/pajak",
       },
       {
         title: "Merge All TA",

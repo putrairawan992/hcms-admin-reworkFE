@@ -6,6 +6,7 @@ const useSaltab = () => {
   const [page, setPage] = useState(1);
   const [totalData, setTotalData] = useState(0);
   const [keyword, setKeyword] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const onChangeText = (e) => {
     setKeyword(e.target.value);
@@ -15,13 +16,14 @@ const useSaltab = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/list/sheet1',
+        url: '/list/sheet3',
         params: { page: 1, size: 10 }
       });
 
       const responseData = response?.data?.data?.data || [];
       setData(responseData);
       setTotalData(response?.data?.total_items);
+      setLoading(false);
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
@@ -31,7 +33,7 @@ const useSaltab = () => {
     fetchData();
   }, []);
 
-  return { data, page, totalData, keyword, onChangeText }
+  return { data, loading, page, totalData, keyword, onChangeText }
 
 };
 

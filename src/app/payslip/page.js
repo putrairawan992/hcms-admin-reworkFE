@@ -3,63 +3,43 @@ import {
   Box,
   Button,
   Flex,
-  Image,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
   Select,
+  Spinner,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import SidebarLayout from "../components/sidebarLayout";
 import styles from "../styles/inbox.module.css";
+import styleModal from "../styles/setupJobPost.module.css";
 import { useState } from "react";
-import moment from "moment";
-import "moment/locale/id";
 import { isEmpty } from "lodash";
-import { PayslipCard } from "../components/molecules";
+import { ListEmpty, PayslipCard } from "../components/molecules";
 import usePayslip from "./usePayslip";
-import { moveScreen } from "../utils/helpers";
-import { Gap } from "../components/atoms";
-
-moment.locale("id");
+import { Gap, SelectField } from "../components/atoms";
+import { monthLabelOptions } from "@/shared/general";
 
 const Payslip = () => {
-  const yearOptions = [
-    { value: "2024", label: "2024" },
-    { value: "2023", label: "2023" },
-    { value: "2022", label: "2022" },
-    { value: "2021", label: "2021" },
-    { value: "2020", label: "2020" },
-    { value: "2019", label: "2019" },
-    { value: "2018", label: "2018" },
-    { value: "2017", label: "2017" },
-    { value: "2016", label: "2016" },
-    { value: "2015", label: "2015" },
-  ];
-  const monthOptions = [
-    { value: "1", label: "Januari" },
-    { value: "2", label: "Februari" },
-    { value: "3", label: "Maret" },
-    { value: "4", label: "April" },
-    { value: "5", label: "Mei" },
-    { value: "6", label: "Juni" },
-    { value: "7", label: "Juli" },
-    { value: "8", label: "Agustus" },
-    { value: "9", label: "September" },
-    { value: "10", label: "Oktober" },
-    { value: "11", label: "November" },
-    { value: "12", label: "Desember" },
-  ];
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [years, setYears] = useState("2024");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const { data, form, loading, loadingSubmit, modalOpen, productDigitalData, toggleModal, onChangeSelect, submitData } = usePayslip();
 
-  const { data, productDigitalData } = usePayslip();
-
-  const renderData = () => {
-    return data.map((item) => {
-      return <PayslipCard data={item} />
-    });
+  const RenderContent = () => {
+    if (!isEmpty(data)) {
+      return data.map((item) => {
+        return <PayslipCard data={item} />
+      });
+    } else {
+      return (
+        <Flex align={"center"} justify={"center"}>
+          <Text>Tidak ada data inbox</Text>
+        </Flex>
+      )
+    }
   };
 
   return (
@@ -67,7 +47,7 @@ const Payslip = () => {
       <Flex align={"center"} justify={"space-between"}>
         <Text className={styles["inbox-title"]}>PaySlip</Text>
         <Box>
-          <Button onClick={() => moveScreen('/data-talent/history')} className={styles["inbox-btn"]} marginRight={2}>
+          <Button onClick={toggleModal} className={styles["inbox-btn"]} marginRight={2}>
             Manual Send
           </Button>
           <Button onClick={onOpen} className={styles["inbox-btn"]}>
@@ -136,12 +116,41 @@ const Payslip = () => {
           </Select>
         </Box>
       </Flex>
-      {!isEmpty(data) ? renderData()
-        : (
-          <Flex align={"center"} justify={"center"}>
-            <Text>Tidak ada data inbox</Text>
-          </Flex>
-        )}
+
+      {loading ? <ListEmpty /> : <RenderContent />}
+
+      <Modal isOpen={modalOpen} onClose={toggleModal} size={"md"} isCentered>
+        <ModalOverlay />
+        <ModalContent paddingY={"1.5rem"} borderRadius={20}>
+          <ModalBody>
+            <Text mb={"2rem"} className={styleModal["job-post-title"]}>
+              Manual Send
+            </Text>
+            <Box>
+              <Box>
+                <SelectField label="Product Digital" options={productDigitalData} slug="product_digital_id" value={form.product_digital_id} onChange={onChangeSelect} />
+                <Gap height={6} />
+                <SelectField label="Bulan" options={monthLabelOptions} slug="month" value={form.month} onChange={onChangeSelect} />
+              </Box>
+            </Box>
+            <Flex align={"center"} justify={"end"} mt={"2.5rem"}>
+              <Button
+                onClick={toggleModal}
+                mr={"0"}
+                className={styleModal["job-post-search-btn-cancel"]}>
+                Batal
+              </Button>
+              <Gap width={4} />
+              <Button
+                onClick={() => submitData()}
+                mr={"0"}
+                className={styleModal["job-post-search-btn"]}>
+                {loadingSubmit ? <Spinner size="sm" color="#FFFFFF" /> : 'Submit'}
+              </Button>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

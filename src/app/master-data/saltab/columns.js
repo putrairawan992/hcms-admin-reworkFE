@@ -1,6 +1,8 @@
+import { formatRupiah } from "@/app/utils/helpers";
+
 const columns = (totalData, page) => {
   return [
-    { name: 'No', selector: (row, index) => 10 * (page - 1) + index + 1, sortable: true },
+    { name: 'No', selector: (row, index) => 10 * (page - 1) + index + 1, sortable: true, width: '70px' },
     { name: 'Service', selector: (row) => row.service, sortable: true },
     { name: 'Tahun', selector: (row) => row.tahun, sortable: true },
     { name: 'Bulan', selector: (row) => row.bulan, sortable: true },
@@ -11,11 +13,7 @@ const columns = (totalData, page) => {
     { name: 'Employee Status', selector: (row) => row.employment_status },
     { name: 'NIK Metranet', selector: (row) => row.nik_metranet },
     { name: 'Nama', selector: (row) => row.nama },
-    { name: 'NPP', selector: (row) => row.npp },
-    { name: 'Hubungan Kerja', selector: (row) => row.employeeStatus },
-    { name: 'Premi Karyawan', selector: (row) => row.employeeStatus },
-    { name: 'Premi Perusahaan', selector: (row) => row.employeeStatus },
-    { name: 'Total Premi', selector: (row) => row.employeeStatus },
+    { name: 'Gaji Pokok', selector: (row) => formatRupiah(row.gaji_pokok || 0), wrap: true, width: '185px' },
   ]
 };
 
