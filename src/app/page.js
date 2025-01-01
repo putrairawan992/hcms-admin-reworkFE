@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Flex, Select, Text, Image, Slide, SliderFilledTrack, Slider, SliderTrack, SliderThumb, Progress, ProgressLabel, CircularProgress } from "@chakra-ui/react";
+import { Box, Button, Flex, Select, Text, Image, Slide, SliderFilledTrack, Slider, SliderTrack, SliderThumb, Progress, ProgressLabel, CircularProgress, Divider } from "@chakra-ui/react";
 import SidebarLayout from "./components/sidebarLayout";
 import styles from "./styles/dashboard.module.css";
 import { useGetDashboard } from "./api/dashboard";
@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { getUserData } from "./utils/localStorage";
 import { Gap, SelectField } from "./components/atoms";
 import { ProgressCard } from "./components/molecules";
-import { yearOptions } from "@/shared/general";
+import { monthLabelOptions, yearOptions } from "@/shared/general";
 
 moment.locale("id");
 
@@ -101,7 +101,7 @@ const Home = () => {
           <Gap height={3} />
           <Flex align={"flex-start"} width={"100%"}>
             <Box className={styles["dashboard-content-container2"]} flex={1}>
-              <Text color="#AE445A" fontWeight='900' fontSize={24}>
+              <Text color="#AE445A" fontWeight='900' fontSize={22}>
                 Approval Job Post
               </Text>
               <Gap height={6} />
@@ -110,7 +110,7 @@ const Home = () => {
             <Gap width={2} />
             <Box className={styles["dashboard-content-container2"]} flex={1}>
               <Flex justify='space-between'>
-                <Text color="#AE445A" fontWeight='900' fontSize={24}>
+                <Text color="#AE445A" fontWeight='900' fontSize={22}>
                   Posisi yang Dibutuhkan
                 </Text>
                 <Box>
@@ -126,7 +126,7 @@ const Home = () => {
           <Gap height={3} />
           <Flex align={"flex-start"} width={"100%"}>
             <Box className={styles["dashboard-content-container2"]} flex={1}>
-              <Text color="#AE445A" fontWeight='900' fontSize={24}>
+              <Text color="#AE445A" fontWeight='900' fontSize={22}>
                 Tipe Karyawan
               </Text>
               <Gap height={6} />
@@ -134,7 +134,7 @@ const Home = () => {
             </Box>
             <Gap width={2} />
             <Box className={styles["dashboard-content-container2"]} flex={1}>
-              <Text color="#AE445A" fontWeight='900' fontSize={24}>
+              <Text color="#AE445A" fontWeight='900' fontSize={22}>
                 Jumlah Talent
               </Text>
               <Gap height={6} />
@@ -144,7 +144,7 @@ const Home = () => {
           <Gap height={3} />
           <Box className={styles["dashboard-content-container2"]} flex={1}>
             <Flex align='center'>
-              <Text color="#AE445A" fontWeight='900' fontSize={24}>
+              <Text color="#AE445A" fontWeight='900' fontSize={22}>
                 Rekap Data
               </Text>
               <Gap width={4} />
@@ -153,7 +153,44 @@ const Home = () => {
               </Box>
             </Flex>
             <Gap height={6} />
-            <ProgressCard data={data.employeeType} label="Orang" />
+            <Box>
+              <Text color='#AE445A' fontSize={18} fontWeight='bold'>Talent</Text>
+              <Gap height={4} />
+              <Flex flex={1}>
+                <Text color='#404041' fontSize={12} fontWeight='bold' flex={1}>Status</Text>
+                {monthLabelOptions.map((item) => (
+                  <Text flex={1} color='#404041' fontSize={12} fontWeight='bold'>{item?.label}</Text>
+                ))}
+              </Flex>
+              <Divider borderWidth={1} borderColor='#AE445A' marginY={3} />
+              <Flex flex={1}>
+                <Text color='#404041' fontSize={12} fontWeight='bold' flex={1}>New Joiner</Text>
+                {monthLabelOptions.map((item) => (
+                  <Text flex={1} color='#404041' fontSize={12} fontWeight='bold'>0 Orang</Text>
+                ))}
+              </Flex>
+              <Gap height={2} />
+              <Flex flex={1}>
+                <Text color='#404041' fontSize={12} fontWeight='bold' flex={1}>Resign</Text>
+                {monthLabelOptions.map((item) => (
+                  <Text flex={1} color='#404041' fontSize={12} fontWeight='bold'>0 Orang</Text>
+                ))}
+              </Flex>
+              <Gap height={2} />
+              <Flex flex={1}>
+                <Text color='#404041' fontSize={12} fontWeight='bold' flex={1}>Renewal</Text>
+                {monthLabelOptions.map((item) => (
+                  <Text flex={1} color='#404041' fontSize={12} fontWeight='bold'>0 Orang</Text>
+                ))}
+              </Flex>
+              <Divider borderWidth={1} borderColor='#AE445A' marginY={3} />
+              <Flex flex={1}>
+                <Text color='#404041' fontSize={12} fontWeight='bold' flex={1}>Grand Total</Text>
+                {monthLabelOptions.map((item) => (
+                  <Text flex={1} color='#404041' fontSize={12} fontWeight='bold'>0 Orang</Text>
+                ))}
+              </Flex>
+            </Box>
           </Box>
         </>
       )}

@@ -25,8 +25,8 @@ const ProgressCard = ({ data = [], label = '' }) => {
         })}
       </Flex>
       <Flex justify='space-between' marginTop={2}>
-        <Text>0%</Text>
-        <Text>100%</Text>
+        <Text fontSize={12}>0%</Text>
+        <Text fontSize={12}>100%</Text>
       </Flex>
       <Flex justify='space-between' marginTop={2}>
         <Text fontWeight='bold' color='#404041'>Total</Text>

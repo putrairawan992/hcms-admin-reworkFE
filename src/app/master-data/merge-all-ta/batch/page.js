@@ -1,5 +1,4 @@
 "use client";
-import SidebarLayout from "@/app/components/sidebarLayout";
 import {
   Box,
   Flex,
@@ -10,8 +9,9 @@ import React from "react";
 import styles from "./batch.styles";
 import { useRouter } from "next/navigation";
 import { MasterDataBatchCard } from "@/app/components/molecules";
+import stylesheet from "../styles";
 
-const MasterDataPajakBatch = () => {
+const MasterDataMergeAllTABatch = () => {
   const router = useRouter();
 
   return (
@@ -23,29 +23,11 @@ const MasterDataPajakBatch = () => {
       height: 'max-content',
     }}>
       <Flex>
-        <Box style={{
-          borderTopLeftRadius: '30px',
-          borderTopRightRadius: '30px',
-          padding: '20px 50px',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer'
-        }} onClick={() => router.push('/master-data/pajak')}>
-          <Text fontWeight='900' fontSize={22} color='#AE445A' textAlign='center' alignSelf='center'>Master Data - PAJAK</Text>
+        <Box style={styles.header} onClick={() => router.push('/master-data/merge-all-ta')}>
+          <Text fontWeight='900' fontSize={22} color='#AE445A' textAlign='center' alignSelf='center'>Master Data - Merge All TA</Text>
         </Box>
-        <Box style={{
-          backgroundColor: '#AE445A',
-          borderTopLeftRadius: '30px',
-          borderTopRightRadius: '30px',
-          padding: '20px 50px',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <Text style={{
-            fontSize: '22px',
-            fontWeight: '900',
-            color: '#FFFFFF',
-          }}>Batch</Text>
+        <Box style={styles.header2} >
+          <Text style={styles.headerTitle}>Batch</Text>
         </Box>
       </Flex>
       <Box paddingX={8}>
@@ -94,5 +76,5 @@ const MasterDataPajakBatch = () => {
   );
 };
 
-export default MasterDataPajakBatch;
+export default MasterDataMergeAllTABatch;
 

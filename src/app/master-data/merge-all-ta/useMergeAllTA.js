@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { httpClient } from "@/app/utils/network";
 
-const usePajak = () => {
+const useMergeAllTA = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalData, setTotalData] = useState(0);
   const [keyword, setKeyword] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const onChangeText = (e) => {
     setKeyword(e.target.value);
@@ -22,6 +23,7 @@ const usePajak = () => {
       const responseData = response?.data?.data?.data || [];
       setData(responseData);
       setTotalData(response?.data?.total_items);
+      setLoading(false);
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
@@ -31,9 +33,9 @@ const usePajak = () => {
     fetchData();
   }, []);
 
-  return { data, page, totalData, keyword, onChangeText }
+  return { data, page, loading, totalData, keyword, onChangeText }
 
 };
 
-export default usePajak;
+export default useMergeAllTA;
 
