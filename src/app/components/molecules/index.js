@@ -11,5 +11,6 @@ import DocumentFormField from "./DocumentFormField";
 import FormFields from "./FormFields";
 import TalentListCard from "./TalentListCard";
 import AttachmentFileList from "./AttachmentFileList";
+import ProgressCard from "./ProgressCard";
 
-export { DataTalentCard, HistoryTalentCard, SendDocumentCard, MasterDataBatchCard, DataTables, PayslipCard, ListEmpty, ApprvRemunCard, BiodataField, DocumentFormField, FormFields, TalentListCard, AttachmentFileList };
+export { DataTalentCard, HistoryTalentCard, SendDocumentCard, MasterDataBatchCard, DataTables, PayslipCard, ListEmpty, ApprvRemunCard, BiodataField, DocumentFormField, FormFields, TalentListCard, AttachmentFileList, ProgressCard };

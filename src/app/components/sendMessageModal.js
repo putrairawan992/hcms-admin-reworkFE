@@ -30,6 +30,8 @@ const SendMessageModal = ({ isOpen, onClose, currentData, refetch }) => {
   const [date, setDate] = useState();
   const { mutate } = useReplyInbox();
 
+  console.log(currentData);
+
   const userExists = dataUsers?.some(
     (user) => user.username === currentData?.sender_name
   );

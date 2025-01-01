@@ -135,11 +135,6 @@ export const navbarDataOptions = [
     ]
   },
   {
-    title: "Hight Level",
-    href: "/high-level",
-    type: "text",
-  },
-  {
     title: "",
     href: "",
     type: "divider",
