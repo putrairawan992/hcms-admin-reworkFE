@@ -1,11 +1,12 @@
 import { Accordion, AccordionButton, AccordionItem, AccordionPanel, Box, Button, Flex, Image, Select, Text, VStack } from '@chakra-ui/react';
 import React from 'react'
-import styles from './SendDocumentCard.styles';
+import styles from './PenilaianCard.styles';
 import { ChatIcon, CloseIcon, DownloadIcon, EyeIcon, FileBadgeIcon, MessageIcon } from '../../icons';
 import moment from 'moment';
 import { Gap } from '../../atoms';
+import { employeeTypeOptions } from './shared/general';
 
-const SendDocumentCard = ({ data = [] }) => {
+const PenilaianCard = ({ data = [] }) => {
   const { product_digital_name, status, created_at, employee_list } = data;
   return (
     <Accordion allowToggle>
@@ -50,20 +51,20 @@ const SendDocumentCard = ({ data = [] }) => {
           <Box>
             <Flex flex={1} borderBottomWidth={3} borderColor='#AE445A' alignItems='center' justifyContent='center' paddingY={4}>
               <VStack flex={1}>
-                <Text fontWeight='bold' color='#AE445A'>Profil</Text>
+                <Text fontWeight='bold' color='#AE445A'>Module Name</Text>
               </VStack>
               <VStack flex={1}>
-                <Text fontWeight='bold' color='#AE445A'>Dokumen</Text>
+                <Text fontWeight='bold' color='#AE445A'>Duration</Text>
               </VStack>
               <VStack flex={1}>
-                <Text fontWeight='bold' color='#AE445A'>Tombol Aksi</Text>
+                <Text fontWeight='bold' color='#AE445A'>Detail</Text>
               </VStack>
               <VStack flex={1}>
-                <Text fontWeight='bold' color='#AE445A'>Status</Text>
+                <Text fontWeight='bold' color='#AE445A'>Score</Text>
               </VStack>
             </Flex>
             <Gap height={30} />
-            {employee_list.map((item) => (
+            {employee_list?.map((item) => (
               <Flex flex={1} marginBottom={6}>
                 <Flex flex={1} alignItems='center' justifyContent='center'>
                   <Box style={styles.imgWrapper}>
@@ -107,6 +108,19 @@ const SendDocumentCard = ({ data = [] }) => {
                 </Flex>
               </Flex>
             ))}
+            <Gap height={4} />
+            <Box borderBottomWidth={3} borderColor='#AE445A' />
+            <Gap height={4} />
+            <Flex justify='space-around'>
+              <Text fontWeight='bold' color='#AE445A'>Average Score</Text>
+              <Text fontWeight='bold' color='#AE445A'>0</Text>
+            </Flex>
+            <Gap height={4} />
+            <Flex justify='flex-end'>
+              <Button style={styles.buttonSend}>
+                Save
+              </Button>
+            </Flex>
           </Box>
         </AccordionPanel>
       </AccordionItem>
@@ -114,4 +128,4 @@ const SendDocumentCard = ({ data = [] }) => {
   );
 }
 
-export default SendDocumentCard;
+export default PenilaianCard;

@@ -175,13 +175,23 @@ export const navbarDataOptions = [
     type: "divider",
   },
   {
-    title: "Dashboard Mitra",
-    href: "/dashboard-mitra",
+    title: "Talent Mitra",
+    href: "/talent-mitra",
     type: "text",
   },
   {
-    title: "Talent List",
-    href: "/talent-list",
+    title: "List Mitra",
+    href: "/list-mitra",
+    type: "text",
+  },
+  {
+    title: "Pre-Test Mitra",
+    href: "/pre-test-mitra",
+    type: "text",
+  },
+  {
+    title: "Penilaian",
+    href: "/penilaian-pre-test",
     type: "text",
   },
 ];

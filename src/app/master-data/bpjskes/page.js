@@ -18,7 +18,7 @@ import { DataTables, ListEmpty } from "@/app/components/molecules";
 
 const MasterDataBPJSKES = () => {
   const router = useRouter();
-  const { data, loading, page, totalData, keyword, onChangeText } = useBpjskes();
+  const { data, loading, page, totalData, keyword, onChangeText, onHandleSync } = useBpjskes();
 
   return (
     <Box style={stylesheet.container}>
@@ -32,8 +32,7 @@ const MasterDataBPJSKES = () => {
       </Flex>
       <Box paddingX={4}>
         <Flex align={"end"} margin={"2rem 0"}>
-          <Button
-            onClick={() => router.push("/setup/new-account")}
+          <Button onClick={onHandleSync}
             className={styles["account-role-search-btn"]} marginLeft={0}>
             Sinkron
           </Button>

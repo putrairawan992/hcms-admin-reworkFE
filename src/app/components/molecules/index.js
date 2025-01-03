@@ -12,5 +12,11 @@ import FormFields from "./FormFields";
 import TalentListCard from "./TalentListCard";
 import AttachmentFileList from "./AttachmentFileList";
 import ProgressCard from "./ProgressCard";
+import PretestCard from "./PretestCard";
+import QuestionSection from "./QuestionSection";
+import ChooseLogo from "./ChooseLogo";
+import MitraListCard from "./MitraListCard";
+import JobProviderCard from "./JobProviderCard";
+import PenilaianCard from "./PenilaianCard";
 
-export { DataTalentCard, HistoryTalentCard, SendDocumentCard, MasterDataBatchCard, DataTables, PayslipCard, ListEmpty, ApprvRemunCard, BiodataField, DocumentFormField, FormFields, TalentListCard, AttachmentFileList, ProgressCard };
+export { DataTalentCard, HistoryTalentCard, SendDocumentCard, MasterDataBatchCard, DataTables, PayslipCard, ListEmpty, ApprvRemunCard, BiodataField, DocumentFormField, FormFields, TalentListCard, AttachmentFileList, ProgressCard, PretestCard, QuestionSection, ChooseLogo, MitraListCard, JobProviderCard, PenilaianCard };

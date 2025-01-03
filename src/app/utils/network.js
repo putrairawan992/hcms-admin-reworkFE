@@ -5,7 +5,7 @@ const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const httpClient = axios.create({
   baseURL: `${baseURL}/api`,
-  timeout: 10000,
+  // timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',

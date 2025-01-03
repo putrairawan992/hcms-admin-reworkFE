@@ -16,7 +16,7 @@ const useBpjskes = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/list/sheet1',
+        url: '/list/sheet2',
         params: { page: 1, size: 10 }
       });
 
@@ -29,11 +29,25 @@ const useBpjskes = () => {
     }
   };
 
+  const onHandleSync = async () => {
+    try {
+      const response = await httpClient({
+        method: 'GET',
+        url: '/sheet1',
+        params: { page: 1, size: 10 }
+      });
+
+      console.log(response);
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  return { data, page, loading, totalData, keyword, onChangeText }
+  return { data, page, loading, totalData, keyword, onChangeText, onHandleSync }
 
 };
 

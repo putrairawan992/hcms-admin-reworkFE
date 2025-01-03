@@ -11,12 +11,11 @@ const SelectField = ({ label = '', slug = '', value = '', options = [], onChange
 
   return (
     <Box marginRight={marginRight} flex={1}>
-      <Text style={styles.label}>{label}</Text>
+      {label !== '' && <Text style={styles.label} mb={2}>{label}</Text>}
       <Select
         value={value}
         onChange={onChangeValue}
         disabled={disabled}
-        icon={<ChevronDownIcon mt={2} />}
         iconSize='18px'
         placeholder={placeholder}
         isDisabledPlaceholder={true}

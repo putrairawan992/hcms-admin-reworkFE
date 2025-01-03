@@ -9,7 +9,6 @@ import React from "react";
 import styles from "./batch.styles";
 import { useRouter } from "next/navigation";
 import { MasterDataBatchCard } from "@/app/components/molecules";
-import stylesheet from "../styles";
 
 const MasterDataMergeAllTABatch = () => {
   const router = useRouter();

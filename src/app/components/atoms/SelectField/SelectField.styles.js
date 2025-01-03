@@ -13,7 +13,6 @@ const styles = {
     borderRadius: '10px',
     border: '1px solid #ae445a',
     background: '#ffffff',
-    marginTop: '8px',
     fontSize: '14px',
     fontWeight: '700',
     color: color === '' ? '#B6B6B6' : '#ae445a',

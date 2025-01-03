@@ -6,23 +6,24 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Stepper,
   Text,
   useDisclosure,
+  Group
 } from "@chakra-ui/react";
-import styles from "../styles/inbox.module.css";
+import styles from "../../styles/inbox.module.css";
 import { useState } from "react";
 import "moment/locale/id";
 import { isEmpty } from "lodash";
-import { ListEmpty, TalentListCard } from "../components/molecules";
-import useDataTalent from "./useDataTalent";
-import { moveScreen } from "../utils/helpers";
-import { Gap, SelectField } from "../components/atoms";
-import { specializationOptions, competenceOptions, educationOptions, experienceOptions } from "./Shared/General";
+import { ListEmpty, TalentListCard } from "../../components/molecules";
+import useDataTalent from "../useDataTalent";
+import { moveScreen } from "../../utils/helpers";
+import { Gap, SelectField } from "../../components/atoms";
+import { specializationOptions, competenceOptions, educationOptions, experienceOptions } from "../Shared/General";
 import { AddIcon, Search2Icon } from "@chakra-ui/icons";
-import { ShareIcon } from "../components/icons";
-import Link from "next/link";
+import { ShareIcon } from "../../components/icons";
 
-const TalentList = () => {
+const TalentListAdd = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [years, setYears] = useState("2024");
   const [month, setMonth] = useState("10");
@@ -50,17 +51,15 @@ const TalentList = () => {
   return (
     <Box className={styles["inbox-container"]}>
       <Flex align={"center"} justify={"space-between"}>
-        <Text className={styles["inbox-title"]}>Talent List</Text>
+        <Text className={styles["inbox-title"]}>Form Kandidat</Text>
       </Flex>
       <Gap height={6} />
       <Flex>
         <Flex flex={1}>
-          <Link href="/talent-list/add">
-            <Button className={styles["inbox-btn"]} marginRight={2}>
-              <AddIcon marginRight={4} />
-              Add Talent
-            </Button>
-          </Link>
+          <Button onClick={() => moveScreen('/data-talent/history')} className={styles["inbox-btn"]} marginRight={2}>
+            <AddIcon marginRight={4} />
+            Add Talent
+          </Button>
           <Button onClick={onOpen} className={styles["inbox-btn"]}>
             <ShareIcon color="#FFFFFF" />
           </Button>
@@ -94,4 +93,4 @@ const TalentList = () => {
   );
 };
 
-export default TalentList;
+export default TalentListAdd;

@@ -33,19 +33,6 @@ const TalentListCard = ({ data = [], onPress = noop }) => {
           <Text color='#404041' fontWeight={400} fontSize={12}>Skor: 85</Text>
         </Box>
         <Text color='#404041' fontWeight={400} fontSize={14}>2 Mei 2023 | 09:00 WIB</Text>
-        <Gap width={4} />
-        <EditIcon />
-        <Gap width={4} />
-        <Text color='#404041' fontWeight={400} fontSize={14}>Aktif</Text>
-        <Gap width={4} />
-        <Box>
-          <FormControl>
-            <Switch
-              onChange={() => { console.log('Error') }}
-              id="action"
-            />
-          </FormControl>
-        </Box>
       </Flex>
     </Flex>
   )
