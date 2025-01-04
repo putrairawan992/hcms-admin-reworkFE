@@ -10,14 +10,12 @@ const style = {
     backgroundColor: '#AE445A',
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
-    padding: '20px',
     alignItems: 'center',
     justifyContent: 'center'
   },
   header2: {
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
-    padding: '20px 50px',
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer'

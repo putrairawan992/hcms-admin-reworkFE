@@ -18,5 +18,8 @@ import ChooseLogo from "./ChooseLogo";
 import MitraListCard from "./MitraListCard";
 import JobProviderCard from "./JobProviderCard";
 import PenilaianCard from "./PenilaianCard";
+import PenilaianDocumentCard from "./PenilaianDocumentCard";
+import PenilaianMultipleChoiceCard from "./PenilaianMultipleChoiceCard";
+import PenilaianEssayCard from "./PenilaianEssayCard";
 
-export { DataTalentCard, HistoryTalentCard, SendDocumentCard, MasterDataBatchCard, DataTables, PayslipCard, ListEmpty, ApprvRemunCard, BiodataField, DocumentFormField, FormFields, TalentListCard, AttachmentFileList, ProgressCard, PretestCard, QuestionSection, ChooseLogo, MitraListCard, JobProviderCard, PenilaianCard };
+export { DataTalentCard, HistoryTalentCard, SendDocumentCard, MasterDataBatchCard, DataTables, PayslipCard, ListEmpty, ApprvRemunCard, BiodataField, DocumentFormField, FormFields, TalentListCard, AttachmentFileList, ProgressCard, PretestCard, QuestionSection, ChooseLogo, MitraListCard, JobProviderCard, PenilaianCard, PenilaianDocumentCard, PenilaianMultipleChoiceCard, PenilaianEssayCard };

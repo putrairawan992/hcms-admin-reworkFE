@@ -6,7 +6,7 @@ const styles = {
       fontSize: '16px',
       fontWeight: '700',
       lineHeight: '19px',
-      minWidth: '20px',
+      minWidth: '20px'
     },
   },
   headCells: {

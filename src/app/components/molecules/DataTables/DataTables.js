@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import styles from './DataTables.styles';
 import DataTable, { createTheme } from 'react-data-table-component';
+import { noop } from '@/app/utils/helpers';
 
 
-const DataTables = ({ data = [], columns = [], totalData = 0, page = 1, keyword = '' }) => {
+const DataTables = ({ data = [], columns = [], totalData = 0, page = 1, keyword = '', onChangePagination = noop }) => {
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
       String(value).toLowerCase().includes(keyword.toLowerCase())
@@ -12,7 +13,7 @@ const DataTables = ({ data = [], columns = [], totalData = 0, page = 1, keyword 
 
   createTheme('transparentTheme', {
     background: {
-      default: 'transparent', // Membuat latar belakang tabel transparan
+      default: 'transparent',
     },
     context: {
       background: 'transparent',
@@ -22,23 +23,23 @@ const DataTables = ({ data = [], columns = [], totalData = 0, page = 1, keyword 
       default: '#ccc',
     },
     text: {
-      primary: '#333',  // Warna teks utama
-      secondary: '#666', // Warna teks sekunder
+      primary: '#333',
+      secondary: '#666',
     },
     header: {
       background: {
-        default: 'transparent', // Membuat latar belakang header transparan
+        default: 'transparent',
       },
-      text: '#AE445A', // Warna teks header
+      text: '#AE445A',
     },
     rows: {
       background: 'transparent',
-      hover: 'rgba(0, 0, 0, 0.05)', // Warna saat di-hover
+      hover: 'rgba(0, 0, 0, 0.05)',
     },
   });
 
   const handlePageChange = (page) => {
-    console.log(`Fetching data for page ${page}`);
+    onChangePagination(page);
   };
 
   return (
@@ -47,6 +48,7 @@ const DataTables = ({ data = [], columns = [], totalData = 0, page = 1, keyword 
         columns={columns}
         data={filteredData}
         pagination
+        striped={true}
         responsive
         highlightOnHover
         theme="transparentTheme"
@@ -55,7 +57,7 @@ const DataTables = ({ data = [], columns = [], totalData = 0, page = 1, keyword 
         paginationTotalRows={totalData}
         paginationPerPage={10}
         paginationDefaultPage={page}
-        onChangePage={handlePageChange}
+        onChangePage={(page) => handlePageChange(page)}
         paginationComponentOptions={{
           noRowsPerPage: true,
         }}
