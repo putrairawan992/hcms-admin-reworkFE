@@ -1,98 +1,54 @@
 "use client";
-import SidebarLayout from "@/app/components/sidebarLayout";
-import {
-  Box,
-  Flex,
-  Select,
-  Text,
-} from "@chakra-ui/react";
 import React from "react";
-import styles from "./batch.styles";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import styles from "../styles";
 import { useRouter } from "next/navigation";
-import { MasterDataBatchCard } from "@/app/components/molecules";
+import { ListEmpty, MasterDataBatchCard } from "@/app/components/molecules";
+import usePajakBatch from "./usePajakBatch";
+import { SelectField } from "@/app/components/atoms";
+import { monthLabelOptions, yearOptions } from "@/shared/general";
+import { isEmpty } from "lodash";
 
-const MasterDataPajakBatch = () => {
+const MasterDataPAJAKBatch = () => {
   const router = useRouter();
+  const { data, loading, filters, onChangeSelect, onPressDetail } = usePajakBatch();
+
+  const RenderContent = () => {
+    if (!isEmpty(data)) {
+      return data?.map((item) => {
+        return <MasterDataBatchCard data={item} onClick={onPressDetail} />;
+      });
+    } else {
+      return (
+        <Flex align={"center"} justify={"center"}>
+          <Text>Tidak ada data inbox</Text>
+        </Flex>
+      )
+    }
+  };
 
   return (
-    <Box style={{
-      background: 'linear-gradient(90deg, #f1f5fe 0%, #ffffff 98.82%)',
-      boxShadow: '5px 0px 10px 0px #b3b9c5',
-      borderRadius: '30px',
-      width: '100%',
-      height: 'max-content',
-    }}>
+    <Box style={styles.container}>
       <Flex>
-        <Box style={{
-          borderTopLeftRadius: '30px',
-          borderTopRightRadius: '30px',
-          padding: '20px 50px',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer'
-        }} onClick={() => router.push('/master-data/pajak')}>
+        <Box style={styles.header2} paddingX={12} paddingY={6} onClick={() => router.push('/master-data/saltab')}>
           <Text fontWeight='900' fontSize={22} color='#AE445A' textAlign='center' alignSelf='center'>Master Data - PAJAK</Text>
         </Box>
-        <Box style={{
-          backgroundColor: '#AE445A',
-          borderTopLeftRadius: '30px',
-          borderTopRightRadius: '30px',
-          padding: '20px 50px',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <Text style={{
-            fontSize: '22px',
-            fontWeight: '900',
-            color: '#FFFFFF',
-          }}>Batch</Text>
+        <Box style={styles.header} paddingX={12} paddingY={6}>
+          <Text fontWeight={900} fontSize={22} color='#FFFFFF'>Batch</Text>
         </Box>
       </Flex>
       <Box paddingX={8}>
         <Flex marginBottom={4} marginTop={10}>
-          <Box marginRight={2} flex={1}>
-            <Text style={styles.filterText}>Tahun</Text>
-            <Select
-              value={2024}
-              onChange={(e) => setYears(e.target.value)}
-              style={styles.filterSelect}>
-              <option value="all" selected>Semua</option>
-              <option value="offering_letter_normal">Offering Letter Normal</option>
-              <option value="pkwt">PKWT</option>
-              <option value="offering_letter_khusus">Offering Letter Khusus</option>
-              <option value="amandemen_pkwt">Amandemen PKWT</option>
-              <option value="contract_freelance">Kontrak Freelance</option>
-            </Select>
-          </Box>
-          <Box marginRight={2} flex={1}>
-            <Text style={styles.filterText}>Bulan</Text>
-            <Select
-              value={2024}
-              onChange={(e) => setYears(e.target.value)}
-              style={styles.filterSelect}>
-              <option value="all" selected>Semua</option>
-              <option value="sent">Sent</option>
-              <option value="employee_signed">Employee Signed</option>
-              <option value="full_signed">Full Signed</option>
-            </Select>
-          </Box>
-          <Box marginRight={2} flex={1}>
-            <Text style={styles.filterText}>Admin</Text>
-            <Select
-              value={2024}
-              onChange={(e) => setYears(e.target.value)}
-              style={styles.filterSelect}>
-              <option value="all" selected>Semua</option>
-            </Select>
-          </Box>
+          <SelectField label="Tahun" placeholder="Pilih Tahun" slug="tahun" options={yearOptions} value={filters.tahun} onChange={onChangeSelect} />
+          <SelectField label="Bulan" placeholder="Pilih Bulan" slug="bulan" options={monthLabelOptions} value={filters.bulan} onChange={onChangeSelect} />
         </Flex>
         <Box paddingBottom={6}>
-          <MasterDataBatchCard />
+          {loading ? <ListEmpty /> : <RenderContent />}
         </Box>
       </Box>
     </Box>
   );
 };
 
-export default MasterDataPajakBatch;
+export default MasterDataPAJAKBatch;
 

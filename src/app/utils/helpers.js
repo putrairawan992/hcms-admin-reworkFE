@@ -6,10 +6,12 @@ export const moveScreen = (screen) => {
 
 export const noop = () => { };
 
-export const formatDate = (date) => {
-  return moment(date).utcOffset("+07:00").format("MMM YYYY");
+export const formatDate = (date, format = 'MMM YYYY') => {
+  return moment(date).utcOffset("+07:00").format(format);
 };
 
 export const formatRupiah = (number = 0, prefix = 'Rp') => {
-  return prefix + ' ' + number.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-}
+  const numericValue = parseFloat(number) || 0;
+  const formattedValue = numericValue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return `${prefix}${formattedValue}`;
+};

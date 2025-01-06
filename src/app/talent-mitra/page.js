@@ -13,9 +13,8 @@ import styles from "../styles/inbox.module.css";
 import { useState } from "react";
 import "moment/locale/id";
 import { isEmpty } from "lodash";
-import { ListEmpty, TalentListCard } from "../components/molecules";
-import useDataTalent from "./useDataTalent";
-import { moveScreen } from "../utils/helpers";
+import { TalentListCard } from "../components/molecules";
+import useTalentMitra from "./useTalentMitra";
 import { Gap, SelectField } from "../components/atoms";
 import { specializationOptions, competenceOptions, educationOptions, experienceOptions } from "./Shared/General";
 import { AddIcon, Search2Icon } from "@chakra-ui/icons";
@@ -31,7 +30,7 @@ const TalentMitra = () => {
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
-  const { data, filters, loading, productDigitalData, onHandlePress, onChangeSelect } = useDataTalent();
+  const { data, filters, loading, productDigitalData, onHandlePress, onChangeSelect } = useTalentMitra();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {

@@ -10,14 +10,12 @@ const style = {
     backgroundColor: '#AE445A',
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
-    padding: '20px',
     alignItems: 'center',
     justifyContent: 'center'
   },
   header2: {
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
-    padding: '20px 50px',
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer'
@@ -26,7 +24,99 @@ const style = {
     fontSize: '22px',
     fontWeight: '900',
     color: '#FFFFFF',
-  }
+  },
+  tableAllowance: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(10, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    backgroundColor: '#3AB471',
+    color: '#FFFFFF',
+    width: '30%',
+    padding: '0px 20px 20px 0px'
+  },
+  textTableAllowance: {
+    gridColumn: 'span 10',
+    padding: '10px',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  cellAllowance: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(10, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    width: '30%',
+  },
+  tableDeduction: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(10, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    backgroundColor: '#AE445A',
+    color: '#FFFFFF',
+    width: '30%',
+    paddingBottom: '20px'
+  },
+  textTableDeduction: {
+    gridColumn: 'span 10',
+    padding: '10px',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  cellDeduction: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(10, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    width: '30%',
+  },
+  tableCompany: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(8, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    backgroundColor: '#3B78C2',
+    color: '#FFFFFF',
+    paddingBottom: '20px',
+    flex: 1,
+  },
+  textTableCompany: {
+    gridColumn: 'span 8',
+    padding: '10px',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  cellCompany: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(8, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    flex: 1,
+  },
+  tableEmployee: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    backgroundColor: '#8364BA',
+    color: '#FFFFFF',
+    width: '7%',
+    paddingBottom: '20px'
+  },
+  textTableEmployee: {
+    gridColumn: 'span 4',
+    padding: '10px',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  cellEmployee: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    width: '7%',
+  },
 };
 
 export default style;

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { httpClient } from "@/app/utils/network";
 
-const useBpjskesBatch = () => {
+const usePajakBatch = () => {
   const router = useRouter();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ const useBpjskesBatch = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/sheet/bpjskes/batch',
+        url: '/sheet/pajak/batch',
         params: filters
       });
 
@@ -30,7 +30,7 @@ const useBpjskesBatch = () => {
   };
 
   const onPressDetail = (month, years) => {
-    router.push(`/master-data/bpjskes/batch/detail?month=${month}&years=${years}`);
+    router.push(`/master-data/pajak/batch/detail?month=${month}&years=${years}`);
   };
 
   const onChangeSelect = (slug, value) => {
@@ -44,5 +44,5 @@ const useBpjskesBatch = () => {
   return { data, loading, filters, onChangeSelect, onPressDetail };
 };
 
-export default useBpjskesBatch;
+export default usePajakBatch;
 

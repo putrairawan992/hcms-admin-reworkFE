@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { httpClient } from "@/app/utils/network";
 import { useToast } from "@chakra-ui/react";
+import { httpClient } from "@/app/utils/network";
 
 const useBpjskes = () => {
   const toast = useToast();
@@ -19,6 +19,10 @@ const useBpjskes = () => {
     setModalOpen(!modalOpen);
   }
 
+  const goToSpreadSheet = () => {
+    return window.open("https://docs.google.com/spreadsheets/d/184tpa1aindgaNbjdGA_GwfMNt9M6DVr6ImTmC0Zf6ZI/edit?gid=590502080#gid=590502080", "_blank");
+  };
+
   const fetchData = async (page) => {
     setLoading(true);
     try {
@@ -33,6 +37,7 @@ const useBpjskes = () => {
       setTotalData(response?.data?.data?.total_items);
       setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error('Failed to fetch data:', error);
     }
   };
@@ -97,8 +102,7 @@ const useBpjskes = () => {
     fetchData(page);
   }, [page]);
 
-  return { data, page, loading, totalData, keyword, modalOpen, onChangeText, onHandleSync, onChangePagination, toggleModal }
-
+  return { data, page, loading, totalData, keyword, modalOpen, onChangeText, onHandleSync, onChangePagination, toggleModal, goToSpreadSheet };
 };
 
 export default useBpjskes;

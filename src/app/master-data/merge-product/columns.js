@@ -1,21 +1,113 @@
-const columns = (totalData, page) => {
+import { formatRupiah } from "@/app/utils/helpers";
+import styles from "./styles";
+
+const columns = (page) => {
   return [
-    { name: 'No', selector: (row, index) => 10 * (page - 1) + index + 1, sortable: true },
-    { name: 'Service', selector: (row) => row.service, sortable: true },
+    { name: 'No', selector: (row, index) => 10 * (page - 1) + index + 1, sortable: true, width: '65px', wrap: true },
     { name: 'Tahun', selector: (row) => row.tahun, sortable: true },
     { name: 'Bulan', selector: (row) => row.bulan, sortable: true },
-    { name: 'Jenis Client', selector: (row) => row.jenis_client },
-    { name: 'Client', selector: (row) => row.client },
-    { name: 'Product Digital', selector: (row) => row.product_digital },
-    { name: 'Skema', selector: (row) => row.skema },
-    { name: 'Employee Status', selector: (row) => row.employment_status },
-    { name: 'NIK Metranet', selector: (row) => row.nik_metranet },
-    { name: 'Nama', selector: (row) => row.nama },
-    { name: 'NPP', selector: (row) => row.npp },
-    { name: 'Hubungan Kerja', selector: (row) => row.employeeStatus },
-    { name: 'Premi Karyawan', selector: (row) => row.employeeStatus },
-    { name: 'Premi Perusahaan', selector: (row) => row.employeeStatus },
-    { name: 'Total Premi', selector: (row) => row.employeeStatus },
+    { name: 'Jenis Client', selector: (row) => row.jenis_client, wrap: true, width: '185px' },
+    { name: 'Client', selector: (row) => row.client, wrap: true, width: '185px' },
+    { name: 'Product Digital', selector: (row) => row.product_digital, wrap: true, width: '185px' },
+    { name: 'Skema', selector: (row) => row.skema, wrap: true, width: '150px' },
+    {
+      name: (
+        <>
+          <div style={styles.tableEmployee}>
+            <span style={styles.textTableEmployee}>Employee Status</span>
+            <span>Contract</span>
+            <span>Intern</span>
+            <span>Freelance</span>
+            <span>Total SDM</span>
+          </div>
+          <div style={styles.tableAllowance}>
+            <span style={styles.textTableAllowance}>Allowance</span>
+            <span>Gaji Pokok</span>
+            <span>Tunjangan Posisi</span>
+            <span>KAK</span>
+            <span>THR</span>
+            <span>Overtime</span>
+            <span>Rapel Gaji</span>
+            <span>Bonus</span>
+            <span>Lain Lain</span>
+            <span>Keterangan Lain-lain</span>
+            <span>Total Allowance</span>
+          </div>
+          <div style={styles.tableDeduction}>
+            <span style={styles.textTableDeduction}>Deduction</span>
+            <span>Potongan Absen</span>
+            <span>Pengiriman Fasilitas Kantor</span>
+            <span>Kliring</span>
+            <span>Lain-lain</span>
+            <span>Keterangan Lain-lain</span>
+            <span>BPJSTK Iuran JHT (2,00%)</span>
+            <span>BPJSTK Iuran JP (1,00%)</span>
+            <span>Total Iuran BPJSTK</span>
+            <span>Premi BPJSKES</span>
+            <span>Total Deduction</span>
+          </div>
+          <div style={styles.tableCompany}>
+            <span style={styles.textTableCompany}>Tanggungan Perusahaan</span>
+            <span>BPJSTK Iuran JKK (0,24%)</span>
+            <span>BPJSTK Iuran JKM (0,30%)</span>
+            <span>BPJSTK Iuran JHT (3,70%)</span>
+            <span>BPJSTK Iuran JP (2,00%)</span>
+            <span>Total Iuran BPSTK</span>
+            <span>Premi BPJSKES</span>
+            <span>Pajak</span>
+            <span>Tanggungan Perusahaan</span>
+          </div>
+        </>
+      ),
+      selector: () => '',
+      cell: (row) => (
+        <>
+          <div style={styles.cellEmployee}>
+            <span>{row.contract || 0}</span>
+            <span>{row.intern || 0}</span>
+            <span>{row.freelance || 0}</span>
+            <span>{row.total_sdm || 0}</span>
+          </div>
+          <div style={styles.cellAllowance}>
+            <span>{formatRupiah(row.gaji_pokok || 0)}</span>
+            <span>{formatRupiah(row.tunjangan_posisi || 0)}</span>
+            <span>{formatRupiah(row.kak || 0)}</span>
+            <span>{formatRupiah(row.thr || 0)}</span>
+            <span>{formatRupiah(row.overtime || 0)}</span>
+            <span>{formatRupiah(row.rapel_gaji || 0)}</span>
+            <span>{formatRupiah(row.bonus || 0)}</span>
+            <span>{formatRupiah(row.lain_lain || 0)}</span>
+            <span>{formatRupiah(row.keterangan_lain_lain || 0)}</span>
+            <span>{formatRupiah(row.total_allowance || 0)}</span>
+          </div>
+          <div style={styles.cellDeduction}>
+            <span>{formatRupiah(row.potongan_absen || 0)}</span>
+            <span>{formatRupiah(row.pengiriman_fasilitas_kantor || 0)}</span>
+            <span>{formatRupiah(row.kliring || 0)}</span>
+            <span>{formatRupiah(row.lain_lain || 0)}</span>
+            <span>{formatRupiah(row.keterangan_lain_lain || 0)}</span>
+            <span>{formatRupiah(row.bpjstk_iuran_jht_2_00 || 0)}</span>
+            <span>{formatRupiah(row.bpjstk_iuran_jp_1_00 || 0)}</span>
+            <span>{formatRupiah(row.total_iuran_bpstk_karyawan || 0)}</span>
+            <span>{formatRupiah(row.premi_bpjskes || 0)}</span>
+            <span>{formatRupiah(row.total_deduction || 0)}</span>
+          </div>
+          <div style={styles.cellCompany}>
+            <span>{formatRupiah(row.bpjstk_iuran_jkk_0_24 || 0)}</span>
+            <span>{formatRupiah(row.bpjstk_iuran_jkm_0_30 || 0)}</span>
+            <span>{formatRupiah(row.bpjstk_iuran_jht_3_70 || 0)}</span>
+            <span>{formatRupiah(row.bpjstk_iuran_jp_2_00 || 0)}</span>
+            <span>{formatRupiah(row.total_iuran_bpstk_perusahaan || 0)}</span>
+            <span>{formatRupiah(row.premi_bpjskes_2 || 0)}</span>
+            <span>{formatRupiah(row.pajak || 0)}</span>
+            <span>{formatRupiah(row.tanggungan_perusahaan || 0)}</span>
+          </div>
+        </>
+      ),
+      width: '500vw',
+    },
+    { name: 'Net Salary', selector: (row) => formatRupiah(row.nett_salary) || '-', wrap: true, width: '200px' },
+    { name: 'Total Biaya', selector: (row) => formatRupiah(row.total_biaya) || '-', wrap: true, width: '200px' },
   ]
 };
 

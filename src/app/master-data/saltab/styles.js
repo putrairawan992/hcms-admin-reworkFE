@@ -10,14 +10,12 @@ const style = {
     backgroundColor: '#AE445A',
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
-    padding: '20px',
     alignItems: 'center',
     justifyContent: 'center'
   },
   header2: {
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
-    padding: '20px 50px',
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer'
@@ -26,7 +24,53 @@ const style = {
     fontSize: '22px',
     fontWeight: '900',
     color: '#FFFFFF',
-  }
+  },
+  tableIncome: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(11, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    backgroundColor: '#F5A623',
+    color: '#FFFFFF',
+    flex: 1,
+    padding: '0px 20px 20px 0px'
+  },
+  textIncome: {
+    gridColumn: 'span 11',
+    padding: '10px',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  cellIncome: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(11, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    flex: 1
+  },
+  tableSubtraction: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(6, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    backgroundColor: '#3AB471',
+    color: '#FFFFFF',
+    flex: 1,
+    paddingBottom: '20px'
+  },
+  textSubtraction: {
+    gridColumn: 'span 6',
+    padding: '10px',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  cellSubtraction: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(6, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    flex: 1
+  },
 };
 
 export default style;

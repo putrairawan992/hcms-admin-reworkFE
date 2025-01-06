@@ -1,7 +1,6 @@
 const styles = {
   header: {
     style: {
-      backgroundColor: 'transparent',
       color: '#AE445A',
       fontSize: '16px',
       fontWeight: '700',
@@ -39,8 +38,7 @@ const styles = {
       color: '#333',
       fontSize: '16px',
       whiteSpace: "normal",
-      wordBreak: "break-word",
-
+      wordBreak: "break-word"
     },
   }
 };

@@ -10,14 +10,12 @@ const style = {
     backgroundColor: '#AE445A',
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
-    padding: '20px',
     alignItems: 'center',
     justifyContent: 'center'
   },
   header2: {
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
-    padding: '20px 50px',
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer'
@@ -26,6 +24,52 @@ const style = {
     fontSize: '22px',
     fontWeight: '900',
     color: '#FFFFFF',
+  },
+  tableCompany: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(6, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    backgroundColor: '#F5A623',
+    color: '#FFFFFF',
+    flex: 1,
+    padding: '0px 20px 20px 0px'
+  },
+  textTableCompany: {
+    gridColumn: 'span 6',
+    padding: '10px',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  cellCompany: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(6, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    flex: 1
+  },
+  tableEmployee: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    backgroundColor: '#3AB471',
+    color: '#FFFFFF',
+    flex: 1,
+    paddingBottom: '20px'
+  },
+  textTableEmployee: {
+    gridColumn: 'span 3',
+    padding: '10px',
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  cellEmployee: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: '0',
+    textAlign: 'center',
+    flex: 1
   }
 };
 

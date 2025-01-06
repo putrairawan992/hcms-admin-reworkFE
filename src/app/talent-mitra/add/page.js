@@ -16,7 +16,7 @@ import { useState } from "react";
 import "moment/locale/id";
 import { isEmpty } from "lodash";
 import { ListEmpty, TalentListCard } from "../../components/molecules";
-import useDataTalent from "../useDataTalent";
+import useDataTalent from "../useTalentMitra";
 import { moveScreen } from "../../utils/helpers";
 import { Gap, SelectField } from "../../components/atoms";
 import { specializationOptions, competenceOptions, educationOptions, experienceOptions } from "../Shared/General";

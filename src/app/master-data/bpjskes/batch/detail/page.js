@@ -14,28 +14,32 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
-import styles from "../../styles/accountSetup.module.css";
-import stylesheet from "./styles";
-import useMergeProduct from "./useMergeProduct";
+import styles from "../../../../styles/accountSetup.module.css";
+import stylesheet from "../../styles";
+import useBpjskesBatchDetail from "./useBpjskesBatchDetail";
 import columns from "./columns";
 import { DataTables } from "@/app/components/molecules";
 import { Gap } from "@/app/components/atoms";
 
-const MasterDataMergeProduct = () => {
-  const { data, loading, page, totalData, keyword, modalOpen, onChangeText, onHandleSync, onChangePagination, toggleModal, goToSpreadSheet } = useMergeProduct();
+const MasterDataBPJSKESBatchDetail = () => {
+  const { data, loading, page, totalData, keyword, modalOpen, month, years, onChangeText, onHandleSync, onChangePagination, toggleModal } = useBpjskesBatchDetail();
 
   return (
     <Box style={stylesheet.container}>
       <Flex>
         <Box paddingX={8} paddingY={8}>
-          <Text fontSize={22} fontWeight={900} color='#AE445A'>Master Data - Merge Product</Text>
+          <Text fontSize={22} fontWeight={900} color='#AE445A'>Master Data BPJSKES - Batch {month || '-'} {years || '-'}</Text>
         </Box>
       </Flex>
       <Box paddingX={8}>
         <Flex align={"end"} margin={"0rem 0"}>
-          <Button onClick={goToSpreadSheet}
+          <Button onClick={onHandleSync}
             className={styles["account-role-search-btn"]} marginLeft={0}>
-            Mirror Spreadsheet
+            Sinkron
+          </Button>
+          <Button onClick={() => window.open("https://docs.google.com/spreadsheets/d/184tpa1aindgaNbjdGA_GwfMNt9M6DVr6ImTmC0Zf6ZI/edit?gid=590502080#gid=590502080", "_blank")}
+            className={styles["account-role-search-btn"]} marginLeft={2}>
+            Ke Spreadsheet
           </Button>
           <Box marginLeft={4}>
             <InputGroup className={styles["account-role-input-container"]}>
@@ -47,7 +51,10 @@ const MasterDataMergeProduct = () => {
                 onChange={onChangeText}
               />
               <InputRightElement>
-                <Search2Icon cursor={"pointer"} color='#AE445A' />
+                <Search2Icon
+                  cursor={"pointer"}
+                  color='#AE445A'
+                />
               </InputRightElement>
             </InputGroup>
           </Box>
@@ -72,4 +79,4 @@ const MasterDataMergeProduct = () => {
   );
 };
 
-export default MasterDataMergeProduct;
+export default MasterDataBPJSKESBatchDetail;

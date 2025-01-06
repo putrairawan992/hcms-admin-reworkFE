@@ -4,10 +4,16 @@ import styles from './MasterDataBatchCard.styles';
 import { EyeIcon } from '../../icons';
 import { Gap } from '../../atoms';
 import { DeleteIcon } from '@chakra-ui/icons';
+import { formatDate, noop } from '@/app/utils/helpers';
 
-const MasterDataBatchCard = ({ data = [] }) => {
+const MasterDataBatchCard = ({ data = [], onClick = noop }) => {
+
+  const handleOnClick = () => {
+    onClick(data?.bulan, data?.tahun);
+  };
+
   return (
-    <Flex style={styles.wrapper}>
+    <Flex style={styles.wrapper} mb={2}>
       <Flex alignItems='center'>
         <Box style={styles.imgWrapper}>
           <Image
@@ -16,17 +22,20 @@ const MasterDataBatchCard = ({ data = [] }) => {
             alt="image"
           />
         </Box>
-        <Gap width={4} />
-        <Text style={styles.title}>
-          Batch December 2021
-        </Text>
       </Flex>
-      <Text style={styles.subtitle}>
-        02 Des 2023 | 11:00 WIB
-      </Text>
-
+      <Box flex={1} marginLeft={6}>
+        <Text style={styles.title}>
+          {`Batch ${data?.bulan || '-'} ${data?.tahun || '-'}`}
+        </Text>
+      </Box>
+      <Box flex={1}>
+        <Text style={styles.subtitle}>
+          {formatDate(data?.created_at, 'DD MMM YYYY | HH:ss')}
+        </Text>
+      </Box>
       <Flex align={"center"}>
-        <EyeIcon style={{ marginRight: '12px' }} />
+        <EyeIcon style={{ cursor: 'pointer' }} onClick={handleOnClick} />
+        <Gap width={4} />
         <DeleteIcon fontSize="11px" color="#ae445a" />
       </Flex>
     </Flex>

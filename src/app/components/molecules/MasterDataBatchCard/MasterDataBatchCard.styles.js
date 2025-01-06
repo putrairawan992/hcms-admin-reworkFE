@@ -7,7 +7,6 @@ const styles = {
     justifyContent: 'space-between',
     padding: '10px 3rem',
     borderRadius: '10px',
-    marginBottom: '1rem',
     backgroundColor: '#FFFFFF'
   },
 

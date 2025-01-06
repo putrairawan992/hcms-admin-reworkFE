@@ -6,41 +6,36 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
 import styles from "../../styles/accountSetup.module.css";
 import stylesheet from "./styles";
-import { useRouter } from "next/navigation";
 import useMergeAllTA from "./useMergeAllTA";
 import columns from "./columns";
-import { DataTables, ListEmpty } from "@/app/components/molecules";
+import { DataTables } from "@/app/components/molecules";
+import { Gap } from "@/app/components/atoms";
 
 const MasterDataMergeAllTA = () => {
-  const router = useRouter();
-  const { data, loading, page, totalData, keyword, onChangeText } = useMergeAllTA();
+  const { data, loading, page, totalData, keyword, modalOpen, onChangeText, onHandleSync, onChangePagination, toggleModal, goToSpreadSheet } = useMergeAllTA();
 
   return (
     <Box style={stylesheet.container}>
       <Flex>
-        <Box style={stylesheet.header}>
-          <Text style={stylesheet.headerTitle}>Master Data - Merge All TA</Text>
-        </Box>
-        <Box style={stylesheet.header2} onClick={() => router.push('/master-data/merge-all-ta/batch')}>
-          <Text fontWeight='900' fontSize={22} color='#AE445A' textAlign='center' alignSelf='center'>Batch</Text>
+        <Box paddingX={8} paddingY={8}>
+          <Text fontSize={22} fontWeight={900} color='#AE445A'>Master Data - Merge All Talent</Text>
         </Box>
       </Flex>
-      <Box paddingX={4}>
-        <Flex align={"end"} margin={"2rem 0"}>
-          <Button
-            onClick={() => router.push("/setup/new-account")}
+      <Box paddingX={8}>
+        <Flex align={"end"} margin={"0rem 0"}>
+          <Button onClick={goToSpreadSheet}
             className={styles["account-role-search-btn"]} marginLeft={0}>
-            Sinkron
-          </Button>
-          <Button
-            onClick={() => router.push("/setup/new-account")}
-            className={styles["account-role-search-btn"]} marginLeft={2}>
-            Ke Spreadsheet
+            Mirror Spreadsheet
           </Button>
           <Box marginLeft={4}>
             <InputGroup className={styles["account-role-input-container"]}>
@@ -52,18 +47,27 @@ const MasterDataMergeAllTA = () => {
                 onChange={onChangeText}
               />
               <InputRightElement>
-                <Search2Icon
-                  cursor={"pointer"}
-                  color='#AE445A'
-                />
+                <Search2Icon cursor={"pointer"} color='#AE445A' />
               </InputRightElement>
             </InputGroup>
           </Box>
         </Flex>
       </Box>
+      <Gap height={4} />
       <Box paddingX={4}>
-        {loading ? <ListEmpty /> : <DataTables data={data} columns={columns(totalData, page)} totalData={totalData} page={page} keyword={keyword} />}
+        <DataTables data={data} columns={columns(page)} totalData={totalData} page={page} keyword={keyword} onChangePagination={onChangePagination} loading={loading} />
       </Box>
+      <Modal isOpen={modalOpen} onClose={toggleModal} size={"md"} isCentered closeOnOverlayClick={!modalOpen}>
+        <ModalOverlay />
+        <ModalContent paddingY={"1.5rem"} borderRadius={20}>
+          <ModalBody>
+            <Flex align={"center"} justify={"center"}>
+              <Spinner color="#AE445A" size="md" marginRight={4} />
+              <Text fontSize={14} fontWeight='700' color='#AE445A'>Please wait...</Text>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

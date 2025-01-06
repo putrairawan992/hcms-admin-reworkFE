@@ -27,18 +27,18 @@ export const monthOptions = [
 ];
 
 export const monthLabelOptions = [
-  { value: "Januari", label: "Januari" },
-  { value: "Februari", label: "Februari" },
+  { value: "January", label: "Januari" },
+  { value: "February", label: "Februari" },
   { value: "Maret", label: "Maret" },
-  { value: "April", label: "April" },
-  { value: "Mei", label: "Mei" },
-  { value: "Juni", label: "Juni" },
-  { value: "Juni", label: "Juli" },
-  { value: "Agustus", label: "Agustus" },
+  { value: "March", label: "April" },
+  { value: "May", label: "Mei" },
+  { value: "June", label: "Juni" },
+  { value: "July", label: "Juli" },
+  { value: "August", label: "Agustus" },
   { value: "September", label: "September" },
-  { value: "Oktober", label: "Oktober" },
+  { value: "October", label: "Oktober" },
   { value: "November", label: "November" },
-  { value: "Desember", label: "Desember" },
+  { value: "December", label: "Desember" },
 ];
 
 export const statusRemunOptions = [

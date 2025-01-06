@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
-import { httpClient } from "@/app/utils/network";
 import { useToast } from "@chakra-ui/react";
+import { httpClient } from "@/app/utils/network";
+import { useSearchParams } from 'next/navigation';
 
-const useBpjstk = () => {
+const useSaltabBatchDetail = () => {
+  const searchParams = useSearchParams();
+  const month = searchParams.get('month');
+  const years = searchParams.get('years');
   const toast = useToast();
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -19,17 +23,13 @@ const useBpjstk = () => {
     setModalOpen(!modalOpen);
   }
 
-  const goToSpreadSheet = () => {
-    return window.open("https://docs.google.com/spreadsheets/d/184tpa1aindgaNbjdGA_GwfMNt9M6DVr6ImTmC0Zf6ZI/edit?gid=1971221899#gid=1971221899", "_blank");
-  };
-
   const fetchData = async (page) => {
     setLoading(true);
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/sheet/bpjstk',
-        params: { page, size: 10 }
+        url: '/sheet/saltab',
+        params: { page, size: 10, bulan: month, tahun: years }
       });
 
       const responseData = response?.data?.data?.data || [];
@@ -37,6 +37,7 @@ const useBpjstk = () => {
       setTotalData(response?.data?.data?.total_items);
       setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error('Failed to fetch data:', error);
     }
   };
@@ -49,7 +50,7 @@ const useBpjstk = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/sheet/bpjstk/sync',
+        url: '/sheet/saltab/sync',
         signal: signal,
       });
 
@@ -98,12 +99,13 @@ const useBpjstk = () => {
   };
 
   useEffect(() => {
-    fetchData(page);
-  }, [page]);
+    if (month && years) {
+      fetchData(page);
+    }
+  }, [page, month, years]);
 
-  return { data, page, loading, totalData, keyword, modalOpen, onChangeText, onHandleSync, onChangePagination, toggleModal, goToSpreadSheet }
-
+  return { data, page, loading, totalData, keyword, modalOpen, month, years, onChangeText, onHandleSync, onChangePagination, toggleModal };
 };
 
-export default useBpjstk;
+export default useSaltabBatchDetail;
 

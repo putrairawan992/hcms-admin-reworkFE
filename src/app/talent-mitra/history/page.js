@@ -14,7 +14,7 @@ import "moment/locale/id";
 import { isEmpty } from "lodash";
 
 import { DataTalentCard, HistoryTalentCard } from "../../components/molecules";
-import useDataTalent from "../useDataTalent";
+import useDataTalent from "../useTalentMitra";
 import { moveScreen } from "@/app/utils/helpers";
 
 moment.locale("id");

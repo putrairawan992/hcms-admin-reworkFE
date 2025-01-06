@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { httpClient } from "../utils/network";
 import { useRouter } from "next/navigation";
 
-const useDataTalent = () => {
+const useTalentMitra = () => {
   const router = useRouter();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +21,7 @@ const useDataTalent = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/admin/talent/list',
+        url: '/talent/pretest',
         params
       });
 
@@ -85,5 +85,5 @@ const useDataTalent = () => {
 
 };
 
-export default useDataTalent;
+export default useTalentMitra;
 

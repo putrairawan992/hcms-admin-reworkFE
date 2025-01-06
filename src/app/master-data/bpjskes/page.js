@@ -19,11 +19,11 @@ import stylesheet from "./styles";
 import { useRouter } from "next/navigation";
 import useBpjskes from "./useBpjskes";
 import columns from "./columns";
-import { DataTables, ListEmpty } from "@/app/components/molecules";
+import { DataTables } from "@/app/components/molecules";
 
 const MasterDataBPJSKES = () => {
   const router = useRouter();
-  const { data, loading, page, totalData, keyword, modalOpen, onChangeText, onHandleSync, onChangePagination, toggleModal } = useBpjskes();
+  const { data, loading, page, totalData, keyword, modalOpen, onChangeText, onHandleSync, onChangePagination, toggleModal, goToSpreadSheet } = useBpjskes();
 
   return (
     <Box style={stylesheet.container}>
@@ -41,7 +41,7 @@ const MasterDataBPJSKES = () => {
             className={styles["account-role-search-btn"]} marginLeft={0}>
             Sinkron
           </Button>
-          <Button onClick={() => window.open("https://docs.google.com/spreadsheets/d/184tpa1aindgaNbjdGA_GwfMNt9M6DVr6ImTmC0Zf6ZI/edit?gid=590502080#gid=590502080", "_blank")}
+          <Button onClick={goToSpreadSheet}
             className={styles["account-role-search-btn"]} marginLeft={2}>
             Ke Spreadsheet
           </Button>
@@ -55,17 +55,14 @@ const MasterDataBPJSKES = () => {
                 onChange={onChangeText}
               />
               <InputRightElement>
-                <Search2Icon
-                  cursor={"pointer"}
-                  color='#AE445A'
-                />
+                <Search2Icon cursor={"pointer"} color='#AE445A' />
               </InputRightElement>
             </InputGroup>
           </Box>
         </Flex>
       </Box>
       <Box paddingX={4}>
-        {loading ? <ListEmpty /> : <DataTables data={data} columns={columns(totalData, page)} totalData={totalData} page={page} keyword={keyword} onChangePagination={onChangePagination} />}
+        <DataTables data={data} columns={columns(page)} totalData={totalData} page={page} keyword={keyword} onChangePagination={onChangePagination} loading={loading} />
       </Box>
       <Modal isOpen={modalOpen} onClose={toggleModal} size={"md"} isCentered closeOnOverlayClick={!modalOpen}>
         <ModalOverlay />
