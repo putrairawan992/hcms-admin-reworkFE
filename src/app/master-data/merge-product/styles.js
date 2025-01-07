@@ -11,14 +11,14 @@ const style = {
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   header2: {
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   headerTitle: {
     fontSize: '22px',
@@ -33,13 +33,13 @@ const style = {
     backgroundColor: '#3AB471',
     color: '#FFFFFF',
     width: '30%',
-    padding: '0px 20px 20px 0px'
+    padding: '0px 20px 20px 0px',
   },
   textTableAllowance: {
     gridColumn: 'span 10',
     padding: '10px',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   cellAllowance: {
     display: 'grid',
@@ -56,13 +56,13 @@ const style = {
     backgroundColor: '#AE445A',
     color: '#FFFFFF',
     width: '30%',
-    paddingBottom: '20px'
+    paddingBottom: '20px',
   },
   textTableDeduction: {
     gridColumn: 'span 10',
     padding: '10px',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   cellDeduction: {
     display: 'grid',
@@ -85,7 +85,7 @@ const style = {
     gridColumn: 'span 8',
     padding: '10px',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   cellCompany: {
     display: 'grid',
@@ -102,13 +102,13 @@ const style = {
     backgroundColor: '#8364BA',
     color: '#FFFFFF',
     width: '7%',
-    paddingBottom: '20px'
+    paddingBottom: '20px',
   },
   textTableEmployee: {
     gridColumn: 'span 4',
     padding: '10px',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   cellEmployee: {
     display: 'grid',

@@ -1,2 +1,2 @@
-import QuestionSection from "./QuestionSection";
+import QuestionSection from './QuestionSection';
 export default QuestionSection;

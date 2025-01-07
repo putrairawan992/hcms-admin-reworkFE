@@ -1,2 +1,2 @@
-import SendDocumentCard from "./SendDocumentCard";
+import SendDocumentCard from './SendDocumentCard';
 export default SendDocumentCard;

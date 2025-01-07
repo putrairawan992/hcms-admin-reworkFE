@@ -11,20 +11,20 @@ const style = {
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   header2: {
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   headerTitle: {
     fontSize: '22px',
     fontWeight: '900',
     color: '#FFFFFF',
-  }
+  },
 };
 
 export default style;

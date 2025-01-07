@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
-import { httpClient } from "../utils/network";
-import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from 'react';
+import { httpClient } from '../utils/network';
+import { useRouter } from 'next/navigation';
 
 const useListMitra = () => {
   const router = useRouter();
@@ -17,21 +17,24 @@ const useListMitra = () => {
     employee_type: '',
   });
 
-  const fetchData = useCallback(async (params) => {
-    try {
-      const response = await httpClient({
-        method: 'GET',
-        url: '/admin/talent/list',
-        params
-      });
+  const fetchData = useCallback(
+    async (params) => {
+      try {
+        const response = await httpClient({
+          method: 'GET',
+          url: '/admin/talent/list',
+          params,
+        });
 
-      const responseData = response?.data?.data || [];
-      setData(responseData);
-      setLoading(false);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
-  }, [filters]);
+        const responseData = response?.data?.data || [];
+        setData(responseData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      }
+    },
+    [filters]
+  );
 
   const fetchDataPD = async () => {
     try {
@@ -41,10 +44,12 @@ const useListMitra = () => {
       });
 
       const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(({ id, product_digital_name }) => ({
-        id,
-        label: product_digital_name
-      }));
+      const transformedData = responseData?.map(
+        ({ id, product_digital_name }) => ({
+          id,
+          label: product_digital_name,
+        })
+      );
       setProductDigitalData(transformedData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -66,10 +71,10 @@ const useListMitra = () => {
 
   const onHandlePress = (employeeId) => {
     router.push(`/data-talent/${employeeId}`);
-  }
+  };
 
   const onChangeSelect = (slug, value) => {
-    setFilters(prevFilters => ({ ...prevFilters, [slug]: value }));
+    setFilters((prevFilters) => ({ ...prevFilters, [slug]: value }));
   };
 
   useEffect(() => {
@@ -81,9 +86,14 @@ const useListMitra = () => {
     fetchData(filters);
   }, [filters]);
 
-  return { data, loading, filters, productDigitalData, onHandlePress, onChangeSelect }
-
+  return {
+    data,
+    loading,
+    filters,
+    productDigitalData,
+    onHandlePress,
+    onChangeSelect,
+  };
 };
 
 export default useListMitra;
-

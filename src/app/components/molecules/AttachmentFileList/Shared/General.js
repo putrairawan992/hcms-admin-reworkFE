@@ -1,26 +1,26 @@
 export const attachmentFileDataOptions = [
   {
-    slug: "curriculum_vitae",
-    label: "Curriculum Vitae"
+    slug: 'curriculum_vitae',
+    label: 'Curriculum Vitae',
   },
   {
-    slug: "photo",
-    label: "Foto"
+    slug: 'photo',
+    label: 'Foto',
   },
   {
-    slug: "ktp",
-    label: "KTP"
+    slug: 'ktp',
+    label: 'KTP',
   },
   {
-    slug: "kk",
-    label: "KK"
+    slug: 'kk',
+    label: 'KK',
   },
   {
-    slug: "npwp",
-    label: "NPWP"
+    slug: 'npwp',
+    label: 'NPWP',
   },
   {
-    slug: "bpjs",
-    label: "BPJS"
+    slug: 'bpjs',
+    label: 'BPJS',
   },
 ];

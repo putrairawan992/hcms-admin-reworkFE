@@ -1,22 +1,22 @@
 export const documentTypeOptions = [
   {
     label: 'OFFERING_LATTER',
-    name: 'Offering Latter Khusus'
+    name: 'Offering Latter Khusus',
   },
   {
     label: 'PKWT',
-    name: 'PKWT Khusus & Normal'
+    name: 'PKWT Khusus & Normal',
   },
   {
     label: 'AMANDEMEN_PKWT',
-    name: 'Amandemen PKWT Khusus & Normal'
+    name: 'Amandemen PKWT Khusus & Normal',
   },
   {
     label: 'CONTRACT_FREELANCE',
-    name: 'Kontrak Freelance'
+    name: 'Kontrak Freelance',
   },
   {
     label: 'CONTRACT_INTERSHIP',
-    name: 'Kontrak Internship'
+    name: 'Kontrak Internship',
   },
 ];

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useToast } from "@chakra-ui/react";
-import { httpClient } from "@/app/utils/network";
+import { useEffect, useState } from 'react';
+import { useToast } from '@chakra-ui/react';
+import { httpClient } from '@/app/utils/network';
 import { useSearchParams } from 'next/navigation';
 
 const useSaltabBatchDetail = () => {
@@ -21,7 +21,7 @@ const useSaltabBatchDetail = () => {
 
   const toggleModal = () => {
     setModalOpen(!modalOpen);
-  }
+  };
 
   const fetchData = async (page) => {
     setLoading(true);
@@ -29,7 +29,7 @@ const useSaltabBatchDetail = () => {
       const response = await httpClient({
         method: 'GET',
         url: '/sheet/saltab',
-        params: { page, size: 10, bulan: month, tahun: years }
+        params: { page, size: 10, bulan: month, tahun: years },
       });
 
       const responseData = response?.data?.data?.data || [];
@@ -62,20 +62,20 @@ const useSaltabBatchDetail = () => {
 
       if (response?.status !== 200) {
         toast({
-          title: "Error",
+          title: 'Error',
           description: `Something went wrong!`,
           duration: 3000,
-          status: "error",
-          position: "top",
+          status: 'error',
+          position: 'top',
           isClosable: true,
         });
       } else {
         toast({
-          title: "Success",
+          title: 'Success',
           description: `Data synced successfully!`,
           duration: 3000,
-          status: "success",
-          position: "top",
+          status: 'success',
+          position: 'top',
           isClosable: true,
         });
       }
@@ -83,16 +83,15 @@ const useSaltabBatchDetail = () => {
       console.error('Failed to sync data:', error);
       setModalOpen(false);
       toast({
-        title: "Error",
+        title: 'Error',
         description: `Failed to sync: ${error.message}`,
         duration: 3000,
-        status: "error",
-        position: "top",
+        status: 'error',
+        position: 'top',
         isClosable: true,
       });
     }
   };
-
 
   const onChangePagination = (page) => {
     setPage(page);
@@ -104,8 +103,20 @@ const useSaltabBatchDetail = () => {
     }
   }, [page, month, years]);
 
-  return { data, page, loading, totalData, keyword, modalOpen, month, years, onChangeText, onHandleSync, onChangePagination, toggleModal };
+  return {
+    data,
+    page,
+    loading,
+    totalData,
+    keyword,
+    modalOpen,
+    month,
+    years,
+    onChangeText,
+    onHandleSync,
+    onChangePagination,
+    toggleModal,
+  };
 };
 
 export default useSaltabBatchDetail;
-

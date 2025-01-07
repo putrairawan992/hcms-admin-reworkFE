@@ -202,7 +202,7 @@
 }
 
 .approval-remuneration-content-details-wrapper {
-  width: 60%
+  width: 60%;
 }
 
 .approval-remuneration-content-details-wrapper-header {
@@ -213,7 +213,7 @@
 .approval-remuneration-content-details-wrapper-inner {
   font-size: 10px;
   display: flex;
-  border: 1px solid #AE445A;
+  border: 1px solid #ae445a;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -222,7 +222,7 @@
   flex: 1;
   padding: 5px;
   justify-content: center;
-  border-right: 1px solid #AE445A;
+  border-right: 1px solid #ae445a;
 }
 
 .approval-remuneration-content-details-header-inner {
@@ -253,5 +253,5 @@
   font-size: 12px;
   font-weight: 700;
   margin-bottom: 5px;
-  color: #AE445A;
+  color: #ae445a;
 }

@@ -1,2 +1,2 @@
-import DataTables from "./DataTables";
+import DataTables from './DataTables';
 export default DataTables;

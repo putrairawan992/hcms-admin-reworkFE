@@ -1,88 +1,147 @@
-"use client";
-import { Gap } from "@/app/components/atoms";
-import { Box, Text, Image, VStack, Flex } from "@chakra-ui/react";
+'use client';
+import { Gap } from '@/app/components/atoms';
+import { Box, Text, Image, VStack, Flex } from '@chakra-ui/react';
 
 const PreviewOfferingLatter = () => {
   return (
-    <Box flex={1} height='100%' paddingX={8} paddingY={4}>
+    <Box flex={1} height="100%" paddingX={8} paddingY={4}>
       <Image src="/images/scala-sidebar.png" width={100} />
       <VStack>
-        <Text fontSize={12} fontWeight='bold' textDecoration='underline'>SURAT PENAWARAN KERJA</Text>
+        <Text fontSize={12} fontWeight="bold" textDecoration="underline">
+          SURAT PENAWARAN KERJA
+        </Text>
         <Text fontSize={12}>No. {`{No.Surat}`}</Text>
       </VStack>
       <Box>
         <Text fontSize={12}>Kepada Yth,</Text>
-        <Text fontSize={12} fontWeight='bold'>{'{Nama Lengkap}'}</Text>
-        <Text fontSize={12} fontWeight='bold'>{'{Alamat Domisili}'}</Text>
+        <Text fontSize={12} fontWeight="bold">
+          {'{Nama Lengkap}'}
+        </Text>
+        <Text fontSize={12} fontWeight="bold">
+          {'{Alamat Domisili}'}
+        </Text>
         <Gap height={4} />
         <Text fontSize={12}>
-          Sehubungan dengan lamaran saudara, maka dengan ini kami memberikan kesempatan kerja bagi saudara di PT. Metra-Net dengan kondisi-kondisi / syarat-syarat pekerjaan yang ditawarkan sebagai berikut :
+          Sehubungan dengan lamaran saudara, maka dengan ini kami memberikan
+          kesempatan kerja bagi saudara di PT. Metra-Net dengan kondisi-kondisi
+          / syarat-syarat pekerjaan yang ditawarkan sebagai berikut :
         </Text>
       </Box>
       <Gap height={4} />
       <Flex>
-        <Text flex={0.2} fontSize={12}>Posisi</Text>
+        <Text flex={0.2} fontSize={12}>
+          Posisi
+        </Text>
         <Flex flex={1}>
-          <Text fontSize={12} marginRight={2}>: </Text>
+          <Text fontSize={12} marginRight={2}>
+            :{' '}
+          </Text>
           <Text fontSize={12}>{`{Role}`}</Text>
         </Flex>
       </Flex>
       <Flex>
-        <Text flex={0.2} fontSize={12}>Level</Text>
+        <Text flex={0.2} fontSize={12}>
+          Level
+        </Text>
         <Flex flex={1}>
-          <Text fontSize={12} marginRight={2}>: </Text>
+          <Text fontSize={12} marginRight={2}>
+            :{' '}
+          </Text>
           <Text fontSize={12}>{`{Level}`}</Text>
         </Flex>
       </Flex>
       <Flex>
-        <Text flex={0.2} fontSize={12}>Upah</Text>
+        <Text flex={0.2} fontSize={12}>
+          Upah
+        </Text>
         <Flex flex={1}>
-          <Text fontSize={12} marginRight={2}>: </Text>
-          <Text fontSize={12}>{`{Rp {Take Home Pay}, - / bulan (Rincian Gaji Pokok Rp {Gaji Pokok (Angka)}, - dan Tunj. Posisi Rp {Tunj. Posisi (Angka)}, -) dengan didalamnya dikenakan potongan kewajiban karyawan untuk iuran BPJS Ketenagakerjaan (rincian JHT (gapok*2%) dan JP (gapok*1%)) &amp; BPJS Kesehatan (gapok *1%)}`}</Text>
+          <Text fontSize={12} marginRight={2}>
+            :{' '}
+          </Text>
+          <Text
+            fontSize={12}
+          >{`{Rp {Take Home Pay}, - / bulan (Rincian Gaji Pokok Rp {Gaji Pokok (Angka)}, - dan Tunj. Posisi Rp {Tunj. Posisi (Angka)}, -) dengan didalamnya dikenakan potongan kewajiban karyawan untuk iuran BPJS Ketenagakerjaan (rincian JHT (gapok*2%) dan JP (gapok*1%)) &amp; BPJS Kesehatan (gapok *1%)}`}</Text>
         </Flex>
       </Flex>
       <Flex>
-        <Text flex={0.2} fontSize={12}>Status</Text>
+        <Text flex={0.2} fontSize={12}>
+          Status
+        </Text>
         <Flex flex={1}>
-          <Text fontSize={12} marginRight={2}>: </Text>
-          <Text fontSize={12}>{`Kontrak {AWAL KONTRAK} s.d {AKHIR KONTRAK}`}</Text>
+          <Text fontSize={12} marginRight={2}>
+            :{' '}
+          </Text>
+          <Text
+            fontSize={12}
+          >{`Kontrak {AWAL KONTRAK} s.d {AKHIR KONTRAK}`}</Text>
         </Flex>
       </Flex>
       <Gap height={4} />
       <Text fontSize={12}>
-        Selain ketentuan tersebut diatas, saudara wajib dan tunduk pada ketentuan perusahaan yang berlaku serta beberapa ketentuan berikut :
+        Selain ketentuan tersebut diatas, saudara wajib dan tunduk pada
+        ketentuan perusahaan yang berlaku serta beberapa ketentuan berikut :
       </Text>
       <Gap height={4} />
       <Flex>
-        <Text flex={0.1} fontSize={12}>1.</Text>
-        <Text fontSize={12} flex={1}>Tunjangan Hari Raya Keagamaan atau Tunjangan Hari Raya (THR) sesuai kebijakan perusahaan</Text>
+        <Text flex={0.1} fontSize={12}>
+          1.
+        </Text>
+        <Text fontSize={12} flex={1}>
+          Tunjangan Hari Raya Keagamaan atau Tunjangan Hari Raya (THR) sesuai
+          kebijakan perusahaan
+        </Text>
       </Flex>
       <Flex>
-        <Text flex={0.1} fontSize={12}>2.</Text>
-        <Text fontSize={12} flex={1}>Kompensasi Akhir Kontrak menyesuaikan kebijakan pemerintah dan kondisi keuangan perusahaan</Text>
+        <Text flex={0.1} fontSize={12}>
+          2.
+        </Text>
+        <Text fontSize={12} flex={1}>
+          Kompensasi Akhir Kontrak menyesuaikan kebijakan pemerintah dan kondisi
+          keuangan perusahaan
+        </Text>
       </Flex>
       <Flex>
-        <Text flex={0.1} fontSize={12}>3.</Text>
-        <Text fontSize={12} flex={1}>Pajak penghasilan ditanggung oleh Metra-Net</Text>
+        <Text flex={0.1} fontSize={12}>
+          3.
+        </Text>
+        <Text fontSize={12} flex={1}>
+          Pajak penghasilan ditanggung oleh Metra-Net
+        </Text>
       </Flex>
       <Flex>
-        <Text flex={0.1} fontSize={12}>4.</Text>
-        <Text fontSize={12} flex={1}>Cuti tahunan (termasuk cuti bersama yang diatur oleh pemerintah) dan disesuaikan dengan ketentuan pelaksanaan project</Text>
+        <Text flex={0.1} fontSize={12}>
+          4.
+        </Text>
+        <Text fontSize={12} flex={1}>
+          Cuti tahunan (termasuk cuti bersama yang diatur oleh pemerintah) dan
+          disesuaikan dengan ketentuan pelaksanaan project
+        </Text>
       </Flex>
       <Flex>
-        <Text flex={0.1} fontSize={12}>5.</Text>
-        <Text fontSize={12} flex={1}>BPJS Kesehatan dan BPJS Ketenagakerjaan yang diaktivasi oleh perusahaan menyesuaikan kebijakan pemerintah</Text>
+        <Text flex={0.1} fontSize={12}>
+          5.
+        </Text>
+        <Text fontSize={12} flex={1}>
+          BPJS Kesehatan dan BPJS Ketenagakerjaan yang diaktivasi oleh
+          perusahaan menyesuaikan kebijakan pemerintah
+        </Text>
       </Flex>
       <Flex>
-        <Text flex={0.1} fontSize={12}>6.</Text>
-        <Text fontSize={12} flex={1}>Perbedaan akun Bank yang menyebabkan biaya tambahan kliring akan dibebankan pada karyawan</Text>
+        <Text flex={0.1} fontSize={12}>
+          6.
+        </Text>
+        <Text fontSize={12} flex={1}>
+          Perbedaan akun Bank yang menyebabkan biaya tambahan kliring akan
+          dibebankan pada karyawan
+        </Text>
       </Flex>
       <Gap height={4} />
       <Text fontSize={12}>
-        Demikian Penawaran Kerja ini kami sampaikan, atas perhatiannya diucapkan terima kasih.
+        Demikian Penawaran Kerja ini kami sampaikan, atas perhatiannya diucapkan
+        terima kasih.
       </Text>
       <Gap height={12} />
-      <Flex justifyContent='center' alignItems='center'>
+      <Flex justifyContent="center" alignItems="center">
         <VStack flex={1}>
           <Text fontSize={12}>Jakarta, {`{Tanggal Hari ini}`}</Text>
         </VStack>
@@ -91,10 +150,12 @@ const PreviewOfferingLatter = () => {
         </VStack>
       </Flex>
       <Gap height={20} />
-      <Flex justifyContent='center' alignItems='center' paddingBottom={12}>
+      <Flex justifyContent="center" alignItems="center" paddingBottom={12}>
         <VStack flex={1}>
           <Text fontSize={12}>{`{Nama Penanggung Jawab}`}</Text>
-          <Text fontSize={12}>{`{Role Penanggung JAwab} {Level Penanggung Jawab}`}</Text>
+          <Text
+            fontSize={12}
+          >{`{Role Penanggung JAwab} {Level Penanggung Jawab}`}</Text>
         </VStack>
         <VStack flex={1}>
           <Text fontSize={12}>{`{Nama Kandidat}`}</Text>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Box, Spinner } from '@chakra-ui/react';
 import styles from './ListEmpty.styles';
 
@@ -8,6 +8,6 @@ const ListEmpty = () => {
       <Spinner size="lg" color="#AE445A" />
     </Box>
   );
-}
+};
 
 export default ListEmpty;

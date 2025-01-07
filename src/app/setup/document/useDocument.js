@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { httpClient } from "../../utils/network";
-import { useRouter } from "next/navigation";
-import { useToast } from "@chakra-ui/react";
+import { useEffect, useState } from 'react';
+import { httpClient } from '../../utils/network';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@chakra-ui/react';
 
 const useDataTalent = () => {
   const router = useRouter();
@@ -37,11 +37,13 @@ const useDataTalent = () => {
       });
 
       const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(({ id, product_digital_name }) => ({
-        id,
-        label: product_digital_name,
-        value: id
-      }));
+      const transformedData = responseData?.map(
+        ({ id, product_digital_name }) => ({
+          id,
+          label: product_digital_name,
+          value: id,
+        })
+      );
       setProductDigitalData(transformedData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -49,17 +51,17 @@ const useDataTalent = () => {
   };
 
   const onHandlePress = (value) => {
-    setForm(prevData => ({ ...prevData, documentType: value }));
-  }
+    setForm((prevData) => ({ ...prevData, documentType: value }));
+  };
 
   const onHandleChange = (slug, value) => {
-    setForm(prevData => ({ ...prevData, productDigital: value }));
+    setForm((prevData) => ({ ...prevData, productDigital: value }));
   };
 
   const validateForm = () => {
-    let newErrors = "";
+    let newErrors = '';
     if (!form.documentType.trim()) {
-      newErrors = "Document Type tidak boleh kosong";
+      newErrors = 'Document Type tidak boleh kosong';
     }
     return newErrors;
   };
@@ -68,15 +70,17 @@ const useDataTalent = () => {
     const validationErrors = validateForm();
     if (validationErrors !== '') {
       toast({
-        title: "Error",
+        title: 'Error',
         description: validationErrors,
         duration: 3000,
-        status: "error",
-        position: "top",
+        status: 'error',
+        position: 'top',
         isClosable: true,
       });
     } else {
-      router.push(`/setup/document/detail?productDigital=${form.productDigital}&documentType=${form.documentType}`);
+      router.push(
+        `/setup/document/detail?productDigital=${form.productDigital}&documentType=${form.documentType}`
+      );
     }
   };
 
@@ -85,9 +89,15 @@ const useDataTalent = () => {
     fetchDataPD();
   }, []);
 
-  return { data, form, loading, productDigitalData, onHandlePress, onHandleChange, onHandleSubmit }
-
+  return {
+    data,
+    form,
+    loading,
+    productDigitalData,
+    onHandlePress,
+    onHandleChange,
+    onHandleSubmit,
+  };
 };
 
 export default useDataTalent;
-

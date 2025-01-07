@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { httpClient } from "../utils/network";
+import { useEffect, useState } from 'react';
+import { httpClient } from '../utils/network';
 
 const useSendDocument = () => {
   const [data, setData] = useState([]);
@@ -22,9 +22,7 @@ const useSendDocument = () => {
     fetchData();
   }, []);
 
-  return { data }
-
+  return { data };
 };
 
 export default useSendDocument;
-

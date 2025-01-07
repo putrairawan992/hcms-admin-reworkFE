@@ -5,7 +5,7 @@ const styles = {
       fontSize: '16px',
       fontWeight: '700',
       lineHeight: '19px',
-      minWidth: '20px'
+      minWidth: '20px',
     },
   },
   headCells: {
@@ -21,8 +21,8 @@ const styles = {
   },
   rows: {
     style: {
-      whiteSpace: "normal",
-      wordBreak: "break-word",
+      whiteSpace: 'normal',
+      wordBreak: 'break-word',
       backgroundColor: 'transparent',
       '&:nth-of-type(odd)': {
         backgroundColor: 'transparent',
@@ -37,10 +37,10 @@ const styles = {
       padding: '10px',
       color: '#333',
       fontSize: '16px',
-      whiteSpace: "normal",
-      wordBreak: "break-word"
+      whiteSpace: 'normal',
+      wordBreak: 'break-word',
     },
-  }
+  },
 };
 
 export default styles;

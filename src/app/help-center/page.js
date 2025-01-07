@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   Box,
   Button,
@@ -8,19 +8,19 @@ import {
   useDisclosure,
   useToast,
   Image,
-} from "@chakra-ui/react";
-import styles from "../styles/helpCenter.module.css";
-import { useEffect, useRef, useState } from "react";
-import "react-quill/dist/quill.snow.css";
-import { ArrowUpIcon } from "../components/icons";
-import { useEditHelpCenter, useGetHelpCenter } from "../api/help-center";
-import { useForm } from "react-hook-form";
-import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+} from '@chakra-ui/react';
+import styles from '../styles/helpCenter.module.css';
+import { useEffect, useRef, useState } from 'react';
+import 'react-quill/dist/quill.snow.css';
+import { ArrowUpIcon } from '../components/icons';
+import { useEditHelpCenter, useGetHelpCenter } from '../api/help-center';
+import { useForm } from 'react-hook-form';
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const HelpCenter = () => {
   const ChangeContactModalWithNoSSR = dynamic(
-    () => import("../components/changeContactModal"),
+    () => import('../components/changeContactModal'),
     { ssr: false }
   );
   const toast = useToast();
@@ -33,10 +33,10 @@ const HelpCenter = () => {
   const fileInputRef = useRef(null);
   const { setValue, watch, handleSubmit } = useForm({
     defaultValues: {
-      file: "",
-      content: "",
-      category: "",
-      id: "",
+      file: '',
+      content: '',
+      category: '',
+      id: '',
     },
   });
 
@@ -47,7 +47,7 @@ const HelpCenter = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setValue("file", file);
+      setValue('file', file);
       setStoredFile(file);
     }
   };
@@ -60,25 +60,25 @@ const HelpCenter = () => {
 
   useEffect(() => {
     if (!isPending) {
-      setValue("file", data[0]?.file);
-      setValue("content", data[0]?.content);
-      setValue("category", data[0]?.category);
-      setValue("id", data[0]?.id);
+      setValue('file', data[0]?.file);
+      setValue('content', data[0]?.content);
+      setValue('category', data[0]?.category);
+      setValue('id', data[0]?.id);
     }
   }, [data, isPending]);
 
   const currentContentHandler = (item) => {
-    setValue("file", item.file);
-    setValue("content", item.content);
-    setValue("category", item.category);
-    setValue("id", item.id);
+    setValue('file', item.file);
+    setValue('content', item.content);
+    setValue('category', item.category);
+    setValue('id', item.id);
   };
 
   const onSubmit = (data) => {
     const formData = new FormData();
-    formData.append("file", data?.file);
-    formData.append("content", data?.content);
-    formData.append("category", data?.category);
+    formData.append('file', data?.file);
+    formData.append('content', data?.content);
+    formData.append('category', data?.category);
 
     mutate(
       {
@@ -88,11 +88,11 @@ const HelpCenter = () => {
       {
         onSuccess: () => {
           toast({
-            title: "Success",
-            description: "Berhasil mengupdate help-center!",
+            title: 'Success',
+            description: 'Berhasil mengupdate help-center!',
             duration: 3000,
-            status: "success",
-            position: "top",
+            status: 'success',
+            position: 'top',
             isClosable: true,
           });
           setReload(true);
@@ -100,11 +100,11 @@ const HelpCenter = () => {
         onError: (err) => {
           console.error(err);
           toast({
-            title: "Error",
+            title: 'Error',
             description: err?.response?.data?.errors || `Something went wrong!`,
             duration: 3000,
-            status: "error",
-            position: "top",
+            status: 'error',
+            position: 'top',
             isClosable: true,
           });
         },
@@ -115,14 +115,14 @@ const HelpCenter = () => {
   return (
     <>
       <ChangeContactModalWithNoSSR isOpen={isOpen} onClose={onClose} />
-      <Box className={styles["help-center-container"]}>
-        <Flex align={"start"} height={"100%"}>
-          <Box className={styles["help-center-left-wrapper"]}>
+      <Box className={styles['help-center-container']}>
+        <Flex align={'start'} height={'100%'}>
+          <Box className={styles['help-center-left-wrapper']}>
             <Box>
-              <Text className={styles["help-center-title"]}>Help Center</Text>
+              <Text className={styles['help-center-title']}>Help Center</Text>
               <Image
-                className={styles["help-center-img"]}
-                src={"/images/faq-icon.png"}
+                className={styles['help-center-img']}
+                src={'/images/faq-icon.png'}
               />
               {!isPending &&
                 data?.map((item, index) => (
@@ -130,9 +130,9 @@ const HelpCenter = () => {
                     onClick={() => currentContentHandler(item)}
                     key={index}
                     className={
-                      watch("id") === item?.id
-                        ? styles["help-center-active-text"]
-                        : styles["help-center-inactive-text"]
+                      watch('id') === item?.id
+                        ? styles['help-center-active-text']
+                        : styles['help-center-inactive-text']
                     }
                   >
                     {item.category}
@@ -142,76 +142,76 @@ const HelpCenter = () => {
             <Box>
               <Button
                 onClick={onOpen}
-                className={styles["help-center-edit-btn"]}
+                className={styles['help-center-edit-btn']}
               >
                 Edit
               </Button>
-              <Text className={styles["help-center-ask-text"]}>
+              <Text className={styles['help-center-ask-text']}>
                 Apa yang bisa kami bantu?
               </Text>
-              <Flex align={"center"}>
+              <Flex align={'center'}>
                 <Text
-                  className={styles["help-center-info"]}
-                  mr={"2rem"}
-                  w={"100px"}
+                  className={styles['help-center-info']}
+                  mr={'2rem'}
+                  w={'100px'}
                 >
-                  Hubungi Kami{" "}
-                  <span style={{ fontWeight: "700", color: "#8364BA" }}>
+                  Hubungi Kami{' '}
+                  <span style={{ fontWeight: '700', color: '#8364BA' }}>
                     (021) 2977 0020
                   </span>
                 </Text>
-                <Text className={styles["help-center-info"]} w={"159px"}>
-                  E-Mail{" "}
-                  <span style={{ fontWeight: "700", color: "#8364BA" }}>
+                <Text className={styles['help-center-info']} w={'159px'}>
+                  E-Mail{' '}
+                  <span style={{ fontWeight: '700', color: '#8364BA' }}>
                     scaleup@metranet.co.id
                   </span>
                 </Text>
               </Flex>
-              <Flex align={"center"} mt={"1.5rem"}>
+              <Flex align={'center'} mt={'1.5rem'}>
                 <Image
-                  className={styles["help-center-whatsapp-icon"]}
-                  src={"/images/Whatsapp.png"}
+                  className={styles['help-center-whatsapp-icon']}
+                  src={'/images/Whatsapp.png'}
                 />
                 <Text
-                  className={styles["help-center-info"]}
-                  margin={"0 14px 0 8px"}
+                  className={styles['help-center-info']}
+                  margin={'0 14px 0 8px'}
                 >
                   Admin Scala
                 </Text>
                 <Text
-                  className={styles["help-center-info"]}
-                  style={{ fontWeight: "700", color: "#8364BA" }}
+                  className={styles['help-center-info']}
+                  style={{ fontWeight: '700', color: '#8364BA' }}
                 >
                   Fast Response
                 </Text>
               </Flex>
             </Box>
           </Box>
-          <Box className={styles["help-center-right-wrapper"]}>
+          <Box className={styles['help-center-right-wrapper']}>
             {isEditQuestion ? (
               <>
                 <Box>
                   <Flex
-                    align={"center"}
-                    justify={"space-between"}
-                    width={"100%"}
-                    mb={"3rem"}
+                    align={'center'}
+                    justify={'space-between'}
+                    width={'100%'}
+                    mb={'3rem'}
                   >
-                    <Text className={styles["help-center-right-title"]}>
-                      {watch("category")}
+                    <Text className={styles['help-center-right-title']}>
+                      {watch('category')}
                     </Text>
-                    <Flex align={"center"}>
+                    <Flex align={'center'}>
                       <Button
                         onClick={() => setIsEditQuestion(false)}
-                        mb={"0"}
-                        className={styles["help-center-back-btn"]}
+                        mb={'0'}
+                        className={styles['help-center-back-btn']}
                       >
                         Back
                       </Button>
                       <Button
                         onClick={handleSubmit(onSubmit)}
-                        mb={"0"}
-                        className={styles["help-center-edit-btn"]}
+                        mb={'0'}
+                        className={styles['help-center-edit-btn']}
                       >
                         Save
                       </Button>
@@ -219,32 +219,32 @@ const HelpCenter = () => {
                   </Flex>
                   <ReactQuill
                     theme="snow"
-                    value={watch("content")}
-                    onChange={(value) => setValue("content", value)}
-                    style={{ margin: "1.5rem 0 4rem", height: "526px" }}
+                    value={watch('content')}
+                    onChange={(value) => setValue('content', value)}
+                    style={{ margin: '1.5rem 0 4rem', height: '526px' }}
                   />
                 </Box>
                 {!storedFile ? (
                   <Flex
                     onClick={handleClick}
-                    className={styles["help-center-upload-container"]}
+                    className={styles['help-center-upload-container']}
                   >
                     <Image
-                      className={styles["help-container-upload-img"]}
-                      src={"/images/Group (4).png"}
+                      className={styles['help-container-upload-img']}
+                      src={'/images/Group (4).png'}
                     />
-                    <Box marginLeft={"1rem"}>
-                      <Text className={styles["help-container-upload-title"]}>
+                    <Box marginLeft={'1rem'}>
+                      <Text className={styles['help-container-upload-title']}>
                         Drop files her or click to upload
                       </Text>
-                      <Text className={styles["help-container-upload-text"]}>
+                      <Text className={styles['help-container-upload-text']}>
                         File supported : PDF, Maksimal 1 file and 10 MB
                       </Text>
                     </Box>
                     <Input
                       type="file"
                       ref={fileInputRef}
-                      style={{ display: "none" }}
+                      style={{ display: 'none' }}
                       onChange={handleFileChange}
                       accept=".pdf"
                     />
@@ -252,23 +252,21 @@ const HelpCenter = () => {
                 ) : (
                   <Flex
                     onClick={handleClick}
-                    className={styles["help-center-uploaded-container"]}
+                    className={styles['help-center-uploaded-container']}
                   >
-                    <Flex align={"center"}>
+                    <Flex align={'center'}>
                       <Image
-                        className={styles["help-center-uploaded-img"]}
-                        src={"/images/doc.circle.png"}
+                        className={styles['help-center-uploaded-img']}
+                        src={'/images/doc.circle.png'}
                       />
-                      <Text className={styles["help-center-uploaded-text"]}>
+                      <Text className={styles['help-center-uploaded-text']}>
                         {storedFile.name}
                       </Text>
                     </Flex>
-                    <Flex flexDir={"column"} align={"center"}>
+                    <Flex flexDir={'column'} align={'center'}>
                       <ArrowUpIcon />
                       <Text
-                        className={
-                          styles["help-center-uploaded-reupload-text"]
-                        }
+                        className={styles['help-center-uploaded-reupload-text']}
                       >
                         Re-upload
                       </Text>
@@ -276,7 +274,7 @@ const HelpCenter = () => {
                     <Input
                       type="file"
                       ref={fileInputRef}
-                      style={{ display: "none" }}
+                      style={{ display: 'none' }}
                       onChange={handleFileChange}
                       accept=".pdf"
                     />
@@ -287,48 +285,48 @@ const HelpCenter = () => {
               <>
                 <Box>
                   <Flex
-                    align={"center"}
-                    justify={"space-between"}
-                    width={"100%"}
-                    mb={"3rem"}
+                    align={'center'}
+                    justify={'space-between'}
+                    width={'100%'}
+                    mb={'3rem'}
                   >
-                    <Text className={styles["help-center-right-title"]}>
-                      {watch("category")}
+                    <Text className={styles['help-center-right-title']}>
+                      {watch('category')}
                     </Text>
                     <Button
                       onClick={() => setIsEditQuestion(true)}
-                      mb={"0"}
-                      className={styles["help-center-edit-btn"]}
+                      mb={'0'}
+                      className={styles['help-center-edit-btn']}
                     >
                       Edit
                     </Button>
                   </Flex>
-                  <Box mb={"2rem"}>
+                  <Box mb={'2rem'}>
                     <Text
                       dangerouslySetInnerHTML={{
-                        __html: watch("content"),
+                        __html: watch('content'),
                       }}
-                      className={styles["help-center-right-text"]}
+                      className={styles['help-center-right-text']}
                     />
                   </Box>
                 </Box>
-                {watch("file") && (
-                  <Flex className={styles["help-center-file-container"]}>
+                {watch('file') && (
+                  <Flex className={styles['help-center-file-container']}>
                     <Image
-                      className={styles["help-center-pdf-icon"]}
-                      src={"/images/PDF.png"}
+                      className={styles['help-center-pdf-icon']}
+                      src={'/images/PDF.png'}
                     />
-                    <Box margin={"0 1.5rem 0 0.1rem"}>
-                      <Text className={styles["help-center-file-title"]}>
-                        {watch("file")}
+                    <Box margin={'0 1.5rem 0 0.1rem'}>
+                      <Text className={styles['help-center-file-title']}>
+                        {watch('file')}
                       </Text>
                       {/* <Text className={styles["help-center-file-text"]}>
                         2.4MB / 10MB
                       </Text> */}
                     </Box>
                     <Image
-                      className={styles["help-center-cloud-icon"]}
-                      src={"/images/Download From Cloud.png"}
+                      className={styles['help-center-cloud-icon']}
+                      src={'/images/Download From Cloud.png'}
                     />
                   </Flex>
                 )}

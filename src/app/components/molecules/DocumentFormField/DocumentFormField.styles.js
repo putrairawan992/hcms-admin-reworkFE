@@ -4,8 +4,8 @@ const styles = {
     borderColor: '#AE445A',
     borderRadius: '10px',
     backgroundColor: isActive ? '#AE445A' : '',
-    cursor: 'pointer'
+    cursor: 'pointer',
   }),
 };
 
-export default styles
+export default styles;

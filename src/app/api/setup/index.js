@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import Cookies from "js-cookie";
+import { useMutation, useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -8,11 +8,11 @@ export const useSetupRemuneration = () => {
   return useMutation({
     mutationFn: async ({ dataRemun }) => {
       const res = await axios({
-        method: "POST",
-        url: baseURL + "/api/admin/remuneration/calculates",
+        method: 'POST',
+        url: baseURL + '/api/admin/remuneration/calculates',
         data: dataRemun,
         headers: {
-          Authorization: `Bearer ${Cookies.get("userToken")}`,
+          Authorization: `Bearer ${Cookies.get('userToken')}`,
         },
       });
 
@@ -23,17 +23,17 @@ export const useSetupRemuneration = () => {
 
 export const useGetSetupJobPost = ({ option }) => {
   return useQuery({
-    queryKey: ["option"],
+    queryKey: ['option'],
     queryFn: async () => {
       if (!option) {
         return null;
       }
 
       const res = await axios({
-        method: "GET",
+        method: 'GET',
         url: baseURL + `/api/admin/job_post/${option}`,
         headers: {
-          Authorization: `Bearer ${Cookies.get("userToken")}`,
+          Authorization: `Bearer ${Cookies.get('userToken')}`,
         },
       });
 
@@ -49,10 +49,10 @@ export const useSubmitJobPostSetup = () => {
   return useMutation({
     mutationFn: async ({ data, option }) => {
       const res = await axios({
-        method: "POST",
+        method: 'POST',
         url: baseURL + `/api/admin/job_post/${option}`,
         headers: {
-          Authorization: `Bearer ${Cookies.get("userToken")}`,
+          Authorization: `Bearer ${Cookies.get('userToken')}`,
         },
         data,
       });
@@ -64,17 +64,17 @@ export const useSubmitJobPostSetup = () => {
 
 export const useGetAccountSetup = ({ username }) => {
   return useQuery({
-    queryKey: ["username"],
+    queryKey: ['username'],
     queryFn: async () => {
       const res = await axios({
-        method: "GET",
+        method: 'GET',
         url: baseURL + `/api/admin/account_setup`,
         headers: {
-          Authorization: `Bearer ${Cookies.get("userToken")}`,
+          Authorization: `Bearer ${Cookies.get('userToken')}`,
         },
         params: {
           username,
-          sort: "A-Z",
+          sort: 'A-Z',
         },
       });
 
@@ -89,10 +89,10 @@ export const useCreateAccountSetup = () => {
   return useMutation({
     mutationFn: async ({ data }) => {
       const res = await axios({
-        method: "POST",
+        method: 'POST',
         url: baseURL + `/api/admin/account_setup`,
         headers: {
-          Authorization: `Bearer ${Cookies.get("userToken")}`,
+          Authorization: `Bearer ${Cookies.get('userToken')}`,
         },
         data,
       });

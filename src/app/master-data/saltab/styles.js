@@ -11,14 +11,14 @@ const style = {
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   header2: {
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   headerTitle: {
     fontSize: '22px',
@@ -33,20 +33,20 @@ const style = {
     backgroundColor: '#F5A623',
     color: '#FFFFFF',
     flex: 1,
-    padding: '0px 20px 20px 0px'
+    padding: '0px 20px 20px 0px',
   },
   textIncome: {
     gridColumn: 'span 11',
     padding: '10px',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   cellIncome: {
     display: 'grid',
     gridTemplateColumns: 'repeat(11, 1fr)',
     gap: '0',
     textAlign: 'center',
-    flex: 1
+    flex: 1,
   },
   tableSubtraction: {
     display: 'grid',
@@ -56,20 +56,20 @@ const style = {
     backgroundColor: '#3AB471',
     color: '#FFFFFF',
     flex: 1,
-    paddingBottom: '20px'
+    paddingBottom: '20px',
   },
   textSubtraction: {
     gridColumn: 'span 6',
     padding: '10px',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   cellSubtraction: {
     display: 'grid',
     gridTemplateColumns: 'repeat(6, 1fr)',
     gap: '0',
     textAlign: 'center',
-    flex: 1
+    flex: 1,
   },
 };
 

@@ -1,2 +1,2 @@
-import PayslipCard from "./PayslipCard";
+import PayslipCard from './PayslipCard';
 export default PayslipCard;

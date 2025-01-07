@@ -11,14 +11,14 @@ const style = {
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   header2: {
     borderTopLeftRadius: '30px',
     borderTopRightRadius: '30px',
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   headerTitle: {
     fontSize: '22px',
@@ -33,20 +33,20 @@ const style = {
     backgroundColor: '#3AB471',
     color: '#FFFFFF',
     flex: 1,
-    padding: '0px 20px 20px 0px'
+    padding: '0px 20px 20px 0px',
   },
   textTableAllowance: {
     gridColumn: 'span 12',
     padding: '10px',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   cellAllowance: {
     display: 'grid',
     gridTemplateColumns: 'repeat(12, 1fr)',
     gap: '0',
     textAlign: 'center',
-    flex: 1
+    flex: 1,
   },
   tableDeduction: {
     display: 'grid',
@@ -56,20 +56,20 @@ const style = {
     backgroundColor: '#AE445A',
     color: '#FFFFFF',
     flex: 1,
-    paddingBottom: '20px'
+    paddingBottom: '20px',
   },
   textTableDeduction: {
     gridColumn: 'span 10',
     padding: '10px',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   cellDeduction: {
     display: 'grid',
     gridTemplateColumns: 'repeat(10, 1fr)',
     gap: '0',
     textAlign: 'center',
-    flex: 1
+    flex: 1,
   },
   tableCompany: {
     display: 'grid',
@@ -79,20 +79,20 @@ const style = {
     backgroundColor: '#3B78C2',
     color: '#FFFFFF',
     flex: 1,
-    paddingBottom: '20px'
+    paddingBottom: '20px',
   },
   textTableCompany: {
     gridColumn: 'span 8',
     padding: '10px',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   cellCompany: {
     display: 'grid',
     gridTemplateColumns: 'repeat(8, 1fr)',
     gap: '0',
     textAlign: 'center',
-    flex: 1
+    flex: 1,
   },
 };
 

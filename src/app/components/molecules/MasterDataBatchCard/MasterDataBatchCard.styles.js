@@ -7,13 +7,13 @@ const styles = {
     justifyContent: 'space-between',
     padding: '10px 3rem',
     borderRadius: '10px',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
 
   imgWrapper: {
     border: '3px solid #AE445A',
     borderRadius: '100%',
-    padding: '2px'
+    padding: '2px',
   },
 
   img: {
@@ -48,7 +48,7 @@ const styles = {
     fontWeight: '700',
     lineHeight: '18px',
     color: '#ffffff',
-  }
-}
+  },
+};
 
-export default styles
+export default styles;

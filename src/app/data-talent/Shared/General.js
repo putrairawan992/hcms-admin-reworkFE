@@ -29,7 +29,7 @@ export const selectionTypeOptions = [
   {
     label: 'Selection',
     value: 'selection',
-  }
+  },
 ];
 
 export const employeeTypeOptions = [
@@ -40,7 +40,7 @@ export const employeeTypeOptions = [
   {
     label: 'Freelance',
     value: 'freelance',
-  }
+  },
 ];
 
 export const statusDocumentOptions = [

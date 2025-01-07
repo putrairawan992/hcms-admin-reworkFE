@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { httpClient } from "@/app/utils/network";
-import { useToast } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from 'react';
+import { httpClient } from '@/app/utils/network';
+import { useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
 
 const useNewAdmin = () => {
   const router = useRouter();
@@ -119,7 +119,7 @@ const useNewAdmin = () => {
   });
 
   const onChangeText = (slug, value) => {
-    setForm(prevData => ({ ...prevData, [slug]: value }));
+    setForm((prevData) => ({ ...prevData, [slug]: value }));
   };
 
   const fetchData = async () => {
@@ -127,7 +127,7 @@ const useNewAdmin = () => {
       const response = await httpClient({
         method: 'GET',
         url: '/list/sheet1',
-        params: { page: 1, size: 10 }
+        params: { page: 1, size: 10 },
       });
 
       const responseData = response?.data?.data?.data || [];
@@ -143,26 +143,26 @@ const useNewAdmin = () => {
       await httpClient({
         method: 'POST',
         url: '/admin/account',
-        data: form
+        data: form,
       });
       setLoading(false);
 
       toast({
-        title: "success",
+        title: 'success',
         description: 'Admin has been created',
         duration: 3000,
-        status: "success",
-        position: "top",
+        status: 'success',
+        position: 'top',
         isClosable: true,
       });
       router.push('/setup/admin-role');
     } catch (error) {
       toast({
-        title: "Error",
+        title: 'Error',
         description: 'Something went wrong!',
         duration: 3000,
-        status: "error",
-        position: "top",
+        status: 'error',
+        position: 'top',
         isClosable: true,
       });
       setLoading(false);
@@ -171,9 +171,18 @@ const useNewAdmin = () => {
 
   const onChangeCheckbox = (slug, label, value, slugParent) => {
     if (slugParent === '') {
-      setForm((prevData) => ({ ...prevData, [slug]: { ...prevData[slug], [label]: value } }));
+      setForm((prevData) => ({
+        ...prevData,
+        [slug]: { ...prevData[slug], [label]: value },
+      }));
     } else {
-      setForm((prevData) => ({ ...prevData, [slugParent]: { ...prevData[slugParent], [slug]: { ...prevData[slugParent][slug], [label]: value, }, }, }));
+      setForm((prevData) => ({
+        ...prevData,
+        [slugParent]: {
+          ...prevData[slugParent],
+          [slug]: { ...prevData[slugParent][slug], [label]: value },
+        },
+      }));
     }
   };
 
@@ -186,8 +195,17 @@ const useNewAdmin = () => {
     fetchData();
   }, []);
 
-  return { form, data, loading, page, totalData, keyword, onChangeText, onHandleSubmit, onChangeCheckbox }
+  return {
+    form,
+    data,
+    loading,
+    page,
+    totalData,
+    keyword,
+    onChangeText,
+    onHandleSubmit,
+    onChangeCheckbox,
+  };
 };
 
 export default useNewAdmin;
-

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { httpClient } from "@/app/utils/network";
-import { useDisclosure } from "@chakra-ui/react";
-import { useRouter, useParams } from "next/navigation";
+import { useEffect, useState } from 'react';
+import { httpClient } from '@/app/utils/network';
+import { useDisclosure } from '@chakra-ui/react';
+import { useRouter, useParams } from 'next/navigation';
 
 const useRemunerationDetail = () => {
   const router = useRouter();
@@ -21,7 +21,7 @@ const useRemunerationDetail = () => {
     years: '',
     month: '',
     product_digital_name: '',
-    status: ''
+    status: '',
   });
 
   const fetchData = async () => {
@@ -48,10 +48,12 @@ const useRemunerationDetail = () => {
       });
 
       const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(({ id, product_digital_name }) => ({
-        id,
-        label: product_digital_name
-      }));
+      const transformedData = responseData?.map(
+        ({ id, product_digital_name }) => ({
+          id,
+          label: product_digital_name,
+        })
+      );
       setProductDigitalData(transformedData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -59,7 +61,7 @@ const useRemunerationDetail = () => {
   };
 
   const onChangeSelect = (slug, value) => {
-    setFilters(prevFilters => ({ ...prevFilters, [slug]: value }));
+    setFilters((prevFilters) => ({ ...prevFilters, [slug]: value }));
   };
 
   const onPressDetail = (id) => {
@@ -75,9 +77,19 @@ const useRemunerationDetail = () => {
     fetchDataPD();
   }, []);
 
-  return { data, loading, filters, productDigitalData, onChangeSelect, onPressDetail, onPressIcon, isOpen, onClose, onCloseNote, isOpenNote }
-
+  return {
+    data,
+    loading,
+    filters,
+    productDigitalData,
+    onChangeSelect,
+    onPressDetail,
+    onPressIcon,
+    isOpen,
+    onClose,
+    onCloseNote,
+    isOpenNote,
+  };
 };
 
 export default useRemunerationDetail;
-

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import SidebarLayout from "@/app/components/sidebarLayout";
+import SidebarLayout from '@/app/components/sidebarLayout';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -18,25 +18,26 @@ import {
   NumberInputField,
   Text,
   Image,
-} from "@chakra-ui/react";
-import styles from "../../styles/remuneration.module.css";
-import useRemuneration from "./useRemuneration";
+} from '@chakra-ui/react';
+import styles from '../../styles/remuneration.module.css';
+import useRemuneration from './useRemuneration';
 
 const Remuneration = () => {
-  const { data, handleInputChange, onSubmit, isOpen, onClose, cancelRef } = useRemuneration();
+  const { data, handleInputChange, onSubmit, isOpen, onClose, cancelRef } =
+    useRemuneration();
 
   return (
     <>
-      <Box className={styles["remuneration-container"]}>
-        <Text className={styles["remuneration-title"]} mb={"1rem"}>
+      <Box className={styles['remuneration-container']}>
+        <Text className={styles['remuneration-title']} mb={'1rem'}>
           Setup - Remuneration
         </Text>
-        <Text className={styles["remuneration-subtitle"]} mb={"1rem"}>
+        <Text className={styles['remuneration-subtitle']} mb={'1rem'}>
           Skema Normal & Khusus
         </Text>
-        <Grid templateColumns="1fr auto 1fr;" gap="70px" mb={"2rem"}>
+        <Grid templateColumns="1fr auto 1fr;" gap="70px" mb={'2rem'}>
           <GridItem>
-            <Text className={styles["remuneration-subtitle"]}>
+            <Text className={styles['remuneration-subtitle']}>
               Remunerasi Per Bulan
             </Text>
           </GridItem>
@@ -44,36 +45,24 @@ const Remuneration = () => {
             <span></span>
           </GridItem>
           <GridItem>
-            <Text className={styles["remuneration-subtitle"]}>
+            <Text className={styles['remuneration-subtitle']}>
               Remunerasi Sisa kontrak
             </Text>
           </GridItem>
         </Grid>
         <Grid templateColumns="1fr auto 1fr;" gap="70px">
           <GridItem>
-            <Flex
-              direction={"column"}
-              gap={"12px"}
-              wrap="nowrap"
-              mb={"2rem"}
-            >
-              <Text
-                className={styles["remuneration-form-title"]}
-                mb={"1rem"}
-              >
+            <Flex direction={'column'} gap={'12px'} wrap="nowrap" mb={'2rem'}>
+              <Text className={styles['remuneration-form-title']} mb={'1rem'}>
                 Penambah Gaji
               </Text>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     Basic Salary:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="bulan.basic_salary"
@@ -84,12 +73,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -97,16 +86,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     Tunjangan Posisi:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="bulan.position_allowance"
@@ -117,12 +102,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -130,16 +115,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     BPJSTK Iuran JKK:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="bulan.bpjstk_jkk_company"
@@ -150,12 +131,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -163,16 +144,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     BPJSTK Iuran JKM:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="bulan.bpjstk_jkm_company"
@@ -183,12 +160,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -196,16 +173,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     BPJSTK Iuran JHT:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="bulan.bpjstk_jht_company"
@@ -216,12 +189,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -229,16 +202,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     BPJSTK Iuran JP:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="bulan.bpjstk_jp_company"
@@ -249,12 +218,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -262,16 +231,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     Premi BPJSKES:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="bulan.premi_bpjskes_company"
@@ -282,12 +247,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -295,16 +260,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     Pajak:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="bulan.tax_company"
@@ -315,43 +276,30 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
                   </InputGroup>
                 </Flex>
               </Box>
-
             </Flex>
-            <Flex
-              direction={"column"}
-              gap={"12px"}
-              wrap="nowrap"
-              mb={"1rem"}
-            >
-              <Text
-                className={styles["remuneration-form-title-2"]}
-                mb={"1rem"}
-              >
+            <Flex direction={'column'} gap={'12px'} wrap="nowrap" mb={'1rem'}>
+              <Text className={styles['remuneration-form-title-2']} mb={'1rem'}>
                 Pengurang Gaji
               </Text>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     BPJSTK Iuran JHT:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="bulan.bpjstk_jht_employee"
@@ -362,12 +310,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -376,16 +324,12 @@ const Remuneration = () => {
               </Box>
 
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     BPJSTK Iuran JP:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="bulan.bpjstk_jp_employee"
@@ -396,12 +340,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -409,16 +353,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     Premi BPJSKES:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="bulan.premi_bpjskes_employee"
@@ -429,12 +369,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -442,8 +382,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
 
-              <Flex width={"100%"} justify={"end"} marginTop={"2rem"}>
-                <Button type="button" className={styles["remuneration-btn"]} onClick={onSubmit}>
+              <Flex width={'100%'} justify={'end'} marginTop={'2rem'}>
+                <Button
+                  type="button"
+                  className={styles['remuneration-btn']}
+                  onClick={onSubmit}
+                >
                   Save
                 </Button>
               </Flex>
@@ -459,29 +403,17 @@ const Remuneration = () => {
             />
           </GridItem>
           <GridItem>
-            <Flex
-              direction={"column"}
-              gap={"12px"}
-              wrap="nowrap"
-              mb={"2rem"}
-            >
-              <Text
-                className={styles["remuneration-form-title"]}
-                mb={"1rem"}
-              >
+            <Flex direction={'column'} gap={'12px'} wrap="nowrap" mb={'2rem'}>
+              <Text className={styles['remuneration-form-title']} mb={'1rem'}>
                 Penambah Gaji
               </Text>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     Basic Salary:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="kontrak.basic_salary"
@@ -492,12 +424,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -505,16 +437,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     Tunjangan Posisi:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="kontrak.position_allowance"
@@ -525,12 +453,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -538,16 +466,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     BPJSTK Iuran JKK:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="kontrak.bpjstk_jkk_company"
@@ -558,12 +482,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -571,16 +495,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     BPJSTK Iuran JKM:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="kontrak.bpjstk_jkm_company"
@@ -591,12 +511,12 @@ const Remuneration = () => {
                       value={data?.kontrak?.bpjstk_jkm_company}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -604,16 +524,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     BPJSTK Iuran JHT:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="kontrak.bpjstk_jht_company"
@@ -624,12 +540,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -637,16 +553,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     BPJSTK Iuran JP:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="kontrak.bpjstk_jp_company"
@@ -657,12 +569,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -670,16 +582,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     Premi BPJSKES:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="kontrak.premi_bpjskes_company"
@@ -690,12 +598,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -703,16 +611,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     Pajak:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="kontrak.tax_company"
@@ -723,12 +627,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -736,29 +640,17 @@ const Remuneration = () => {
                 </Flex>
               </Box>
             </Flex>
-            <Flex
-              direction={"column"}
-              gap={"12px"}
-              wrap="nowrap"
-              mb={"1rem"}
-            >
-              <Text
-                className={styles["remuneration-form-title-2"]}
-                mb={"1rem"}
-              >
+            <Flex direction={'column'} gap={'12px'} wrap="nowrap" mb={'1rem'}>
+              <Text className={styles['remuneration-form-title-2']} mb={'1rem'}>
                 Pengurang Gaji
               </Text>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     BPJSTK Iuran JHT:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="kontrak.bpjstk_jht_employee"
@@ -769,12 +661,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -782,16 +674,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     BPJSTK Iuran JP:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="kontrak.bpjstk_jp_employee"
@@ -802,12 +690,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -815,16 +703,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
               <Box>
-                <Flex
-                  align={"center"}
-                  justify={"space-between"}
-                  wrap="nowrap"
-                >
-                  <Text className={styles["remuneration-search-text"]}>
+                <Flex align={'center'} justify={'space-between'} wrap="nowrap">
+                  <Text className={styles['remuneration-search-text']}>
                     Premi BPJSKES:
                   </Text>
                   <InputGroup
-                    className={styles["remuneration-input-container"]}
+                    className={styles['remuneration-input-container']}
                   >
                     <NumberInput
                       name="kontrak.premi_bpjskes_employee"
@@ -835,12 +719,12 @@ const Remuneration = () => {
                       onChangeCapture={handleInputChange}
                     >
                       <NumberInputField
-                        className={styles["remuneration-input"]}
+                        className={styles['remuneration-input']}
                         placeholder="0"
                       />
                     </NumberInput>
                     <InputRightElement
-                      className={styles["remuneration-input-suffix"]}
+                      className={styles['remuneration-input-suffix']}
                     >
                       %
                     </InputRightElement>
@@ -848,8 +732,12 @@ const Remuneration = () => {
                 </Flex>
               </Box>
             </Flex>
-            <Flex width={"100%"} justify={"end"} marginTop={"2rem"}>
-              <Button type="button" className={styles["remuneration-btn"]} onClick={onSubmit}>
+            <Flex width={'100%'} justify={'end'} marginTop={'2rem'}>
+              <Button
+                type="button"
+                className={styles['remuneration-btn']}
+                onClick={onSubmit}
+              >
                 Save
               </Button>
             </Flex>
@@ -863,12 +751,12 @@ const Remuneration = () => {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogBody className={styles["remuneration-success"]}>
+            <AlertDialogBody className={styles['remuneration-success']}>
               <Flex
-                direction={"column"}
-                align={"center"}
-                justify={"center"}
-                gap={"24px"}
+                direction={'column'}
+                align={'center'}
+                justify={'center'}
+                gap={'24px'}
               >
                 <Image src="/images/Success-Circle.png" />
                 <Text>Data berhasil disimpan</Text>

@@ -33,7 +33,7 @@ export const getUserData = () => {
       email: userEmail,
       photo: userPhoto,
       address: userAddress,
-      phone: userPhone
+      phone: userPhone,
     };
   } catch (error) {
     console.error('Error getting user data from localStorage', error);

@@ -61,7 +61,7 @@ export const dataFormContractDays = [
     label: 'Pasal 6, Nomor 3',
     slug: 'clause_6_3',
     type: 'textarea',
-  }
+  },
 ];
 
 export const dataFormContractFreelance = [
@@ -79,7 +79,7 @@ export const dataFormContractFreelance = [
     label: 'Level Penanggung Jawab',
     slug: 'responsible_level',
     type: 'text',
-  }
+  },
 ];
 
 export const dataFormContractInternship = [
@@ -97,7 +97,7 @@ export const dataFormContractInternship = [
     label: 'Level Penanggung Jawab',
     slug: 'responsible_level',
     type: 'text',
-  }
+  },
 ];
 
 export const dataFormOfferingLatterKhusus = [
@@ -115,7 +115,7 @@ export const dataFormOfferingLatterKhusus = [
     label: 'Level Penanggung Jawab',
     slug: 'responsible_level',
     type: 'text',
-  }
+  },
 ];
 
 export const dataFormOfferingLatterNormal = [
@@ -133,7 +133,7 @@ export const dataFormOfferingLatterNormal = [
     label: 'Level Penanggung Jawab',
     slug: 'responsible_level',
     type: 'text',
-  }
+  },
 ];
 
 export const dataFormPKWT = [
@@ -158,7 +158,8 @@ export const dataFormPKWT = [
     type: 'textarea',
   },
   {
-    label: 'Pasal 9 Berakhinya Perjanjian atau Pemutusan Perjanjian (Poin 2, b)',
+    label:
+      'Pasal 9 Berakhinya Perjanjian atau Pemutusan Perjanjian (Poin 2, b)',
     slug: 'clause_9',
     type: 'textarea',
   },

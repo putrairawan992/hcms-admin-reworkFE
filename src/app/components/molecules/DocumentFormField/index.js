@@ -1,2 +1,2 @@
-import DocumentFormField from "./DocumentFormField";
+import DocumentFormField from './DocumentFormField';
 export default DocumentFormField;

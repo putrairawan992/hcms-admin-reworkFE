@@ -1,2 +1,2 @@
-import ListEmpty from "./ListEmpty";
+import ListEmpty from './ListEmpty';
 export default ListEmpty;

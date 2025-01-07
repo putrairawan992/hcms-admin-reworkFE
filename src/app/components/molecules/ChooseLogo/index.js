@@ -1,2 +1,2 @@
-import ChooseLogo from "./ChooseLogo";
+import ChooseLogo from './ChooseLogo';
 export default ChooseLogo;

@@ -1,2 +1,2 @@
-import MitraListCard from "./MitraListCard";
+import MitraListCard from './MitraListCard';
 export default MitraListCard;

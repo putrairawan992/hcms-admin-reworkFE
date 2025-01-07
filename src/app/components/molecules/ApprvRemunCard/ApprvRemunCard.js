@@ -1,11 +1,15 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
 import styles from './ApprvRemunCard.styles';
 import moment from 'moment';
-import { ChatIcon } from "@/app/components/icons";
+import { ChatIcon } from '@/app/components/icons';
 import { noop } from '@/app/utils/helpers';
 
-const ApprvRemunCard = ({ data = [], onClickDetail = noop, onClickIcon = noop }) => {
+const ApprvRemunCard = ({
+  data = [],
+  onClickDetail = noop,
+  onClickIcon = noop,
+}) => {
   const onHandlePressDetail = () => {
     onClickDetail(data?.remuneration_id);
   };
@@ -15,9 +19,7 @@ const ApprvRemunCard = ({ data = [], onClickDetail = noop, onClickIcon = noop })
   };
 
   return (
-    <Flex
-      justifyContent='space-between'
-      style={styles.wrapper}>
+    <Flex justifyContent="space-between" style={styles.wrapper}>
       <Box style={styles.imgWrapper}>
         <Image
           style={styles.img}
@@ -25,21 +27,29 @@ const ApprvRemunCard = ({ data = [], onClickDetail = noop, onClickIcon = noop })
           alt="image"
         />
       </Box>
-      <Text style={styles.title}>
-        {data?.product_digital_name || '-'}
+      <Text style={styles.title}>{data?.product_digital_name || '-'}</Text>
+      <Text style={styles.subtitle}>
+        {moment(data?.created_at).utcOffset('+07:00').format('MMM YYYY')}
       </Text>
-      <Text style={styles.subtitle}>{moment(data?.created_at).utcOffset("+07:00").format("MMM YYYY")}</Text>
       <Flex flex={1}>
-        <Box borderWidth={1} borderColor='#AE445A' paddingX={6} paddingY={2} borderRadius={10}>
+        <Box
+          borderWidth={1}
+          borderColor="#AE445A"
+          paddingX={6}
+          paddingY={2}
+          borderRadius={10}
+        >
           <Text style={styles.subtitle}>{data?.status}</Text>
         </Box>
       </Flex>
       <Box flex={1}>
         <ChatIcon style={styles.icon} onClick={onHandlePressIcon} />
       </Box>
-      <Button style={styles.button} onClick={onHandlePressDetail}>Detail</Button>
+      <Button style={styles.button} onClick={onHandlePressDetail}>
+        Detail
+      </Button>
     </Flex>
   );
-}
+};
 
 export default memo(ApprvRemunCard);

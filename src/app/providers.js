@@ -1,16 +1,19 @@
-"use client";
-import { ChakraProvider } from "@chakra-ui/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
-import { usePathname } from "next/navigation";
-import SidebarLayout from "./components/sidebarLayout";
+'use client';
+import { ChakraProvider } from '@chakra-ui/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useEffect, useMemo, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import SidebarLayout from './components/sidebarLayout';
 
 export function Providers({ children }) {
   const [isClient, setIsClient] = useState(false);
   const [queryClient] = useState(() => new QueryClient());
   const pathname = usePathname();
-  const noSidebarRoutes = ["/login", "/register"];
-  const shouldShowSidebar = useMemo(() => !noSidebarRoutes.includes(pathname), [pathname]);
+  const noSidebarRoutes = ['/login', '/register'];
+  const shouldShowSidebar = useMemo(
+    () => !noSidebarRoutes.includes(pathname),
+    [pathname]
+  );
 
   useEffect(() => {
     setIsClient(true);

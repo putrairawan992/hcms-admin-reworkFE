@@ -1,25 +1,49 @@
-import DataTalentCard from "./DataTalentCard";
-import HistoryTalentCard from "./HistoryTalentCard";
-import SendDocumentCard from "./SendDocumentCard";
-import MasterDataBatchCard from "./MasterDataBatchCard";
-import DataTables from "./DataTables";
-import PayslipCard from "./PayslipCard";
-import ListEmpty from "./ListEmpty";
-import ApprvRemunCard from "./ApprvRemunCard";
-import BiodataField from "./BiodataField";
-import DocumentFormField from "./DocumentFormField";
-import FormFields from "./FormFields";
-import TalentListCard from "./TalentListCard";
-import AttachmentFileList from "./AttachmentFileList";
-import ProgressCard from "./ProgressCard";
-import PretestCard from "./PretestCard";
-import QuestionSection from "./QuestionSection";
-import ChooseLogo from "./ChooseLogo";
-import MitraListCard from "./MitraListCard";
-import JobProviderCard from "./JobProviderCard";
-import PenilaianCard from "./PenilaianCard";
-import PenilaianDocumentCard from "./PenilaianDocumentCard";
-import PenilaianMultipleChoiceCard from "./PenilaianMultipleChoiceCard";
-import PenilaianEssayCard from "./PenilaianEssayCard";
+import DataTalentCard from './DataTalentCard';
+import HistoryTalentCard from './HistoryTalentCard';
+import SendDocumentCard from './SendDocumentCard';
+import MasterDataBatchCard from './MasterDataBatchCard';
+import DataTables from './DataTables';
+import PayslipCard from './PayslipCard';
+import ListEmpty from './ListEmpty';
+import ApprvRemunCard from './ApprvRemunCard';
+import BiodataField from './BiodataField';
+import DocumentFormField from './DocumentFormField';
+import FormFields from './FormFields';
+import TalentListCard from './TalentListCard';
+import AttachmentFileList from './AttachmentFileList';
+import ProgressCard from './ProgressCard';
+import PretestCard from './PretestCard';
+import QuestionSection from './QuestionSection';
+import ChooseLogo from './ChooseLogo';
+import MitraListCard from './MitraListCard';
+import JobProviderCard from './JobProviderCard';
+import PenilaianCard from './PenilaianCard';
+import PenilaianDocumentCard from './PenilaianDocumentCard';
+import PenilaianMultipleChoiceCard from './PenilaianMultipleChoiceCard';
+import PenilaianEssayCard from './PenilaianEssayCard';
 
-export { DataTalentCard, HistoryTalentCard, SendDocumentCard, MasterDataBatchCard, DataTables, PayslipCard, ListEmpty, ApprvRemunCard, BiodataField, DocumentFormField, FormFields, TalentListCard, AttachmentFileList, ProgressCard, PretestCard, QuestionSection, ChooseLogo, MitraListCard, JobProviderCard, PenilaianCard, PenilaianDocumentCard, PenilaianMultipleChoiceCard, PenilaianEssayCard };
+export {
+  DataTalentCard,
+  HistoryTalentCard,
+  SendDocumentCard,
+  MasterDataBatchCard,
+  DataTables,
+  PayslipCard,
+  ListEmpty,
+  ApprvRemunCard,
+  BiodataField,
+  DocumentFormField,
+  FormFields,
+  TalentListCard,
+  AttachmentFileList,
+  ProgressCard,
+  PretestCard,
+  QuestionSection,
+  ChooseLogo,
+  MitraListCard,
+  JobProviderCard,
+  PenilaianCard,
+  PenilaianDocumentCard,
+  PenilaianMultipleChoiceCard,
+  PenilaianEssayCard,
+};

@@ -1,2 +1,2 @@
-import ApprvRemunCard from "./ApprvRemunCard";
+import ApprvRemunCard from './ApprvRemunCard';
 export default ApprvRemunCard;

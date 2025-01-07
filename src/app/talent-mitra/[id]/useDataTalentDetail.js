@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { httpClient } from "@/app/utils/network";
-import { useRouter, useParams } from "next/navigation";
+import { useEffect, useState } from 'react';
+import { httpClient } from '@/app/utils/network';
+import { useRouter, useParams } from 'next/navigation';
 
 const useDataTalentDetail = () => {
   const router = useRouter();
@@ -27,15 +27,13 @@ const useDataTalentDetail = () => {
 
   const onHandlePress = (employeeId) => {
     router.push(`/data-talent/${employeeId}`);
-  }
+  };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  return { data, loading, onHandlePress }
-
+  return { data, loading, onHandlePress };
 };
 
 export default useDataTalentDetail;
-

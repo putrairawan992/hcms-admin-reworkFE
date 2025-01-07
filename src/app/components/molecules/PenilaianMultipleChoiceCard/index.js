@@ -1,2 +1,2 @@
-import PenilaianMultipleChoiceCard from "./PenilaianMultipleChoiceCard";
+import PenilaianMultipleChoiceCard from './PenilaianMultipleChoiceCard';
 export default PenilaianMultipleChoiceCard;

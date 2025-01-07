@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   Box,
   Button,
@@ -8,56 +8,72 @@ import {
   InputRightElement,
   Text,
   useDisclosure,
-} from "@chakra-ui/react";
-import styles from "../styles/inbox.module.css";
-import { useState } from "react";
-import "moment/locale/id";
-import { isEmpty } from "lodash";
-import { ListEmpty, TalentListCard, MitraListCard } from "../components/molecules";
-import useListMitra from "./useListMitra";
-import { Gap, SelectField } from "../components/atoms";
-import { specializationOptions, competenceOptions, educationOptions, experienceOptions } from "./Shared/General";
-import { AddIcon, Search2Icon } from "@chakra-ui/icons";
-import { ShareIcon } from "../components/icons";
-import Link from "next/link";
+} from '@chakra-ui/react';
+import styles from '../styles/inbox.module.css';
+import { useState } from 'react';
+import 'moment/locale/id';
+import { isEmpty } from 'lodash';
+import {
+  ListEmpty,
+  TalentListCard,
+  MitraListCard,
+} from '../components/molecules';
+import useListMitra from './useListMitra';
+import { Gap, SelectField } from '../components/atoms';
+import {
+  specializationOptions,
+  competenceOptions,
+  educationOptions,
+  experienceOptions,
+} from './Shared/General';
+import { AddIcon, Search2Icon } from '@chakra-ui/icons';
+import { ShareIcon } from '../components/icons';
+import Link from 'next/link';
 
 const ListMitra = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [years, setYears] = useState("2024");
-  const [month, setMonth] = useState("10");
+  const [years, setYears] = useState('2024');
+  const [month, setMonth] = useState('10');
   const [currentData, setCurrentData] = useState();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
-  const { data, filters, loading, productDigitalData, onHandlePress, onChangeSelect } = useListMitra();
+  const {
+    data,
+    filters,
+    loading,
+    productDigitalData,
+    onHandlePress,
+    onChangeSelect,
+  } = useListMitra();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
       return data.map((item) => {
-        return <TalentListCard data={item} onPress={onHandlePress} />
+        return <TalentListCard data={item} onPress={onHandlePress} />;
       });
     } else {
       return (
-        <Flex align={"center"} justify={"center"}>
+        <Flex align={'center'} justify={'center'}>
           <Text>Tidak ada data inbox</Text>
         </Flex>
-      )
+      );
     }
   };
 
   return (
-    <Box className={styles["inbox-container"]}>
-      <Flex align={"center"} justify={"space-between"}>
-        <Text className={styles["inbox-title"]}>List Mitra</Text>
+    <Box className={styles['inbox-container']}>
+      <Flex align={'center'} justify={'space-between'}>
+        <Text className={styles['inbox-title']}>List Mitra</Text>
       </Flex>
       <Gap height={6} />
       <Flex>
         <Flex flex={1}>
           <Box>
-            <InputGroup className={styles["input-container"]}>
+            <InputGroup className={styles['input-container']}>
               <Input
-                className={styles["admin-role-input"]}
+                className={styles['admin-role-input']}
                 type="text"
                 placeholder="Cari mitra"
               />
@@ -68,13 +84,12 @@ const ListMitra = () => {
           </Box>
           <Gap width={2} />
           <Link href="/list-mitra/add">
-            <Button className={styles["inbox-btn"]} marginRight={2}>
+            <Button className={styles['inbox-btn']} marginRight={2}>
               <AddIcon marginRight={4} />
               Create Mitra Account
             </Button>
           </Link>
         </Flex>
-
       </Flex>
 
       <Gap height={6} />

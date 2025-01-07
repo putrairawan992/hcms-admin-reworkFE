@@ -1,5 +1,5 @@
 import { Box, Flex, Text, VStack } from '@chakra-ui/react';
-import React from 'react'
+import React from 'react';
 import styles from './DocumentFormField.styles';
 import { FileIcon } from '../../../components/icons';
 import { noop } from '@/app/utils/helpers';
@@ -12,13 +12,14 @@ const DocumentFormField = ({ data = [], onPress = noop, isActive = '' }) => {
   };
 
   return (
-    <Flex wrap="wrap" justifyContent="flex-start" alignItems="flex-start" display='flex'>
+    <Flex
+      wrap="wrap"
+      justifyContent="flex-start"
+      alignItems="flex-start"
+      display="flex"
+    >
       {dataDocsOptions.map((item, index) => (
-        <Box
-          key={index}
-          flexBasis="calc(50%)"
-          marginBottom={6}
-        >
+        <Box key={index} flexBasis="calc(50%)" marginBottom={6}>
           <VStack>
             <Box
               style={styles.box(isActive === item.id)}
@@ -35,8 +36,7 @@ const DocumentFormField = ({ data = [], onPress = noop, isActive = '' }) => {
         </Box>
       ))}
     </Flex>
-
-  )
-}
+  );
+};
 
 export default DocumentFormField;

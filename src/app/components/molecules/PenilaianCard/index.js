@@ -1,2 +1,2 @@
-import PenilaianCard from "./PenilaianCard";
+import PenilaianCard from './PenilaianCard';
 export default PenilaianCard;

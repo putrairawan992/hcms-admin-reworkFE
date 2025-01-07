@@ -1,2 +1,2 @@
-import JobProviderCard from "./JobProviderCard";
+import JobProviderCard from './JobProviderCard';
 export default JobProviderCard;

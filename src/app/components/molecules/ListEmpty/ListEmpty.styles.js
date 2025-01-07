@@ -4,8 +4,8 @@ const styles = {
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center',
-    display: 'flex'
-  }
+    display: 'flex',
+  },
 };
 
-export default styles
+export default styles;

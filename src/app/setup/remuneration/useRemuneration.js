@@ -1,7 +1,7 @@
-import { useEffect, useState, useRef } from "react";
-import { httpClient } from "@/app/utils/network";
+import { useEffect, useState, useRef } from 'react';
+import { httpClient } from '@/app/utils/network';
 
-import { useDisclosure, useToast } from "@chakra-ui/react";
+import { useDisclosure, useToast } from '@chakra-ui/react';
 
 const useRemuneration = () => {
   const toast = useToast();
@@ -52,17 +52,17 @@ const useRemuneration = () => {
       await httpClient({
         method: 'POST',
         url: '/admin/remuneration/calculates',
-        data: data
+        data: data,
       });
       onOpen();
     } catch (error) {
       console.log(error?.response?.data);
       toast({
-        title: "Error",
+        title: 'Error',
         description: `Something went wrong!`,
         duration: 3000,
-        status: "error",
-        position: "top",
+        status: 'error',
+        position: 'top',
         isClosable: true,
       });
     }
@@ -91,9 +91,18 @@ const useRemuneration = () => {
     fetchData();
   }, []);
 
-  return { data, page, totalData, keyword, isOpen, onClose, cancelRef, onChangeText, handleInputChange, onSubmit }
-
+  return {
+    data,
+    page,
+    totalData,
+    keyword,
+    isOpen,
+    onClose,
+    cancelRef,
+    onChangeText,
+    handleInputChange,
+    onSubmit,
+  };
 };
 
 export default useRemuneration;
-

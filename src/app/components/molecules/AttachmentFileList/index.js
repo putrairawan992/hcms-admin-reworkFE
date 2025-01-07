@@ -1,2 +1,2 @@
-import AttachmentFileList from "./AttachmentFileList";
+import AttachmentFileList from './AttachmentFileList';
 export default AttachmentFileList;

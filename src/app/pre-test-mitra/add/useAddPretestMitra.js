@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { httpClient } from "../../utils/network";
+import { useEffect, useState } from 'react';
+import { httpClient } from '../../utils/network';
 
 const useDashboardMitra = () => {
   const [data, setData] = useState([]);
   const [questionData, setQuestionData] = useState([
     {
       question: '',
-      answer: ''
-    }
+      answer: '',
+    },
   ]);
 
   const fetchData = async () => {
@@ -32,9 +32,7 @@ const useDashboardMitra = () => {
     fetchData();
   }, []);
 
-  return { data, questionData, addRowQuestion }
-
+  return { data, questionData, addRowQuestion };
 };
 
 export default useDashboardMitra;
-

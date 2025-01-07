@@ -18,5 +18,5 @@ export const dataDocsOptions = [
   {
     id: 'CONTRACT_INTERSHIP',
     label: 'Kontrak Intership',
-  }
+  },
 ];

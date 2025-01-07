@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { httpClient } from "../utils/network";
+import { useEffect, useState } from 'react';
+import { httpClient } from '../utils/network';
 
 const usePenilaianPretest = () => {
   const [data, setData] = useState([]);
@@ -22,9 +22,7 @@ const usePenilaianPretest = () => {
     fetchData();
   }, []);
 
-  return { data }
-
+  return { data };
 };
 
 export default usePenilaianPretest;
-

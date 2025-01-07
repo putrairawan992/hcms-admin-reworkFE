@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useToast } from "@chakra-ui/react";
-import { httpClient } from "@/app/utils/network";
+import { useEffect, useState } from 'react';
+import { useToast } from '@chakra-ui/react';
+import { httpClient } from '@/app/utils/network';
 
 const useMergeProduct = () => {
   const toast = useToast();
@@ -17,10 +17,13 @@ const useMergeProduct = () => {
 
   const toggleModal = () => {
     setModalOpen(!modalOpen);
-  }
+  };
 
   const goToSpreadSheet = () => {
-    return window.open("https://docs.google.com/spreadsheets/d/184tpa1aindgaNbjdGA_GwfMNt9M6DVr6ImTmC0Zf6ZI/edit?gid=590502080#gid=590502080", "_blank");
+    return window.open(
+      'https://docs.google.com/spreadsheets/d/184tpa1aindgaNbjdGA_GwfMNt9M6DVr6ImTmC0Zf6ZI/edit?gid=590502080#gid=590502080',
+      '_blank'
+    );
   };
 
   const fetchData = async (page) => {
@@ -29,7 +32,7 @@ const useMergeProduct = () => {
       const response = await httpClient({
         method: 'GET',
         url: '/sheet/mergeProduct',
-        params: { page, size: 10 }
+        params: { page, size: 10 },
       });
 
       const responseData = response?.data?.data?.data || [];
@@ -62,20 +65,20 @@ const useMergeProduct = () => {
 
       if (response?.status !== 200) {
         toast({
-          title: "Error",
+          title: 'Error',
           description: `Something went wrong!`,
           duration: 3000,
-          status: "error",
-          position: "top",
+          status: 'error',
+          position: 'top',
           isClosable: true,
         });
       } else {
         toast({
-          title: "Success",
+          title: 'Success',
           description: `Data synced successfully!`,
           duration: 3000,
-          status: "success",
-          position: "top",
+          status: 'success',
+          position: 'top',
           isClosable: true,
         });
       }
@@ -83,16 +86,15 @@ const useMergeProduct = () => {
       console.error('Failed to sync data:', error);
       setModalOpen(false);
       toast({
-        title: "Error",
+        title: 'Error',
         description: `Failed to sync: ${error.message}`,
         duration: 3000,
-        status: "error",
-        position: "top",
+        status: 'error',
+        position: 'top',
         isClosable: true,
       });
     }
   };
-
 
   const onChangePagination = (page) => {
     setPage(page);
@@ -102,8 +104,19 @@ const useMergeProduct = () => {
     fetchData(page);
   }, [page]);
 
-  return { data, page, loading, totalData, keyword, modalOpen, onChangeText, onHandleSync, onChangePagination, toggleModal, goToSpreadSheet };
+  return {
+    data,
+    page,
+    loading,
+    totalData,
+    keyword,
+    modalOpen,
+    onChangeText,
+    onHandleSync,
+    onChangePagination,
+    toggleModal,
+    goToSpreadSheet,
+  };
 };
 
 export default useMergeProduct;
-

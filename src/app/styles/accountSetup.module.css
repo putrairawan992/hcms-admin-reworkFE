@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 .account-role-container {
   background: linear-gradient(90deg, #f1f5fe 0%, #ffffff 98.82%);
@@ -60,7 +60,7 @@
 }
 
 .account-role-table-header {
-  font-family: "Nunito", sans-serif !important;
+  font-family: 'Nunito', sans-serif !important;
   font-size: 16px !important;
   font-weight: 700 !important;
   line-height: 19px !important;

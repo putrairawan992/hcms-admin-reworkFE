@@ -8,13 +8,13 @@ const styles = {
     padding: '10px 1rem',
     borderRadius: '10px',
     marginBottom: '1rem',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
 
   imgWrapper: {
     border: '3px solid #AE445A',
     borderRadius: '100%',
-    padding: '2px'
+    padding: '2px',
   },
 
   img: {
@@ -67,7 +67,7 @@ const styles = {
     fontSize: '16px',
     fontWeight: '700',
     color: '#ae445a',
-  }
-}
+  },
+};
 
-export default styles
+export default styles;

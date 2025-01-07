@@ -1,2 +1,2 @@
-import CheckboxFields from "./CheckboxFields";
+import CheckboxFields from './CheckboxFields';
 export default CheckboxFields;

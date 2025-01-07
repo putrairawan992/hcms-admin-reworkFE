@@ -1,2 +1,2 @@
-import PretestCard from "./PretestCard";
+import PretestCard from './PretestCard';
 export default PretestCard;

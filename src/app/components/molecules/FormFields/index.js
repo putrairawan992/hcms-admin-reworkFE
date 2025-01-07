@@ -1,2 +1,2 @@
-import FormFields from "./FormFields";
+import FormFields from './FormFields';
 export default FormFields;

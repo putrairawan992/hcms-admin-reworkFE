@@ -1,5 +1,5 @@
 .loginpage-container {
-  background-image: url("/images/login-bg.png");
+  background-image: url('/images/login-bg.png');
   background-size: cover;
   background-position: inherit;
   background-attachment: fixed;

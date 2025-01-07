@@ -1,2 +1,2 @@
-import FormFieldsCheckbox from "./FormFieldsCheckbox";
+import FormFieldsCheckbox from './FormFieldsCheckbox';
 export default FormFieldsCheckbox;

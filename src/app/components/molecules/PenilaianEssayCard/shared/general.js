@@ -2,31 +2,31 @@ export const employeeTypeOptions = [
   {
     id: 'contract',
     name: 'Contract',
-    color: '#AE445A'
+    color: '#AE445A',
   },
   {
     id: 'freelance',
     name: 'Freelance',
-    color: '#8364BA'
+    color: '#8364BA',
   },
   {
     id: 'probation',
     name: 'Probation',
-    color: '#3AB471'
+    color: '#3AB471',
   },
   {
     id: 'full_time',
     name: 'Full Time',
-    color: '#F39F5A'
+    color: '#F39F5A',
   },
   {
     id: 'month',
     name: 'Month',
-    color: '#AE445A'
+    color: '#AE445A',
   },
   {
     id: 'part_time',
     name: 'Part Time',
-    color: '#3AB471'
+    color: '#3AB471',
   },
 ];

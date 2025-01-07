@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { httpClient } from "../../utils/network";
+import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { httpClient } from '../../utils/network';
 
 const useDataTalentHistory = () => {
   const router = useRouter();
@@ -17,21 +17,24 @@ const useDataTalentHistory = () => {
     employee_type: '',
   });
 
-  const fetchData = useCallback(async (params) => {
-    try {
-      const response = await httpClient({
-        method: 'GET',
-        url: '/admin/talent/history',
-        params
-      });
+  const fetchData = useCallback(
+    async (params) => {
+      try {
+        const response = await httpClient({
+          method: 'GET',
+          url: '/admin/talent/history',
+          params,
+        });
 
-      const responseData = response?.data?.data || [];
-      setData(responseData);
-      setLoading(false);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
-  }, [filters]);
+        const responseData = response?.data?.data || [];
+        setData(responseData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      }
+    },
+    [filters]
+  );
 
   const fetchDataPD = async () => {
     try {
@@ -41,10 +44,12 @@ const useDataTalentHistory = () => {
       });
 
       const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(({ id, product_digital_name }) => ({
-        id,
-        label: product_digital_name
-      }));
+      const transformedData = responseData?.map(
+        ({ id, product_digital_name }) => ({
+          id,
+          label: product_digital_name,
+        })
+      );
       setProductDigitalData(transformedData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -66,10 +71,10 @@ const useDataTalentHistory = () => {
 
   const onHandlePress = (employeeId) => {
     router.push(`/data-talent/${employeeId}`);
-  }
+  };
 
   const onChangeSelect = (slug, value) => {
-    setFilters(prevFilters => ({ ...prevFilters, [slug]: value }));
+    setFilters((prevFilters) => ({ ...prevFilters, [slug]: value }));
   };
 
   useEffect(() => {
@@ -81,9 +86,14 @@ const useDataTalentHistory = () => {
     fetchData(filters);
   }, [filters]);
 
-  return { data, loading, filters, productDigitalData, onHandlePress, onChangeSelect }
-
+  return {
+    data,
+    loading,
+    filters,
+    productDigitalData,
+    onHandlePress,
+    onChangeSelect,
+  };
 };
 
 export default useDataTalentHistory;
-

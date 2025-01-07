@@ -5,7 +5,7 @@ const styles = {
     lineHeight: '24px',
     textAlign: 'left',
     color: '#404041',
-    marginBottom: '8px'
+    marginBottom: '8px',
   },
 
   labelChildren: {
@@ -13,8 +13,8 @@ const styles = {
     fontWeight: '700',
     lineHeight: '18px',
     textAlign: 'left',
-    color: '#ae445a'
-  }
+    color: '#ae445a',
+  },
 };
 
-export default styles
+export default styles;

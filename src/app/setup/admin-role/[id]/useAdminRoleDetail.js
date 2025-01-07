@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import { httpClient } from "@/app/utils/network";
-import { useToast } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from 'react';
+import { httpClient } from '@/app/utils/network';
+import { useToast } from '@chakra-ui/react';
+import { useRouter, useParams } from 'next/navigation';
 
 const useAdminRoleDetail = () => {
   const router = useRouter();
+  const { id } = useParams();
   const toast = useToast();
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -119,20 +120,30 @@ const useAdminRoleDetail = () => {
   });
 
   const onChangeText = (slug, value) => {
-    setForm(prevData => ({ ...prevData, [slug]: value }));
+    setForm((prevData) => ({ ...prevData, [slug]: value }));
   };
 
   const fetchData = async () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/list/sheet1',
-        params: { page: 1, size: 10 }
+        url: '/admin/detail/account',
+        params: { id },
       });
 
-      const responseData = response?.data?.data?.data || [];
-      setData(responseData);
-      setTotalData(response?.data?.total_items);
+      const responseData = response?.data?.data || [];
+      const updatedData = {
+        admin_id: responseData?.admin_id || '',
+        nama: responseData?.username || '',
+        email: responseData?.email || '', // Tambahkan email jika ada di data
+        divisi: responseData?.divisi || '',
+        jabatan: responseData?.jabatan || '',
+        password: '', // Tetap kosong jika password tidak disertakan
+      };
+
+      console.log(responseData);
+
+      setForm((prevData) => ({ ...prevData, ...updatedData }));
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
@@ -143,26 +154,26 @@ const useAdminRoleDetail = () => {
       await httpClient({
         method: 'POST',
         url: '/admin/account',
-        data: form
+        data: form,
       });
       setLoading(false);
 
       toast({
-        title: "success",
+        title: 'success',
         description: 'Admin has been created',
         duration: 3000,
-        status: "success",
-        position: "top",
+        status: 'success',
+        position: 'top',
         isClosable: true,
       });
       router.push('/setup/admin-role');
     } catch (error) {
       toast({
-        title: "Error",
+        title: 'Error',
         description: 'Something went wrong!',
         duration: 3000,
-        status: "error",
-        position: "top",
+        status: 'error',
+        position: 'top',
         isClosable: true,
       });
       setLoading(false);
@@ -171,9 +182,18 @@ const useAdminRoleDetail = () => {
 
   const onChangeCheckbox = (slug, label, value, slugParent) => {
     if (slugParent === '') {
-      setForm((prevData) => ({ ...prevData, [slug]: { ...prevData[slug], [label]: value } }));
+      setForm((prevData) => ({
+        ...prevData,
+        [slug]: { ...prevData[slug], [label]: value },
+      }));
     } else {
-      setForm((prevData) => ({ ...prevData, [slugParent]: { ...prevData[slugParent], [slug]: { ...prevData[slugParent][slug], [label]: value, }, }, }));
+      setForm((prevData) => ({
+        ...prevData,
+        [slugParent]: {
+          ...prevData[slugParent],
+          [slug]: { ...prevData[slugParent][slug], [label]: value },
+        },
+      }));
     }
   };
 
@@ -186,8 +206,17 @@ const useAdminRoleDetail = () => {
     fetchData();
   }, []);
 
-  return { form, data, loading, page, totalData, keyword, onChangeText, onHandleSubmit, onChangeCheckbox }
+  return {
+    form,
+    data,
+    loading,
+    page,
+    totalData,
+    keyword,
+    onChangeText,
+    onHandleSubmit,
+    onChangeCheckbox,
+  };
 };
 
 export default useAdminRoleDetail;
-

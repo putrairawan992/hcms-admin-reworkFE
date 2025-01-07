@@ -1,2 +1,2 @@
-import HistoryTalentCard from "./HistoryTalentCard";
+import HistoryTalentCard from './HistoryTalentCard';
 export default HistoryTalentCard;

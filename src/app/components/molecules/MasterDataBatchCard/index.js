@@ -1,2 +1,2 @@
-import MasterDataBatchCard from "./MasterDataBatchCard";
+import MasterDataBatchCard from './MasterDataBatchCard';
 export default MasterDataBatchCard;

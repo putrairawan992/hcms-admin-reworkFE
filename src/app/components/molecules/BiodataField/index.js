@@ -1,2 +1,2 @@
-import BiodataField from "./BiodataField";
+import BiodataField from './BiodataField';
 export default BiodataField;

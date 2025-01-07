@@ -1,2 +1,2 @@
-import TalentListCard from "./TalentListCard";
+import TalentListCard from './TalentListCard';
 export default TalentListCard;

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { httpClient } from "@/app/utils/network";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { httpClient } from '@/app/utils/network';
 
 const usePajakBatch = () => {
   const router = useRouter();
@@ -8,7 +8,7 @@ const usePajakBatch = () => {
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     bulan: '',
-    tahun: ''
+    tahun: '',
   });
 
   const fetchData = async (filters) => {
@@ -17,7 +17,7 @@ const usePajakBatch = () => {
       const response = await httpClient({
         method: 'GET',
         url: '/sheet/pajak/batch',
-        params: filters
+        params: filters,
       });
 
       const responseData = response?.data?.data || [];
@@ -30,11 +30,13 @@ const usePajakBatch = () => {
   };
 
   const onPressDetail = (month, years) => {
-    router.push(`/master-data/pajak/batch/detail?month=${month}&years=${years}`);
+    router.push(
+      `/master-data/pajak/batch/detail?month=${month}&years=${years}`
+    );
   };
 
   const onChangeSelect = (slug, value) => {
-    setFilters(prevFilters => ({ ...prevFilters, [slug]: value }));
+    setFilters((prevFilters) => ({ ...prevFilters, [slug]: value }));
   };
 
   useEffect(() => {
@@ -45,4 +47,3 @@ const usePajakBatch = () => {
 };
 
 export default usePajakBatch;
-

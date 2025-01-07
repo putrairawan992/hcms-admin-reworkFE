@@ -5,8 +5,8 @@ const styles = {
     cursor: 'pointer',
     marginBottom: '1rem',
     textAlign: 'center',
-    color: pathName === href ? '#ae445a' : '#404041'
-  })
+    color: pathName === href ? '#ae445a' : '#404041',
+  }),
 };
 
-export default styles
+export default styles;

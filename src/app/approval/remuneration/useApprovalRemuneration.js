@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
-import { httpClient } from "@/app/utils/network";
-import { useDisclosure } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from 'react';
+import { httpClient } from '@/app/utils/network';
+import { useDisclosure } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
 
 const useApprovalRemuneration = () => {
   const router = useRouter();
@@ -19,26 +19,31 @@ const useApprovalRemuneration = () => {
     years: '',
     month: '',
     product_digital_name: '',
-    status: ''
+    status: '',
   });
 
-  const fetchData = useCallback(async (params) => {
-    const isFiltersEmpty = Object.values(filters).every(value => value === '');
+  const fetchData = useCallback(
+    async (params) => {
+      const isFiltersEmpty = Object.values(filters).every(
+        (value) => value === ''
+      );
 
-    try {
-      const response = await httpClient({
-        method: 'GET',
-        url: '/admin/remuneration/list',
-        ...(isFiltersEmpty ? {} : { params })
-      });
+      try {
+        const response = await httpClient({
+          method: 'GET',
+          url: '/admin/remuneration/list',
+          ...(isFiltersEmpty ? {} : { params }),
+        });
 
-      const responseData = response?.data?.data || [];
-      setData(responseData);
-      setLoading(false);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
-  }, [filters]);
+        const responseData = response?.data?.data || [];
+        setData(responseData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      }
+    },
+    [filters]
+  );
 
   const fetchDataPD = async () => {
     try {
@@ -48,10 +53,12 @@ const useApprovalRemuneration = () => {
       });
 
       const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(({ id, product_digital_name }) => ({
-        id,
-        label: product_digital_name
-      }));
+      const transformedData = responseData?.map(
+        ({ id, product_digital_name }) => ({
+          id,
+          label: product_digital_name,
+        })
+      );
       setProductDigitalData(transformedData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -59,7 +66,7 @@ const useApprovalRemuneration = () => {
   };
 
   const onChangeSelect = (slug, value) => {
-    setFilters(prevFilters => ({ ...prevFilters, [slug]: value }));
+    setFilters((prevFilters) => ({ ...prevFilters, [slug]: value }));
   };
 
   const onPressDetail = (id) => {
@@ -78,9 +85,19 @@ const useApprovalRemuneration = () => {
     fetchData(filters);
   }, [filters]);
 
-  return { data, loading, filters, productDigitalData, onChangeSelect, onPressDetail, onPressIcon, isOpen, onClose, onCloseNote, isOpenNote }
-
+  return {
+    data,
+    loading,
+    filters,
+    productDigitalData,
+    onChangeSelect,
+    onPressDetail,
+    onPressIcon,
+    isOpen,
+    onClose,
+    onCloseNote,
+    isOpenNote,
+  };
 };
 
 export default useApprovalRemuneration;
-

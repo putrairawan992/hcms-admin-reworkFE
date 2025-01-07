@@ -1,2 +1,2 @@
-import Gap from "./Gap";
+import Gap from './Gap';
 export default Gap;

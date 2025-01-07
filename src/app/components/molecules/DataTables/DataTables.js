@@ -1,11 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import styles from './DataTables.styles';
 import DataTable, { createTheme } from 'react-data-table-component';
 import { noop } from '@/app/utils/helpers';
 import ListEmpty from '../ListEmpty';
 
-
-const DataTables = ({ data = [], columns = [], loading = false, totalData = 0, page = 1, keyword = '', onChangePagination = noop }) => {
+const DataTables = ({
+  data = [],
+  columns = [],
+  loading = false,
+  totalData = 0,
+  page = 1,
+  keyword = '',
+  onChangePagination = noop,
+}) => {
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
       String(value).toLowerCase().includes(keyword.toLowerCase())
@@ -67,6 +74,6 @@ const DataTables = ({ data = [], columns = [], loading = false, totalData = 0, p
       />
     </div>
   );
-}
+};
 
 export default DataTables;

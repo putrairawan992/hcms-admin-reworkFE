@@ -11,7 +11,7 @@ const styles = {
   imgWrapper: {
     border: '3px solid #AE445A',
     borderRadius: '100%',
-    padding: '2px'
+    padding: '2px',
   },
 
   img: {
@@ -27,7 +27,7 @@ const styles = {
     textAlign: 'left',
     color: '#404041',
     flex: 1,
-    marginLeft: '20px'
+    marginLeft: '20px',
   },
 
   subtitle: {
@@ -36,7 +36,7 @@ const styles = {
     lineHeight: '18px',
     textAlign: 'left',
     color: '#404041',
-    flex: 1
+    flex: 1,
   },
   button: {
     height: '32px',
@@ -50,11 +50,11 @@ const styles = {
     color: '#ffffff',
   },
   icon: {
-    width: "28px",
-    height: "28px",
-    margin: "0 12px",
-    cursor: "pointer",
-  }
-}
+    width: '28px',
+    height: '28px',
+    margin: '0 12px',
+    cursor: 'pointer',
+  },
+};
 
-export default styles
+export default styles;

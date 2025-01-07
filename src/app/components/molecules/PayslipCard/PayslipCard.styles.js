@@ -11,23 +11,21 @@ const styles = {
     borderWidth: 1,
     borderColor: '#AE445A',
     borderRadius: '5px',
-    padding: '6px 0px'
+    padding: '6px 0px',
   },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   title: {
     color: '#404041',
     fontWeight: 'bold',
-    textDecorationLine: 'underline',
-    cursor: 'pointer'
   },
   imgWrapper: {
     border: '3px solid #AE445A',
     borderRadius: '100%',
-    padding: '2px'
+    padding: '2px',
   },
   img: {
     width: '38px',
@@ -44,7 +42,7 @@ const styles = {
     fontWeight: '700',
     lineHeight: '18px',
     color: '#ffffff',
-  }
+  },
 };
 
-export default styles
+export default styles;

@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { httpClient } from "@/app/utils/network";
-import { useRouter, useParams } from "next/navigation";
-import { useToast } from "@chakra-ui/react";
-import { documentTypeOptions } from "./Shared/General";
+import { useEffect, useState } from 'react';
+import { httpClient } from '@/app/utils/network';
+import { useRouter, useParams } from 'next/navigation';
+import { useToast } from '@chakra-ui/react';
+import { documentTypeOptions } from './Shared/General';
 
 const useSetupDocumentDetail = () => {
   const toast = useToast();
@@ -10,23 +10,27 @@ const useSetupDocumentDetail = () => {
   const params = useParams();
 
   const searchParams = new URLSearchParams(window.location.search);
-  const documentType = searchParams.get("documentType");
+  const documentType = searchParams.get('documentType');
 
   const [data, setData] = useState([]);
   const [typeOptions, setTypeOptions] = useState([]);
   const [productDigital, setProductDigitalData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-
   const [form, setForm] = useState({
     job_provider_id: '',
-    type_document: ''
+    type_document: '',
   });
 
-
   useEffect(() => {
-    const documentTypeValue = documentTypeOptions.find((item) => item.label === documentType);
-    setForm((prev) => ({ ...prev, type_document: documentTypeValue?.name || 'Amandemen PKWT Khusus & Normal' }));
+    const documentTypeValue = documentTypeOptions.find(
+      (item) => item.label === documentType
+    );
+    setForm((prev) => ({
+      ...prev,
+      type_document:
+        documentTypeValue?.name || 'Amandemen PKWT Khusus & Normal',
+    }));
   }, [documentType]);
 
   const fetchDataPD = async () => {
@@ -37,11 +41,13 @@ const useSetupDocumentDetail = () => {
       });
 
       const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(({ id, product_digital_name }) => ({
-        id,
-        label: product_digital_name,
-        value: id
-      }));
+      const transformedData = responseData?.map(
+        ({ id, product_digital_name }) => ({
+          id,
+          label: product_digital_name,
+          value: id,
+        })
+      );
       setProductDigitalData(transformedData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -58,7 +64,7 @@ const useSetupDocumentDetail = () => {
       const responseData = response?.data?.data || [];
       const transformedData = responseData?.map((item, index) => ({
         id: index,
-        label: item
+        label: item,
       }));
       setTypeOptions(transformedData);
     } catch (error) {
@@ -74,30 +80,30 @@ const useSetupDocumentDetail = () => {
       await httpClient({
         method: 'POST',
         url: '/admin/document/setup_document',
-        data: formData
+        data: formData,
       });
       toast({
-        title: "Success",
-        description: "Data Berhasil Disimpan",
+        title: 'Success',
+        description: 'Data Berhasil Disimpan',
         duration: 3000,
-        status: "success",
-        position: "top",
+        status: 'success',
+        position: 'top',
         isClosable: true,
       });
       setLoading(false);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Something went wrong",
+        title: 'Error',
+        description: 'Something went wrong',
         duration: 3000,
-        status: "error",
-        position: "top",
+        status: 'error',
+        position: 'top',
         isClosable: true,
       });
       console.error('Failed to fetch data:', error);
       setLoading(false);
     }
-  }
+  };
 
   const cleanData = (data) => {
     return Object.entries(data).reduce((acc, [key, value]) => {
@@ -113,7 +119,10 @@ const useSetupDocumentDetail = () => {
       const response = await httpClient({
         method: 'GET',
         url: '/admin/document/setup_document',
-        params: { job_provider_id: filters?.job_provider_id, type_document: filters?.type_document }
+        params: {
+          job_provider_id: filters?.job_provider_id,
+          type_document: filters?.type_document,
+        },
       });
 
       const responseData = response?.data?.data || [];
@@ -126,7 +135,7 @@ const useSetupDocumentDetail = () => {
   };
 
   const onChangeSelect = (slug, value) => {
-    setForm(prevFilters => ({ ...prevFilters, [slug]: value }));
+    setForm((prevFilters) => ({ ...prevFilters, [slug]: value }));
   };
 
   useEffect(() => {
@@ -136,12 +145,19 @@ const useSetupDocumentDetail = () => {
 
   useEffect(() => {
     fetchDocumentDetail(form);
-    console.log(form)
+    console.log(form);
   }, [form]);
 
-  return { data, loading, form, typeOptions, productDigital, loading, onHandlePress, onChangeSelect }
-
+  return {
+    data,
+    loading,
+    form,
+    typeOptions,
+    productDigital,
+    loading,
+    onHandlePress,
+    onChangeSelect,
+  };
 };
 
 export default useSetupDocumentDetail;
-
