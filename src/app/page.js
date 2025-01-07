@@ -13,26 +13,9 @@ import useDashboard from "./useDashboard";
 moment.locale("id");
 
 const Home = () => {
-  const { productDigitalData } = useDashboard();
-  const profile = getUserData();
+  const { data, productDigitalData } = useDashboard();
 
-  const isPending = false;
-  // const { data, isPending } = useGetDashboard();
-  const [currentTime, setCurrentTime] = useState(moment());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(moment());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const handleNavigate = (screen) => {
-    window.location.href = screen;
-  };
-
-  const data =
+  const datas =
   {
     jobPost: [
       { title: "Approve", value: 42, color: '#3B78C2' },
@@ -107,7 +90,7 @@ const Home = () => {
             Approval Job Post
           </Text>
           <Gap height={6} />
-          <ProgressCard data={data.jobPost} label="Lowongan" />
+          <ProgressCard data={data?.approval_job_post || []} label="Lowongan" />
         </Box>
         <Gap width={2} />
         <Box className={styles["dashboard-content-container2"]} flex={1}>
@@ -122,7 +105,7 @@ const Home = () => {
             </Box>
           </Flex>
           <Gap height={6} />
-          <ProgressCard data={data.requirePosition} label="Orang" />
+          <ProgressCard data={data?.available_position || []} label="Orang" />
         </Box>
       </Flex>
       <Gap height={3} />
@@ -132,7 +115,7 @@ const Home = () => {
             Tipe Karyawan
           </Text>
           <Gap height={6} />
-          <ProgressCard data={data.employeeType} label="Orang" />
+          <ProgressCard data={data?.employee_type || []} label="Orang" />
         </Box>
         <Gap width={2} />
         <Box className={styles["dashboard-content-container2"]} flex={1}>
@@ -140,7 +123,7 @@ const Home = () => {
             Jumlah Talent
           </Text>
           <Gap height={6} />
-          <ProgressCard data={data.talentList} label="Orang" />
+          <ProgressCard data={data?.talent || []} label="Orang" />
         </Box>
       </Flex>
       <Gap height={3} />

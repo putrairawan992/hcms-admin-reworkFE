@@ -1,9 +1,10 @@
 import React from 'react'
 import { Box, Divider, Flex, Text } from '@chakra-ui/react';
 import { Gap } from '../../atoms';
+import { colors } from '@/shared/general';
 
 const ProgressCard = ({ data = [], label = '' }) => {
-  const total = data.reduce((sum, value) => sum + value?.value, 0);
+  const total = data.reduce((sum, value) => sum + value?.total, 0);
 
   return (
     <Box>
@@ -13,12 +14,13 @@ const ProgressCard = ({ data = [], label = '' }) => {
         borderRadius="100"
         overflow="hidden">
         {data?.map((item, index, arr) => {
-          const total = arr.reduce((sum, currentItem) => sum + currentItem?.value, 0);
+          const total = arr.reduce((sum, currentItem) => sum + currentItem?.percentage, 0);
+          const itemColor = colors[index % colors.length];
           return (
             <Box
               key={index}
-              width={`${(item?.value / total) * 100}%`}
-              backgroundColor={item?.color}
+              width={`${(item?.percentage / total) * 100}%`}
+              backgroundColor={itemColor}
               transition="width 0.3s ease"
             />
           )
@@ -35,14 +37,16 @@ const ProgressCard = ({ data = [], label = '' }) => {
       <Divider borderColor='#AE445A' borderWidth={1} marginY={2} />
       <Gap height={2} />
       {data?.map((item, index) => {
+        const itemColor = colors[index % colors.length];
+
         return (
           <Flex marginBottom={3} key={index}>
             <Flex align='center' flex={1}>
-              <Box width={15} height={15} backgroundColor={item?.color} marginRight={2} />
-              <Text fontSize={13} color='#404041'>{item?.title}</Text>
+              <Box width={15} height={15} backgroundColor={itemColor} marginRight={2} />
+              <Text fontSize={13} color='#404041'>{item?.label || '-'}</Text>
             </Flex>
-            <Text flex={1} fontSize={13} color='#404041'>{`${item?.value} ${label}`}</Text>
-            <Text fontSize={13} color='#404041'>{item?.value}%</Text>
+            <Text flex={1} fontSize={13} color='#404041'>{`${item?.total || 0} ${label}`}</Text>
+            <Text fontSize={13} color='#404041'>{item?.percentage}%</Text>
           </Flex>
         );
       })}

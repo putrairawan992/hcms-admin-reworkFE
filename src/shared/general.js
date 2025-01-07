@@ -509,3 +509,6 @@ export const formFieldsAdminOptions = [
   //   ]
   // },
 ];
+
+
+export const colors = ['#3B78C2', '#3AB471', '#F39F5A', '#F39F5A', '#9C27B0', '#607D8B'];
