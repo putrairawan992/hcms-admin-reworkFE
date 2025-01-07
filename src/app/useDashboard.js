@@ -21,8 +21,7 @@ const useDashboard = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/admin/talent/list',
-        params
+        url: '/admin/dashboard/list'
       });
 
       const responseData = response?.data?.data || [];

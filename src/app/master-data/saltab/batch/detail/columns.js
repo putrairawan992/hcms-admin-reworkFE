@@ -1,5 +1,5 @@
 import { formatRupiah } from "@/app/utils/helpers";
-import styles from "./styles";
+import styles from "../../styles";
 
 const columns = (page) => {
   return [

@@ -1,9 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Box, Button, Flex, Select, Text, Image, Slide, SliderFilledTrack, Slider, SliderTrack, SliderThumb, Progress, ProgressLabel, CircularProgress, Divider } from "@chakra-ui/react";
-import SidebarLayout from "./components/sidebarLayout";
+import { Box, Flex, Text, Image, Divider } from "@chakra-ui/react";
 import styles from "./styles/dashboard.module.css";
-import { useGetDashboard } from "./api/dashboard";
 import moment from "moment";
 import "moment/locale/id";
 import { getUserData } from "./utils/localStorage";
@@ -47,9 +45,10 @@ const Home = () => {
       { title: "Front-End Engineer", value: 20, color: '#8364BA' }
     ],
     employeeType: [
-      { title: "Approve", value: 42, color: '#3B78C2' },
-      { title: "Reject", value: 28, color: '#3AB471' },
-      { title: "In-Review", value: 30, color: '#F39F5A' }
+      { title: "Contract", value: 42, color: '#3B78C2' },
+      { title: "Freelance", value: 28, color: '#3AB471' },
+      { title: "Intern", value: 30, color: '#8364BA' },
+      { title: "Full Time", value: 30, color: '#F39F5A' }
     ],
     talentList: [
       { title: "Aktif", value: 42, color: '#3B78C2' },
@@ -58,6 +57,9 @@ const Home = () => {
       { title: "Resign", value: 30, color: '#F39F5A' }
     ],
   };
+
+
+
 
   return (
     <React.Fragment>
