@@ -3,19 +3,16 @@ import {
   Box,
   Button,
   Flex,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
   ModalOverlay,
-  Select,
   Spinner,
   Text,
-  useDisclosure,
 } from '@chakra-ui/react';
 import styles from '../styles/inbox.module.css';
 import styleModal from '../styles/setupJobPost.module.css';
-import React, { useState } from 'react';
+import React from 'react';
 import { isEmpty } from 'lodash';
 import { ListEmpty, PayslipCard } from '../components/molecules';
 import usePayslip from './usePayslip';
@@ -23,9 +20,6 @@ import { Gap, SelectField } from '../components/atoms';
 import { monthLabelOptions, yearOptions } from '@/shared/general';
 
 const Payslip = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [years, setYears] = useState('2024');
-
   const {
     data,
     form,
@@ -44,8 +38,8 @@ const Payslip = () => {
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
-      return data.map((item) => {
-        return <PayslipCard data={item} onClick={onHandleDetail} />;
+      return data.map((item, index) => {
+        return <PayslipCard key={index} data={item} onClick={onHandleDetail} />;
       });
     } else {
       return (
@@ -68,7 +62,7 @@ const Payslip = () => {
           >
             Manual Send
           </Button>
-          <Button onClick={onOpen} className={styles['inbox-btn']}>
+          <Button className={styles['inbox-btn']}>
             Download All Filtered
           </Button>
         </Box>

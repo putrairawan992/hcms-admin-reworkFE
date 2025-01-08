@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import { Box, Button, Flex, Text, Divider, Spinner } from '@chakra-ui/react';
 import styles from '../../../styles/adminRole.module.css';
 
@@ -36,7 +37,7 @@ const AdminRoleDetail = () => {
           placeholder="Masukan nama admin"
           onChangeText={onChangeText}
           slug="nama"
-          value={form.nama}
+          value={form.username}
         />
       </Flex>
       <Flex flex={1} align={'center'} mb={'2rem'}>
@@ -85,10 +86,17 @@ const AdminRoleDetail = () => {
       <Box className={styles['admin-new-admin-bottom-wrapper']}>
         <Text className={styles['admin-role-title']}>Feature</Text>
         <FormFieldsCheckbox
-          data={formFieldsAdminOptions}
-          form={form}
+          data={form.platformAccess}
+          form={form.platformAccess}
           onChangeCheckbox={onChangeCheckbox}
         />
+        <FormFieldsCheckbox
+          title='Dashboard'
+          label='dashboard'
+          onChangeCheckbox={onChangeCheckbox}
+          data={form.platformAccess.find((e) => e.slug === 'dashboard')?.checkbox}
+        />
+        <FormFieldsCheckbox title='Dashboard' label='Dashbord' withChildren={true} />
       </Box>
       <Flex width={'100%'} justify={'end'} marginTop={'2rem'}>
         <Button

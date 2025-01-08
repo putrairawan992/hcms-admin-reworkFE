@@ -10,11 +10,6 @@ const useTalentMitra = () => {
   const [filters, setFilters] = useState({
     size: 10,
     page: 1,
-    digital_product: '',
-    document: '',
-    document_tracking: '',
-    selection_type: '',
-    employee_type: '',
   });
 
   const fetchData = useCallback(

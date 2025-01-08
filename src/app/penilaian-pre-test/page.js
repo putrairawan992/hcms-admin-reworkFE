@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import { Box, Button, Flex, Input, InputGroup, Text } from '@chakra-ui/react';
 import styles from '../styles/inbox.module.css';
 
@@ -57,7 +58,7 @@ const PenilaiaanPretest = () => {
       </Flex>
       <Gap height={8} />
       <Box flex={1}>
-        <PenilaianCard />
+        {data?.map((item, index) => (<PenilaianCard key={index} data={item} />))}
       </Box>
     </Box>
   );

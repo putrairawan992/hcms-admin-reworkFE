@@ -8,7 +8,7 @@ const useDashboardMitra = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/admin/document/send_document/list',
+        url: '/admin/mitra/pretest/master',
       });
 
       const responseData = response?.data?.data || [];

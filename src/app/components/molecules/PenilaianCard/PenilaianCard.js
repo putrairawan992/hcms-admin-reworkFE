@@ -23,7 +23,6 @@ import {
 } from '../../icons';
 import moment from 'moment';
 import { Gap } from '../../atoms';
-import { employeeTypeOptions } from './shared/general';
 
 const PenilaianCard = ({ data = [] }) => {
   const { product_digital_name, status, created_at, employee_list } = data;
@@ -105,8 +104,8 @@ const PenilaianCard = ({ data = [] }) => {
               </VStack>
             </Flex>
             <Gap height={30} />
-            {employee_list?.map((item) => (
-              <Flex flex={1} marginBottom={6}>
+            {employee_list?.map((item, index) => (
+              <Flex flex={1} marginBottom={6} key={index}>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Box style={styles.imgWrapper}>
                     <Image

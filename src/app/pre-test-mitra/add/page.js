@@ -1,5 +1,5 @@
 'use client';
-
+import React from 'react';
 import { Box, Button, Divider, Flex, Input, Text } from '@chakra-ui/react';
 import styles from '../../styles/inbox.module.css';
 import { ChooseLogo, QuestionSection } from '../../components/molecules';
@@ -8,7 +8,7 @@ import { Gap, SelectField } from '../../components/atoms';
 import { useMemo } from 'react';
 
 const PretestMitra = () => {
-  const { data, questionData, addRowQuestion } = useAddPretestMitra();
+  const { data, questionData, category, addRowQuestion } = useAddPretestMitra();
 
   const RenderContentQuestion = useMemo(() => {
     return questionData.map((item, index) => {
@@ -49,7 +49,7 @@ const PretestMitra = () => {
         </Box>
         <Gap height={4} />
         <Flex>
-          <SelectField placeholder="Kategori" label="Kategori" />
+          <SelectField placeholder="Pilih kategori" label="Kategori" options={category} />
           <SelectField placeholder="Durasi Waktu" label="Durasi Waktu" />
         </Flex>
         <Gap height={4} />

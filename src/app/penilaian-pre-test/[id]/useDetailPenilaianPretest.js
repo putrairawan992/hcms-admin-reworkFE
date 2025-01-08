@@ -14,7 +14,7 @@ const useDetailPenilaianPretest = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/admin/document/send_document/list',
+        url: '/talent/pretest/question/570fb096-f581-4621-8c14-d6599d1f5ae7',
       });
 
       const responseData = response?.data?.data || [];
