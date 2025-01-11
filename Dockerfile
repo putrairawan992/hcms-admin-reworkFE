@@ -1,35 +1,26 @@
-# Use the official Node.js image as a base
-FROM node:18 AS builder
+# Gunakan image Node.js sebagai base image
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json files
-COPY package*.json ./
+# Salin file package.json dan package-lock.json
+COPY package.json package-lock.json ./
 
-# Install dependencies
+# Instal dependencies, termasuk devDependencies agar semua modul tersedia
 RUN npm install
 
-# Copy the rest of the application files
+# Tambahkan instalasi modul tambahan jika diperlukan
+RUN npm install tailwindcss sharp
+
+# Salin seluruh project ke dalam container
 COPY . .
 
-# Build the Next.js application
+# Build aplikasi untuk produksi
 RUN npm run build
 
-# Production stage
-FROM node:18-slim AS runner
-
-# Set working directory
-WORKDIR /app
-
-# Copy only necessary files from the builder stage
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/node_modules ./node_modules
-
-# Expose port
+# Expose port yang akan digunakan
 EXPOSE 3000
 
-# Start the Next.js application
-CMD ["npm", "run", "start"]
+# Command default untuk menjalankan aplikasi
+CMD ["npm", "start"]
