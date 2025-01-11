@@ -24,14 +24,19 @@ import {
 import moment from 'moment';
 import { Gap, SelectField } from '../../atoms';
 import { SettingsIcon } from '@chakra-ui/icons';
+import { noop } from '@/app/utils/helpers';
 
-const SendDocumentCard = ({ data = [] }) => {
-  const { product_digital_name, status, created_at, employee_list, document_type } = data;
+const SendDocumentCard = ({ data = {}, toggleModal = noop }) => {
+  const { product_digital_name, status, created_at, employee_list, document_type, type_setting_document } = data;
 
   const documentAll = document_type?.map((item) => ({
     id: item?.id,
     label: item?.type_document
   })) || [];
+
+  const onHandleToggleModal = () => {
+    toggleModal(data);
+  };
 
   return (
     <Accordion allowToggle>
@@ -52,7 +57,7 @@ const SendDocumentCard = ({ data = [] }) => {
             {moment(created_at).locale('en').format('MMMM YYYY')}
           </Text>
           <EyeIcon color='#ae445a' />
-          <SettingsIcon color='#ae445a' />
+          <SettingsIcon color='#ae445a' onClick={onHandleToggleModal} cursor='pointer' />
           <Box>
             <Flex flex={1}>
               <Box

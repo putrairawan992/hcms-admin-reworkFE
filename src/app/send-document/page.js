@@ -1,26 +1,26 @@
 'use client';
 import React from 'react';
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Modal, ModalBody, ModalContent, ModalOverlay, Spinner, Text } from '@chakra-ui/react';
 import styles from '../styles/inbox.module.css';
+import styleModal from '../styles/setupJobPost.module.css';
 import moment from 'moment';
 import 'moment/locale/id';
 import { isEmpty } from 'lodash';
 import { ListEmpty, SendDocumentCard } from '../components/molecules';
 import useSendDocument from './useSendDocument';
-import { SelectField } from '../components/atoms';
+import { Gap, SelectField } from '../components/atoms';
 import { monthOptions, yearOptions } from '@/shared/general';
-import { useRouter } from 'next/navigation';
+import { SettingsIcon } from '@chakra-ui/icons';
 
 moment.locale('id');
 
 const SendDocument = () => {
-  const router = useRouter();
-  const { data, loading, productDigital, filters, onChangeSelect } = useSendDocument();
+  const { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, toggleModalOpen } = useSendDocument();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
       return data.map((item, index) => {
-        return <SendDocumentCard data={item} key={index} />;
+        return <SendDocumentCard data={item} key={index} toggleModal={toggleModalOpen} />;
       });
     } else {
       return (
@@ -58,6 +58,86 @@ const SendDocument = () => {
         <SelectField options={productDigital} placeholder='Semua' value={filters.product_digital_name} label='Product Digital' slug='product_digital_name' onChange={onChangeSelect} />
       </Flex>
       {loading ? <ListEmpty /> : <RenderContent />}
+
+      <Modal isOpen={modalOpen} onClose={toggleModal} size={'xl'} isCentered closeOnOverlayClick={false} closeOnEsc={false}>
+        <ModalOverlay />
+        <ModalContent paddingY={'1.5rem'} paddingX={'1.5rem'} borderRadius={20}>
+          <ModalBody>
+            <Flex align='center' justifyContent='center'>
+              <SettingsIcon color='#ae445a' fontSize={40} />
+            </Flex>
+            <Gap height={6} />
+            <Box>
+              <Text>
+                Anda akan mengatur Setelan Pembuatan dokumen untuk batch ini.
+                Arti dari tiap pilihan dalam dropdown akan dijelaskan di bawah ini:
+              </Text>
+              <Gap height={4} />
+              <Flex>
+                <Text>1. </Text>
+                <Gap width={4} />
+                <Text>
+                  <span style={{ fontWeight: 'bold' }}>Semua:</span> Setiap karyawan dalam batch ini memiliki Setelan Pembuatan Dokumen Berbeda-beda (New Contract Manual, New Contract Template, Existing Contract)
+                </Text>
+              </Flex>
+              <Gap height={2} />
+              <Flex>
+                <Text>2. </Text>
+                <Gap width={4} />
+                <Text>
+                  New Contract Manual: Setelan Pembuatan Dokumen ini untuk karyawan baru, dan Dokumen tidak sesuai template yang berlaku saat ini
+                </Text>
+              </Flex>
+              <Gap height={2} />
+              <Flex>
+                <Text>3. </Text>
+                <Gap width={4} />
+                <Text>
+                  New Contract Template: Setelan Pembuatan Dokumen ini untuk karyawan baru, dan Dokumen sesuai template yang berlaku saat ini
+                </Text>
+              </Flex>
+              <Gap height={2} />
+              <Flex>
+                <Text>4. </Text>
+                <Gap width={4} />
+                <Text>
+                  Exisiting Contract : Setelan Pembuatan Dokumen ini untuk karyawan lama, dan Dokumen sudah ditandatangani kedua belah pihak.
+                </Text>
+              </Flex>
+
+              <Gap height={4} />
+              <Flex align='center' justifyContent='center'>
+                <SelectField placeholder='Pilih setelan dokumen' label='Setelan Dokumen' options={settingDocument} value={documentTypeValue?.value || ''} slug='document_type' onChange={onChangeSelectDocumentType} />
+              </Flex>
+              <Gap height={2} />
+              <Flex align='center' justifyContent='center'>
+                <Text fontSize={12}>Anda bisa mengatur ulang settingan ini dengan kembali memencet tombol</Text>
+                <Gap width={2} />
+                <SettingsIcon color='#ae445a' fontSize={12} />
+              </Flex>
+            </Box>
+            <Flex align={'center'} justify={'end'} mt={'2.5rem'}>
+              <Button
+                onClick={toggleModal}
+                mr={'0'}
+                className={styleModal['job-post-search-btn-cancel']}>
+                Batal
+              </Button>
+              <Gap width={4} />
+              <Button
+                mr={'0'}
+                onClick={onSubmitSettingDocument}
+                className={styleModal['job-post-search-btn']}>
+                {loadingSubmit ? (
+                  <Spinner size="sm" color="#FFFFFF" />
+                ) : (
+                  'Save'
+                )}
+              </Button>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };
