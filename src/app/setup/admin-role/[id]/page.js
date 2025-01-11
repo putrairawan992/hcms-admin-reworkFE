@@ -21,22 +21,12 @@ const AdminRoleDetail = () => {
       </Text>
       <Flex flex={1} align={'center'} mb={'2rem'}>
         <FormFields
-          label="Admin ID"
-          type="text"
-          theme="up-down"
-          placeholder="Masukan admin ID"
-          onChangeText={onChangeText}
-          slug="admin_id"
-          value={form.admin_id}
-        />
-        <Gap width={12} />
-        <FormFields
           label="Nama"
           type="text"
           theme="up-down"
           placeholder="Masukan nama admin"
           onChangeText={onChangeText}
-          slug="nama"
+          slug="username"
           value={form.username}
         />
       </Flex>
@@ -78,8 +68,29 @@ const AdminRoleDetail = () => {
           theme="up-down"
           placeholder="Masukan Password"
           onChangeText={onChangeText}
-          slug="password"
-          value={form.password}
+          slug="new_password"
+          value={form.new_password}
+        />
+      </Flex>
+      <Flex flex={1} align={'center'} mb={'2rem'}>
+        <FormFields
+          label="No Telp"
+          type="text"
+          theme="up-down"
+          placeholder="Masukan no telphone"
+          onChangeText={onChangeText}
+          slug="phone_number"
+          value={form.phone_number}
+        />
+        <Gap width={12} />
+        <FormFields
+          label="Address"
+          type="text"
+          theme="up-down"
+          placeholder="Masukan address"
+          onChangeText={onChangeText}
+          slug="address"
+          value={form.address}
         />
       </Flex>
       <Divider className={styles['admin-new-admin-divider']} />

@@ -22,10 +22,17 @@ import {
   MessageIcon,
 } from '../../icons';
 import moment from 'moment';
-import { Gap } from '../../atoms';
+import { Gap, SelectField } from '../../atoms';
+import { SettingsIcon } from '@chakra-ui/icons';
 
 const SendDocumentCard = ({ data = [] }) => {
-  const { product_digital_name, status, created_at, employee_list } = data;
+  const { product_digital_name, status, created_at, employee_list, document_type } = data;
+
+  const documentAll = document_type?.map((item) => ({
+    id: item?.id,
+    label: item?.type_document
+  })) || [];
+
   return (
     <Accordion allowToggle>
       <AccordionItem border="none" key={1}>
@@ -44,7 +51,8 @@ const SendDocumentCard = ({ data = [] }) => {
           <Text style={styles.subtitle}>
             {moment(created_at).locale('en').format('MMMM YYYY')}
           </Text>
-          <EyeIcon />
+          <EyeIcon color='#ae445a' />
+          <SettingsIcon color='#ae445a' />
           <Box>
             <Flex flex={1}>
               <Box
@@ -104,8 +112,8 @@ const SendDocumentCard = ({ data = [] }) => {
               </VStack>
             </Flex>
             <Gap height={30} />
-            {employee_list.map((item) => (
-              <Flex flex={1} marginBottom={6}>
+            {employee_list.map((item, index) => (
+              <Flex flex={1} marginBottom={6} key={index}>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Box style={styles.imgWrapper}>
                     <Image
@@ -130,33 +138,17 @@ const SendDocumentCard = ({ data = [] }) => {
                 </Flex>
                 <Flex alignItems="center" justifyContent="center" flex={1}>
                   <Box style={{ width: '200px' }}>
-                    <Select height={10} style={styles.select}>
-                      <option value="all" selected>
-                        Semua
-                      </option>
-                      <option value="offering_letter_normal">
-                        Offering Letter Normal
-                      </option>
-                      <option value="pkwt">PKWT</option>
-                      <option value="offering_letter_khusus">
-                        Offering Letter Khusus
-                      </option>
-                      <option value="amandemen_pkwt">Amandemen PKWT</option>
-                      <option value="contract_freelance">
-                        Kontrak Freelance
-                      </option>
-                    </Select>
+                    <SelectField placeholder='Pilih document' options={documentAll} />
                   </Box>
                 </Flex>
                 <Flex
                   flex={1}
                   alignItems="center"
                   justifyContent="space-around"
-                  marginLeft={4}
-                >
-                  <FileBadgeIcon />
-                  <MessageIcon />
-                  <CloseIcon />
+                  marginLeft={4}>
+                  <FileBadgeIcon color='#B6B6B6' />
+                  <MessageIcon color='#B6B6B6' />
+                  <CloseIcon color='#B6B6B6' />
                 </Flex>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Text fontWeight="bold" color="#AE445A">

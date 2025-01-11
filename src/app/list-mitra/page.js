@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import {
   Box,
   Button,
@@ -14,18 +15,11 @@ import { useState } from 'react';
 import 'moment/locale/id';
 import { isEmpty } from 'lodash';
 import {
-  ListEmpty,
   TalentListCard,
   MitraListCard,
 } from '../components/molecules';
 import useListMitra from './useListMitra';
-import { Gap, SelectField } from '../components/atoms';
-import {
-  specializationOptions,
-  competenceOptions,
-  educationOptions,
-  experienceOptions,
-} from './Shared/General';
+import { Gap } from '../components/atoms';
 import { AddIcon, Search2Icon } from '@chakra-ui/icons';
 import { ShareIcon } from '../components/icons';
 import Link from 'next/link';

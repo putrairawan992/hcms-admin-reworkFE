@@ -1,68 +1,22 @@
 'use client';
-import {
-  Box,
-  Button,
-  Flex,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Stepper,
-  Text,
-  useDisclosure,
-  Group,
-} from '@chakra-ui/react';
+import React from 'react';
+import { Box, Button, Flex, Text, Image, Spinner } from '@chakra-ui/react';
 import styles from '../../styles/inbox.module.css';
-import { useState } from 'react';
-import 'moment/locale/id';
-import { isEmpty } from 'lodash';
-import {
-  FormFields,
-  ListEmpty,
-  TalentListCard,
-} from '../../components/molecules';
-import useDataTalent from '../useListMitra';
-import { moveScreen } from '../../utils/helpers';
-import { Gap, SelectField } from '../../components/atoms';
-import {
-  specializationOptions,
-  competenceOptions,
-  educationOptions,
-  experienceOptions,
-} from '../Shared/General';
-import { AddIcon, Search2Icon } from '@chakra-ui/icons';
-import { ShareIcon } from '../../components/icons';
+import { FormFields } from '../../components/molecules';
+import { Gap } from '../../components/atoms';
+import useAddMitra from './useAddMitra';
 
 const TalentListAdd = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [years, setYears] = useState('2024');
-  const [month, setMonth] = useState('10');
-  const [currentData, setCurrentData] = useState();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-
   const {
-    data,
-    filters,
+    profileFileInputRef,
+    profileImagePreview,
     loading,
-    productDigitalData,
-    onHandlePress,
-    onChangeSelect,
-  } = useDataTalent();
-
-  const RenderContent = () => {
-    if (!isEmpty(data)) {
-      return data.map((item) => {
-        return <TalentListCard data={item} onPress={onHandlePress} />;
-      });
-    } else {
-      return (
-        <Flex align={'center'} justify={'center'}>
-          <Text>Tidak ada data inbox</Text>
-        </Flex>
-      );
-    }
-  };
+    form,
+    onChangeText,
+    onClickProfile,
+    handleFileChange,
+    onHandleSubmit
+  } = useAddMitra();
 
   return (
     <Box className={styles['inbox-container']}>
@@ -74,28 +28,60 @@ const TalentListAdd = () => {
       <Gap height={6} />
       <Box style={{ borderWidth: 1, borderColor: '#EAEAEA' }} />
       <Gap height={6} />
+      <Flex flex={1} justify='flex-end' className={styles["editProfile-change-img-wrapper"]} mr={5}>
+        <Box className={styles["editProfile-img-wrapper"]}>
+          <Image
+            className={styles["editProfile-img"]}
+            src={profileImagePreview}
+            alt="profile-pict"
+          />
+        </Box>
+        <Gap width={4} />
+        <Text
+          onClick={onClickProfile}
+          className={styles["editProfile-change-img-text"]}
+        >
+          Ganti Foto Profil
+        </Text>
+        <input
+          type="file"
+          ref={profileFileInputRef}
+          style={{ display: "none" }}
+          onChange={(e) => handleFileChange(e, "profile")}
+          accept="image/*"
+        />
+      </Flex>
       <Flex>
         <FormFields
           theme="up-down"
           label="Nama"
+          slug='name'
           placeholder="Masukan nama mitra"
+          value={form.name}
+          onChangeText={onChangeText}
         />
         <Gap width={4} />
         <FormFields
           theme="up-down"
           label="Username"
+          slug='username'
           placeholder="Masukan username mitra"
+          value={form.username}
+          onChangeText={onChangeText}
         />
       </Flex>
       <Gap height={4} />
       <FormFields
         theme="up-down"
         label="E-Mail"
+        slug='email'
         placeholder="Masukan E-Mail mitra"
+        value={form.email}
+        onChangeText={onChangeText}
       />
       <Gap height={8} />
-      <Button className={styles['inbox-btn']} paddingX={8}>
-        Create Account
+      <Button className={styles['inbox-btn']} paddingX={8} onClick={onHandleSubmit}>
+        {loading ? <Spinner size="sm" /> : ' Create Account'}
       </Button>
     </Box>
   );

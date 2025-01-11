@@ -8,7 +8,7 @@ const usePenilaianPretest = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/admin/mitra/pretest/master',
+        url: '/talent/pretest/question/570fb096-f581-4621-8c14-d6599d1f5ae7',
       });
 
       const responseData = response?.data?.data || [];

@@ -1,144 +1,63 @@
 'use client';
-import {
-  Box,
-  Button,
-  Flex,
-  Select,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
+import React from 'react';
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import styles from '../styles/inbox.module.css';
-import { useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/id';
 import { isEmpty } from 'lodash';
-
-import { DataTalentCard, SendDocumentCard } from '../components/molecules';
+import { ListEmpty, SendDocumentCard } from '../components/molecules';
 import useSendDocument from './useSendDocument';
-import { moveScreen } from '../utils/helpers';
+import { SelectField } from '../components/atoms';
+import { monthOptions, yearOptions } from '@/shared/general';
+import { useRouter } from 'next/navigation';
 
 moment.locale('id');
 
 const SendDocument = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [years, setYears] = useState('2024');
-  const [month, setMonth] = useState('10');
-  const [currentData, setCurrentData] = useState();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const router = useRouter();
+  const { data, loading, productDigital, filters, onChangeSelect } = useSendDocument();
 
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-
-  const { data } = useSendDocument();
-
-  const renderData = () => {
-    return data.map((item) => {
-      return <SendDocumentCard data={item} />;
-    });
+  const RenderContent = () => {
+    if (!isEmpty(data)) {
+      return data.map((item, index) => {
+        return <SendDocumentCard data={item} key={index} />;
+      });
+    } else {
+      return (
+        <Flex align={'center'} justify={'center'}>
+          <Text>Tidak ada data inbox</Text>
+        </Flex>
+      );
+    }
   };
 
   return (
     <Box className={styles['inbox-container']}>
       <Flex align={'center'} justify={'space-between'}>
         <Text className={styles['inbox-title']}>Send Document</Text>
-        <Box>
-          <Button
-            onClick={() => moveScreen('/data-talent/history')}
-            className={styles['inbox-btn']}
-            marginRight={2}
-          >
-            History
-          </Button>
-          <Button onClick={onOpen} className={styles['inbox-btn']} ma>
-            Download All
-          </Button>
-        </Box>
+        <Flex>
+          <Flex
+            borderWidth={1}
+            borderColor="#AE445A"
+            borderRadius={6}
+            paddingX={4}
+            paddingY={1}>
+            <Text marginRight={3} fontWeight="bold">
+              Perlu Ditinjau:{' '}
+            </Text>
+            <Text marginRight={3} color="#AE445A" fontWeight="bold">
+              1
+            </Text>
+            <Text fontWeight="bold">Submit</Text>
+          </Flex>
+        </Flex>
       </Flex>
       <Flex marginBottom={4} marginTop={10}>
-        <Box marginRight={2} flex={1}>
-          <Text className={styles['inbox-filter-text']}>Tahun</Text>
-          <Select
-            value={years}
-            onChange={(e) => setYears(e.target.value)}
-            className={styles['inbox-filter-select']}
-          >
-            <option value="all" selected>
-              Semua
-            </option>
-          </Select>
-        </Box>
-        <Box marginRight={2} flex={1}>
-          <Text className={styles['inbox-filter-text']}>Bulan</Text>
-          <Select
-            value={years}
-            onChange={(e) => setYears(e.target.value)}
-            className={styles['inbox-filter-select']}
-          >
-            <option value="all" selected>
-              Semua
-            </option>
-            <option value="offering_letter_normal">
-              Offering Letter Normal
-            </option>
-            <option value="pkwt">PKWT</option>
-            <option value="offering_letter_khusus">
-              Offering Letter Khusus
-            </option>
-            <option value="amandemen_pkwt">Amandemen PKWT</option>
-            <option value="contract_freelance">Kontrak Freelance</option>
-          </Select>
-        </Box>
-        <Box marginRight={2} flex={1}>
-          <Text className={styles['inbox-filter-text']}>Digital Product</Text>
-          <Select
-            value={years}
-            onChange={(e) => setYears(e.target.value)}
-            className={styles['inbox-filter-select']}
-          >
-            <option value="all" selected>
-              Semua
-            </option>
-            <option value="sent">Sent</option>
-            <option value="employee_signed">Employee Signed</option>
-            <option value="full_signed">Full Signed</option>
-          </Select>
-        </Box>
-        <Box marginRight={2} flex={1}>
-          <Text className={styles['inbox-filter-text']}>Berkas</Text>
-          <Select
-            value={years}
-            onChange={(e) => setYears(e.target.value)}
-            className={styles['inbox-filter-select']}
-          >
-            <option value="all" selected>
-              Semua
-            </option>
-            <option value="non_selection">Non Selection</option>
-            <option value="selection">Selection</option>
-          </Select>
-        </Box>
-        <Box marginRight={2} flex={1}>
-          <Text className={styles['inbox-filter-text']}>Status Karyawan</Text>
-          <Select
-            value={years}
-            flex={1}
-            onChange={(e) => setYears(e.target.value)}
-            className={styles['inbox-filter-select']}
-          >
-            <option value="all" selected>
-              Semua
-            </option>
-            <option value="contract">Kontrak</option>
-            <option value="freelance">Freelance</option>
-          </Select>
-        </Box>
+        <SelectField options={yearOptions} placeholder='Semua' value={filters.years} label='Tahun' slug='years' onChange={onChangeSelect} />
+        <SelectField options={monthOptions} placeholder='Semua' value={filters.month} label='Bulan' slug='month' onChange={onChangeSelect} />
+        <SelectField options={productDigital} placeholder='Semua' value={filters.product_digital_name} label='Product Digital' slug='product_digital_name' onChange={onChangeSelect} />
       </Flex>
-      {!isEmpty(data) ? (
-        renderData()
-      ) : (
-        <Flex align={'center'} justify={'center'}>
-          <Text>Tidak ada data inbox</Text>
-        </Flex>
-      )}
+      {loading ? <ListEmpty /> : <RenderContent />}
     </Box>
   );
 };

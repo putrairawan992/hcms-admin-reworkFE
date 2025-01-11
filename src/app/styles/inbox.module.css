@@ -167,3 +167,34 @@
 .admin-role-input::placeholder {
   font-style: italic;
 }
+
+.editProfile-change-img-wrapper {
+  align-items: center;
+}
+
+.editProfile-img-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 74px;
+  height: 74px;
+  border: 1.79px solid #ae445a;
+  border-radius: 100%;
+}
+
+.editProfile-img {
+  height: 66px;
+  width: 66px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.editProfile-change-img-text {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 18px;
+  text-align: left;
+  color: #404041;
+  text-decoration: underline;
+  cursor: pointer;
+}

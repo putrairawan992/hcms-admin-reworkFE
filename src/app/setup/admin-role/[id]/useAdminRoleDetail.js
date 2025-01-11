@@ -20,7 +20,9 @@ const useAdminRoleDetail = () => {
     email: '',
     divisi: '',
     jabatan: '',
-    password: '',
+    new_password: '',
+    phone_number: '',
+    address: '',
     platformAccess: []
   });
 
@@ -44,17 +46,9 @@ const useAdminRoleDetail = () => {
         email: responseData?.email || '',
         divisi: responseData?.divisi || '',
         jabatan: responseData?.jabatan || '',
-        password: responseData?.password || '',
-        platformAccess: mapPlatformAccess(responseData),
-      });
-
-      console.log({
-        admin_id: responseData?.id || '',
-        username: responseData?.username || '',
-        email: responseData?.email || '',
-        divisi: responseData?.divisi || '',
-        jabatan: responseData?.jabatan || '',
-        password: responseData?.password || '',
+        new_password: responseData?.password || '',
+        phone_number: responseData?.phone_number || '',
+        address: responseData?.address || '',
         platformAccess: mapPlatformAccess(responseData),
       });
     } catch (error) {
@@ -65,15 +59,15 @@ const useAdminRoleDetail = () => {
   const submitData = async () => {
     try {
       await httpClient({
-        method: 'POST',
-        url: '/admin/account',
+        method: 'PATCH',
+        url: '/admin/edit_account',
         data: form,
       });
       setLoading(false);
 
       toast({
         title: 'success',
-        description: 'Admin has been created',
+        description: 'Admin has been updated',
         duration: 3000,
         status: 'success',
         position: 'top',
@@ -127,47 +121,6 @@ const useAdminRoleDetail = () => {
       ),
     }));
   };
-
-  // const onChangeCheckbox = (slug, label, value, slugParent) => {
-  //   console.log('Checkbox change detected:', { slug, label, value, slugParent });
-
-  //   setForm((prevData) => ({
-  //     ...prevData,
-  //     platformAccess: prevData.platformAccess.map((item) => {
-  //       if (item.slug === slugParent || item.slug === slug) {
-  //         const updateItem = {
-  //           ...item,
-  //           checkbox: item?.checkbox?.map((checkboxItem) =>
-  //             checkboxItem.label.toLowerCase() === label
-  //               ? { ...checkboxItem, value }
-  //               : checkboxItem
-  //           ),
-  //         };
-
-  //         if (item.children) {
-  //           updateItem.children = item.children.map((child) =>
-  //             child.slug === slug
-  //               ? {
-  //                 ...child,
-  //                 checkbox: child.checkbox.map((checkboxItem) =>
-  //                   checkboxItem.label.toLowerCase() === label
-  //                     ? { ...checkboxItem, value }
-  //                     : checkboxItem
-  //                 ),
-  //               }
-  //               : child
-  //           );
-  //         }
-
-
-  //         return updateItem;
-  //       }
-  //       return item;
-  //     }),
-  //   }));
-  // };
-
-
 
   const onHandleSubmit = () => {
     setLoading(true);
