@@ -42,7 +42,7 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop }) => {
     <Accordion allowToggle>
       <AccordionItem border="none" key={1}>
         <AccordionButton background={'#8364BA'} style={styles.wrapper}>
-          <Flex alignItems="center" justifyContent="center">
+          <Flex alignItems="center" flex={1} justify='center'>
             <Box style={styles.imgWrapper}>
               <Image
                 style={styles.img}
@@ -51,14 +51,21 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop }) => {
               />
             </Box>
             <Gap width={6} />
-            <Text style={styles.title}>{product_digital_name}</Text>
+            <Box flex={1}>
+              <Text style={styles.title}>{product_digital_name}</Text>
+            </Box>
           </Flex>
-          <Text style={styles.subtitle}>
-            {moment(created_at).locale('en').format('MMMM YYYY')}
-          </Text>
-          <EyeIcon color='#ae445a' />
-          <SettingsIcon color='#ae445a' onClick={onHandleToggleModal} cursor='pointer' />
-          <Box>
+          <Flex flex={1} justify='center' alignItems='center'>
+            <Text style={styles.subtitle}>
+              {moment(created_at).locale('en').format('MMMM YYYY')}
+            </Text>
+          </Flex>
+          <Flex flex={1} justify='center' alignItems='center'>
+            <EyeIcon color='#ae445a' />
+            <Gap width={4} />
+            <SettingsIcon color='#ae445a' onClick={onHandleToggleModal} cursor='pointer' />
+          </Flex>
+          <Box flex={1}>
             <Flex flex={1}>
               <Box
                 borderWidth={1}
@@ -71,7 +78,7 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop }) => {
               </Box>
             </Flex>
           </Box>
-          <Flex alignItems="center" justifyContent="center">
+          <Flex alignItems="center" justifyContent="center" flex={1}>
             <DownloadIcon />
             <Gap width={4} />
             <ChatIcon style={{ width: 20, height: 20 }} />
@@ -84,8 +91,8 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop }) => {
           borderWidth={2}
           borderRadius={10}
           borderColor="#AE445A"
-          backgroundColor="#FFFFFF"
-        >
+          marginBottom={4}
+          backgroundColor="#FFFFFF">
           <Box>
             <Flex
               flex={1}

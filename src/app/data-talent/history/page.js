@@ -1,5 +1,5 @@
 'use client';
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, SimpleGrid, Text } from '@chakra-ui/react';
 import styles from '../../styles/inbox.module.css';
 
 import { HistoryTalentCard } from '../../components/molecules';
@@ -50,9 +50,13 @@ const DataTalentHistory = () => {
         </Box>
       </Flex>
       <Flex>
-        {data?.data?.map((item) => {
-          return <HistoryTalentCard data={item} />;
-        })}
+        <Flex flex={1}>
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6} w="full">
+            {data?.data?.map((item, index) => (
+              <HistoryTalentCard key={index} data={item} />
+            ))}
+          </SimpleGrid>
+        </Flex>
       </Flex>
     </Box>
   );

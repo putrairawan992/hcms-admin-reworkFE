@@ -45,9 +45,9 @@ const useSendDocument = () => {
 
       const responseData = response?.data?.data || [];
       const transformedData = responseData?.map(
-        ({ id, product_digital_name }) => ({
+        ({ id, name }) => ({
           id,
-          label: product_digital_name,
+          label: name,
         })
       );
       setProductDigitalData(transformedData);
