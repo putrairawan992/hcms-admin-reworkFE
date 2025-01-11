@@ -3,8 +3,8 @@ pipeline {
    environment {
         DOCKER_REGISTRY = credentials('docker-registry-staging')
         REPOSITORY_USER = credentials('repository-user')
-        REPOSITORY_NAME = 'hcms-admin-rework-fe'
-        IMAGE_NAME = 'admin-hcms-rework'
+        REPOSITORY_NAME = 'hcms-admin-rework-fe-new'
+        IMAGE_NAME = 'admin-hcms-rework-new'
         DOCKER_IMAGE = "${DOCKER_REGISTRY}/${IMAGE_NAME}"
         DOCKER_CREDENTIALS = 'docker-credentials'
         SSH_CREDENTIALS = 'ssh-credentials-staging'
@@ -19,7 +19,7 @@ pipeline {
         DATE = sh(script: 'date +"%m/%d/%Y %I:%M %p"', returnStdout: true).trim()
         SSH_USERNAME = credentials('ssh-username-secret')
         SSH_HOST = credentials('host-staging')
-        ENV_FILE = credentials('env_admin-hcms-rework')
+        ENV_FILE = credentials('env_admin-hcms-rework-new')
     }
     stages {
         stage('Checkout') {
@@ -160,7 +160,7 @@ pipeline {
                                 docker rm -f $IMAGE_NAME || true
 
                                 # Run the new container with the specified version
-                                sudo docker run -d -it --restart always -p 3009:3000 --name $IMAGE_NAME $DOCKER_IMAGE:$NEW_DEV_VERSION
+                                sudo docker run -d -it --restart always -p 3030:3000 --name $IMAGE_NAME $DOCKER_IMAGE:$NEW_DEV_VERSION
 
                                 # Clean up old Docker images, keeping only the 2 most recent ones
                                 docker images --filter=reference='$DOCKER_IMAGE:*' --format '{{.Repository}}:{{.Tag}}' | sort -rV | tail -n +3 | xargs -r docker rmi -f
@@ -180,7 +180,7 @@ pipeline {
                             username: "Jenkins",
                             embeds: [
                                 [
-                                    title: "Success: Deployment Deployment Perta Usaha Development",
+                                    title: "Success: Deployment Deployment Hcms Rework Development",
                                     description: "Done Update ${env.GIT_REPOSITORY} ke versi ${env.NEW_DEV_VERSION}",
                                     fields: [
                                         [
