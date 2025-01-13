@@ -55,7 +55,7 @@ const FormFields = ({
       >
         <Box flex={0.5}>
           <Text fontSize={14} fontWeight="bold" color="#404041">
-            {label}:
+            {label}
           </Text>
         </Box>
         <Flex flex={1}>
@@ -66,7 +66,7 @@ const FormFields = ({
       <Box flex={1}>
         <Box flex={0.5}>
           <Text fontSize={14} fontWeight="bold" color="#404041">
-            {label}:
+            {label}
           </Text>
         </Box>
         <Flex flex={1}>

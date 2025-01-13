@@ -28,11 +28,6 @@ import { noop } from '@/app/utils/helpers';
 const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop }) => {
   const { product_digital_name, status, created_at, employee_list, document_type, type_setting_document } = data;
 
-  // const employeeMapping = employeeList?.map((item) => ({
-  //   ...item,
-  //   isChanged: item?.
-  // }));
-
   const [employeeList, setEmployeeList] = useState(employee_list || []);
   const [isActive, setIsActive] = useState(false);
 
@@ -164,7 +159,7 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop })
                       fontWeight={700}
                       textDecoration="underline"
                     >
-                      {item?.username}
+                      {item?.employee_name}
                     </Text>
                     <Text fontSize={12} fontWeight={400}>
                       {item?.employee_type}

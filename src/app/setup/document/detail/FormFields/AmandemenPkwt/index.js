@@ -84,8 +84,7 @@ const FormFieldsAmandementPKWT = ({ loading = false, onClick = noop }) => {
               <Flex
                 flex={1}
                 alignItems={item.type === 'textarea' ? 'flex-start' : 'center'}
-                marginBottom={2}
-              >
+                marginBottom={2}>
                 <Box flex={0.5}>
                   <Text fontSize={14} fontWeight="bold" color="#404041">
                     {item.label}:
