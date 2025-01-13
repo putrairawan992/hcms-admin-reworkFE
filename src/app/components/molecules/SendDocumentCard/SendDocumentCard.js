@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   Accordion,
   AccordionButton,
@@ -7,11 +8,9 @@ import {
   Button,
   Flex,
   Image,
-  Select,
   Text,
   VStack,
 } from '@chakra-ui/react';
-import React from 'react';
 import styles from './SendDocumentCard.styles';
 import {
   ChatIcon,
@@ -26,8 +25,16 @@ import { Gap, SelectField } from '../../atoms';
 import { SettingsIcon } from '@chakra-ui/icons';
 import { noop } from '@/app/utils/helpers';
 
-const SendDocumentCard = ({ data = {}, toggleModal = noop }) => {
+const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop }) => {
   const { product_digital_name, status, created_at, employee_list, document_type, type_setting_document } = data;
+
+  // const employeeMapping = employeeList?.map((item) => ({
+  //   ...item,
+  //   isChanged: item?.
+  // }));
+
+  const [employeeList, setEmployeeList] = useState(employee_list || []);
+  const [isActive, setIsActive] = useState(false);
 
   const documentAll = document_type?.map((item) => ({
     id: item?.id,
@@ -36,6 +43,22 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop }) => {
 
   const onHandleToggleModal = () => {
     toggleModal(data);
+  };
+
+  const onChangeSelect = (value, index) => {
+    const updatedList = [...employee_list];
+    updatedList[index] = {
+      ...updatedList[index],
+      temporary_type_document: value,
+      temporary_status: value === '' ? false : true,
+    };
+
+    setIsActive(true);
+    setEmployeeList(updatedList);
+  };
+
+  const onHandleClickIcon = (type) => {
+    onPressIcon(type);
   };
 
   return (
@@ -124,13 +147,13 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop }) => {
               </VStack>
             </Flex>
             <Gap height={30} />
-            {employee_list.map((item, index) => (
+            {employeeList.map((item, index) => (
               <Flex flex={1} marginBottom={6} key={index}>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Box style={styles.imgWrapper}>
                     <Image
                       style={styles.img}
-                      src="/images/company-dummy.jpeg"
+                      src={item?.photo}
                       alt="image"
                     />
                   </Box>
@@ -150,7 +173,7 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop }) => {
                 </Flex>
                 <Flex alignItems="center" justifyContent="center" flex={1}>
                   <Box style={{ width: '200px' }}>
-                    <SelectField placeholder='Pilih document' options={documentAll} />
+                    <SelectField placeholder='Pilih document' options={documentAll} value={item?.temporary_type_document} onChange={(slug, value) => onChangeSelect(value, index)} slug='document_type_employee' key={index} />
                   </Box>
                 </Flex>
                 <Flex
@@ -158,9 +181,9 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop }) => {
                   alignItems="center"
                   justifyContent="space-around"
                   marginLeft={4}>
-                  <FileBadgeIcon color='#B6B6B6' />
-                  <MessageIcon color='#B6B6B6' />
-                  <CloseIcon color='#B6B6B6' />
+                  <FileBadgeIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('file')} />
+                  <MessageIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('message')} />
+                  <CloseIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('close')} />
                 </Flex>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Text fontWeight="bold" color="#AE445A">

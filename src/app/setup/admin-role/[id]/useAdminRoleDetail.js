@@ -77,7 +77,7 @@ const useAdminRoleDetail = () => {
     } catch (error) {
       toast({
         title: 'Error',
-        description: 'Something went wrong!',
+        description: error?.response?.data?.errors || 'Something went wrong!',
         duration: 3000,
         status: 'error',
         position: 'top',

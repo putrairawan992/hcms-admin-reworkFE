@@ -21,6 +21,7 @@ import PenilaianCard from './PenilaianCard';
 import PenilaianDocumentCard from './PenilaianDocumentCard';
 import PenilaianMultipleChoiceCard from './PenilaianMultipleChoiceCard';
 import PenilaianEssayCard from './PenilaianEssayCard';
+import ApprovalJobPostCard from './ApprovalJobPostCard';
 
 export {
   DataTalentCard,
@@ -46,4 +47,5 @@ export {
   PenilaianDocumentCard,
   PenilaianMultipleChoiceCard,
   PenilaianEssayCard,
+  ApprovalJobPostCard
 };

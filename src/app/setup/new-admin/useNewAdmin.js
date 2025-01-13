@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { httpClient } from '@/app/utils/network';
 import { useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
@@ -6,10 +6,6 @@ import { useRouter } from 'next/navigation';
 const useNewAdmin = () => {
   const router = useRouter();
   const toast = useToast();
-  const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalData, setTotalData] = useState(0);
-  const [keyword, setKeyword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
@@ -122,22 +118,6 @@ const useNewAdmin = () => {
     setForm((prevData) => ({ ...prevData, [slug]: value }));
   };
 
-  const fetchData = async () => {
-    try {
-      const response = await httpClient({
-        method: 'GET',
-        url: '/list/sheet1',
-        params: { page: 1, size: 10 },
-      });
-
-      const responseData = response?.data?.data?.data || [];
-      setData(responseData);
-      setTotalData(response?.data?.total_items);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
-  };
-
   const submitData = async () => {
     try {
       await httpClient({
@@ -159,7 +139,7 @@ const useNewAdmin = () => {
     } catch (error) {
       toast({
         title: 'Error',
-        description: 'Something went wrong!',
+        description: error?.response?.message || 'Something went wrong',
         duration: 3000,
         status: 'error',
         position: 'top',
@@ -191,17 +171,9 @@ const useNewAdmin = () => {
     submitData();
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return {
     form,
-    data,
     loading,
-    page,
-    totalData,
-    keyword,
     onChangeText,
     onHandleSubmit,
     onChangeCheckbox,

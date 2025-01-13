@@ -15,12 +15,12 @@ import { SettingsIcon } from '@chakra-ui/icons';
 moment.locale('id');
 
 const SendDocument = () => {
-  const { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, toggleModalOpen } = useSendDocument();
+  const { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, toggleModalOpen, onPressIcon } = useSendDocument();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
       return data.map((item, index) => {
-        return <SendDocumentCard data={item} key={index} toggleModal={toggleModalOpen} />;
+        return <SendDocumentCard data={item} key={index} toggleModal={toggleModalOpen} onPressIcon={onPressIcon} />;
       });
     } else {
       return (

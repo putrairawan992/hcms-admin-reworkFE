@@ -16,14 +16,13 @@ import moment from 'moment';
 import 'moment/locale/id';
 import dynamic from 'next/dynamic';
 import { useGetApprovalRemunerationDetail } from '@/app/api/approval';
-import useApprovalRemuneration from '../useApprovalRemuneration';
 import useRemunerationDetail from './useRemunerationDetail';
 
 moment.locale('id');
 
 const ApprovalRemunerationDetails = ({ params }) => {
   const id = params.id;
-  const { data } = useRemunerationDetail();
+  const { data, onHandleDownload } = useRemunerationDetail();
 
   const ConfirmationModalWithNoSSR = dynamic(
     () => import('../../../components/cancelApprovalConfirmationModal'),
@@ -191,14 +190,14 @@ const ApprovalRemunerationDetails = ({ params }) => {
                     <Box
                       className={
                         styles[
-                          'approval-remuneration-content-details-wrapper-header'
+                        'approval-remuneration-content-details-wrapper-header'
                         ]
                       }
                     >
                       <Flex
                         className={
                           styles[
-                            'approval-remuneration-content-details-header-inner'
+                          'approval-remuneration-content-details-header-inner'
                           ]
                         }
                       >
@@ -207,7 +206,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                       <Flex
                         className={
                           styles[
-                            'approval-remuneration-content-details-header-inner'
+                          'approval-remuneration-content-details-header-inner'
                           ]
                         }
                       >
@@ -216,7 +215,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                       <Flex
                         className={
                           styles[
-                            'approval-remuneration-content-details-header-inner'
+                          'approval-remuneration-content-details-header-inner'
                           ]
                         }
                       >
@@ -225,7 +224,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                       <Flex
                         className={
                           styles[
-                            'approval-remuneration-content-details-header-inner'
+                          'approval-remuneration-content-details-header-inner'
                           ]
                         }
                       >
@@ -234,7 +233,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                       <Flex
                         className={
                           styles[
-                            'approval-remuneration-content-details-header-inner'
+                          'approval-remuneration-content-details-header-inner'
                           ]
                         }
                       >
@@ -244,7 +243,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                     <Box
                       className={
                         styles[
-                          'approval-remuneration-content-details-wrapper-inner'
+                        'approval-remuneration-content-details-wrapper-inner'
                         ]
                       }
                     >
@@ -310,7 +309,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                     <Text
                       className={
                         styles[
-                          'approval-remuneration-details-footer-inner-text'
+                        'approval-remuneration-details-footer-inner-text'
                         ]
                       }
                     >
@@ -323,7 +322,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                     <Text
                       className={
                         styles[
-                          'approval-remuneration-details-footer-inner-text'
+                        'approval-remuneration-details-footer-inner-text'
                         ]
                       }
                     >
@@ -353,8 +352,8 @@ const ApprovalRemunerationDetails = ({ params }) => {
                     </Text>
                     <Text fontSize={'12px'}>11 Juni 2023</Text>
                     <Button
-                      className={styles['approval-remuneration-content-btn']}
-                    >
+                      onClick={onHandleDownload}
+                      className={styles['approval-remuneration-content-btn']}>
                       Download
                     </Button>
                   </Flex>

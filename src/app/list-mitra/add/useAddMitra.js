@@ -55,7 +55,7 @@ const useAddMitra = () => {
       console.log(error);
       toast({
         title: 'Error',
-        description: error?.response?.data?.errors || 'Something went wrong!',
+        description: sponse?.data?.errors || 'Something went wrong!',
         duration: 3000,
         status: 'error',
         position: 'top',

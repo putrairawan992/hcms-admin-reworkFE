@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
 import { httpClient } from '@/app/utils/network';
-import { useRouter, useParams } from 'next/navigation';
 import { useToast } from '@chakra-ui/react';
 import { documentTypeOptions } from './Shared/General';
 
 const useSetupDocumentDetail = () => {
   const toast = useToast();
-  const router = useRouter();
-  const params = useParams();
 
   const searchParams = new URLSearchParams(window.location.search);
   const documentType = searchParams.get('documentType');

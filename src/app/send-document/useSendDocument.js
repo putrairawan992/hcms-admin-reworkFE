@@ -138,6 +138,10 @@ const useSendDocument = () => {
     submitSettingDocument(payload);
   };
 
+  const onPressIcon = (type) => {
+    console.log(type);
+  };
+
   useEffect(() => {
     fetchData(filters);
   }, [filters]);
@@ -147,7 +151,7 @@ const useSendDocument = () => {
     fetchDataDocument();
   }, []);
 
-  return { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType };
+  return { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon };
 };
 
 export default useSendDocument;
