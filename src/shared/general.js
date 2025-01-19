@@ -525,3 +525,12 @@ export const colors = [
   '#9C27B0',
   '#607D8B',
 ];
+
+export const jobPostOptions = [
+  { label: 'Lokasi Kerja', value: 'work_location' },
+  { label: 'Keuntungan dari Perusahaan', value: 'benefits_company' },
+  { label: 'Pendidikan', value: 'education' },
+  { label: 'Pengalaman', value: 'experience' },
+  { label: 'Spesialisasi Pekerjaan', value: 'job_specialization' },
+  { label: 'Tingkat Pekerjaan', value: 'work_level' },
+];

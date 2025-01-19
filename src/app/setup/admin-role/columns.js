@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 import { EditIcon } from '@/app/components/icons';
 import { Box, Flex, FormControl, FormLabel, Switch } from '@chakra-ui/react';
 
-const columns = (totalData, page) => {
+const columns = (totalData, page, onChange) => {
   const router = useRouter();
 
   const onHandleDetail = (id) => {
@@ -48,7 +48,7 @@ const columns = (totalData, page) => {
             alignItems="center"
             marginLeft={2}
             justifyContent={'space-between'}
-          >
+            onChange={(e) => onChange(row.id, e.target.checked)}>
             <Switch id="action" />
             <FormLabel htmlFor="action" mb="0" marginLeft={2} fontSize={12}>
               Off
