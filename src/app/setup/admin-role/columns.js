@@ -40,7 +40,7 @@ const columns = (totalData, page, onChange) => {
       name: 'Action',
       cell: (row) => (
         <Flex alignItems="center" justify="space-between">
-          <Box onClick={() => onHandleDetail(row.id)}>
+          <Box onClick={() => onHandleDetail(row.id)} cursor='pointer'>
             <EditIcon width={20} height={20} />
           </Box>
           <FormControl

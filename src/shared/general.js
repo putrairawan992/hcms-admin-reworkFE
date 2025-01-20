@@ -527,10 +527,10 @@ export const colors = [
 ];
 
 export const jobPostOptions = [
-  { label: 'Lokasi Kerja', value: 'work_location' },
-  { label: 'Keuntungan dari Perusahaan', value: 'benefits_company' },
-  { label: 'Pendidikan', value: 'education' },
-  { label: 'Pengalaman', value: 'experience' },
-  { label: 'Spesialisasi Pekerjaan', value: 'job_specialization' },
-  { label: 'Tingkat Pekerjaan', value: 'work_level' },
+  { label: 'Lokasi Kerja', value: 'work_location', prefix: 'job_location_name' },
+  { label: 'Keuntungan dari Perusahaan', value: 'benefits_company', prefix: 'benefit_name' },
+  { label: 'Pendidikan', value: 'education', prefix: 'education_name' },
+  { label: 'Pengalaman', value: 'experience', prefix: 'experience_name' },
+  { label: 'Spesialisasi Pekerjaan', value: 'job_specialization', prefix: 'job_specialist_name' },
+  { label: 'Tingkat Pekerjaan', value: 'work_level', prefix: 'job_level_name' },
 ];

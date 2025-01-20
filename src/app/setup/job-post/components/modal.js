@@ -1,4 +1,5 @@
 'use client';
+import React, { useState } from 'react';
 import {
   Button,
   Flex,
@@ -7,18 +8,13 @@ import {
   ModalContent,
   ModalOverlay,
   Text,
-  Image,
   Box,
-  Select,
   Input,
 } from '@chakra-ui/react';
-import styles from '../../../styles/approvalJobPost.module.css';
+import styles from '../../../styles/setupJobPost.module.css';
 import { noop } from '@/app/utils/helpers';
 
-const ConfirmationModal = ({ modalText = '', isOpen = false, onClose = false, size = 'xl', onSubmit = noop }) => {
-  const onSubmitHandler = () => {
-    onSubmit();
-  };
+const ConfirmationModal = ({ value = '', isOpen = false, onClose = false, size = 'xl', onSubmit = noop, onChangeText = noop }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={size} isCentered>
@@ -34,19 +30,19 @@ const ConfirmationModal = ({ modalText = '', isOpen = false, onClose = false, si
                 Masukkan title
               </Text>
               <Input
-                onChange={(e) => setName(e.target.value)}
-                placeholder={`Masukkan $title`}
+                onChange={(e) => onChangeText(e.target.value)}
+                placeholder="Masukan Title..."
                 type="text"
+                value={value}
               />
             </Box>
           </Box>
           <Flex align={'center'} justify={'end'} mt={'2.5rem'}>
             <Button
-              // onClick={submitHandler}
+              onClick={onSubmit}
               mr={'0'}
-              className={styles['job-post-search-btn']}
-            >
-              Create
+              className={styles['job-post-search-btn']}>
+              Save
             </Button>
           </Flex>
         </ModalBody>

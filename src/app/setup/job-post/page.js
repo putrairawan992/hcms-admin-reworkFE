@@ -22,14 +22,14 @@ import useJobPost from './useJobPost';
 import ConfirmationModalWithNoSSR from './components/modal';
 
 const SetupJobPost = () => {
-  const { modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onOpen, onChangeOptions, onChangeStatus, onChangeText, toggleModal } = useJobPost();
+  const { modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onOpen, onChangeOptions, onChangeStatus, onChangeText, toggleModal, onPressEdit, onChangeTextModal, onSubmitEdit } = useJobPost();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
       return (
         <DataTables
           data={data}
-          columns={columns(1, onChangeStatus, toggleModal)}
+          columns={columns(1, onChangeStatus, onPressEdit)}
           totalData={data?.length}
           keyword={keyword}
           page={1}
@@ -61,9 +61,11 @@ const SetupJobPost = () => {
         option={selectedOption}
       />
       <ConfirmationModalWithNoSSR
-        modalText={'Test'}
+        value={modalValue?.name}
         isOpen={modalOpen}
         onClose={toggleModal}
+        onChangeText={onChangeTextModal}
+        onSubmit={onSubmitEdit}
       />
       <Box className={styles['job-post-container']}>
         <Text className={styles['job-post-title']}>Setup - Job Post</Text>

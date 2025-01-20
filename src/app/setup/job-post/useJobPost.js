@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { httpClient } from '@/app/utils/network';
 import { useDisclosure, useToast } from '@chakra-ui/react';
+import { jobPostOptions } from '@/shared/general';
 
 const useJobPost = () => {
   const toast = useToast();
@@ -11,6 +12,10 @@ const useJobPost = () => {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [modalValue, setModalValue] = useState({
+    id: '',
+    name: ''
+  });
   const [selectedOption, setSelectedOption] = useState('');
 
   const toggleModal = () => {
@@ -41,12 +46,12 @@ const useJobPost = () => {
     setKeyword(value);
   };
 
-  const submitData = async (option, id, status) => {
+  const submitData = async (option, id, data) => {
     try {
       await httpClient({
         method: 'PUT',
         url: `/admin/job_post/${option}/${id}`,
-        data: { status },
+        data
       });
 
       toast({
@@ -81,7 +86,25 @@ const useJobPost = () => {
         item.id === id ? { ...item, status: isActive } : item
       )
     );
-    await submitData(selectedOption, id, isActive);
+    const statusData = { status: isActive };
+    await submitData(selectedOption, id, statusData);
+  };
+
+  const onPressEdit = (id, name) => {
+    setModalValue(prevData => ({ ...prevData, id, name }));
+    toggleModal();
+  };
+
+  const onChangeTextModal = (value) => {
+    setModalValue(prevData => ({ ...prevData, name: value }));
+  };
+
+  const onSubmitEdit = async () => {
+    const prefixData = jobPostOptions.find((item) => item.value === selectedOption);
+    const data = { [prefixData.prefix]: modalValue?.name };
+    await submitData(selectedOption, modalValue?.id, data);
+    toggleModal();
+    fetchData(selectedOption);
   };
 
   useEffect(() => {
@@ -89,7 +112,7 @@ const useJobPost = () => {
   }, [selectedOption]);
 
   return {
-    modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onChangeOptions, onChangeStatus, onChangeText, onOpen, toggleModal
+    modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onChangeOptions, onChangeStatus, onChangeText, onOpen, toggleModal, onChangeTextModal, onPressEdit, onSubmitEdit
   };
 };
 

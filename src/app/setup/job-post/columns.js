@@ -1,15 +1,8 @@
-import { useRouter } from 'next/navigation';
 import { Box, Flex, FormControl, FormLabel, Switch } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Gap } from '@/app/components/atoms';
 
-const columns = (page, onChangeStatus, toggleModal) => {
-  const router = useRouter();
-
-  const onHandleDetail = (id) => {
-    router.push(`/setup/admin-role/${id}`);
-  };
-
+const columns = (page, onChangeStatus, onPressEdit) => {
   return [
     {
       name: 'No',
@@ -50,11 +43,21 @@ const columns = (page, onChangeStatus, toggleModal) => {
       name: 'Action',
       cell: (row) => (
         <Flex alignItems="center" justify="center">
-          <Box onClick={() => toggleModal(row.id)} cursor='pointer'>
+          <Box onClick={() => onPressEdit(row.id, row.experience_name ||
+            row.education_name ||
+            row.job_specialist_name ||
+            row.job_level_name ||
+            row.job_location_name ||
+            row.benefit_name)} cursor='pointer'>
             <EditIcon width={18} height={18} color='#AE445A' />
           </Box>
           <Gap width={2} />
-          <Box onClick={() => toggleModal(row.id)} cursor='pointer'>
+          <Box onClick={() => onPressEdit(row.id, row.experience_name ||
+            row.education_name ||
+            row.job_specialist_name ||
+            row.job_level_name ||
+            row.job_location_name ||
+            row.benefit_name)} cursor='pointer'>
             <DeleteIcon width={5} height={5} color='#AE445A' />
           </Box>
         </Flex>
