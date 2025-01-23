@@ -1,9 +1,9 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback } from 'react';
 import { Box, Flex, Input, Text } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 import { noop } from '@/app/utils/helpers';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const FormFields = ({
   label = '',
@@ -51,11 +51,10 @@ const FormFields = ({
         key={slug}
         flex={1}
         alignItems={type === 'textarea' ? 'flex-start' : 'center'}
-        marginBottom={2}
-      >
+        marginBottom={2}>
         <Box flex={0.5}>
           <Text fontSize={14} fontWeight="bold" color="#404041">
-            {label}:
+            {label}
           </Text>
         </Box>
         <Flex flex={1}>

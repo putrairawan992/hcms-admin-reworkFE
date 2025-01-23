@@ -1,20 +1,22 @@
 'use client';
-
-import { useMemo } from 'react';
-import { Box, Button, Divider, Flex, Input, Text } from '@chakra-ui/react';
+import { useMemo, useState } from 'react';
+import { Box, Button, Flex, Text, Spinner } from '@chakra-ui/react';
 import styles from '../../styles/inbox.module.css';
 import {
-  ChooseLogo,
   PenilaianDocumentCard,
-  PenilaianMultipleChoiceCard,
   QuestionSection,
 } from '../../components/molecules';
 import useDetailPenilaianPretest from './useDetailPenilaianPretest';
-import { Gap, SelectField } from '../../components/atoms';
-import UploadDocument from './UploadDocument';
-
+import { Gap } from '../../components/atoms';
+import { useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
 const PretestMitra = () => {
+  const toast = useToast();
+  const router = useRouter();
+
   const { data, questionData, addRowQuestion } = useDetailPenilaianPretest();
+  const [nilai, setNilai] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const RenderContentQuestion = useMemo(() => {
     return questionData.map((item, index) => {
@@ -22,19 +24,29 @@ const PretestMitra = () => {
     });
   }, [questionData]);
 
+  const handleClick = () => {
+    setIsLoading(true);
+
+    setTimeout(() => {
+      localStorage.setItem('nilai', nilai);
+      setIsLoading(false);
+      toast({
+        title: 'success',
+        description: 'Nilai berhasil ditambahkan',
+        duration: 3000,
+        status: 'success',
+        position: 'top',
+        isClosable: true,
+      });
+      router.push('/penilaian-pre-test');
+    }, 2000);
+  };
+  console.log({ nilai });
   return (
     <Box className={styles['inbox-container']}>
       <Flex align={'center'} justify={'space-between'}>
         <Box>
-          <Text className={styles['inbox-title']}>Modul Pilihan Ganda</Text>
-          <Text
-            fontSize={12}
-            fontWeight={300}
-            color="#404041"
-            fontStyle="italic"
-          >
-            Silahkan atur soal yang akan dijadikan Pre-Test bagi calon Karyawan
-          </Text>
+          <Text className={styles['inbox-title']}>Wawancara Mandiri</Text>
         </Box>
       </Flex>
       <Gap height={8} />
@@ -44,19 +56,16 @@ const PretestMitra = () => {
             Soal dan Jawaban
           </Text>
           <Gap height={4} />
-          <PenilaianDocumentCard />
-          <Gap height={4} />
-          <PenilaianMultipleChoiceCard />
+          <PenilaianDocumentCard setNilai={setNilai} />
         </Box>
       </Box>
       <Gap height={8} />
       <Flex flex={1} justify="flex-end">
         <Button
           className={styles['inbox-btn']}
-          onClick={addRowQuestion}
-          paddingX={10}
-        >
-          Save
+          onClick={handleClick}
+          paddingX={10}>
+          {isLoading ? <Spinner size="sm" /> : 'Save'}
         </Button>
       </Flex>
     </Box>
