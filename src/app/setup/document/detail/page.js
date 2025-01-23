@@ -95,6 +95,7 @@ const SetupDocumentDetails = () => {
                 options={productDigital}
                 value={form.job_provider_id}
                 slug="job_provider_id"
+                placeholder='Pilih product digital'
                 onChange={onChangeSelect}
                 withOptionDefault={false}
               />

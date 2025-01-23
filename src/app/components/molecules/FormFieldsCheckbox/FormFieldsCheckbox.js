@@ -1,10 +1,9 @@
 import React, { memo } from 'react';
 import { Box, Checkbox, Flex, Text } from '@chakra-ui/react';
-import { CheckboxFields } from '../../atoms';
 import styles from './FormFieldsCheckbox.styles';
 import { noop } from '@/app/utils/helpers';
 
-const FormFieldsCheckbox = ({ data = [], label = '', slug = '', form = [], onChangeCheckbox = noop }) => {
+const FormFieldsCheckbox = ({ data = [], onChangeCheckbox = noop }) => {
 
   const onChange = (slug, label, value, slugParent) => {
     onChangeCheckbox(slug, label, value, slugParent);
@@ -42,7 +41,7 @@ const FormFieldsCheckbox = ({ data = [], label = '', slug = '', form = [], onCha
                 onChange={(event) =>
                   onChange(e?.slug, e?.label?.toLowerCase(), event.target.checked, item?.slug)
                 }
-                marginRight="2rem" key={index}>
+                marginRight="2rem" key={index} mb={'1rem'}>
                 {e.label}
               </Checkbox>
             )

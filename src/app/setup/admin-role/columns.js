@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 import { EditIcon } from '@/app/components/icons';
 import { Box, Flex, FormControl, FormLabel, Switch } from '@chakra-ui/react';
 
-const columns = (totalData, page) => {
+const columns = (totalData, page, onChange) => {
   const router = useRouter();
 
   const onHandleDetail = (id) => {
@@ -16,23 +16,23 @@ const columns = (totalData, page) => {
       sortable: true,
       width: '70px',
     },
-    { name: 'Admin ID', selector: (row) => row.id, width: '250px', wrap: true },
+    { name: 'Admin ID', selector: (row) => row.admin_id, width: '250px', wrap: true },
     {
       name: 'Nama',
-      selector: (row) => row.username,
+      selector: (row) => row.users,
       width: '250px',
       wrap: true,
     },
     { name: 'Email', selector: (row) => row.email, width: '250px', wrap: true },
     {
       name: 'Divisi',
-      selector: (row) => row.email,
+      selector: (row) => row.divisi,
       width: '250px',
       wrap: true,
     },
     {
       name: 'Jabatan',
-      selector: (row) => row.email,
+      selector: (row) => row.jabatan,
       width: '250px',
       wrap: true,
     },
@@ -40,7 +40,7 @@ const columns = (totalData, page) => {
       name: 'Action',
       cell: (row) => (
         <Flex alignItems="center" justify="space-between">
-          <Box onClick={() => onHandleDetail(row.id)}>
+          <Box onClick={() => onHandleDetail(row.id)} cursor='pointer'>
             <EditIcon width={20} height={20} />
           </Box>
           <FormControl
@@ -48,7 +48,7 @@ const columns = (totalData, page) => {
             alignItems="center"
             marginLeft={2}
             justifyContent={'space-between'}
-          >
+            onChange={(e) => onChange(row.id, e.target.checked)}>
             <Switch id="action" />
             <FormLabel htmlFor="action" mb="0" marginLeft={2} fontSize={12}>
               Off

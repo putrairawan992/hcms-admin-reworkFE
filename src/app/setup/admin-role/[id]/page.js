@@ -4,7 +4,6 @@ import { Box, Button, Flex, Text, Divider, Spinner } from '@chakra-ui/react';
 import styles from '../../../styles/adminRole.module.css';
 
 import useAdminRoleDetail from './useAdminRoleDetail';
-import style from './styles';
 import { Gap } from '@/app/components/atoms';
 import { FormFields } from '@/app/components/molecules';
 import FormFieldsCheckbox from '@/app/components/molecules/FormFieldsCheckbox';
@@ -96,18 +95,7 @@ const AdminRoleDetail = () => {
       <Divider className={styles['admin-new-admin-divider']} />
       <Box className={styles['admin-new-admin-bottom-wrapper']}>
         <Text className={styles['admin-role-title']}>Feature</Text>
-        <FormFieldsCheckbox
-          data={form.platformAccess}
-          form={form.platformAccess}
-          onChangeCheckbox={onChangeCheckbox}
-        />
-        <FormFieldsCheckbox
-          title='Dashboard'
-          label='dashboard'
-          onChangeCheckbox={onChangeCheckbox}
-          data={form.platformAccess.find((e) => e.slug === 'dashboard')?.checkbox}
-        />
-        <FormFieldsCheckbox title='Dashboard' label='Dashbord' withChildren={true} />
+        <FormFieldsCheckbox data={form.permissions} onChangeCheckbox={onChangeCheckbox} />
       </Box>
       <Flex width={'100%'} justify={'end'} marginTop={'2rem'}>
         <Button

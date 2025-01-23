@@ -1,15 +1,14 @@
 import React, { memo } from 'react';
-import { Box, Checkbox, Select, Text } from '@chakra-ui/react';
+import { Box, Select, Text } from '@chakra-ui/react';
 import styles from './SelectField.styles';
 import './style.css';
-import { ChevronDownIcon } from '@chakra-ui/icons';
 
 const SelectField = ({
   label = '',
   slug = '',
   value = '',
   options = [],
-  onChange = () => {},
+  onChange = () => { },
   marginRight = 2,
   disabled = false,
   placeholder = 'Semua',
@@ -32,10 +31,9 @@ const SelectField = ({
         iconSize="18px"
         placeholder={placeholder}
         isDisabledPlaceholder={true}
-        style={styles.select(value)}
-      >
-        {options.map((item) => (
-          <option value={item?.value}>{item?.label}</option>
+        style={styles.select(value)}>
+        {options.map((item, index) => (
+          <option value={item?.value} key={index}>{item?.label}</option>
         ))}
       </Select>
     </Box>

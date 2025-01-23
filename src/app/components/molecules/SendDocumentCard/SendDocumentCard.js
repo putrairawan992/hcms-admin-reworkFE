@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   Accordion,
   AccordionButton,
@@ -7,11 +8,9 @@ import {
   Button,
   Flex,
   Image,
-  Select,
   Text,
   VStack,
 } from '@chakra-ui/react';
-import React from 'react';
 import styles from './SendDocumentCard.styles';
 import {
   ChatIcon,
@@ -24,20 +23,44 @@ import {
 import moment from 'moment';
 import { Gap, SelectField } from '../../atoms';
 import { SettingsIcon } from '@chakra-ui/icons';
+import { noop } from '@/app/utils/helpers';
 
-const SendDocumentCard = ({ data = [] }) => {
-  const { product_digital_name, status, created_at, employee_list, document_type } = data;
+const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop }) => {
+  const { product_digital_name, status, created_at, employee_list, document_type, type_setting_document } = data;
+
+  const [employeeList, setEmployeeList] = useState(employee_list || []);
+  const [isActive, setIsActive] = useState(false);
 
   const documentAll = document_type?.map((item) => ({
     id: item?.id,
     label: item?.type_document
   })) || [];
 
+  const onHandleToggleModal = () => {
+    toggleModal(data);
+  };
+
+  const onChangeSelect = (value, index) => {
+    const updatedList = [...employee_list];
+    updatedList[index] = {
+      ...updatedList[index],
+      temporary_type_document: value,
+      temporary_status: value === '' ? false : true,
+    };
+
+    setIsActive(true);
+    setEmployeeList(updatedList);
+  };
+
+  const onHandleClickIcon = (type) => {
+    onPressIcon(type);
+  };
+
   return (
     <Accordion allowToggle>
       <AccordionItem border="none" key={1}>
         <AccordionButton background={'#8364BA'} style={styles.wrapper}>
-          <Flex alignItems="center" justifyContent="center">
+          <Flex alignItems="center" flex={1} justify='center'>
             <Box style={styles.imgWrapper}>
               <Image
                 style={styles.img}
@@ -46,14 +69,21 @@ const SendDocumentCard = ({ data = [] }) => {
               />
             </Box>
             <Gap width={6} />
-            <Text style={styles.title}>{product_digital_name}</Text>
+            <Box flex={1}>
+              <Text style={styles.title}>{product_digital_name}</Text>
+            </Box>
           </Flex>
-          <Text style={styles.subtitle}>
-            {moment(created_at).locale('en').format('MMMM YYYY')}
-          </Text>
-          <EyeIcon color='#ae445a' />
-          <SettingsIcon color='#ae445a' />
-          <Box>
+          <Flex flex={1} justify='center' alignItems='center'>
+            <Text style={styles.subtitle}>
+              {moment(created_at).locale('en').format('MMMM YYYY')}
+            </Text>
+          </Flex>
+          <Flex flex={1} justify='center' alignItems='center'>
+            <EyeIcon color='#ae445a' />
+            <Gap width={4} />
+            <SettingsIcon color='#ae445a' onClick={onHandleToggleModal} cursor='pointer' />
+          </Flex>
+          <Box flex={1}>
             <Flex flex={1}>
               <Box
                 borderWidth={1}
@@ -66,7 +96,7 @@ const SendDocumentCard = ({ data = [] }) => {
               </Box>
             </Flex>
           </Box>
-          <Flex alignItems="center" justifyContent="center">
+          <Flex alignItems="center" justifyContent="center" flex={1}>
             <DownloadIcon />
             <Gap width={4} />
             <ChatIcon style={{ width: 20, height: 20 }} />
@@ -79,8 +109,8 @@ const SendDocumentCard = ({ data = [] }) => {
           borderWidth={2}
           borderRadius={10}
           borderColor="#AE445A"
-          backgroundColor="#FFFFFF"
-        >
+          marginBottom={4}
+          backgroundColor="#FFFFFF">
           <Box>
             <Flex
               flex={1}
@@ -112,13 +142,13 @@ const SendDocumentCard = ({ data = [] }) => {
               </VStack>
             </Flex>
             <Gap height={30} />
-            {employee_list.map((item, index) => (
+            {employeeList.map((item, index) => (
               <Flex flex={1} marginBottom={6} key={index}>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Box style={styles.imgWrapper}>
                     <Image
                       style={styles.img}
-                      src="/images/company-dummy.jpeg"
+                      src={item?.photo}
                       alt="image"
                     />
                   </Box>
@@ -129,7 +159,7 @@ const SendDocumentCard = ({ data = [] }) => {
                       fontWeight={700}
                       textDecoration="underline"
                     >
-                      {item?.username}
+                      {item?.employee_name}
                     </Text>
                     <Text fontSize={12} fontWeight={400}>
                       {item?.employee_type}
@@ -138,7 +168,7 @@ const SendDocumentCard = ({ data = [] }) => {
                 </Flex>
                 <Flex alignItems="center" justifyContent="center" flex={1}>
                   <Box style={{ width: '200px' }}>
-                    <SelectField placeholder='Pilih document' options={documentAll} />
+                    <SelectField placeholder='Pilih document' options={documentAll} value={item?.temporary_type_document} onChange={(slug, value) => onChangeSelect(value, index)} slug='document_type_employee' key={index} />
                   </Box>
                 </Flex>
                 <Flex
@@ -146,9 +176,9 @@ const SendDocumentCard = ({ data = [] }) => {
                   alignItems="center"
                   justifyContent="space-around"
                   marginLeft={4}>
-                  <FileBadgeIcon color='#B6B6B6' />
-                  <MessageIcon color='#B6B6B6' />
-                  <CloseIcon color='#B6B6B6' />
+                  <FileBadgeIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('file')} />
+                  <MessageIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('message')} />
+                  <CloseIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('close')} />
                 </Flex>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Text fontWeight="bold" color="#AE445A">

@@ -1,4 +1,5 @@
 export const yearOptions = [
+  { value: '2025', label: '2025' },
   { value: '2024', label: '2024' },
   { value: '2023', label: '2023' },
   { value: '2022', label: '2022' },
@@ -44,6 +45,12 @@ export const monthLabelOptions = [
 export const statusRemunOptions = [
   { value: 'approved', label: 'Approved' },
   { value: 'rejected', label: 'Rejected' },
+];
+
+export const statusJobPostOptions = [
+  { value: 'Approved', label: 'Approved' },
+  { value: 'Onprogress', label: 'On Progress' },
+  { value: 'Pending', label: 'Pending' },
 ];
 
 export const navbarDataOptions = [
@@ -517,4 +524,13 @@ export const colors = [
   '#F39F5A',
   '#9C27B0',
   '#607D8B',
+];
+
+export const jobPostOptions = [
+  { label: 'Lokasi Kerja', value: 'work_location', prefix: 'job_location_name' },
+  { label: 'Keuntungan dari Perusahaan', value: 'benefits_company', prefix: 'benefit_name' },
+  { label: 'Pendidikan', value: 'education', prefix: 'education_name' },
+  { label: 'Pengalaman', value: 'experience', prefix: 'experience_name' },
+  { label: 'Spesialisasi Pekerjaan', value: 'job_specialization', prefix: 'job_specialist_name' },
+  { label: 'Tingkat Pekerjaan', value: 'work_level', prefix: 'job_level_name' },
 ];

@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import {
   Box,
   Button,
@@ -8,6 +9,7 @@ import {
   Text,
   useToast,
   Image,
+  Spinner,
 } from '@chakra-ui/react';
 import styles from '../styles/loginPage.module.css';
 import { useRouter } from 'next/navigation';
@@ -23,6 +25,7 @@ const LoginPage = () => {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const setProfile = useProfileStore((state) => state.setProfile);
 
   const fetchDataProfile = async () => {
@@ -41,6 +44,12 @@ const LoginPage = () => {
   };
 
   const loginHandler = () => {
+    if (!username && !password) {
+      return false;
+    }
+
+
+    setLoading(true);
     mutate(
       {
         username,
@@ -58,12 +67,11 @@ const LoginPage = () => {
           });
           document.cookie = `userToken=${res.data.token}; path=/; max-age=86400; SameSite=Lax`;
           fetchDataProfile();
-
-          setTimeout(() => {
-            router.push('/');
-          }, 1000);
+          setLoading(false);
+          router.push('/');
         },
         onError: () => {
+          setLoading(false);
           toast({
             title: 'Error',
             description: 'Email atau password salah, silahkan coba lagi',
@@ -101,9 +109,8 @@ const LoginPage = () => {
             <Button
               background={username && password ? '#F39F5A' : '#b6b6b6'}
               onClick={loginHandler}
-              className={styles['login-button']}
-            >
-              Login
+              className={styles['login-button']}>
+              {loading ? <Spinner size='md' color='#FFFFFF' /> : 'Login'}
             </Button>
             <Text className={styles['forgot-password-text']}>
               Lupa Password

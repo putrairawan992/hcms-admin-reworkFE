@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './DataTables.styles';
 import DataTable, { createTheme } from 'react-data-table-component';
 import { noop } from '@/app/utils/helpers';
@@ -63,7 +63,7 @@ const DataTables = ({
         paginationServer
         customStyles={styles}
         paginationTotalRows={totalData}
-        paginationPerPage={10}
+        paginationPerPage={filteredData?.length > 10 ? 10 : filteredData?.length}
         progressPending={loading}
         progressComponent={<ListEmpty />}
         paginationDefaultPage={page}

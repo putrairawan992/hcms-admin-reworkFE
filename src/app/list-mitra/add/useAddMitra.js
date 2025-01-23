@@ -57,6 +57,7 @@ const useAddMitra = () => {
       console.log(result);
     } catch (error) {
       console.log(error);
+
       // toast({
       //   title: 'Error',
       //   description: error?.response?.data?.errors || 'Something went wrong!',
@@ -65,6 +66,7 @@ const useAddMitra = () => {
       //   position: 'top',
       //   isClosable: true,
       // });
+
       setLoading(false);
     }
   };

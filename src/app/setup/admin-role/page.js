@@ -19,6 +19,7 @@ import {
   Thead,
   Tr,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { AddIcon, EditIcon, Search2Icon } from '@chakra-ui/icons';
 import styles from '../../styles/adminRole.module.css';
@@ -31,26 +32,20 @@ import columns from './columns';
 import { isEmpty } from 'lodash';
 
 const AdminRole = () => {
+  const toast = useToast();
   const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState('');
   const [data, setData] = useState([]);
   const [totalData, setTotalData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const ConfirmationModalWithNoSSR = dynamic(
-    () => import('../../components/confirmationModal'),
-    { ssr: false }
-  );
+  const [statusData, setStatusData] = useState(false);
+  const ConfirmationModalWithNoSSR = dynamic(() => import('./components/modal'), { ssr: false });
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [text, setText] = useState('');
 
-  const changeAdminStatusHandler = (status) => {
-    if (status === 'active') {
-      setText('Anda akan menonaktifkan akun ini. Apakah anda yakin?');
-    } else {
-      setText('Anda akan mengaktifkan akun ini. Apakah anda yakin?');
-    }
-    onOpen();
+  const onChangeSwitch = (id, isChecked) => {
+    submitData(id, isChecked);
   };
 
   const fetchData = async () => {
@@ -70,8 +65,40 @@ const AdminRole = () => {
     }
   };
 
+  const submitData = async (id, status) => {
+    try {
+      await httpClient({
+        method: 'PATCH',
+        url: '/admin/edit_account',
+        params: { id },
+        data: {
+          status: status,
+          email: 'newadmin@gmail.com',
+          phone_number: '087823360902',
+          address: 'JL RAYA'
+        }
+      });
+
+      toast({
+        title: 'Success',
+        description: `Account telah ${status ? 'diaktifkan' : 'di non aktifkan'}`,
+        duration: 3000,
+        status: 'success',
+        position: 'top',
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
+  };
+
   const onChangeText = (e) => {
     setKeyword(e.target.value);
+  };
+
+  const onSubmit = () => {
+    console.log(statusData);
+    onClose();
   };
 
   useEffect(() => {
@@ -83,7 +110,7 @@ const AdminRole = () => {
       return (
         <DataTables
           data={data}
-          columns={columns(totalData, page)}
+          columns={columns(totalData, page, onChangeSwitch)}
           totalData={totalData}
           page={page}
           keyword={keyword}
@@ -104,6 +131,7 @@ const AdminRole = () => {
         modalText={text}
         isOpen={isOpen}
         onClose={onClose}
+        onSubmit={onSubmit}
       />
       <Box className={styles['admin-role-container']}>
         <Text className={styles['admin-role-title']}>Setup - Admin</Text>
@@ -125,8 +153,7 @@ const AdminRole = () => {
           </Box>
           <Button
             onClick={() => router.push('/setup/new-admin')}
-            className={styles['admin-role-search-btn']}
-          >
+            className={styles['admin-role-search-btn']}>
             <AddIcon w={'10px'} height={'10px'} mr={'5px'} />
             New Admin
           </Button>

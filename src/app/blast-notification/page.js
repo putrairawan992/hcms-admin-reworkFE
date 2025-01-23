@@ -1,26 +1,31 @@
 'use client';
 import React from 'react';
-import { Box, Button, Flex, Modal, ModalBody, ModalContent, ModalOverlay, Spinner, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalContent, ModalOverlay, Spinner, Text } from '@chakra-ui/react';
 import styles from '../styles/inbox.module.css';
 import styleModal from '../styles/setupJobPost.module.css';
 import moment from 'moment';
 import 'moment/locale/id';
 import { isEmpty } from 'lodash';
-import { ListEmpty, SendDocumentCard } from '../components/molecules';
-import useSendDocument from './useSendDocument';
+import { BlastNotificationCard, FormFields, ListEmpty } from '../components/molecules';
+import useBlastNotification from './useBlastNotification';
 import { Gap, SelectField } from '../components/atoms';
-import { monthOptions, yearOptions } from '@/shared/general';
-import { SettingsIcon } from '@chakra-ui/icons';
+import { Search2Icon, SettingsIcon } from '@chakra-ui/icons';
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 moment.locale('id');
 
-const SendDocument = () => {
-  const { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, toggleModalOpen, onPressIcon } = useSendDocument();
+const BlastNotification = () => {
+  const { data, dummy, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, onPressDetails } = useBlastNotification();
+
+  const onChangeText = (slug, value) => {
+    setForm((prevData) => ({ ...prevData, [slug]: value }));
+  };
 
   const RenderContent = () => {
-    if (!isEmpty(data)) {
-      return data.map((item, index) => {
-        return <SendDocumentCard data={item} key={index} toggleModal={toggleModalOpen} onPressIcon={onPressIcon} />;
+    if (!isEmpty(dummy)) {
+      return dummy.map((item) => {
+        return <BlastNotificationCard data={item} onPress={onPressDetails} />;
       });
     } else {
       return (
@@ -34,30 +39,64 @@ const SendDocument = () => {
   return (
     <Box className={styles['inbox-container']}>
       <Flex align={'center'} justify={'space-between'}>
-        <Text className={styles['inbox-title']}>Send Document</Text>
+        <Text className={styles['inbox-title']}>Notification</Text>
         <Flex>
-          <Flex
-            borderWidth={1}
-            borderColor="#AE445A"
-            borderRadius={6}
-            paddingX={4}
-            paddingY={1}>
-            <Text marginRight={3} fontWeight="bold">
-              Perlu Ditinjau:{' '}
-            </Text>
-            <Text marginRight={3} color="#AE445A" fontWeight="bold">
-              1
-            </Text>
-            <Text fontWeight="bold">Submit</Text>
-          </Flex>
+          <SelectField options={productDigital} placeholder='Pilih product digital' value={filters.product_digital_name} slug='product_digital_name' onChange={onChangeSelect} />
         </Flex>
       </Flex>
-      <Flex marginBottom={4} marginTop={10}>
-        <SelectField options={yearOptions} placeholder='Semua' value={filters.years} label='Tahun' slug='years' onChange={onChangeSelect} />
-        <SelectField options={monthOptions} placeholder='Semua' value={filters.month} label='Bulan' slug='month' onChange={onChangeSelect} />
-        <SelectField options={productDigital} placeholder='Semua' value={filters.product_digital_name} label='Product Digital' slug='product_digital_name' onChange={onChangeSelect} />
+      <Gap height={6} />
+      <Box>
+        <FormFields label='Judul' placeholder='Masukan judul pesan brodcast' theme='up-down' type='text' />
+        <Gap height={4} />
+        <Box
+          flex={1}
+          alignItems='flex-start'
+          marginBottom={2}>
+          <Box flex={0.5}>
+            <Text fontSize={14} fontWeight="bold" color="#404041">
+              Isi Pesan
+            </Text>
+          </Box>
+          <Flex flex={1}>
+            <ReactQuill
+              theme="snow"
+              style={{ height: '150px', flex: 1, marginBottom: 45 }}
+              onChange={(value) => onChangeText(data.slug, value)}
+            />
+          </Flex>
+        </Box>
+        <Button className={styles['inbox-btn']} paddingX={8}>
+          Detail
+        </Button>
+      </Box>
+
+      <Box borderWidth={2} borderColor='#AE445A' marginY={6} />
+
+      <Flex alignItems='center'>
+        <Box>
+          <InputGroup className={styles['input-container']}>
+            <Input
+              className={styles['admin-role-input']}
+              type="text"
+              placeholder="Cari pesan"
+            />
+            <InputRightElement>
+              <Search2Icon />
+            </InputRightElement>
+          </InputGroup>
+        </Box>
+        <Gap width={2} />
+        <Box>
+          <Input
+            type="date"
+            className={styles['modal-input']}
+          />
+        </Box>
       </Flex>
+      <Gap height={4} />
+
       {loading ? <ListEmpty /> : <RenderContent />}
+
 
       <Modal isOpen={modalOpen} onClose={toggleModal} size={'xl'} isCentered closeOnOverlayClick={false} closeOnEsc={false}>
         <ModalOverlay />
@@ -142,4 +181,4 @@ const SendDocument = () => {
   );
 };
 
-export default SendDocument;
+export default BlastNotification;

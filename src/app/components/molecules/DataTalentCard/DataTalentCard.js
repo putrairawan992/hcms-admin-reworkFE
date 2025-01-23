@@ -6,9 +6,7 @@ import { employeeTypeOptions } from './shared/general';
 import { noop } from '@/app/utils/helpers';
 
 const DataTalentCard = ({ data = [], onPress = noop }) => {
-  const { employee_id, employee_type, username, photo } = data;
-
-  console.log(photo);
+  const { employee_id, employee_type, name, photo } = data;
 
   const employeeTypeBadge = employeeTypeOptions.find(
     (item) => item.id === employee_type
@@ -31,7 +29,7 @@ const DataTalentCard = ({ data = [], onPress = noop }) => {
       <div style={{ width: '20px' }} />
       <Flex alignItems="center" flex={1}>
         <h2 style={styles.title} onClick={onHandlePress}>
-          {username || '-'}
+          {name || '-'}
         </h2>
       </Flex>
       <Box md alignItems="center">
@@ -91,10 +89,10 @@ const DataTalentCard = ({ data = [], onPress = noop }) => {
             height={8}
             paddingX={8}
             fontSize={10}
-            backgroundColor={employeeTypeBadge.color}
+            backgroundColor={employeeTypeBadge?.color}
             color="#FFFFFF"
           >
-            {employeeTypeBadge.name || '-'}
+            {employeeTypeBadge?.name || '-'}
           </Button>
         </div>
       </Box>

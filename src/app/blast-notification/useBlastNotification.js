@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { httpClient } from '../utils/network';
 import { useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
 
-const useSendDocument = () => {
+const useBlastNotification = () => {
   const toast = useToast();
+  const router = useRouter();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -12,19 +14,69 @@ const useSendDocument = () => {
   const [productDigital, setProductDigitalData] = useState([]);
   const [settingDocument, setSettingDocument] = useState([]);
   const [documentTypeValue, setDocumentTypeValue] = useState('');
+  const [dummy, setDummy] = useState([
+    {
+      "id": "some-notif-id",
+      "recipent_id": "recipient-id",
+      "title": "Notification Title",
+      "content": "This is the content of the notification",
+      "date": "2024-10-15T10:00:00.000Z",
+      "created_at": "2024-10-23T14:34:13.000Z",
+      "updated_at": "2024-10-23T14:34:13.000Z",
+      "type_user": "user-type",
+      "sender_id": "sender-id",
+      "is_read": false
+    },
+    {
+      "id": "611fa651-dd99-4513-bd64-34eb345b8807",
+      "recipent_id": "some-prod-1",
+      "title": "ini judul notif",
+      "content": "ini adalah content",
+      "date": "2024-10-23T08:19:55.000Z",
+      "created_at": "2024-10-23T08:19:56.000Z",
+      "updated_at": "2024-10-23T08:19:56.000Z",
+      "type_user": "user",
+      "sender_id": "2f1f6977-0dc5-4c1c-9766-11a6fbd503b2",
+      "is_read": false
+    },
+    {
+      "id": "00160668-56ec-43a0-803b-3bb1190511f0",
+      "recipent_id": "some-prod-2",
+      "title": "ini judul notif",
+      "content": "ini adalah content",
+      "date": "2024-10-23T08:19:55.000Z",
+      "created_at": "2024-10-23T08:19:56.000Z",
+      "updated_at": "2024-10-23T08:19:56.000Z",
+      "type_user": "user",
+      "sender_id": "2f1f6977-0dc5-4c1c-9766-11a6fbd503b2",
+      "is_read": false
+    },
+    {
+      "id": "0bc0cb24-68be-4e95-ba44-2fe90d653ede",
+      "recipent_id": "some-prod-3",
+      "title": "ini judul notif",
+      "content": "ini adalah content",
+      "date": "2024-10-23T08:19:55.000Z",
+      "created_at": "2024-10-23T08:19:56.000Z",
+      "updated_at": "2024-10-23T08:19:56.000Z",
+      "type_user": "user",
+      "sender_id": "2f1f6977-0dc5-4c1c-9766-11a6fbd503b2",
+      "is_read": false
+    }
+  ]);
   const [filters, setFilters] = useState({
     years: '',
     month: '',
     product_digital_name: ''
   });
 
-  const fetchData = async (filters) => {
+  const fetchData = async (params) => {
     setLoading(true);
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/admin/document/send_document/list',
-        params: filters
+        url: '/api/admin/notif/list',
+        params
       });
 
       const responseData = response?.data?.data || [];
@@ -142,6 +194,10 @@ const useSendDocument = () => {
     console.log(type);
   };
 
+  const onPressDetails = (id) => {
+    router.push(`/blast-notification/${id}`);
+  };
+
   useEffect(() => {
     fetchData(filters);
   }, [filters]);
@@ -151,7 +207,7 @@ const useSendDocument = () => {
     fetchDataDocument();
   }, []);
 
-  return { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon };
+  return { data, dummy, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon, onPressDetails };
 };
 
-export default useSendDocument;
+export default useBlastNotification;

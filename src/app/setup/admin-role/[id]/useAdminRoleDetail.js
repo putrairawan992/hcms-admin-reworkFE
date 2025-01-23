@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { httpClient } from '@/app/utils/network';
 import { useToast } from '@chakra-ui/react';
 import { useRouter, useParams } from 'next/navigation';
-import { mapPlatformAccess } from '@/app/utils/helpers';
+import { mapPermissionsAccess } from '@/app/utils/helpers';
+import { formFieldsAdminOptions } from '@/shared/general';
 
 const useAdminRoleDetail = () => {
   const router = useRouter();
@@ -15,7 +16,7 @@ const useAdminRoleDetail = () => {
   const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
-    admin_id: '',
+    id: '',
     username: '',
     email: '',
     divisi: '',
@@ -23,7 +24,7 @@ const useAdminRoleDetail = () => {
     new_password: '',
     phone_number: '',
     address: '',
-    platformAccess: []
+    permissions: []
   });
 
   const onChangeText = (slug, value) => {
@@ -41,7 +42,7 @@ const useAdminRoleDetail = () => {
       const responseData = response?.data?.data || {};
 
       setForm({
-        admin_id: responseData?.id || '',
+        id: responseData?.id || '',
         username: responseData?.username || '',
         email: responseData?.email || '',
         divisi: responseData?.divisi || '',
@@ -49,7 +50,7 @@ const useAdminRoleDetail = () => {
         new_password: responseData?.password || '',
         phone_number: responseData?.phone_number || '',
         address: responseData?.address || '',
-        platformAccess: mapPlatformAccess(responseData),
+        permissions: mapPermissionsAccess(formFieldsAdminOptions, responseData)
       });
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -77,7 +78,7 @@ const useAdminRoleDetail = () => {
     } catch (error) {
       toast({
         title: 'Error',
-        description: 'Something went wrong!',
+        description: error?.response?.data?.errors || 'Something went wrong!',
         duration: 3000,
         status: 'error',
         position: 'top',
@@ -88,11 +89,6 @@ const useAdminRoleDetail = () => {
   };
 
   const updateCheckbox = (item, slug, label, value, slugParent) => {
-    console.log('slug', slug);
-    console.log('label', label);
-    console.log('value', value);
-    console.log('slugParent', slugParent);
-
     if (item.slug === slugParent || item.slug === slug) {
       const updatedCheckbox = item.checkbox?.map((checkboxItem) =>
         checkboxItem.label.toLowerCase() === label.toLowerCase()
@@ -116,7 +112,7 @@ const useAdminRoleDetail = () => {
   const onChangeCheckbox = (slug, label, value, slugParent) => {
     setForm((prevData) => ({
       ...prevData,
-      platformAccess: prevData.platformAccess.map((item) =>
+      permissions: prevData.permissions.map((item) =>
         updateCheckbox(item, slug, label, value, slugParent)
       ),
     }));

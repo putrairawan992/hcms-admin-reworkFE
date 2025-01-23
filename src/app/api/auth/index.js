@@ -10,7 +10,7 @@ export const useLogin = () => {
         method: 'POST',
         url: baseURL + '/api/admin/login',
         data: {
-          username,
+          email: username,
           password,
         },
       });
