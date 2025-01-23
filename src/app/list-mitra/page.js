@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import {
   Box,
   Button,
@@ -14,14 +13,10 @@ import styles from '../styles/inbox.module.css';
 import { useState } from 'react';
 import 'moment/locale/id';
 import { isEmpty } from 'lodash';
-import {
-  TalentListCard,
-  MitraListCard,
-} from '../components/molecules';
+import { TalentListCard, MitraListCard } from '../components/molecules';
 import useListMitra from './useListMitra';
 import { Gap } from '../components/atoms';
 import { AddIcon, Search2Icon } from '@chakra-ui/icons';
-import { ShareIcon } from '../components/icons';
 import Link from 'next/link';
 
 const ListMitra = () => {
@@ -32,7 +27,8 @@ const ListMitra = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-
+  const dataMitra = JSON.parse(localStorage.getItem('mitra'));
+  console.log({ dataMitra });
   const {
     data,
     filters,
@@ -90,7 +86,7 @@ const ListMitra = () => {
       <Box style={{ borderWidth: 1, borderColor: '#EAEAEA' }} />
       <Gap height={6} />
       {/* {loading ? <ListEmpty /> : <RenderContent />} */}
-      <MitraListCard data={[]} onPress={onHandlePress} />
+      <MitraListCard data={dataMitra} onPress={onHandlePress} />
     </Box>
   );
 };

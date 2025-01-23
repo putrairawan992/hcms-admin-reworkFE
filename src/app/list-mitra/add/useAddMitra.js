@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@chakra-ui/react';
-import { httpClient } from '@/app/utils/network';
 
 const useAddMitra = () => {
   const router = useRouter();
@@ -9,12 +8,14 @@ const useAddMitra = () => {
 
   const [imageProfile, setImageProfile] = useState('');
   const [loading, setLoading] = useState(false);
-  const [profileImagePreview, setProfileImagePreview] = useState('/images/company-dummy.jpeg');
+  const [profileImagePreview, setProfileImagePreview] = useState(
+    '/images/company-dummy.jpeg'
+  );
   const profileFileInputRef = useRef(null);
   const [form, setForm] = useState({
     name: '',
     username: '',
-    email: ''
+    email: '',
   });
 
   const onChangeText = (slug, value) => {
@@ -28,39 +29,44 @@ const useAddMitra = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setImageProfile("photo", file);
+      setImageProfile('photo', file);
       setProfileImagePreview(URL.createObjectURL(file));
     }
   };
-
+  const dataMitra = localStorage.getItem('mitra');
+  const existingData = dataMitra ? JSON.parse(dataMitra) : [];
   const submitData = async () => {
+    existingData.push(form);
+    localStorage.setItem('mitra', JSON.stringify(existingData));
+    toast({
+      title: 'success',
+      description: 'Admin has been updated',
+      duration: 3000,
+      status: 'success',
+      position: 'top',
+      isClosable: true,
+    });
+    router.push('/list-mitra');
     try {
-      await httpClient({
-        method: 'POST',
-        url: '/admin/mitra/account',
-        data: form,
-      });
+      // const result = await httpClient({
+      //   method: 'POST',
+      //   url: 'registermitra',
+      //   data: form,
+      // });
       setLoading(false);
-
-      toast({
-        title: 'success',
-        description: 'Admin has been updated',
-        duration: 3000,
-        status: 'success',
-        position: 'top',
-        isClosable: true,
-      });
-      router.push('/list-mitra');
+      console.log(result);
     } catch (error) {
       console.log(error);
-      toast({
-        title: 'Error',
-        description: sponse?.data?.errors || 'Something went wrong!',
-        duration: 3000,
-        status: 'error',
-        position: 'top',
-        isClosable: true,
-      });
+
+      // toast({
+      //   title: 'Error',
+      //   description: error?.response?.data?.errors || 'Something went wrong!',
+      //   duration: 3000,
+      //   status: 'error',
+      //   position: 'top',
+      //   isClosable: true,
+      // });
+
       setLoading(false);
     }
   };
@@ -78,7 +84,7 @@ const useAddMitra = () => {
     onChangeText,
     onClickProfile,
     handleFileChange,
-    onHandleSubmit
+    onHandleSubmit,
   };
 };
 

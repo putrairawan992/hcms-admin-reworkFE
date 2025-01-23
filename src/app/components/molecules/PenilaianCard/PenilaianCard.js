@@ -7,25 +7,37 @@ import {
   Button,
   Flex,
   Image,
-  Select,
   Text,
   VStack,
+  Spinner,
 } from '@chakra-ui/react';
-import React from 'react';
 import styles from './PenilaianCard.styles';
-import {
-  ChatIcon,
-  CloseIcon,
-  DownloadIcon,
-  EyeIcon,
-  FileBadgeIcon,
-  MessageIcon,
-} from '../../icons';
 import moment from 'moment';
 import { Gap } from '../../atoms';
-
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useToast } from '@chakra-ui/react';
 const PenilaianCard = ({ data = [] }) => {
-  const { product_digital_name, status, created_at, employee_list } = data;
+  const toast = useToast();
+  const router = useRouter();
+  const nilai = localStorage.getItem('nilai');
+  const { talent_name, status, created_at, employee_list } = data;
+  const [isLoading, setIsLoading] = useState(false);
+  const handleClick = () => {
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+      toast({
+        title: 'success',
+        description: 'Nilai berhasil disimpan',
+        duration: 3000,
+        status: 'success',
+        position: 'top',
+        isClosable: true,
+      });
+    }, 2000);
+  };
   return (
     <Accordion allowToggle>
       <AccordionItem border="none" key={1}>
@@ -39,40 +51,23 @@ const PenilaianCard = ({ data = [] }) => {
               />
             </Box>
             <Gap width={6} />
-            <Text style={styles.title}>{product_digital_name}</Text>
+            <Text style={styles.title}>{talent_name}</Text>
           </Flex>
-          <Text style={styles.subtitle}>
-            {moment(created_at).locale('en').format('MMMM YYYY')}
-          </Text>
-          <EyeIcon />
+
           <Box>
             <Flex flex={1}>
-              <Box
-                borderWidth={1}
-                borderColor="#AE445A"
-                paddingX={6}
-                paddingY={2}
-                borderRadius={10}
-              >
-                <Text style={styles.subtitle}>{status}</Text>
-              </Box>
+              <Text style={styles.subtitle}>Review Kandidat</Text>
             </Flex>
           </Box>
-          <Flex alignItems="center" justifyContent="center">
-            <DownloadIcon />
-            <Gap width={4} />
-            <ChatIcon style={{ width: 20, height: 20 }} />
-          </Flex>
-          <Flex align={'center'}>
-            <Button style={styles.buttonSend}>Send All</Button>
-          </Flex>
+          <Text style={styles.subtitle}>
+            {moment(created_at).locale('en').format('DD MMMM YYYY')}
+          </Text>
         </AccordionButton>
         <AccordionPanel
           borderWidth={2}
           borderRadius={10}
           borderColor="#AE445A"
-          backgroundColor="#FFFFFF"
-        >
+          backgroundColor="#FFFFFF">
           <Box>
             <Flex
               flex={1}
@@ -80,8 +75,7 @@ const PenilaianCard = ({ data = [] }) => {
               borderColor="#AE445A"
               alignItems="center"
               justifyContent="center"
-              paddingY={4}
-            >
+              paddingY={4}>
               <VStack flex={1}>
                 <Text fontWeight="bold" color="#AE445A">
                   Module Name
@@ -107,60 +101,33 @@ const PenilaianCard = ({ data = [] }) => {
             {employee_list?.map((item, index) => (
               <Flex flex={1} marginBottom={6} key={index}>
                 <Flex flex={1} alignItems="center" justifyContent="center">
-                  <Box style={styles.imgWrapper}>
-                    <Image
-                      style={styles.img}
-                      src="/images/company-dummy.jpeg"
-                      alt="image"
-                    />
-                  </Box>
                   <Gap width={3} />
                   <Box flex={1} alignItems="center" justifyContent="center">
-                    <Text
-                      fontSize={12}
-                      fontWeight={700}
-                      textDecoration="underline"
-                    >
-                      {item?.username}
-                    </Text>
-                    <Text fontSize={12} fontWeight={400}>
-                      {item?.employee_type}
+                    <Text fontSize={16} fontWeight={600}>
+                      {item?.module_name}
                     </Text>
                   </Box>
                 </Flex>
-                <Flex alignItems="center" justifyContent="center" flex={1}>
-                  <Box style={{ width: '200px' }}>
-                    <Select height={10} style={styles.select}>
-                      <option value="all" selected>
-                        Semua
-                      </option>
-                      <option value="offering_letter_normal">
-                        Offering Letter Normal
-                      </option>
-                      <option value="pkwt">PKWT</option>
-                      <option value="offering_letter_khusus">
-                        Offering Letter Khusus
-                      </option>
-                      <option value="amandemen_pkwt">Amandemen PKWT</option>
-                      <option value="contract_freelance">
-                        Kontrak Freelance
-                      </option>
-                    </Select>
-                  </Box>
+                <Flex flex={1} alignItems="center" justifyContent="center">
+                  <Box>{item?.duration}</Box>
                 </Flex>
+
                 <Flex
                   flex={1}
                   alignItems="center"
                   justifyContent="space-around"
-                  marginLeft={4}
-                >
-                  <FileBadgeIcon />
-                  <MessageIcon />
-                  <CloseIcon />
+                  marginLeft={4}>
+                  <Button
+                    style={styles.buttonSend}
+                    onClick={() =>
+                      router.push('/penilaian-pre-test/wawancara-mandiri')
+                    }>
+                    Detail
+                  </Button>
                 </Flex>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Text fontWeight="bold" color="#AE445A">
-                    None
+                    {nilai}
                   </Text>
                 </Flex>
               </Flex>
@@ -168,17 +135,12 @@ const PenilaianCard = ({ data = [] }) => {
             <Gap height={4} />
             <Box borderBottomWidth={3} borderColor="#AE445A" />
             <Gap height={4} />
-            <Flex justify="space-around">
-              <Text fontWeight="bold" color="#AE445A">
-                Average Score
-              </Text>
-              <Text fontWeight="bold" color="#AE445A">
-                0
-              </Text>
-            </Flex>
+
             <Gap height={4} />
             <Flex justify="flex-end">
-              <Button style={styles.buttonSend}>Save</Button>
+              <Button style={styles.buttonSend} onClick={handleClick}>
+                {isLoading ? <Spinner size="sm" /> : 'Save'}
+              </Button>
             </Flex>
           </Box>
         </AccordionPanel>

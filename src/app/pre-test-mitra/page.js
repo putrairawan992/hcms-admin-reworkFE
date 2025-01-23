@@ -3,14 +3,8 @@ import {
   Box,
   Button,
   Flex,
-  FormControl,
-  FormLabel,
-  Image,
   Input,
   InputGroup,
-  InputRightElement,
-  Select,
-  Switch,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -18,24 +12,28 @@ import styles from '../styles/inbox.module.css';
 import { useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/id';
-import { isEmpty } from 'lodash';
 
 import { PretestCard, SendDocumentCard } from '../components/molecules';
 import usePretestMitra from './usePretestMitra';
-import { moveScreen } from '../utils/helpers';
 import { Gap, SelectField } from '../components/atoms';
 import {
   AlphabetIcon,
-  BrainIcon,
   CodeIcon,
-  EyeIcon,
   NumberIcon,
   PhotoIcon,
   VideoIcon,
 } from '../components/icons';
-import { ChevronRightIcon, Search2Icon } from '@chakra-ui/icons';
+import { ChevronRightIcon } from '@chakra-ui/icons';
+import { moveScreen } from '../utils/helpers';
 
 moment.locale('id');
+const moduleOptions = [
+  { label: 'Modul Live Recording', value: 'Modul Live Recording' },
+  { label: 'Modul Gambar', value: 'Modul Gambar' },
+  { label: 'Modul Essay', value: 'Modul Essay' },
+  { label: 'Modul Pilihan Ganda', value: 'Modul Pilihan Ganda' },
+  { label: 'Modul Upload Document', value: 'Modul Upload Document' },
+];
 
 const PretestMitra = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -44,7 +42,10 @@ const PretestMitra = () => {
   const [currentData, setCurrentData] = useState();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const [module, setModule] = useState('');
+  const isHaveSavePretest = localStorage.getItem('save-pretest') === 'true';
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  console.log(typeof isHaveSavePretest);
 
   const { data } = usePretestMitra();
 
@@ -53,7 +54,7 @@ const PretestMitra = () => {
       return <SendDocumentCard data={item} />;
     });
   };
-
+  console.log(module);
   return (
     <Box className={styles['inbox-container']}>
       <Flex align={'center'} justify={'space-between'}>
@@ -63,8 +64,7 @@ const PretestMitra = () => {
             fontSize={12}
             fontWeight={300}
             color="#404041"
-            fontStyle="italic"
-          >
+            fontStyle="italic">
             Silahkan atur soal yang akan dijadikan Pre-Test bagi calon Karyawan
           </Text>
         </Box>
@@ -83,9 +83,23 @@ const PretestMitra = () => {
         </Box>
         <Gap width={2} />
         <Box>
-          <SelectField placeholder="Buat Module Baru" />
+          <SelectField
+            placeholder="Buat Module Baru"
+            options={moduleOptions}
+            value={module}
+            slug="module"
+            onChange={(_, module) => {
+              console.log(module);
+              setModule(module);
+            }}
+          />
         </Box>
-        <Button className={styles['inbox-btn']}>Create</Button>
+        <Button
+          className={styles['inbox-btn']}
+          disabled={!module}
+          onClick={() => moveScreen(`/pre-test-mitra/add?module=${module}`)}>
+          Create
+        </Button>
       </Flex>
       <Gap height={8} />
       <Box flex={1}>
@@ -95,11 +109,13 @@ const PretestMitra = () => {
           </Text>
           <Gap height={4} />
           <Flex>
-            <PretestCard
-              title="Interview Dasar"
-              placeholder="Pilih Interview Dasar"
-              icon={<VideoIcon color="#FFFFFF" />}
-            />
+            {isHaveSavePretest && (
+              <PretestCard
+                title="Interview Dasar"
+                placeholder="Pilih Interview Dasar"
+                icon={<VideoIcon color="#FFFFFF" />}
+              />
+            )}
             <Gap width={4} />
             <PretestCard
               title="Interview User"
@@ -115,34 +131,22 @@ const PretestMitra = () => {
           </Text>
           <Gap height={4} />
           <Flex>
-            <PretestCard
-              title="Tes Potensi Akademik"
-              placeholder="Pilih Tes Potensi Akademik"
-              icon={<AlphabetIcon color="#FFFFFF" />}
-              bgGradient="linear-gradient(90deg, #F39F5A 0%, #AE445A 100%)"
-            />
-            <Gap width={4} />
-            <PretestCard
-              title="Psikotest: DISC"
-              placeholder="Pilih Psikotest: Disc"
-              icon={<BrainIcon color="#FFFFFF" />}
-              bgGradient="linear-gradient(90deg, #F39F5A 0%, #AE445A 100%)"
-            />
-            <Gap width={4} />
-            <PretestCard
-              title="Tes IQ 2023"
-              placeholder="Pilih Tes IQ 2023"
-              icon={<BrainIcon color="#FFFFFF" />}
-              bgGradient="linear-gradient(90deg, #3B78C2 0%, #AE445A 100%)"
-            />
+            {
+              <PretestCard
+                title="Tes Potensi Akademikkkk"
+                placeholder="Pilih Tes Potensi Akademik"
+                icon={<AlphabetIcon color="#FFFFFF" />}
+                bgGradient="linear-gradient(90deg, #F39F5A 0%, #AE445A 100%)"
+              />
+            }
+
             <Gap width={8} />
             <Flex
               alignItems="center"
               display="flex"
               justifyContent="center"
               textAlign="center"
-              flexDirection="column"
-            >
+              flexDirection="column">
               <Box
                 bgGradient={'linear-gradient(90deg, #F39F5A 0%, #AE445A 100%)'}
                 borderRadius={100}
@@ -150,8 +154,7 @@ const PretestMitra = () => {
                 height={8}
                 alignItems="center"
                 justifyContent="center"
-                display="flex"
-              >
+                display="flex">
                 <ChevronRightIcon color="#FFFFFF" fontSize={28} />
               </Box>
             </Flex>
@@ -190,8 +193,7 @@ const PretestMitra = () => {
               display="flex"
               justifyContent="center"
               textAlign="center"
-              flexDirection="column"
-            >
+              flexDirection="column">
               <Box
                 bgGradient={'linear-gradient(90deg, #F39F5A 0%, #AE445A 100%)'}
                 borderRadius={100}
@@ -199,8 +201,7 @@ const PretestMitra = () => {
                 height={8}
                 alignItems="center"
                 justifyContent="center"
-                display="flex"
-              >
+                display="flex">
                 <ChevronRightIcon color="#FFFFFF" fontSize={28} />
               </Box>
             </Flex>

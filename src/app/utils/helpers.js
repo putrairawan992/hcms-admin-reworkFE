@@ -1,10 +1,9 @@
 import moment from 'moment';
-
 export const moveScreen = (screen) => {
   return (window.location.href = screen);
 };
 
-export const noop = () => { };
+export const noop = () => {};
 
 export const formatDate = (date, format = 'MMM YYYY') => {
   return moment(date).utcOffset('+07:00').format(format);
