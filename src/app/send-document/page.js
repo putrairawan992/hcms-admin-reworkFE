@@ -11,11 +11,13 @@ import useSendDocument from './useSendDocument';
 import { Gap, SelectField } from '../components/atoms';
 import { monthOptions, yearOptions } from '@/shared/general';
 import { SettingsIcon } from '@chakra-ui/icons';
+import { FileModal } from './components/modal';
+import ModalSendDocument from './components/modal';
 
 moment.locale('id');
 
 const SendDocument = () => {
-  const { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, toggleModalOpen, onPressIcon } = useSendDocument();
+  const { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, toggleModalOpen, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType } = useSendDocument();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
@@ -138,6 +140,8 @@ const SendDocument = () => {
           </ModalBody>
         </ModalContent>
       </Modal>
+
+      <ModalSendDocument type={modalType} typeDocument={modalDocType} isOpen={modalOpenDoc} onClose={toggleModalOpenDoc} />
     </Box>
   );
 };

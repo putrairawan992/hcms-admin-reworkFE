@@ -11,7 +11,7 @@ const useBlastNotification = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [documentDetails, setDocumentDetails] = useState({});
-  const [productDigital, setProductDigitalData] = useState([]);
+  const [productDigital, setProductDigital] = useState([]);
   const [settingDocument, setSettingDocument] = useState([]);
   const [documentTypeValue, setDocumentTypeValue] = useState('');
   const [dummy, setDummy] = useState([
@@ -66,9 +66,15 @@ const useBlastNotification = () => {
   ]);
   const [filters, setFilters] = useState({
     years: '',
-    month: '',
-    product_digital_name: ''
+    month: ''
   });
+
+  const [form, setForm] = useState({
+    title: '',
+    message: ''
+  });
+
+  const [productDigitalData, setProductDigitalData] = useState([]);
 
   const fetchData = async (params) => {
     setLoading(true);
@@ -102,28 +108,7 @@ const useBlastNotification = () => {
           label: name,
         })
       );
-      setProductDigitalData(transformedData);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
-  };
-
-  const fetchDataDocument = async () => {
-    try {
-      const response = await httpClient({
-        method: 'GET',
-        url: '/admin/document/setting_document/list',
-      });
-
-      const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(
-        ({ id, type }) => ({
-          value: id,
-          label: type,
-        })
-      );
-      setSettingDocument(transformedData);
-
+      setProductDigital(transformedData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
@@ -161,12 +146,11 @@ const useBlastNotification = () => {
   };
 
   const onChangeSelect = (slug, value) => {
-    setFilters((prevFilters) => ({ ...prevFilters, [slug]: value }));
+    setProductDigitalData(value);
   };
 
-  const onChangeSelectDocumentType = (slug, value) => {
-    const docTypes = settingDocument.find(item => item.value === value);
-    setDocumentTypeValue(docTypes);
+  const onChangeText = (slug, value) => {
+    setForm((prevData) => ({ ...prevData, [slug]: value }));
   };
 
   const toggleModal = () => {
@@ -204,10 +188,9 @@ const useBlastNotification = () => {
 
   useEffect(() => {
     fetchDataPD();
-    fetchDataDocument();
   }, []);
 
-  return { data, dummy, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon, onPressDetails };
+  return { form, data, dummy, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onPressIcon, onPressDetails, productDigitalData, onChangeText };
 };
 
 export default useBlastNotification;

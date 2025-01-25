@@ -12,6 +12,9 @@ const useSendDocument = () => {
   const [productDigital, setProductDigitalData] = useState([]);
   const [settingDocument, setSettingDocument] = useState([]);
   const [documentTypeValue, setDocumentTypeValue] = useState('');
+  const [modalOpenDoc, setModalOpenDoc] = useState(false);
+  const [modalDocType, setModalDocType] = useState('');
+  const [modalType, setModalType] = useState('');
   const [filters, setFilters] = useState({
     years: '',
     month: '',
@@ -94,9 +97,11 @@ const useSendDocument = () => {
         isClosable: true,
       });
       setLoadingSubmit(prevData => (!prevData));
+      toggleModal();
       fetchData(filters);
     } catch (error) {
       setLoadingSubmit(prevData => (!prevData));
+      toggleModal();
       toast({
         title: 'Error',
         description: error?.response?.data?.errors || `Something went wrong!`,
@@ -138,8 +143,14 @@ const useSendDocument = () => {
     submitSettingDocument(payload);
   };
 
-  const onPressIcon = (type) => {
-    console.log(type);
+  const onPressIcon = (data, type) => {
+    setModalType(type);
+    setModalDocType(data?.type_setting_document);
+    toggleModalOpenDoc();
+  };
+
+  const toggleModalOpenDoc = () => {
+    setModalOpenDoc(prevData => (!prevData));
   };
 
   useEffect(() => {
@@ -151,7 +162,7 @@ const useSendDocument = () => {
     fetchDataDocument();
   }, []);
 
-  return { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon };
+  return { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType };
 };
 
 export default useSendDocument;

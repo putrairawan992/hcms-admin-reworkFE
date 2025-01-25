@@ -16,11 +16,7 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 moment.locale('id');
 
 const BlastNotification = () => {
-  const { data, dummy, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, onPressDetails } = useBlastNotification();
-
-  const onChangeText = (slug, value) => {
-    setForm((prevData) => ({ ...prevData, [slug]: value }));
-  };
+  const { form, data, dummy, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, onPressDetails, productDigitalData, onChangeText } = useBlastNotification();
 
   const RenderContent = () => {
     if (!isEmpty(dummy)) {
@@ -41,12 +37,12 @@ const BlastNotification = () => {
       <Flex align={'center'} justify={'space-between'}>
         <Text className={styles['inbox-title']}>Notification</Text>
         <Flex>
-          <SelectField options={productDigital} placeholder='Pilih product digital' value={filters.product_digital_name} slug='product_digital_name' onChange={onChangeSelect} />
+          <SelectField options={productDigital} placeholder='Pilih product digital' value={productDigitalData} slug='product_digital_name' onChange={onChangeSelect} />
         </Flex>
       </Flex>
       <Gap height={6} />
       <Box>
-        <FormFields label='Judul' placeholder='Masukan judul pesan brodcast' theme='up-down' type='text' />
+        <FormFields label='Judul' placeholder='Masukan judul pesan brodcast' theme='up-down' type='text' onChangeText={onChangeText} slug='title' value={form.title} />
         <Gap height={4} />
         <Box
           flex={1}
@@ -61,12 +57,12 @@ const BlastNotification = () => {
             <ReactQuill
               theme="snow"
               style={{ height: '150px', flex: 1, marginBottom: 45 }}
-              onChange={(value) => onChangeText(data.slug, value)}
+              onChange={(value) => onChangeText('message', value)}
             />
           </Flex>
         </Box>
         <Button className={styles['inbox-btn']} paddingX={8}>
-          Detail
+          Send
         </Button>
       </Box>
 

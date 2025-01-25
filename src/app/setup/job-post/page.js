@@ -19,17 +19,18 @@ import columns from './columns';
 import { jobPostOptions } from '@/shared/general';
 import { Gap } from '@/app/components/atoms';
 import useJobPost from './useJobPost';
-import ConfirmationModalWithNoSSR from './components/modal';
+import EditModal from './components/modal';
+import ConfirmationModalWithNoSSR from './components/confirmationModal';
 
 const SetupJobPost = () => {
-  const { modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onOpen, onChangeOptions, onChangeStatus, onChangeText, toggleModal, onPressEdit, onChangeTextModal, onSubmitEdit } = useJobPost();
+  const { modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onOpen, onChangeOptions, onChangeStatus, onChangeText, toggleModal, onPressEdit, onChangeTextModal, onSubmitEdit, onSubmitDelete, modalOpenConfirm, toggleModalConfirm, onPressDelete } = useJobPost();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
       return (
         <DataTables
           data={data}
-          columns={columns(1, onChangeStatus, onPressEdit)}
+          columns={columns(1, onChangeStatus, onPressEdit, onPressDelete)}
           totalData={data?.length}
           keyword={keyword}
           page={1}
@@ -60,12 +61,19 @@ const SetupJobPost = () => {
         }
         option={selectedOption}
       />
-      <ConfirmationModalWithNoSSR
+
+      <EditModal
         value={modalValue?.name}
         isOpen={modalOpen}
         onClose={toggleModal}
         onChangeText={onChangeTextModal}
         onSubmit={onSubmitEdit}
+      />
+      <ConfirmationModalWithNoSSR
+        modalText="Apakah anda yakin ingin menghapus data ini?"
+        isOpen={modalOpenConfirm}
+        onClose={toggleModalConfirm}
+        onSubmit={onSubmitDelete}
       />
       <Box className={styles['job-post-container']}>
         <Text className={styles['job-post-title']}>Setup - Job Post</Text>

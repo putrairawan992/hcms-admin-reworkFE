@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 .modal-info {
@@ -16,8 +17,6 @@
   line-height: 21px;
   text-align: center;
   color: #5d5c5d;
-  margin: 1.5rem 0;
-  width: 257px;
 }
 
 .modal-reject {

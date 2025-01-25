@@ -114,7 +114,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                 <Text
                   className={styles['approval-remuneration-detail-header-text']}
                 >
-                  2023
+                  {moment(data?.createdAt).format('YYYY')}
                 </Text>
               </Box>
             </Box>
@@ -130,7 +130,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                 <Text
                   className={styles['approval-remuneration-detail-header-text']}
                 >
-                  Agustus
+                  {moment(data?.createdAt).format('MMMM')}
                 </Text>
               </Box>
             </Box>

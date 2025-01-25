@@ -9,6 +9,7 @@ const useJobPost = () => {
   const [keyword, setKeyword] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpenConfirm, setModalOpenConfirm] = useState(false);
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,6 +21,10 @@ const useJobPost = () => {
 
   const toggleModal = () => {
     setModalOpen(prevData => !prevData);
+  };
+
+  const toggleModalConfirm = () => {
+    setModalOpenConfirm(prevData => !prevData);
   };
 
 
@@ -46,10 +51,10 @@ const useJobPost = () => {
     setKeyword(value);
   };
 
-  const submitData = async (option, id, data) => {
+  const submitData = async (option, id, data, method = 'PUT') => {
     try {
       await httpClient({
-        method: 'PUT',
+        method,
         url: `/admin/job_post/${option}/${id}`,
         data
       });
@@ -95,6 +100,11 @@ const useJobPost = () => {
     toggleModal();
   };
 
+  const onPressDelete = (id, name) => {
+    setModalValue(prevData => ({ ...prevData, id, name }));
+    toggleModalConfirm();
+  };
+
   const onChangeTextModal = (value) => {
     setModalValue(prevData => ({ ...prevData, name: value }));
   };
@@ -107,12 +117,18 @@ const useJobPost = () => {
     fetchData(selectedOption);
   };
 
+  const onSubmitDelete = async () => {
+    await submitData(selectedOption, modalValue?.id, {}, 'DELETE');
+    toggleModalConfirm();
+    fetchData(selectedOption);
+  };
+
   useEffect(() => {
     fetchData(selectedOption);
   }, [selectedOption]);
 
   return {
-    modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onChangeOptions, onChangeStatus, onChangeText, onOpen, toggleModal, onChangeTextModal, onPressEdit, onSubmitEdit
+    modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onChangeOptions, onChangeStatus, onChangeText, onOpen, toggleModal, onChangeTextModal, onPressEdit, onSubmitEdit, onSubmitDelete, modalOpenConfirm, toggleModalConfirm, onPressDelete
   };
 };
 

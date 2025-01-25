@@ -53,7 +53,7 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop })
   };
 
   const onHandleClickIcon = (type) => {
-    onPressIcon(type);
+    onPressIcon(data, type);
   };
 
   return (
