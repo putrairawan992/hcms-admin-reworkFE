@@ -10,7 +10,7 @@ import FormFieldsCheckbox from '@/app/components/molecules/FormFieldsCheckbox';
 import { formFieldsAdminOptions } from '@/shared/general';
 
 const AdminRoleDetail = () => {
-  const { form, loading, onChangeText, onHandleSubmit, onChangeCheckbox } =
+  const { data, form, loading, onChangeText, onHandleSubmit, onChangeCheckbox } =
     useAdminRoleDetail();
 
   return (

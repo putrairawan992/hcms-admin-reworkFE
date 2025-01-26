@@ -16,11 +16,11 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 moment.locale('id');
 
 const BlastNotification = () => {
-  const { form, data, dummy, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, onPressDetails, productDigitalData, onChangeText } = useBlastNotification();
+  const { form, data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, onPressDetails, productDigitalData, onChangeText, onSubmit, isContentValid, onChangeTextFilter } = useBlastNotification();
 
   const RenderContent = () => {
-    if (!isEmpty(dummy)) {
-      return dummy.map((item) => {
+    if (!isEmpty(data)) {
+      return data.map((item) => {
         return <BlastNotificationCard data={item} onPress={onPressDetails} />;
       });
     } else {
@@ -57,12 +57,12 @@ const BlastNotification = () => {
             <ReactQuill
               theme="snow"
               style={{ height: '150px', flex: 1, marginBottom: 45 }}
-              onChange={(value) => onChangeText('message', value)}
+              onChange={(value) => onChangeText('content', value)}
             />
           </Flex>
         </Box>
-        <Button className={styles['inbox-btn']} paddingX={8}>
-          Send
+        <Button className={styles['inbox-btn']} paddingX={8} onClick={onSubmit} isDisabled={!productDigitalData || loadingSubmit || !form.title || !isContentValid(form.content)}>
+          {loadingSubmit ? <Spinner size="sm" /> : "Send"}
         </Button>
       </Box>
 
@@ -85,6 +85,8 @@ const BlastNotification = () => {
         <Box>
           <Input
             type="date"
+            onChange={(e) => onChangeTextFilter('date', e.target.value)}
+            value={filters.date}
             className={styles['modal-input']}
           />
         </Box>

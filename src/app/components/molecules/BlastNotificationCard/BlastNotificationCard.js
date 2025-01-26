@@ -6,7 +6,7 @@ import { Gap } from '../../atoms';
 import { DeleteIcon } from '@chakra-ui/icons';
 
 const BlastNotificationCard = ({ data = [], onPress = noop }) => {
-  const { id, title, type_user, date, } = data;
+  const { id, title, type_user, created_at, } = data;
 
   const onHandlePress = () => {
     onPress(id);
@@ -22,7 +22,7 @@ const BlastNotificationCard = ({ data = [], onPress = noop }) => {
           <Text fontSize={12} fontWeight={400} color="#404041">{type_user || '-'}</Text>
         </Box>
         <Box flex={1}>
-          <Text fontSize={12} fontWeight={400} color="#404041">{formatDate(date, 'DD MMM YYYY')}</Text>
+          <Text fontSize={12} fontWeight={400} color="#404041">{formatDate(created_at, 'DD MMM YYYY')}</Text>
         </Box>
         <Box>
           <Gap width={12} />
