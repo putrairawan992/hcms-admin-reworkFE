@@ -10,6 +10,7 @@ const useJobPost = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOpenConfirm, setModalOpenConfirm] = useState(false);
+  const [loadingModal, setLoadingModal] = useState(false);
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -59,6 +60,7 @@ const useJobPost = () => {
         data
       });
 
+      setLoadingModal(false);
       toast({
         title: 'success',
         description: 'Job post has been updated.',
@@ -68,6 +70,7 @@ const useJobPost = () => {
         isClosable: true,
       });
     } catch (error) {
+      setLoadingModal(false);
       toast({
         title: 'Error',
         description: error?.response?.message || 'Something went wrong',
@@ -110,6 +113,7 @@ const useJobPost = () => {
   };
 
   const onSubmitEdit = async () => {
+    setLoadingModal(true);
     const prefixData = jobPostOptions.find((item) => item.value === selectedOption);
     const data = { [prefixData.prefix]: modalValue?.name };
     await submitData(selectedOption, modalValue?.id, data);
@@ -128,7 +132,7 @@ const useJobPost = () => {
   }, [selectedOption]);
 
   return {
-    modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onChangeOptions, onChangeStatus, onChangeText, onOpen, toggleModal, onChangeTextModal, onPressEdit, onSubmitEdit, onSubmitDelete, modalOpenConfirm, toggleModalConfirm, onPressDelete
+    modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onChangeOptions, onChangeStatus, onChangeText, onOpen, toggleModal, onChangeTextModal, onPressEdit, onSubmitEdit, onSubmitDelete, modalOpenConfirm, toggleModalConfirm, onPressDelete, loadingModal
   };
 };
 

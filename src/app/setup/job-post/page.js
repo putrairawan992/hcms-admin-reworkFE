@@ -23,7 +23,7 @@ import EditModal from './components/modal';
 import ConfirmationModalWithNoSSR from './components/confirmationModal';
 
 const SetupJobPost = () => {
-  const { modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onOpen, onChangeOptions, onChangeStatus, onChangeText, toggleModal, onPressEdit, onChangeTextModal, onSubmitEdit, onSubmitDelete, modalOpenConfirm, toggleModalConfirm, onPressDelete } = useJobPost();
+  const { modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onOpen, onChangeOptions, onChangeStatus, onChangeText, toggleModal, onPressEdit, onChangeTextModal, onSubmitEdit, onSubmitDelete, modalOpenConfirm, toggleModalConfirm, onPressDelete, loadingModal } = useJobPost();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
@@ -68,6 +68,7 @@ const SetupJobPost = () => {
         onClose={toggleModal}
         onChangeText={onChangeTextModal}
         onSubmit={onSubmitEdit}
+        loading={loadingModal}
       />
       <ConfirmationModalWithNoSSR
         modalText="Apakah anda yakin ingin menghapus data ini?"

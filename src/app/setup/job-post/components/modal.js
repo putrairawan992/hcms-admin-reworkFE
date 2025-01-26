@@ -10,11 +10,12 @@ import {
   Text,
   Box,
   Input,
+  Spinner,
 } from '@chakra-ui/react';
 import styles from '../../../styles/setupJobPost.module.css';
 import { noop } from '@/app/utils/helpers';
 
-const ConfirmationModal = ({ value = '', isOpen = false, onClose = false, size = 'xl', onSubmit = noop, onChangeText = noop }) => {
+const ConfirmationModal = ({ value = '', isOpen = false, onClose = false, size = 'xl', onSubmit = noop, onChangeText = noop, loading = false }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={size} isCentered>
@@ -42,7 +43,7 @@ const ConfirmationModal = ({ value = '', isOpen = false, onClose = false, size =
               onClick={onSubmit}
               mr={'0'}
               className={styles['job-post-search-btn']}>
-              Save
+              {loading ? <Spinner /> : 'Save'}
             </Button>
           </Flex>
         </ModalBody>

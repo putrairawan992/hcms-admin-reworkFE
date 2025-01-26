@@ -348,9 +348,9 @@ const ApprovalRemunerationDetails = ({ params }) => {
                       }
                       marginBottom={'0px'}
                     >
-                      Juni 2023
+                      {moment(data?.createdAt).format('MMMM YYYY')}
                     </Text>
-                    <Text fontSize={'12px'}>11 Juni 2023</Text>
+                    <Text fontSize={'12px'}>  {moment(data?.createdAt).format('DD MMM YYYY')}</Text>
                     <Button
                       onClick={onHandleDownload}
                       className={styles['approval-remuneration-content-btn']}>
