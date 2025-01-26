@@ -6,6 +6,14 @@
   text-align: center;
 }
 
+.modal-wrapper-2 {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* text-align: center; */
+}
+
 .modal-info {
   width: 60px;
   height: 60px;

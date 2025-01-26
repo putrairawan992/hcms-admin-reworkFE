@@ -25,7 +25,7 @@ const FormFields = ({
           borderColor="#AE445A"
           borderRadius={10}
           padding="8px 16px"
-          type="text"
+          type='text'
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChangeText(slug, e.target.value)}
@@ -37,13 +37,29 @@ const FormFields = ({
           theme="snow"
           key={slug}
           id={slug}
-          style={{ height: '150px', flex: 1, marginBottom: 45 }}
+          style={{ height: '150px', flex: 1, marginBottom: 60 }}
           value={value}
           onChange={(value) => onChangeText(slug, value)}
         />
       );
+    } else if (type === 'date') {
+      return (
+        <Input
+          key={slug}
+          id={slug}
+          flex={1}
+          borderWidth={1}
+          borderColor="#AE445A"
+          borderRadius={10}
+          padding="8px 16px"
+          type='date'
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => onChangeText(slug, e.target.value)}
+        />
+      );
     }
-  }, [value]);
+  }, []);
 
   {
     return theme === 'default' ? (
@@ -53,7 +69,7 @@ const FormFields = ({
         alignItems={type === 'textarea' ? 'flex-start' : 'center'}
         marginBottom={2}>
         <Box flex={0.5}>
-          <Text fontSize={14} fontWeight="bold" color="#404041">
+          <Text fontSize={12} fontWeight="bold" color="#404041">
             {label}
           </Text>
         </Box>

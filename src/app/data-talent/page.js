@@ -22,13 +22,14 @@ const DataTalent = () => {
     loading,
     productDigitalData,
     onHandlePress,
+    onHandlePressDetail,
     onChangeSelect,
   } = useDataTalent();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
       return data.map((item) => {
-        return <DataTalentCard data={item} onPress={onHandlePress} />;
+        return <DataTalentCard data={item} onPress={onHandlePress} onPressDetail={onHandlePressDetail} />;
       });
     } else {
       return (

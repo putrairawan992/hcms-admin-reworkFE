@@ -4,17 +4,18 @@ import FileManualModal from './Manual';
 import { noop } from '@/app/utils/helpers';
 import FileExistingContractModal from './ExistingContract';
 import FileAllModal from './All';
+import FileContractTemplateModal from './ContractTemplate';
 
-const FileModal = ({ type = '', isOpen = false, onClose = noop }) => {
+const FileModal = ({ type = '', isOpen = false, onClose = noop, typeDocTalent = '', data = {} }) => {
   switch (type) {
     case 'contract_manual':
-      return <FileManualModal isOpen={isOpen} onClose={onClose} />
+      return <FileManualModal isOpen={isOpen} onClose={onClose} typeDocTalent={typeDocTalent} data={data} />
     case 'existing_contract':
-      return <FileExistingContractModal isOpen={isOpen} onClose={onClose} />
-    case 'semua':
-      return <FileAllModal isOpen={isOpen} onClose={onClose} />
+      return <FileExistingContractModal isOpen={isOpen} onClose={onClose} typeDocTalent={typeDocTalent} data={data} />
+    case 'contract_template':
+      return <FileContractTemplateModal isOpen={isOpen} onClose={onClose} typeDocTalent={typeDocTalent} data={data} />
     default:
-      break;
+      return <FileAllModal isOpen={isOpen} onClose={onClose} typeDocTalent={typeDocTalent} />
   }
 };
 

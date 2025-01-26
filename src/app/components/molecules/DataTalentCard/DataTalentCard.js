@@ -5,7 +5,7 @@ import Icons, { DownloadIcon, EyeIcon } from '../../icons';
 import { employeeTypeOptions } from './shared/general';
 import { noop } from '@/app/utils/helpers';
 
-const DataTalentCard = ({ data = [], onPress = noop }) => {
+const DataTalentCard = ({ data = [], onPress = noop, onPressDetail = noop }) => {
   const { employee_id, employee_type, name, photo } = data;
 
   const employeeTypeBadge = employeeTypeOptions.find(
@@ -14,6 +14,10 @@ const DataTalentCard = ({ data = [], onPress = noop }) => {
 
   const onHandlePress = () => {
     onPress(employee_id);
+  };
+
+  const onHandleDetail = () => {
+    onPressDetail(data?.tracking_document);
   };
 
   return (
@@ -61,8 +65,9 @@ const DataTalentCard = ({ data = [], onPress = noop }) => {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            flex={1}
-          >
+            onClick={onHandleDetail}
+            cursor='pointer'
+            flex={1}>
             <EyeIcon />
           </Box>
           <Box

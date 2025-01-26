@@ -17,12 +17,12 @@ import ModalSendDocument from './components/modal';
 moment.locale('id');
 
 const SendDocument = () => {
-  const { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, toggleModalOpen, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType } = useSendDocument();
+  const { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, toggleModalOpen, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType, onChangeSelectType, selectedDocumentTalent, employeeDetail } = useSendDocument();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
       return data.map((item, index) => {
-        return <SendDocumentCard data={item} key={index} toggleModal={toggleModalOpen} onPressIcon={onPressIcon} />;
+        return <SendDocumentCard data={item} key={index} toggleModal={toggleModalOpen} onPressIcon={onPressIcon} onChangeSelect={onChangeSelectType} />;
       });
     } else {
       return (
@@ -141,7 +141,7 @@ const SendDocument = () => {
         </ModalContent>
       </Modal>
 
-      <ModalSendDocument type={modalType} typeDocument={modalDocType} isOpen={modalOpenDoc} onClose={toggleModalOpenDoc} />
+      <ModalSendDocument type={modalType} typeDocument={modalDocType} isOpen={modalOpenDoc} onClose={toggleModalOpenDoc} typeDocTalent={selectedDocumentTalent} data={employeeDetail} />
     </Box>
   );
 };

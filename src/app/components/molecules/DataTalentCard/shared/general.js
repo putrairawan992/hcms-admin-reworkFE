@@ -5,6 +5,11 @@ export const employeeTypeOptions = [
     color: '#AE445A',
   },
   {
+    id: 'kontrak',
+    name: 'Contract',
+    color: '#AE445A',
+  },
+  {
     id: 'freelance',
     name: 'Freelance',
     color: '#8364BA',

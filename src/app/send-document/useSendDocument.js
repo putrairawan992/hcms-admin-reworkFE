@@ -15,6 +15,8 @@ const useSendDocument = () => {
   const [modalOpenDoc, setModalOpenDoc] = useState(false);
   const [modalDocType, setModalDocType] = useState('');
   const [modalType, setModalType] = useState('');
+  const [selectedDocumentTalent, setSelectedDocumentTalent] = useState('');
+  const [employeeDetail, setEmployeeDetail] = useState({});
   const [filters, setFilters] = useState({
     years: '',
     month: '',
@@ -143,14 +145,20 @@ const useSendDocument = () => {
     submitSettingDocument(payload);
   };
 
-  const onPressIcon = (data, type) => {
+  const onPressIcon = (data, type, docTalent) => {
     setModalType(type);
+    setSelectedDocumentTalent(docTalent);
+    setEmployeeDetail(data);
     setModalDocType(data?.type_setting_document);
     toggleModalOpenDoc();
   };
 
   const toggleModalOpenDoc = () => {
     setModalOpenDoc(prevData => (!prevData));
+  };
+
+  const onChangeSelectType = (data) => {
+    setSelectedDocumentTalent(data);
   };
 
   useEffect(() => {
@@ -162,7 +170,7 @@ const useSendDocument = () => {
     fetchDataDocument();
   }, []);
 
-  return { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType };
+  return { data, employeeDetail, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType, onChangeSelectType, selectedDocumentTalent };
 };
 
 export default useSendDocument;

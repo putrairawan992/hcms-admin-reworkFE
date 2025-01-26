@@ -24,12 +24,12 @@ import moment from 'moment';
 import { Gap, SelectField } from '../../atoms';
 import { SettingsIcon } from '@chakra-ui/icons';
 import { noop } from '@/app/utils/helpers';
+import { set } from 'lodash';
 
-const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop }) => {
+const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, onChangeSelect = noop }) => {
   const { product_digital_name, status, created_at, employee_list, document_type, type_setting_document } = data;
-
+  const [documentTalent, setDocumentTalent] = useState('');
   const [employeeList, setEmployeeList] = useState(employee_list || []);
-  const [isActive, setIsActive] = useState(false);
 
   const documentAll = document_type?.map((item) => ({
     id: item?.id,
@@ -40,7 +40,7 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop })
     toggleModal(data);
   };
 
-  const onChangeSelect = (value, index) => {
+  const onHandleChange = (value, index) => {
     const updatedList = [...employee_list];
     updatedList[index] = {
       ...updatedList[index],
@@ -48,12 +48,18 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop })
       temporary_status: value === '' ? false : true,
     };
 
-    setIsActive(true);
     setEmployeeList(updatedList);
+    setDocumentTalent(value);
   };
 
-  const onHandleClickIcon = (type) => {
-    onPressIcon(data, type);
+  const onHandleClickIcon = (type, screenData) => {
+    if (screenData?.temporary_status) {
+      const dataFormated = {
+        ...data,
+        employee: screenData
+      };
+      onPressIcon(dataFormated, type, documentTalent);
+    }
   };
 
   return (
@@ -168,7 +174,7 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop })
                 </Flex>
                 <Flex alignItems="center" justifyContent="center" flex={1}>
                   <Box style={{ width: '200px' }}>
-                    <SelectField placeholder='Pilih document' options={documentAll} value={item?.temporary_type_document} onChange={(slug, value) => onChangeSelect(value, index)} slug='document_type_employee' key={index} />
+                    <SelectField placeholder='Pilih document' options={documentAll} value={item?.temporary_type_document} onChange={(slug, value) => onHandleChange(value, index)} slug='document_type_employee' key={index} />
                   </Box>
                 </Flex>
                 <Flex
@@ -176,9 +182,9 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop })
                   alignItems="center"
                   justifyContent="space-around"
                   marginLeft={4}>
-                  <FileBadgeIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('file')} />
-                  <MessageIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('message')} />
-                  <CloseIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('close')} />
+                  <FileBadgeIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('file', item)} />
+                  <MessageIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('message', item)} />
+                  <CloseIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('close', item)} />
                 </Flex>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Text fontWeight="bold" color="#AE445A">
