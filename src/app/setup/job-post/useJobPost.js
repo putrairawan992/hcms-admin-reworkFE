@@ -132,7 +132,7 @@ const useJobPost = () => {
   }, [selectedOption]);
 
   return {
-    modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onChangeOptions, onChangeStatus, onChangeText, onOpen, toggleModal, onChangeTextModal, onPressEdit, onSubmitEdit, onSubmitDelete, modalOpenConfirm, toggleModalConfirm, onPressDelete, loadingModal
+    modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onChangeOptions, onChangeStatus, onChangeText, onOpen, toggleModal, onChangeTextModal, onPressEdit, onSubmitEdit, onSubmitDelete, modalOpenConfirm, toggleModalConfirm, onPressDelete, loadingModal, fetchData
   };
 };
 

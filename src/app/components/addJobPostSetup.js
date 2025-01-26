@@ -9,6 +9,7 @@ import {
   ModalContent,
   ModalOverlay,
   Select,
+  Spinner,
   Text,
   useToast,
 } from '@chakra-ui/react';
@@ -16,13 +17,15 @@ import styles from '../styles/setupJobPost.module.css';
 import { useState } from 'react';
 import { useSubmitJobPostSetup } from '../api/setup';
 
-const AddJobPostSetup = ({ isOpen, onClose, title, option, refetch }) => {
+const AddJobPostSetup = ({ isOpen, onClose, title, option, reFetch }) => {
   const toast = useToast();
   const [name, setName] = useState('');
+  const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState('');
   const { mutate } = useSubmitJobPostSetup();
 
   const submitHandler = () => {
+    setLoading(true);
     const data = {
       status,
     };
@@ -53,11 +56,11 @@ const AddJobPostSetup = ({ isOpen, onClose, title, option, refetch }) => {
             position: 'top',
             isClosable: true,
           });
-          refetch();
+          setLoading(false);
           onClose();
+          reFetch();
         },
         onError: (err) => {
-          console.error(err);
           toast({
             title: 'Error',
             description: err?.response?.data?.errors || `Something went wrong!`,
@@ -66,6 +69,7 @@ const AddJobPostSetup = ({ isOpen, onClose, title, option, refetch }) => {
             position: 'top',
             isClosable: true,
           });
+          setLoading(false);
         },
       }
     );
@@ -100,7 +104,7 @@ const AddJobPostSetup = ({ isOpen, onClose, title, option, refetch }) => {
                   Pilih Status
                 </option>
                 <option value={'Active'}>Aktif</option>
-                <option value={'Inactive'}>Non - Aktif</option>
+                <option value={'Deactive'}>Non - Aktif</option>
               </Select>
             </Box>
           </Box>
@@ -108,9 +112,8 @@ const AddJobPostSetup = ({ isOpen, onClose, title, option, refetch }) => {
             <Button
               onClick={submitHandler}
               mr={'0'}
-              className={styles['job-post-search-btn']}
-            >
-              Create
+              className={styles['job-post-search-btn']}>
+              {loading ? <Spinner /> : 'Create'}
             </Button>
           </Flex>
         </ModalBody>

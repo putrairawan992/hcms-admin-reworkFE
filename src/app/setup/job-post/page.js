@@ -23,7 +23,7 @@ import EditModal from './components/modal';
 import ConfirmationModalWithNoSSR from './components/confirmationModal';
 
 const SetupJobPost = () => {
-  const { modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onOpen, onChangeOptions, onChangeStatus, onChangeText, toggleModal, onPressEdit, onChangeTextModal, onSubmitEdit, onSubmitDelete, modalOpenConfirm, toggleModalConfirm, onPressDelete, loadingModal } = useJobPost();
+  const { modalValue, modalOpen, loading, data, selectedOption, keyword, isOpen, onClose, onOpen, onChangeOptions, onChangeStatus, onChangeText, toggleModal, onPressEdit, onChangeTextModal, onSubmitEdit, onSubmitDelete, modalOpenConfirm, toggleModalConfirm, onPressDelete, loadingModal, fetchData } = useJobPost();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
@@ -56,6 +56,7 @@ const SetupJobPost = () => {
       <AddJobPostSetup
         isOpen={isOpen}
         onClose={onClose}
+        reFetch={() => fetchData(selectedOption)}
         title={
           jobPostOptions.find((item) => item.value === selectedOption)?.label
         }
