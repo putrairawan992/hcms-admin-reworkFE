@@ -5,11 +5,15 @@ import { formatDate, noop } from '@/app/utils/helpers';
 import { Gap } from '../../atoms';
 import { DeleteIcon } from '@chakra-ui/icons';
 
-const BlastNotificationCard = ({ data = [], onPress = noop }) => {
+const BlastNotificationCard = ({ data = [], onPress = noop, onPressIcon = noop }) => {
   const { id, title, type_user, created_at, } = data;
 
   const onHandlePress = () => {
     onPress(id);
+  };
+
+  const onHandlePressIcon = () => {
+    onPressIcon(id);
   };
 
   return (
@@ -25,8 +29,8 @@ const BlastNotificationCard = ({ data = [], onPress = noop }) => {
           <Text fontSize={12} fontWeight={400} color="#404041">{formatDate(created_at, 'DD MMM YYYY')}</Text>
         </Box>
         <Box>
-          <Gap width={12} />
-          <DeleteIcon />
+          <Gap width={8} />
+          <DeleteIcon cursor='pointer' onClick={onHandlePressIcon} color='#AE445A' />
         </Box>
         <Box>
           <Button style={styles.button} paddingX={8} onClick={onHandlePress}>

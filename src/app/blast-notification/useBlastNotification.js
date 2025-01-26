@@ -10,15 +10,13 @@ const useBlastNotification = () => {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
-  const [documentDetails, setDocumentDetails] = useState({});
+  const [loadingModal, setLoadingModal] = useState(false);
   const [productDigital, setProductDigital] = useState([]);
   const [productDigitalData, setProductDigitalData] = useState('');
-  const [settingDocument, setSettingDocument] = useState([]);
-  const [documentTypeValue, setDocumentTypeValue] = useState('');
+  const [notificationId, setNotificationId] = useState('');
   const [filters, setFilters] = useState({
     date: '',
-    years: '',
-    month: ''
+    title: '',
   });
 
   const [form, setForm] = useState({
@@ -64,13 +62,11 @@ const useBlastNotification = () => {
     }
   };
 
-  const submitData = async (data) => {
+  const submitData = async (method = '', data, setLoading) => {
+    const url = method === 'DELETE' ? `/admin/notif/delete/${data}` : '/admin/notif/create';
+
     try {
-      await httpClient({
-        method: 'POST',
-        url: '/admin/notif/create',
-        data
-      });
+      await httpClient({ method, url, data });
 
       toast({
         title: 'Success',
@@ -80,10 +76,10 @@ const useBlastNotification = () => {
         position: 'top',
         isClosable: true,
       });
-      setLoadingSubmit(prevData => (!prevData));
+      setLoading(false);
       fetchData(filters);
     } catch (error) {
-      setLoadingSubmit(prevData => (!prevData));
+      setLoading(false);
       toast({
         title: 'Error',
         description: error?.response?.data?.errors || `Something went wrong!`,
@@ -111,38 +107,29 @@ const useBlastNotification = () => {
     setModalOpen(prevData => (!prevData));
   };
 
-  const toggleModalOpen = (data) => {
-    setModalOpen(prevData => (!prevData));
-    const docTypes = settingDocument.find(item => item.label === data?.type_setting_document);
-    setDocumentDetails(data);
-    setDocumentTypeValue(docTypes);
-  };
-
-  const onSubmitSettingDocument = () => {
-    setLoadingSubmit(prevData => (!prevData));
-    const payload = {
-      setting_document_id: documentTypeValue?.value || '',
-      remuneration_id: documentDetails?.remuneration_id,
-      employee_list: documentDetails?.employee_list?.map(item => item.user_id)
-    }
-    submitSettingDocument(payload);
-  };
-
-  const onPressIcon = (type) => {
-    console.log(type);
+  const onPressIcon = (id) => {
+    toggleModal();
+    setNotificationId(id);
   };
 
   const onPressDetails = (id) => {
     router.push(`/blast-notification/${id}`);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    setLoadingSubmit(true);
     const payload = {
       product_digital: [productDigitalData || ''],
       ...form
     };
 
-    submitData(payload);
+    await submitData('POST', payload, setLoadingSubmit);
+  };
+
+  const onSubmitDelete = async () => {
+    setLoadingModal(true);
+    const payload = notificationId;
+    await submitData('DELETE', payload, setLoadingModal);
   };
 
   const isContentValid = (content) => {
@@ -158,7 +145,7 @@ const useBlastNotification = () => {
     fetchDataPD();
   }, []);
 
-  return { form, data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onPressIcon, onPressDetails, productDigitalData, onChangeText, onSubmit, isContentValid, onChangeTextFilter };
+  return { form, data, loading, loadingSubmit, modalOpen, productDigital, filters, onChangeSelect, toggleModal, onPressIcon, onPressDetails, productDigitalData, onChangeText, onSubmit, isContentValid, onChangeTextFilter, notificationId, onSubmitDelete, loadingModal };
 };
 
 export default useBlastNotification;

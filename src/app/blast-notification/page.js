@@ -1,27 +1,27 @@
 'use client';
 import React from 'react';
-import { Box, Button, Flex, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalContent, ModalOverlay, Spinner, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Input, InputGroup, InputRightElement, Spinner, Text } from '@chakra-ui/react';
 import styles from '../styles/inbox.module.css';
-import styleModal from '../styles/setupJobPost.module.css';
 import moment from 'moment';
 import 'moment/locale/id';
 import { isEmpty } from 'lodash';
 import { BlastNotificationCard, FormFields, ListEmpty } from '../components/molecules';
 import useBlastNotification from './useBlastNotification';
 import { Gap, SelectField } from '../components/atoms';
-import { Search2Icon, SettingsIcon } from '@chakra-ui/icons';
+import { Search2Icon } from '@chakra-ui/icons';
 import dynamic from 'next/dynamic';
+import ConfirmationModal from './modal';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 moment.locale('id');
 
 const BlastNotification = () => {
-  const { form, data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, onPressDetails, productDigitalData, onChangeText, onSubmit, isContentValid, onChangeTextFilter } = useBlastNotification();
+  const { form, data, loading, loadingSubmit, modalOpen, productDigital, filters, onChangeSelect, toggleModal, onPressDetails, productDigitalData, onChangeText, onSubmit, isContentValid, onChangeTextFilter, onPressIcon, onSubmitDelete, loadingModal } = useBlastNotification();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
       return data.map((item) => {
-        return <BlastNotificationCard data={item} onPress={onPressDetails} />;
+        return <BlastNotificationCard data={item} onPress={onPressDetails} onPressIcon={onPressIcon} />;
       });
     } else {
       return (
@@ -75,6 +75,8 @@ const BlastNotification = () => {
               className={styles['admin-role-input']}
               type="text"
               placeholder="Cari pesan"
+              value={filters.title}
+              onChange={(e) => onChangeTextFilter('title', e.target.value)}
             />
             <InputRightElement>
               <Search2Icon />
@@ -96,85 +98,7 @@ const BlastNotification = () => {
       {loading ? <ListEmpty /> : <RenderContent />}
 
 
-      <Modal isOpen={modalOpen} onClose={toggleModal} size={'xl'} isCentered closeOnOverlayClick={false} closeOnEsc={false}>
-        <ModalOverlay />
-        <ModalContent paddingY={'1.5rem'} paddingX={'1.5rem'} borderRadius={20}>
-          <ModalBody>
-            <Flex align='center' justifyContent='center'>
-              <SettingsIcon color='#ae445a' fontSize={40} />
-            </Flex>
-            <Gap height={6} />
-            <Box>
-              <Text>
-                Anda akan mengatur Setelan Pembuatan dokumen untuk batch ini.
-                Arti dari tiap pilihan dalam dropdown akan dijelaskan di bawah ini:
-              </Text>
-              <Gap height={4} />
-              <Flex>
-                <Text>1. </Text>
-                <Gap width={4} />
-                <Text>
-                  <span style={{ fontWeight: 'bold' }}>Semua:</span> Setiap karyawan dalam batch ini memiliki Setelan Pembuatan Dokumen Berbeda-beda (New Contract Manual, New Contract Template, Existing Contract)
-                </Text>
-              </Flex>
-              <Gap height={2} />
-              <Flex>
-                <Text>2. </Text>
-                <Gap width={4} />
-                <Text>
-                  New Contract Manual: Setelan Pembuatan Dokumen ini untuk karyawan baru, dan Dokumen tidak sesuai template yang berlaku saat ini
-                </Text>
-              </Flex>
-              <Gap height={2} />
-              <Flex>
-                <Text>3. </Text>
-                <Gap width={4} />
-                <Text>
-                  New Contract Template: Setelan Pembuatan Dokumen ini untuk karyawan baru, dan Dokumen sesuai template yang berlaku saat ini
-                </Text>
-              </Flex>
-              <Gap height={2} />
-              <Flex>
-                <Text>4. </Text>
-                <Gap width={4} />
-                <Text>
-                  Exisiting Contract : Setelan Pembuatan Dokumen ini untuk karyawan lama, dan Dokumen sudah ditandatangani kedua belah pihak.
-                </Text>
-              </Flex>
-
-              <Gap height={4} />
-              <Flex align='center' justifyContent='center'>
-                <SelectField placeholder='Pilih setelan dokumen' label='Setelan Dokumen' options={settingDocument} value={documentTypeValue?.value || ''} slug='document_type' onChange={onChangeSelectDocumentType} />
-              </Flex>
-              <Gap height={2} />
-              <Flex align='center' justifyContent='center'>
-                <Text fontSize={12}>Anda bisa mengatur ulang settingan ini dengan kembali memencet tombol</Text>
-                <Gap width={2} />
-                <SettingsIcon color='#ae445a' fontSize={12} />
-              </Flex>
-            </Box>
-            <Flex align={'center'} justify={'end'} mt={'2.5rem'}>
-              <Button
-                onClick={toggleModal}
-                mr={'0'}
-                className={styleModal['job-post-search-btn-cancel']}>
-                Batal
-              </Button>
-              <Gap width={4} />
-              <Button
-                mr={'0'}
-                onClick={onSubmitSettingDocument}
-                className={styleModal['job-post-search-btn']}>
-                {loadingSubmit ? (
-                  <Spinner size="sm" color="#FFFFFF" />
-                ) : (
-                  'Save'
-                )}
-              </Button>
-            </Flex>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <ConfirmationModal isOpen={modalOpen} onClose={toggleModal} onSubmit={onSubmitDelete} loading={loadingModal} />
     </Box>
   );
 };
