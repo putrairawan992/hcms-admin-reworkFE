@@ -16,6 +16,7 @@ import {
 import styles from '../styles/setupJobPost.module.css';
 import { useState } from 'react';
 import { useSubmitJobPostSetup } from '../api/setup';
+import { jobPostOptions } from '@/shared/general';
 
 const AddJobPostSetup = ({ isOpen, onClose, title, option, reFetch }) => {
   const toast = useToast();
@@ -26,23 +27,8 @@ const AddJobPostSetup = ({ isOpen, onClose, title, option, reFetch }) => {
 
   const submitHandler = () => {
     setLoading(true);
-    const data = {
-      status,
-    };
-
-    if (title === 'Pendidikan') {
-      data['education_name'] = name;
-    } else if (title === 'Lokasi Kerja') {
-      data['job_location_name'] = name;
-    } else if (title === 'Keuntungan dari Perusahaan') {
-      data['benefit_name'] = name;
-    } else if (title === 'Pengalaman') {
-      data['experience_name'] = name;
-    } else if (title === 'Spesialisasi Pekerjaan') {
-      data['job_specialist_name'];
-    } else if (title === 'Tingkat Pekerjaan') {
-      data['job_level_name'];
-    }
+    const prefix = jobPostOptions.find((item) => item.value === option)?.prefix;
+    const data = { status, [prefix]: name };
 
     mutate(
       { data, option },
