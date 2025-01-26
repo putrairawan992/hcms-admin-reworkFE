@@ -28,8 +28,7 @@ const AdminRoleDetail = () => {
           slug="username"
           value={form.username}
         />
-      </Flex>
-      <Flex flex={1} align={'center'} mb={'2rem'}>
+        <Gap width={12} />
         <FormFields
           label="Email"
           type="text"
@@ -39,7 +38,8 @@ const AdminRoleDetail = () => {
           slug="email"
           value={form.email}
         />
-        <Gap width={12} />
+      </Flex>
+      <Flex flex={1} align={'center'} mb={'2rem'}>
         <FormFields
           label="Divisi"
           type="text"
@@ -49,8 +49,7 @@ const AdminRoleDetail = () => {
           slug="divisi"
           value={form.divisi}
         />
-      </Flex>
-      <Flex flex={1} align={'center'} mb={'2rem'}>
+        <Gap width={12} />
         <FormFields
           label="Jabatan"
           type="text"
@@ -59,16 +58,6 @@ const AdminRoleDetail = () => {
           onChangeText={onChangeText}
           slug="jabatan"
           value={form.jabatan}
-        />
-        <Gap width={12} />
-        <FormFields
-          label="Password"
-          type="text"
-          theme="up-down"
-          placeholder="Masukan Password"
-          onChangeText={onChangeText}
-          slug="new_password"
-          value={form.new_password}
         />
       </Flex>
       <Flex flex={1} align={'center'} mb={'2rem'}>
