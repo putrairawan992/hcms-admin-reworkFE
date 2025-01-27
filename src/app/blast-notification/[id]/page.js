@@ -1,14 +1,15 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import styles from '../../styles/inbox.module.css';
 import { Gap } from '@/app/components/atoms';
 import { formatDate } from '@/app/utils/helpers';
 import { httpClient } from '@/app/utils/network';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { ListEmpty } from '@/app/components/molecules';
 
 const BlastNotificationDetails = () => {
+  const router = useRouter();
   const { id } = useParams();
 
   const [data, setData] = useState([]);
@@ -56,7 +57,7 @@ const BlastNotificationDetails = () => {
               <Text fontSize={16} fontWeight='700' color='#AE445A'>Tanggal Dikirim:</Text>
             </Box>
             <Box flex={1}>
-              <Text fontSize={16} fontWeight='700' color='#404041'>{formatDate(data?.created_at, 'DD MMM YYYY') || '-'}</Text>
+              <Text fontSize={16} fontWeight='700' color='#404041'>{data?.created_at ? formatDate(data?.created_at, 'DD MMM YYYY') : '-'}</Text>
             </Box>
           </Flex>
           <Gap height={4} />
@@ -71,6 +72,16 @@ const BlastNotificationDetails = () => {
           </Flex>
         </Box>
       </Flex>}
+
+      <Flex align={'center'} justify={'right'}>
+        <Box>
+          <Button
+            onClick={() => router.push('/blast-notification')}
+            className={styles['inbox-btn']}>
+            Close
+          </Button>
+        </Box>
+      </Flex>
     </Box>
   );
 };
