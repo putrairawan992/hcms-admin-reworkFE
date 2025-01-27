@@ -2,8 +2,6 @@
 import React from 'react';
 import { Box, Button, Flex, Input, InputGroup, InputRightElement, Spinner, Text } from '@chakra-ui/react';
 import styles from '../styles/inbox.module.css';
-import moment from 'moment';
-import 'moment/locale/id';
 import { isEmpty } from 'lodash';
 import { BlastNotificationCard, FormFields, ListEmpty } from '../components/molecules';
 import useBlastNotification from './useBlastNotification';
@@ -12,8 +10,6 @@ import { Search2Icon } from '@chakra-ui/icons';
 import dynamic from 'next/dynamic';
 import ConfirmationModal from './modal';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-
-moment.locale('id');
 
 const BlastNotification = () => {
   const { form, data, loading, loadingSubmit, modalOpen, productDigital, filters, onChangeSelect, toggleModal, onPressDetails, productDigitalData, onChangeText, onSubmit, isContentValid, onChangeTextFilter, onPressIcon, onSubmitDelete, loadingModal, onHandlePaginate } = useBlastNotification();
