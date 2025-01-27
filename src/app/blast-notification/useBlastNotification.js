@@ -17,6 +17,8 @@ const useBlastNotification = () => {
   const [filters, setFilters] = useState({
     date: '',
     title: '',
+    page: 1,
+    size: 10
   });
 
   const [form, setForm] = useState({
@@ -62,11 +64,15 @@ const useBlastNotification = () => {
     }
   };
 
-  const submitData = async (method = '', data, setLoading) => {
-    const url = method === 'DELETE' ? `/admin/notif/delete/${data}` : '/admin/notif/create';
-
+  const submitData = async (method = '', data, setLoading, isSuccess) => {
     try {
-      await httpClient({ method, url, data });
+      const url = method === 'DELETE' ? `/admin/notif/delete/${data}` : '/admin/notif/create';
+      const config = { method, url };
+      if (method !== 'DELETE') {
+        config.data = data;
+      }
+
+      await httpClient(config);
 
       toast({
         title: 'Success',
@@ -78,7 +84,9 @@ const useBlastNotification = () => {
       });
       setLoading(false);
       fetchData(filters);
+      isSuccess();
     } catch (error) {
+      console.log(error.response);
       setLoading(false);
       toast({
         title: 'Error',
@@ -90,6 +98,7 @@ const useBlastNotification = () => {
       });
     }
   };
+
 
   const onChangeSelect = (slug, value) => {
     setProductDigitalData(value);
@@ -116,6 +125,13 @@ const useBlastNotification = () => {
     router.push(`/blast-notification/${id}`);
   };
 
+  const clearForm = () => {
+    setForm({
+      title: '',
+      content: ''
+    });
+  };
+
   const onSubmit = async () => {
     setLoadingSubmit(true);
     const payload = {
@@ -123,18 +139,26 @@ const useBlastNotification = () => {
       ...form
     };
 
-    await submitData('POST', payload, setLoadingSubmit);
+    await submitData('POST', payload, setLoadingSubmit, clearForm);
   };
 
   const onSubmitDelete = async () => {
     setLoadingModal(true);
     const payload = notificationId;
-    await submitData('DELETE', payload, setLoadingModal);
+    await submitData('DELETE', payload, setLoadingModal, toggleModal);
   };
 
   const isContentValid = (content) => {
     const cleanedContent = content.replace(/<(.|\n)*?>/g, '').trim();
     return cleanedContent.length > 0;
+  };
+
+  const onHandlePaginate = (currentPage, type) => {
+    if (type === 'previous') {
+      setFilters((prevData) => ({ ...prevData, page: Math.max(currentPage - 1, 1) }));
+    } else {
+      setFilters((prevData) => ({ ...prevData, page: currentPage + 1 }));
+    }
   };
 
   useEffect(() => {
@@ -145,7 +169,7 @@ const useBlastNotification = () => {
     fetchDataPD();
   }, []);
 
-  return { form, data, loading, loadingSubmit, modalOpen, productDigital, filters, onChangeSelect, toggleModal, onPressIcon, onPressDetails, productDigitalData, onChangeText, onSubmit, isContentValid, onChangeTextFilter, notificationId, onSubmitDelete, loadingModal };
+  return { form, data, loading, loadingSubmit, modalOpen, productDigital, filters, onChangeSelect, toggleModal, onPressIcon, onPressDetails, productDigitalData, onChangeText, onSubmit, isContentValid, onChangeTextFilter, notificationId, onSubmitDelete, loadingModal, onHandlePaginate };
 };
 
 export default useBlastNotification;

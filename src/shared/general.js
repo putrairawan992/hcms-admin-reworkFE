@@ -93,11 +93,7 @@ export const navbarDataOptions = [
       {
         title: 'Remuneration',
         href: '/setup/remuneration',
-      },
-      {
-        title: 'Payslip',
-        href: '/setup/payslip',
-      },
+      }
     ],
   },
   {

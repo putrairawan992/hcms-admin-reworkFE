@@ -16,12 +16,12 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 moment.locale('id');
 
 const BlastNotification = () => {
-  const { form, data, loading, loadingSubmit, modalOpen, productDigital, filters, onChangeSelect, toggleModal, onPressDetails, productDigitalData, onChangeText, onSubmit, isContentValid, onChangeTextFilter, onPressIcon, onSubmitDelete, loadingModal } = useBlastNotification();
+  const { form, data, loading, loadingSubmit, modalOpen, productDigital, filters, onChangeSelect, toggleModal, onPressDetails, productDigitalData, onChangeText, onSubmit, isContentValid, onChangeTextFilter, onPressIcon, onSubmitDelete, loadingModal, onHandlePaginate } = useBlastNotification();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
-      return data.map((item) => {
-        return <BlastNotificationCard data={item} onPress={onPressDetails} onPressIcon={onPressIcon} />;
+      return data.map((item, index) => {
+        return <BlastNotificationCard data={item} onPress={onPressDetails} onPressIcon={onPressIcon} key={index} />;
       });
     } else {
       return (
@@ -56,6 +56,7 @@ const BlastNotification = () => {
           <Flex flex={1}>
             <ReactQuill
               theme="snow"
+              value={form.content}
               style={{ height: '150px', flex: 1, marginBottom: 45 }}
               onChange={(value) => onChangeText('content', value)}
             />
@@ -97,6 +98,22 @@ const BlastNotification = () => {
 
       {loading ? <ListEmpty /> : <RenderContent />}
 
+      <Gap height={8} />
+      <Flex justify="right" alignItems='center'>
+        <Button
+          className={styles['modal-approve']}
+          isDisabled={filters.page === 1}
+          onClick={() => onHandlePaginate(filters.page, 'previous')}>
+          Previous
+        </Button>
+        <Text mx={4}>{filters.page}</Text>
+        <Button
+          className={styles['modal-approve']}
+          isDisabled={data.length < 10}
+          onClick={() => onHandlePaginate(filters.page, 'next')}>
+          Next
+        </Button>
+      </Flex>
 
       <ConfirmationModal isOpen={modalOpen} onClose={toggleModal} onSubmit={onSubmitDelete} loading={loadingModal} />
     </Box>
