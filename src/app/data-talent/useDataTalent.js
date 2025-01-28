@@ -61,9 +61,8 @@ const useDataTalent = () => {
     router.push(`/data-talent/${employeeId}`);
   };
 
-  const onHandlePressDetail = (data) => {
-    localStorage.setItem('document_tracking', JSON.stringify(data));
-    router.push(`/data-talent/tracking-document`);
+  const onHandlePressDetail = (employeeId) => {
+    router.push(`/data-talent/tracking-document/${employeeId}`);
   };
 
   const onChangeSelect = (slug, value) => {

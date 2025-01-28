@@ -17,7 +17,7 @@ const DataTalentCard = ({ data = [], onPress = noop, onPressDetail = noop }) => 
   };
 
   const onHandleDetail = () => {
-    onPressDetail(data?.tracking_document);
+    onPressDetail(employee_id);
   };
 
   return (
