@@ -8,13 +8,9 @@ const useDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [productDigitalData, setProductDigitalData] = useState([]);
   const [filters, setFilters] = useState({
-    size: 10,
-    page: 1,
-    digital_product: '',
-    document: '',
-    document_tracking: '',
-    selection_type: '',
-    employee_type: '',
+    year: '',
+    month: '',
+    provider: '',
   });
 
   const fetchData = useCallback(
@@ -23,6 +19,7 @@ const useDashboard = () => {
         const response = await httpClient({
           method: 'GET',
           url: '/admin/dashboard/list',
+          params
         });
 
         const responseData = response?.data?.data || [];
@@ -54,19 +51,6 @@ const useDashboard = () => {
       console.error('Failed to fetch data:', error);
     }
   };
-  const fetchDataPDS = async () => {
-    try {
-      const response = await httpClient({
-        method: 'GET',
-        url: '/admin/document/setting_document/list',
-      });
-
-      const responseData = response?.data?.data || [];
-      console.log(responseData);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
-  };
 
   const onHandlePress = (employeeId) => {
     router.push(`/data-talent/${employeeId}`);
@@ -77,7 +61,6 @@ const useDashboard = () => {
   };
 
   useEffect(() => {
-    fetchDataPDS();
     fetchDataPD();
   }, []);
 

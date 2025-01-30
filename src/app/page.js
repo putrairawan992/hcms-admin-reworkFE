@@ -1,51 +1,25 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Flex, Text, Image, Divider } from '@chakra-ui/react';
 import styles from './styles/dashboard.module.css';
 import moment from 'moment';
 import 'moment/locale/id';
-import { getUserData } from './utils/localStorage';
 import { Gap, SelectField } from './components/atoms';
 import { ProgressCard } from './components/molecules';
-import { monthLabelOptions, yearOptions } from '@/shared/general';
+import { monthLabelOptions, monthOptions, yearOptions } from '@/shared/general';
 import useDashboard from './useDashboard';
 
 moment.locale('id');
 
 const Home = () => {
-  const { data, productDigitalData } = useDashboard();
-
-  const datas = {
-    jobPost: [
-      { title: 'Approve', value: 42, color: '#3B78C2' },
-      { title: 'Reject', value: 28, color: '#3AB471' },
-      { title: 'In-Review', value: 30, color: '#F39F5A' },
-    ],
-    requirePosition: [
-      { title: 'Marketing Staff', value: 42, color: '#3B78C2' },
-      { title: 'Graphic Designer', value: 28, color: '#3AB471' },
-      { title: 'Front-End Engineer', value: 20, color: '#8364BA' },
-    ],
-    employeeType: [
-      { title: 'Contract', value: 42, color: '#3B78C2' },
-      { title: 'Freelance', value: 28, color: '#3AB471' },
-      { title: 'Intern', value: 30, color: '#8364BA' },
-      { title: 'Full Time', value: 30, color: '#F39F5A' },
-    ],
-    talentList: [
-      { title: 'Aktif', value: 42, color: '#3B78C2' },
-      { title: 'Perubahan Gaji', value: 28, color: '#3AB471' },
-      { title: 'Perubahan Status', value: 30, color: '#8364BA' },
-      { title: 'Resign', value: 30, color: '#F39F5A' },
-    ],
-  };
+  const { data, filters, productDigitalData, onChangeSelect } = useDashboard();
 
   return (
     <React.Fragment>
       <Box className={styles['dashboard-container']}>
-        <SelectField label="Tahun" options={yearOptions} />
-        <SelectField label="Bulan" options={monthLabelOptions} />
-        <SelectField label="Digital Product" options={productDigitalData} />
+        <SelectField label="Tahun" options={yearOptions} slug='year' value={filters.year} onChange={onChangeSelect} />
+        <SelectField label="Bulan" options={monthOptions} slug='month' value={filters.month} onChange={onChangeSelect} />
+        <SelectField label="Digital Product" options={productDigitalData} slug='provider' value={filters.provider} onChange={onChangeSelect} />
       </Box>
       <Gap height={3} />
       <Flex align={'flex-start'} width={'100%'}>
@@ -56,7 +30,7 @@ const Home = () => {
         >
           <Text color="#404041" fontWeight="bold">
             Jumlah PKWT Talent yang sudah diproses:{' '}
-            <span style={{ color: '#3B78C2' }}>2.106 </span>Orang
+            <span style={{ color: '#3B78C2' }}>{data?.jumlahPkwt || '0'} </span>Orang
           </Text>
         </Box>
         <Gap width={2} />
@@ -67,7 +41,7 @@ const Home = () => {
         >
           <Text color="#404041" fontWeight="bold">
             Rata-Rata pemrosesan PKWT (Full Signed):{' '}
-            <span style={{ color: '#3B78C2' }}>20 </span>Hari
+            <span style={{ color: '#3B78C2' }}>{data?.averageProcessingTime || '0'} </span>Hari
           </Text>
         </Box>
       </Flex>
@@ -79,7 +53,7 @@ const Home = () => {
           style={{ height: '65px' }}
         >
           <Text color="#404041" fontWeight="bold">
-            Turn Over Rate: <span style={{ color: '#3B78C2' }}>23</span>%
+            Turn Over Rate: <span style={{ color: '#3B78C2' }}>{data?.turnover || '0'}</span>%
           </Text>
           <Gap width={4} />
           <Image src="/images/dashboard/bye.png" height={65} />
@@ -91,7 +65,7 @@ const Home = () => {
           style={{ height: '65px' }}
         >
           <Text color="#404041" fontWeight="bold">
-            New Hiring Rate: <span style={{ color: '#3B78C2' }}>23</span>%
+            New Hiring Rate: <span style={{ color: '#3B78C2' }}>{data?.newhiring || '0'}</span>%
           </Text>
           <Gap width={8} />
           <Image src="/images/dashboard/rate.png" height={65} />
