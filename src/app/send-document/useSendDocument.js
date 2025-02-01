@@ -161,6 +161,34 @@ const useSendDocument = () => {
     setSelectedDocumentTalent(data);
   };
 
+  const onClickSendAll = async (batch_remuneration_id) => {
+    try {
+      await httpClient({
+        method: 'POST',
+        url: '/admin/document/send_document/sendall',
+        data: { batch_remuneration_id }
+      });
+
+      toast({
+        title: 'Success',
+        description: 'Data Berhasil Disimpan',
+        duration: 3000,
+        status: 'success',
+        position: 'top',
+        isClosable: true,
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: error?.response?.data?.errors || `Something went wrong!`,
+        duration: 3000,
+        status: 'error',
+        position: 'top',
+        isClosable: true,
+      });
+    }
+  };
+
   useEffect(() => {
     fetchData(filters);
   }, [filters]);
@@ -170,7 +198,7 @@ const useSendDocument = () => {
     fetchDataDocument();
   }, []);
 
-  return { data, employeeDetail, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType, onChangeSelectType, selectedDocumentTalent };
+  return { data, employeeDetail, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType, onChangeSelectType, selectedDocumentTalent, onClickSendAll };
 };
 
 export default useSendDocument;

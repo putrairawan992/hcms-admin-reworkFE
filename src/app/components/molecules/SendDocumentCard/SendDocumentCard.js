@@ -8,6 +8,7 @@ import {
   Button,
   Flex,
   Image,
+  Spinner,
   Text,
   VStack,
 } from '@chakra-ui/react';
@@ -24,10 +25,9 @@ import moment from 'moment';
 import { Gap, SelectField } from '../../atoms';
 import { SettingsIcon } from '@chakra-ui/icons';
 import { noop } from '@/app/utils/helpers';
-import { set } from 'lodash';
 
-const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, onChangeSelect = noop }) => {
-  const { product_digital_name, status, created_at, employee_list, document_type, type_setting_document } = data;
+const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, onClickSendAll = noop }) => {
+  const { product_digital_name, status, created_at, employee_list, document_type, type_setting_document, remuneration_id } = data;
   const [documentTalent, setDocumentTalent] = useState('');
   const [employeeList, setEmployeeList] = useState(employee_list || []);
 
@@ -60,6 +60,10 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
       };
       onPressIcon(dataFormated, type, documentTalent);
     }
+  };
+
+  const onHandleClickSend = () => {
+    onClickSendAll(remuneration_id);
   };
 
   return (
@@ -108,7 +112,7 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
             <ChatIcon style={{ width: 20, height: 20 }} />
           </Flex>
           <Flex align={'center'}>
-            <Button style={styles.buttonSend}>Send All</Button>
+            <Button style={styles.buttonSend} onClick={onHandleClickSend}>Send All</Button>
           </Flex>
         </AccordionButton>
         <AccordionPanel
