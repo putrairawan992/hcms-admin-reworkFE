@@ -1,7 +1,6 @@
 import { Gap } from '@/app/components/atoms';
-import { formatRupiah } from '@/app/utils/helpers';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
-import { Box, Flex, FormControl, FormLabel, Switch } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 
 const columns = (page) => {
   return [
@@ -13,24 +12,13 @@ const columns = (page) => {
       wrap: true,
     },
     {
-      name: 'Foto Perusahaan',
-      selector: (row) => row.service,
-      sortable: true,
-      wrap: true,
-    },
-    {
       name: 'Digital Product',
-      selector: (row) => row.jenis_client,
-      wrap: true,
-    },
-    {
-      name: 'Username',
-      selector: (row) => row.client,
+      selector: (row) => row.product_digital_name,
       wrap: true,
     },
     {
       name: 'Email',
-      selector: (row) => row.product_digital,
+      selector: (row) => row.email,
       wrap: true,
     },
     {

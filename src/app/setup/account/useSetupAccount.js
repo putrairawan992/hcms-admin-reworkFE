@@ -19,7 +19,7 @@ const useSetupAccount = () => {
         params: { sort: 'A-Z' }
       });
 
-      const responseData = response?.data?.data?.data || [];
+      const responseData = response?.data?.data || [];
       setData(responseData);
       setLoading(false);
     } catch (error) {
