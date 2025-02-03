@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Button,
   Flex,
@@ -17,17 +17,19 @@ import { noop } from '@/app/utils/helpers';
 import { Gap, SelectField } from '@/app/components/atoms';
 import { inboxSetupAccountOptions, schemaSetupAccountOptions } from '@/shared/general';
 
-const ConfirmationModal = ({ value = '', isOpen = false, onClose = false, size = 'xl', onSubmit = noop, loading = false }) => {
+const ConfirmationModal = ({ data = {}, value = '', isOpen = false, onClose = false, size = 'xl', onSubmit = noop, loading = false }) => {
   const [form, setForm] = useState({
-    email: '',
-    username: '',
-    inbox: '',
-    remuneration: ''
+    inbox: data?.inbox || '',
+    remuneration: data?.remuneration || ''
   });
 
   const onChangeText = (slug, value) => {
     setForm(prevData => ({ ...prevData, [slug]: value }));
   };
+
+  const onHandleSubmit = useCallback(() => {
+    onSubmit(form);
+  }, [form, data]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={size} isCentered>
@@ -43,10 +45,9 @@ const ConfirmationModal = ({ value = '', isOpen = false, onClose = false, size =
                 Username
               </Text>
               <Input
-                onChange={(e) => onChangeText(e.target.value)}
-                placeholder="Masukan Title..."
+                placeholder="Masukan username..."
                 type="text"
-                value={value}
+                value={data?.username}
                 disabled
               />
             </Box>
@@ -56,7 +57,7 @@ const ConfirmationModal = ({ value = '', isOpen = false, onClose = false, size =
           </Box>
           <Flex align={'center'} justify={'end'} mt={'2.5rem'}>
             <Button
-              onClick={onSubmit}
+              onClick={onHandleSubmit}
               mr={'0'}
               className={styles['job-post-search-btn']}>
               {loading ? <Spinner /> : 'Save'}

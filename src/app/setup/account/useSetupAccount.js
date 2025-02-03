@@ -28,10 +28,11 @@ const useSetupAccount = () => {
   };
 
   const onHandlePress = (type, data) => {
+    setScreenData(data);
+
     if (type === 'EDIT') {
       toggleModal();
     } else {
-      setScreenData(data);
       toggleModalDelete();
     }
   };
@@ -50,6 +51,41 @@ const useSetupAccount = () => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
+    }
+  };
+
+  const onSubmitEdit = async (paramsData) => {
+    setLoadingModal(true);
+    const payload = { ...paramsData, username: screenData?.username || '', email: screenData?.email || '' };
+
+    try {
+      await httpClient({
+        method: 'PATCH',
+        url: `/admin/account_setup/${screenData?.id}`,
+        data: payload
+      });
+
+      setLoadingModal(false);
+      toggleModal();
+      fetchData();
+      toast({
+        title: 'success',
+        description: 'Account has been updated.',
+        duration: 3000,
+        status: 'success',
+        position: 'top',
+        isClosable: true,
+      });
+    } catch (error) {
+      setLoadingModal(false);
+      toast({
+        title: 'Error',
+        description: error?.response?.message || 'Something went wrong',
+        duration: 3000,
+        status: 'error',
+        position: 'top',
+        isClosable: true,
+      });
     }
   };
 
@@ -99,12 +135,14 @@ const useSetupAccount = () => {
     keyword,
     modalOpen,
     modalOpenDelete,
+    screenData,
     onChangeText,
     toggleModal,
     toggleModalDelete,
     onChangeText,
     onHandlePress,
-    onSubmitDelete
+    onSubmitDelete,
+    onSubmitEdit
   };
 };
 

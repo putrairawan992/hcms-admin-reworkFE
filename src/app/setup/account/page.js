@@ -19,7 +19,7 @@ import columns from './columns';
 
 const AccountSetup = () => {
   const router = useRouter();
-  const { data, loading, keyword, modalOpen, modalOpenDelete, loadingModalDelete, toggleModalDelete, loadingModal, toggleModal, onChangeText, onHandlePress, onSubmitDelete } = useSetupAccount();
+  const { data, screenData, loading, keyword, modalOpen, modalOpenDelete, loadingModalDelete, toggleModalDelete, onSubmitEdit, loadingModal, toggleModal, onChangeText, onHandlePress, onSubmitDelete } = useSetupAccount();
 
   return (
     <Box className={styles['account-role-container']}>
@@ -57,11 +57,11 @@ const AccountSetup = () => {
         loading={loading}
       />
       <EditModal
-        value={'Test'}
+        data={screenData}
         isOpen={modalOpen}
         onClose={toggleModal}
         onChangeText={onChangeText}
-        // onSubmit={onSubmitEdit}
+        onSubmit={onSubmitEdit}
         loading={loadingModal}
       />
       <ConfirmationModalWithNoSSR
