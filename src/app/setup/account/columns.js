@@ -2,7 +2,7 @@ import { Gap } from '@/app/components/atoms';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Box, Flex } from '@chakra-ui/react';
 
-const columns = (page) => {
+const columns = (page, onPress) => {
   return [
     {
       name: 'No',
@@ -26,11 +26,11 @@ const columns = (page) => {
       cell: (row) => (
         <Flex alignItems="center" justify="space-between">
           <Box cursor='pointer'>
-            <EditIcon width={4} height={4} color='#AE445A' />
+            <EditIcon width={4} height={4} color='#AE445A' onClick={() => onPress('EDIT', row)} />
           </Box>
           <Gap width={2} />
           <Box cursor='pointer'>
-            <DeleteIcon width={4} height={4} color='#AE445A' />
+            <DeleteIcon width={4} height={4} color='#AE445A' onClick={() => onPress('DELETE', row)} />
           </Box>
         </Flex>
       ),

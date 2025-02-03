@@ -53,6 +53,16 @@ export const statusJobPostOptions = [
   { value: 'Pending', label: 'Pending' },
 ];
 
+export const inboxSetupAccountOptions = [
+  { value: 'view', label: 'view' },
+  { value: 'reply', label: 'reply' },
+];
+
+export const schemaSetupAccountOptions = [
+  { value: 'normal', label: 'Approved' },
+  { value: 'khusus', label: 'khusus' },
+];
+
 export const navbarDataOptions = [
   {
     title: 'Dashboard',

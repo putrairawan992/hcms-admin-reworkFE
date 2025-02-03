@@ -1,13 +1,39 @@
 import { useEffect, useState } from 'react';
 import { httpClient } from '@/app/utils/network';
+import { useToast } from '@chakra-ui/react';
 
 const useSetupAccount = () => {
+  const toast = useToast();
   const [data, setData] = useState([]);
   const [keyword, setKeyword] = useState('');
   const [loading, setLoading] = useState(true);
+  const [screenData, setScreenData] = useState({});
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [loadingModal, setLoadingModal] = useState(false);
+
+  const [modalOpenDelete, setModalOpenDelete] = useState(false);
+  const [loadingModalDelete, setLoadingModalDelete] = useState(false);
+
+  const toggleModal = () => {
+    setModalOpen(prevData => (!prevData));
+  };
+
+  const toggleModalDelete = () => {
+    setModalOpenDelete(prevData => (!prevData));
+  };
 
   const onChangeText = (e) => {
     setKeyword(e.target.value);
+  };
+
+  const onHandlePress = (type, data) => {
+    if (type === 'EDIT') {
+      toggleModal();
+    } else {
+      setScreenData(data);
+      toggleModalDelete();
+    }
   };
 
   const fetchData = async () => {
@@ -27,6 +53,40 @@ const useSetupAccount = () => {
     }
   };
 
+
+  const onSubmitDelete = async () => {
+    setLoadingModalDelete(true);
+    try {
+      await httpClient({
+        method: 'DELETE',
+        url: `/admin/account_setup/${screenData?.id}`
+      });
+
+      setLoadingModalDelete(false);
+      toggleModalDelete();
+      fetchData();
+      toast({
+        title: 'success',
+        description: 'Account has been updated.',
+        duration: 3000,
+        status: 'success',
+        position: 'top',
+        isClosable: true,
+      });
+    } catch (error) {
+      setLoadingModalDelete(false);
+      toast({
+        title: 'Error',
+        description: error?.response?.message || 'Something went wrong',
+        duration: 3000,
+        status: 'error',
+        position: 'top',
+        isClosable: true,
+      });
+    }
+  };
+
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -34,8 +94,17 @@ const useSetupAccount = () => {
   return {
     data,
     loading,
+    loadingModal,
+    loadingModalDelete,
     keyword,
+    modalOpen,
+    modalOpenDelete,
     onChangeText,
+    toggleModal,
+    toggleModalDelete,
+    onChangeText,
+    onHandlePress,
+    onSubmitDelete
   };
 };
 
