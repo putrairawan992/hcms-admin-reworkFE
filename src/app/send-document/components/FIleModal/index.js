@@ -15,7 +15,7 @@ const FileModal = ({ type = '', isOpen = false, onClose = noop, typeDocTalent = 
     case 'contract_template':
       return <FileContractTemplateModal isOpen={isOpen} onClose={onClose} typeDocTalent={typeDocTalent} data={data} onSubmit={onSubmit} />
     default:
-      return <FileAllModal isOpen={isOpen} onClose={onClose} typeDocTalent={typeDocTalent} />
+      return <FileAllModal isOpen={isOpen} onClose={onClose} typeDocTalent={typeDocTalent} onSubmit={onSubmit} />
   }
 };
 

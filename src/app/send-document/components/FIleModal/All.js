@@ -7,8 +7,8 @@ import { SettingsIcon } from '@chakra-ui/icons';
 import { LuCloudUpload, LuFolder } from 'react-icons/lu';
 
 const FileAllModal = ({ isOpen = false, onClose = noop, size = 'lg', onSubmit = noop }) => {
-  const onSubmitHandler = () => {
-    onSubmit();
+  const onSubmitHandler = (type, data) => {
+    onSubmit(type, data);
   };
 
   return (
@@ -51,7 +51,7 @@ const FileAllModal = ({ isOpen = false, onClose = noop, size = 'lg', onSubmit = 
             </Flex>
             <Gap height={4} />
             <Flex align='center' justifyContent='center'>
-              <Flex alignItems='center' justifyContent='center' textAlign={'center'} padding={2} borderWidth={3} borderColor={'#F39F5A'} borderRadius={12} flex={1}>
+              <Flex alignItems='center' justifyContent='center' textAlign={'center'} padding={2} borderWidth={3} borderColor={'#F39F5A'} borderRadius={12} flex={1} onClick={() => onSubmitHandler('all', 'contract_manual')} cursor='pointer'>
                 <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" flex={1}>
                   <LuCloudUpload style={{ textAlign: 'center' }} fontSize={30} color='#AE445A' />
                   <Gap height={2} />
@@ -59,7 +59,7 @@ const FileAllModal = ({ isOpen = false, onClose = noop, size = 'lg', onSubmit = 
                 </Box>
               </Flex>
               <Gap width={2} />
-              <Flex alignItems='center' justifyContent='center' textAlign={'center'} padding={2} borderWidth={3} borderColor={'#F39F5A'} borderRadius={12} flex={1}>
+              <Flex alignItems='center' justifyContent='center' textAlign={'center'} padding={2} borderWidth={3} borderColor={'#F39F5A'} borderRadius={12} flex={1} onClick={() => onSubmitHandler('all', 'contract_template')} cursor='pointer'>
                 <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" flex={1}>
                   <LuFolder style={{ textAlign: 'center' }} fontSize={30} color='#AE445A' />
                   <Gap height={2} />
@@ -67,7 +67,7 @@ const FileAllModal = ({ isOpen = false, onClose = noop, size = 'lg', onSubmit = 
                 </Box>
               </Flex>
               <Gap width={2} />
-              <Flex alignItems='center' justifyContent='center' textAlign={'center'} padding={2} borderWidth={3} borderColor={'#F39F5A'} borderRadius={12} flex={1}>
+              <Flex alignItems='center' justifyContent='center' textAlign={'center'} padding={2} borderWidth={3} borderColor={'#F39F5A'} borderRadius={12} flex={1} onClick={() => onSubmitHandler('all', 'existing_contract')} cursor='pointer'>
                 <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" flex={1}>
                   <LuCloudUpload style={{ textAlign: 'center' }} fontSize={30} color='#AE445A' />
                   <Gap height={2} />

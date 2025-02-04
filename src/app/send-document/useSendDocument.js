@@ -189,9 +189,14 @@ const useSendDocument = () => {
     }
   };
 
-  const onSubmit = () => {
-    toggleModalOpenDoc();
-    fetchData(filters);
+  const onSubmit = (type, data) => {
+    console.log(type, data);
+    if (type === 'all') {
+      setModalDocType(data);
+    } else {
+      toggleModalOpenDoc();
+      fetchData(filters);
+    }
   };
 
   useEffect(() => {
