@@ -25,8 +25,10 @@ import moment from 'moment';
 import { Gap, SelectField } from '../../atoms';
 import { SettingsIcon } from '@chakra-ui/icons';
 import { noop } from '@/app/utils/helpers';
+import { useRouter } from 'next/navigation';
 
 const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, onClickSendAll = noop }) => {
+  const router = useRouter();
   const { product_digital_name, status, created_at, employee_list, document_type, type_setting_document, remuneration_id } = data;
   const [documentTalent, setDocumentTalent] = useState('');
   const [employeeList, setEmployeeList] = useState(employee_list || []);
@@ -66,6 +68,12 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
     onClickSendAll(remuneration_id);
   };
 
+  const onHandleMessage = () => { };
+
+  const onHandleDetail = () => {
+    router.push(`/approval/remuneration/${data?.remuneration_id}`);
+  };
+
   return (
     <Accordion allowToggle>
       <AccordionItem border="none" key={1}>
@@ -89,7 +97,7 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
             </Text>
           </Flex>
           <Flex flex={1} justify='center' alignItems='center'>
-            <EyeIcon color='#ae445a' />
+            <EyeIcon color='#ae445a' onClick={onHandleDetail} style={{ cursor: 'pointer' }} />
             <Gap width={4} />
             <SettingsIcon color='#ae445a' onClick={onHandleToggleModal} cursor='pointer' />
           </Flex>
