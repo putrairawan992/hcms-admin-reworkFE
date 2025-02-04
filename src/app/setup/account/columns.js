@@ -17,6 +17,11 @@ const columns = (page, onPress) => {
       wrap: true,
     },
     {
+      name: 'Username',
+      selector: (row) => row.username || '-',
+      wrap: true,
+    },
+    {
       name: 'Email',
       selector: (row) => row.email,
       wrap: true,

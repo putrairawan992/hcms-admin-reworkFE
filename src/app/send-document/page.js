@@ -17,7 +17,7 @@ import ModalSendDocument from './components/modal';
 moment.locale('id');
 
 const SendDocument = () => {
-  const { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, toggleModalOpen, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType, onChangeSelectType, selectedDocumentTalent, employeeDetail, onClickSendAll } = useSendDocument();
+  const { data, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, onChangeSelectDocumentType, toggleModalOpen, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType, onChangeSelectType, selectedDocumentTalent, employeeDetail, onClickSendAll, onSubmit } = useSendDocument();
 
   const RenderContent = () => {
     if (!isEmpty(data)) {
@@ -141,7 +141,7 @@ const SendDocument = () => {
         </ModalContent>
       </Modal>
 
-      <ModalSendDocument type={modalType} typeDocument={modalDocType} isOpen={modalOpenDoc} onClose={toggleModalOpenDoc} typeDocTalent={selectedDocumentTalent} data={employeeDetail} />
+      <ModalSendDocument type={modalType} typeDocument={modalDocType} isOpen={modalOpenDoc} onClose={toggleModalOpenDoc} typeDocTalent={selectedDocumentTalent} data={employeeDetail} onSubmit={onSubmit} />
     </Box>
   );
 };

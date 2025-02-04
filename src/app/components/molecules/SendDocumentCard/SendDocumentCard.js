@@ -107,9 +107,7 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
             </Flex>
           </Box>
           <Flex alignItems="center" justifyContent="center" flex={1}>
-            <DownloadIcon />
-            <Gap width={4} />
-            <ChatIcon style={{ width: 20, height: 20 }} />
+            <ChatIcon style={{ width: 20, height: 20, cursor: 'pointer' }} />
           </Flex>
           <Flex align={'center'}>
             <Button style={styles.buttonSend} onClick={onHandleClickSend}>Send All</Button>
@@ -186,9 +184,9 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
                   alignItems="center"
                   justifyContent="space-around"
                   marginLeft={4}>
-                  <FileBadgeIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('file', item)} />
-                  <MessageIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('message', item)} />
-                  <CloseIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('close', item)} />
+                  <FileBadgeIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('file', item)} style={{ cursor: 'pointer' }} />
+                  <MessageIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('message', item)} style={{ cursor: 'pointer' }} />
+                  <CloseIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('close', item)} style={{ cursor: 'pointer' }} />
                 </Flex>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Text fontWeight="bold" color="#AE445A">

@@ -19,11 +19,11 @@ import { useState } from 'react';
 import { httpClient } from '@/app/utils/network';
 
 const FileManualModal = ({ isOpen = false, onClose = noop, size = 'sm', onSubmit = noop, data = {} }) => {
+  const toast = useToast();
   const [fileName, setFileName] = useState("Browse File To Upload");
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const toast = useToast();
 
 
   const onSubmitHandler = async () => {
@@ -48,16 +48,13 @@ const FileManualModal = ({ isOpen = false, onClose = noop, size = 'sm', onSubmit
       formData.append("employee_id", data?.employee?.user_id);
       formData.append("remuneration_id", data?.remuneration_id);
 
-      const payload = {
-        file: selectedFile,
-        employee_id: data?.employee?.user_id,
-        remuneration_id: data?.remuneration_id,
-      };
-
       await httpClient({
         method: 'POST',
         url: '/admin/document/contract_manual/update',
-        data: payload
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
       toast({
@@ -69,6 +66,10 @@ const FileManualModal = ({ isOpen = false, onClose = noop, size = 'sm', onSubmit
         isClosable: true,
       });
       setIsSubmitting(false);
+      setFileName("Browse File To Upload"); // Reset nama file
+      setSelectedFile(null); // Reset file
+      setErrorMessage(""); // Clear error jika valid
+      onSubmit();
     } catch (error) {
       toast({
         title: 'Error',
@@ -79,6 +80,10 @@ const FileManualModal = ({ isOpen = false, onClose = noop, size = 'sm', onSubmit
         isClosable: true,
       });
       setIsSubmitting(false);
+      setFileName("Browse File To Upload"); // Reset nama file
+      setSelectedFile(null); // Reset file
+      setErrorMessage(""); // Clear error jika valid
+      onSubmit();
     }
   };
 

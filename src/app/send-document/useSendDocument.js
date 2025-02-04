@@ -189,6 +189,11 @@ const useSendDocument = () => {
     }
   };
 
+  const onSubmit = () => {
+    toggleModalOpenDoc();
+    fetchData(filters);
+  };
+
   useEffect(() => {
     fetchData(filters);
   }, [filters]);
@@ -198,7 +203,7 @@ const useSendDocument = () => {
     fetchDataDocument();
   }, []);
 
-  return { data, employeeDetail, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType, onChangeSelectType, selectedDocumentTalent, onClickSendAll };
+  return { data, employeeDetail, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType, onChangeSelectType, selectedDocumentTalent, onClickSendAll, onSubmit };
 };
 
 export default useSendDocument;
