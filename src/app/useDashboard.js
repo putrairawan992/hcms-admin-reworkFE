@@ -5,12 +5,16 @@ import { useRouter } from 'next/navigation';
 const useDashboard = () => {
   const router = useRouter();
   const [data, setData] = useState([]);
+  const [dataRecap, setDataRecap] = useState([]);
   const [loading, setLoading] = useState(true);
   const [productDigitalData, setProductDigitalData] = useState([]);
   const [filters, setFilters] = useState({
     year: '',
     month: '',
     provider: '',
+  });
+  const [filtersRecap, setFiltersRecap] = useState({
+    year: '',
   });
 
   const fetchData = useCallback(
@@ -19,7 +23,7 @@ const useDashboard = () => {
         const response = await httpClient({
           method: 'GET',
           url: '/admin/dashboard/list',
-          params
+          params,
         });
 
         const responseData = response?.data?.data || [];
@@ -30,6 +34,23 @@ const useDashboard = () => {
       }
     },
     [filters]
+  );
+  const fetchRecapData = useCallback(
+    async (params) => {
+      try {
+        const response = await httpClient({
+          method: 'GET',
+          url: '/admin/dashboard/fluktuatif',
+          params,
+        });
+        const responseDataRecap = response?.data?.data || [];
+        setDataRecap(responseDataRecap);
+        setLoading(false);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      }
+    },
+    [filtersRecap]
   );
 
   const fetchDataPD = async () => {
@@ -59,6 +80,9 @@ const useDashboard = () => {
   const onChangeSelect = (slug, value) => {
     setFilters((prevFilters) => ({ ...prevFilters, [slug]: value }));
   };
+  const onChangeSelectRecap = (slug, value) => {
+    setFiltersRecap((prevFilters) => ({ ...prevFilters, [slug]: value }));
+  };
 
   useEffect(() => {
     fetchDataPD();
@@ -68,13 +92,20 @@ const useDashboard = () => {
     fetchData(filters);
   }, [filters]);
 
+  useEffect(() => {
+    fetchRecapData(filtersRecap);
+  }, [filtersRecap]);
+
   return {
     data,
+    dataRecap,
     loading,
     filters,
+    filtersRecap,
     productDigitalData,
     onHandlePress,
     onChangeSelect,
+    onChangeSelectRecap,
   };
 };
 

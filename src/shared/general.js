@@ -41,6 +41,20 @@ export const monthLabelOptions = [
   { value: 'November', label: 'November' },
   { value: 'December', label: 'Desember' },
 ];
+export const monthLabelOptionsRecap = [
+  { key: 'jan', value: 'January', label: 'Jan' },
+  { key: 'feb', value: 'February', label: 'Feb' },
+  { key: 'mar', value: 'March', label: 'Mar' },
+  { key: 'apr', value: 'April', label: 'Apr' },
+  { key: 'may', value: 'May', label: 'Mei' },
+  { key: 'jun', value: 'June', label: 'Jun' },
+  { key: 'jul', value: 'July', label: 'Jul' },
+  { key: 'aug', value: 'August', label: 'Ags' },
+  { key: 'sep', value: 'September', label: 'Sep' },
+  { key: 'oct', value: 'October', label: 'Okt' },
+  { key: 'nov', value: 'November', label: 'Nov' },
+  { key: 'dec', value: 'December', label: 'Des' },
+];
 
 export const statusRemunOptions = [
   { value: 'approved', label: 'Approved' },
@@ -103,7 +117,7 @@ export const navbarDataOptions = [
       {
         title: 'Remuneration',
         href: '/setup/remuneration',
-      }
+      },
     ],
   },
   {
@@ -533,10 +547,22 @@ export const colors = [
 ];
 
 export const jobPostOptions = [
-  { label: 'Lokasi Kerja', value: 'work_location', prefix: 'job_location_name' },
-  { label: 'Keuntungan dari Perusahaan', value: 'benefits_company', prefix: 'benefit_name' },
+  {
+    label: 'Lokasi Kerja',
+    value: 'work_location',
+    prefix: 'job_location_name',
+  },
+  {
+    label: 'Keuntungan dari Perusahaan',
+    value: 'benefits_company',
+    prefix: 'benefit_name',
+  },
   { label: 'Pendidikan', value: 'education', prefix: 'education_name' },
   { label: 'Pengalaman', value: 'experience', prefix: 'experience_name' },
-  { label: 'Spesialisasi Pekerjaan', value: 'job_specialization', prefix: 'job_specialist_name' },
+  {
+    label: 'Spesialisasi Pekerjaan',
+    value: 'job_specialization',
+    prefix: 'job_specialist_name',
+  },
   { label: 'Tingkat Pekerjaan', value: 'work_level', prefix: 'job_level_name' },
 ];
