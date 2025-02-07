@@ -17,6 +17,7 @@ const useSendDocument = () => {
   const [modalType, setModalType] = useState('');
   const [selectedDocumentTalent, setSelectedDocumentTalent] = useState('');
   const [employeeDetail, setEmployeeDetail] = useState({});
+  const [previewData, setPreviewData] = useState({});
   const [filters, setFilters] = useState({
     years: '',
     month: '',
@@ -82,6 +83,26 @@ const useSendDocument = () => {
     }
   };
 
+  const fetchDocumentPreview = async (document_id, type, docTalent, data) => {
+    try {
+      const response = await httpClient({
+        method: 'GET',
+        url: `/admin/document/preview/send_document/detail`,
+        params: { document_id }
+      });
+
+      const responseData = response?.data?.data || [];
+      setPreviewData(responseData);
+      setModalType(type);
+      setSelectedDocumentTalent(docTalent);
+      setEmployeeDetail(data);
+      setModalDocType(data?.type_setting_document);
+      toggleModalOpenDoc();
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
+  };
+
   const submitSettingDocument = async (data) => {
     try {
       await httpClient({
@@ -104,6 +125,34 @@ const useSendDocument = () => {
     } catch (error) {
       setLoadingSubmit(prevData => (!prevData));
       toggleModal();
+      toast({
+        title: 'Error',
+        description: error?.response?.data?.errors || `Something went wrong!`,
+        duration: 3000,
+        status: 'error',
+        position: 'top',
+        isClosable: true,
+      });
+    }
+  };
+
+  const submitDeleteEmployee = async (remuneration_id) => {
+    try {
+      await httpClient({
+        method: 'DELETE',
+        url: '/admin/remuneration/detail',
+        data: { remuneration_id }
+      });
+
+      toast({
+        title: 'Success',
+        description: 'Data Berhasil Dihapus',
+        duration: 3000,
+        status: 'success',
+        position: 'top',
+        isClosable: true,
+      });
+    } catch (error) {
       toast({
         title: 'Error',
         description: error?.response?.data?.errors || `Something went wrong!`,
@@ -146,11 +195,17 @@ const useSendDocument = () => {
   };
 
   const onPressIcon = (data, type, docTalent) => {
-    setModalType(type);
-    setSelectedDocumentTalent(docTalent);
-    setEmployeeDetail(data);
-    setModalDocType(data?.type_setting_document);
-    toggleModalOpenDoc();
+    if (data?.type_setting_document === 'contract_template') {
+      const docTypes = data?.document_type?.find((item) => item.type_document === docTalent);
+      fetchDocumentPreview(docTypes?.id, type, docTalent, data);
+    } else {
+      setModalType(type);
+      setSelectedDocumentTalent(docTalent);
+      setEmployeeDetail(data);
+      setModalDocType(data?.type_setting_document);
+      toggleModalOpenDoc();
+    }
+
   };
 
   const toggleModalOpenDoc = () => {
@@ -190,13 +245,18 @@ const useSendDocument = () => {
   };
 
   const onSubmit = (type, data) => {
-    console.log(type, data);
     if (type === 'all') {
       setModalDocType(data);
     } else {
       toggleModalOpenDoc();
       fetchData(filters);
     }
+  };
+
+  const onDelete = () => {
+    submitDeleteEmployee(employeeDetail?.remuneration_id);
+    toggleModalOpenDoc();
+    fetchData(filters);
   };
 
   useEffect(() => {
@@ -208,7 +268,7 @@ const useSendDocument = () => {
     fetchDataDocument();
   }, []);
 
-  return { data, employeeDetail, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType, onChangeSelectType, selectedDocumentTalent, onClickSendAll, onSubmit };
+  return { data, employeeDetail, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType, onChangeSelectType, selectedDocumentTalent, onClickSendAll, onSubmit, previewData, onDelete };
 };
 
 export default useSendDocument;

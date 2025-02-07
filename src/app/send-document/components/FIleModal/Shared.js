@@ -8,6 +8,8 @@ export const contractTemplateOptions = [
           {
             label: 'No. Surat:',
             type: 'text',
+            isDisabled: false,
+            field: 'letter_no'
           }
         ],
       },
@@ -17,18 +19,26 @@ export const contractTemplateOptions = [
           {
             label: 'Ruang Lingkup:',
             type: 'textarea',
-          },
-          {
-            label: 'Tanggal Hari Ini:',
-            type: 'date',
+            isDisabled: false,
+            field: 'scope'
           },
           {
             label: 'Nama Penanggung Jawab:',
             type: 'text',
+            isDisabled: true,
+            field: 'responsible_person'
+          },
+          {
+            label: 'Role Penanggung Jawab:',
+            type: 'text',
+            isDisabled: true,
+            field: 'responsible_role'
           },
           {
             label: 'Level Penanggung Jawab:',
             type: 'text',
+            isDisabled: true,
+            field: 'responsible_level'
           },
         ],
       },
@@ -43,6 +53,8 @@ export const contractTemplateOptions = [
           {
             label: 'No. Surat:',
             type: 'text',
+            isDisabled: false,
+            field: 'letter_no'
           }
         ],
       },
@@ -52,18 +64,26 @@ export const contractTemplateOptions = [
           {
             label: 'Ruang Lingkup:',
             type: 'textarea',
-          },
-          {
-            label: 'Tanggal Hari Ini:',
-            type: 'date',
+            isDisabled: false,
+            field: 'scope'
           },
           {
             label: 'Nama Penanggung Jawab:',
             type: 'text',
+            isDisabled: true,
+            field: 'responsible_person'
+          },
+          {
+            label: 'Role Penanggung Jawab:',
+            type: 'text',
+            isDisabled: true,
+            field: 'responsible_role'
           },
           {
             label: 'Level Penanggung Jawab:',
             type: 'text',
+            isDisabled: true,
+            field: 'responsible_level'
           },
         ],
       },
@@ -78,6 +98,8 @@ export const contractTemplateOptions = [
           {
             label: 'Nomor Surat PKWT:',
             type: 'text',
+            isDisabled: false,
+            field: 'letter_no'
           }
         ],
       },
@@ -85,72 +107,80 @@ export const contractTemplateOptions = [
         title: 'Isi PKWT Skema Khusus/Normal',
         formField: [
           {
-            label: 'Tanggal:',
-            type: 'date',
-          },
-          {
             label: 'Nama Penanggung Jawab:',
             type: 'text',
+            isDisabled: true,
+            field: 'responsible_person'
           },
           {
             label: 'Nomor Surat Kuasa PJ:',
             type: 'text',
+            isDisabled: true,
+            field: 'power_of_attorney_number'
           },
           {
             label: 'Tanggal Surat Kuasa PJ:',
             type: 'text',
+            isDisabled: true,
+            field: 'power_of_attorney_date'
           },
           {
             label: 'Usia',
             type: 'text',
+            isDisabled: false,
+            field: 'age'
           },
           {
             label: 'Tempat Lahir:',
             type: 'text',
+            isDisabled: false,
+            field: 'age'
           },
           {
             label: 'Tanggal Lahir:',
             type: 'date',
+            isDisabled: false,
+            field: 'birth_of_date'
           },
           {
             label: 'Poin-poin Pertimbangan:',
             type: 'textarea',
+            isDisabled: true,
+            field: 'consideration'
           },
-          {
-            label: 'Take Home Pay:',
-            type: 'text',
-          },
+
           {
             label: 'THP (Terbilang):',
             type: 'text',
+            isDisabled: false,
+            field: 'thp'
           },
-          {
-            label: 'Gaji Pokok (Angka):',
-            type: 'text',
-          },
+
           {
             label: 'Gaji Pokok (Terbilang):',
             type: 'text',
+            isDisabled: false,
+            field: 'gaji_pokok'
           },
-          {
-            label: 'Tunj. Posisi (Angka):',
-            type: 'text',
-          },
+
           {
             label: 'Tunj. Posisi (Terbilang):',
             type: 'text',
+            isDisabled: false,
+            field: 'tunjangan_posisi'
           },
-          {
-            label: 'Durasi Kontrak Bulan (Angka):',
-            type: 'text',
-          },
+
           {
             label: 'Durasi Kontrak Bulan (Terbilang):',
             type: 'text',
+            isDisabled: false,
+            field: 'durasi_kontrak'
           },
           {
             label: 'Pasal 8 Berakhinya Perjanjian atau Pemutusan Perjanjian:',
             type: 'text',
+            isDisabled: false,
+            field: 'pasal_8'
           },
         ],
       },
@@ -160,6 +190,8 @@ export const contractTemplateOptions = [
           {
             label: 'Ruang Lingkup:',
             type: 'textarea',
+            isDisabled: false,
+            field: 'scope'
           }
         ],
       },
@@ -174,6 +206,8 @@ export const contractTemplateOptions = [
           {
             label: 'No. Surat:',
             type: 'text',
+            isDisabled: false,
+            field: 'letter_no'
           }
         ],
       },
@@ -183,23 +217,27 @@ export const contractTemplateOptions = [
           {
             label: 'Ruang Lingkup:',
             type: 'date',
-          },
-          {
-            label: 'Tanggal Hari Ini:',
-            type: 'date',
+            isDisabled: false,
+            field: 'scope'
           },
           {
             label: 'Nama Penanggung Jawab:',
             type: 'text',
+            isDisabled: true,
+            field: 'responsible_person'
           },
           {
             label: 'Role Penanggung Jawab:',
             type: 'text',
+            isDisabled: true,
+            field: 'responsible_role'
           },
           {
             label: 'Level Penanggung Jawab:',
             type: 'text',
-          }
+            isDisabled: true,
+            field: 'responsible_level'
+          },
         ],
       }
     ],

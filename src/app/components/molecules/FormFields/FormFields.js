@@ -12,6 +12,7 @@ const FormFields = ({
   slug = '',
   theme = 'default',
   placeholder = '',
+  disabled = false,
   onChangeText = noop,
 }) => {
   const RenderForm = useCallback(() => {
@@ -29,6 +30,7 @@ const FormFields = ({
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChangeText(slug, e.target.value)}
+          disabled={disabled}
         />
       );
     } else if (type === 'textarea') {
@@ -40,6 +42,7 @@ const FormFields = ({
           style={{ height: '150px', flex: 1, marginBottom: 60 }}
           value={value}
           onChange={(value) => onChangeText(slug, value)}
+          disabled={disabled}
         />
       );
     } else if (type === 'date') {
@@ -55,6 +58,7 @@ const FormFields = ({
           type='date'
           placeholder={placeholder}
           value={value}
+          disabled={disabled}
           onChange={(e) => onChangeText(slug, e.target.value)}
         />
       );
