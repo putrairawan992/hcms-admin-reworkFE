@@ -1,53 +1,55 @@
-import DataTalentCard from './DataTalentCard';
-import HistoryTalentCard from './HistoryTalentCard';
-import SendDocumentCard from './SendDocumentCard';
-import MasterDataBatchCard from './MasterDataBatchCard';
-import DataTables from './DataTables';
-import PayslipCard from './PayslipCard';
-import ListEmpty from './ListEmpty';
 import ApprvRemunCard from './ApprvRemunCard';
+import AttachmentFileList from './AttachmentFileList';
 import BiodataField from './BiodataField';
+import ChooseLogo from './ChooseLogo';
+import DataTables from './DataTables';
+import DataTalentCard from './DataTalentCard';
 import DocumentFormField from './DocumentFormField';
 import FormFields from './FormFields';
-import TalentListCard from './TalentListCard';
-import AttachmentFileList from './AttachmentFileList';
-import ProgressCard from './ProgressCard';
-import PretestCard from './PretestCard';
-import QuestionSection from './QuestionSection';
-import ChooseLogo from './ChooseLogo';
-import MitraListCard from './MitraListCard';
+import HistoryTalentCard from './HistoryTalentCard';
 import JobProviderCard from './JobProviderCard';
+import ListEmpty from './ListEmpty';
+import MasterDataBatchCard from './MasterDataBatchCard';
+import MitraListCard from './MitraListCard';
+import Pagination from './Pagination';
+import PayslipCard from './PayslipCard';
 import PenilaianCard from './PenilaianCard';
 import PenilaianDocumentCard from './PenilaianDocumentCard';
-import PenilaianMultipleChoiceCard from './PenilaianMultipleChoiceCard';
 import PenilaianEssayCard from './PenilaianEssayCard';
 import ApprovalJobPostCard from './ApprovalJobPostCard';
 import BlastNotificationCard from './BlastNotificationCard';
+import PenilaianMultipleChoiceCard from './PenilaianMultipleChoiceCard';
+import PretestCard from './PretestCard';
+import ProgressCard from './ProgressCard';
+import QuestionSection from './QuestionSection';
+import SendDocumentCard from './SendDocumentCard';
+import TalentListCard from './TalentListCard';
 
 export {
-  DataTalentCard,
-  HistoryTalentCard,
-  SendDocumentCard,
-  MasterDataBatchCard,
-  DataTables,
-  PayslipCard,
-  ListEmpty,
+  ApprovalJobPostCard,
   ApprvRemunCard,
+  AttachmentFileList,
   BiodataField,
+  BlastNotificationCard,
+  ChooseLogo,
+  DataTables,
+  DataTalentCard,
   DocumentFormField,
   FormFields,
-  TalentListCard,
-  AttachmentFileList,
-  ProgressCard,
-  PretestCard,
-  QuestionSection,
-  ChooseLogo,
-  MitraListCard,
+  HistoryTalentCard,
   JobProviderCard,
+  ListEmpty,
+  MasterDataBatchCard,
+  MitraListCard,
+  Pagination,
+  PayslipCard,
   PenilaianCard,
   PenilaianDocumentCard,
-  PenilaianMultipleChoiceCard,
   PenilaianEssayCard,
-  ApprovalJobPostCard,
-  BlastNotificationCard
+  PenilaianMultipleChoiceCard,
+  PretestCard,
+  ProgressCard,
+  QuestionSection,
+  SendDocumentCard,
+  TalentListCard,
 };

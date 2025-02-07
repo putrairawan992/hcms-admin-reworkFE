@@ -1,62 +1,70 @@
-import { useEffect, useState } from 'react';
-import { httpClient } from '../../utils/network';
+import { useState } from 'react';
+import axiosInstance from '@/app/api/axiosConfig';
+import usePretestStore from '@/stores/pretestStore';
 
-const useDashboardMitra = () => {
-  const [data, setData] = useState([]);
-  const [category, setCategory] = useState([]);
+const useAddPretestMitra = () => {
+  const { jobSpesialistId } = usePretestStore();
   const [questionData, setQuestionData] = useState([
     {
+      id: 1,
       question: '',
       answer: '',
+      options: [
+        { alphabet: 'A', text: '', is_correction: 'false' },
+        { alphabet: 'B', text: '', is_correction: 'false' },
+        { alphabet: 'C', text: '', is_correction: 'false' },
+        { alphabet: 'D', text: '', is_correction: 'false' },
+      ],
     },
   ]);
 
-  const fetchData = async () => {
+  const postPretest = async (data) => {
     try {
-      const response = await httpClient({
-        method: 'GET',
-        url: '/admin/mitra/pretest/master_category'
-      });
-
-      const responseData = response?.data?.data || [];
-      setData(responseData);
+      const response = await axiosInstance.post(
+        `/api/admin/pretest?job_specialist_id=${jobSpesialistId}`,
+        data
+      );
+      console.log(response);
+      return response;
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
   };
 
-  const fetchDataCategory = async () => {
+  const getDetailPretest = async (id) => {
     try {
-      const response = await httpClient({
-        method: 'GET',
-        url: '/admin/mitra/pretest/master_category'
-      });
-
-      const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(
-        ({ id, category_name }) => ({
-          id,
-          label: category_name,
-          value: id,
-        })
+      const response = await axiosInstance.get(
+        `/api/admin/pretest_detail?pretest_modul_detail_id=${id}`
       );
-
-      setCategory(transformedData);
+      console.log(response);
+      return response;
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
   };
 
   const addRowQuestion = () => {
-    setQuestionData([...questionData, { question: '', answer: '' }]);
+    const newQuestion = {
+      id: questionData.length + 1,
+      question: '',
+      answer: '',
+      options: [
+        { alphabet: 'A', text: '', is_correction: 'false' },
+        { alphabet: 'B', text: '', is_correction: 'false' },
+        { alphabet: 'C', text: '', is_correction: 'false' },
+        { alphabet: 'D', text: '', is_correction: 'false' },
+      ],
+    };
+    setQuestionData([...questionData, newQuestion]);
   };
 
-  useEffect(() => {
-    fetchData();
-    fetchDataCategory();
-  }, []);
-
-  return { data, questionData, category, addRowQuestion };
+  return {
+    addRowQuestion,
+    getDetailPretest,
+    postPretest,
+    questionData,
+    setQuestionData,
+  };
 };
 
-export default useDashboardMitra;
+export default useAddPretestMitra;

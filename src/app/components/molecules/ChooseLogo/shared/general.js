@@ -11,105 +11,32 @@ import {
   VideoIcon,
 } from '@/app/components/icons';
 
-export const typeOptions = (isActive) => [
-  {
-    id: '1',
-    icon: (
-      <BrainIcon
-        width={25}
-        height={25}
-        color={isActive === '1' ? '#FFFFFF' : '#404041'}
-      />
-    ),
-  },
-  {
-    id: '2',
-    icon: (
-      <VideoIcon
-        width={25}
-        height={25}
-        color={isActive === '2' ? '#FFFFFF' : '#404041'}
-      />
-    ),
-  },
-  {
-    id: '3',
-    icon: (
-      <AlphabetIcon
-        width={25}
-        height={25}
-        color={isActive === '3' ? '#FFFFFF' : '#404041'}
-      />
-    ),
-  },
-  {
-    id: '4',
-    icon: (
-      <PaintBrustIcon
-        width={25}
-        height={25}
-        color={isActive === '4' ? '#FFFFFF' : '#404041'}
-      />
-    ),
-  },
-  {
-    id: '5',
-    icon: (
-      <CodeIcon
-        width={25}
-        height={25}
-        color={isActive === '5' ? '#FFFFFF' : '#404041'}
-      />
-    ),
-  },
-  {
-    id: '6',
-    icon: (
-      <NumberIcon
-        width={25}
-        height={25}
-        color={isActive === '6' ? '#FFFFFF' : '#404041'}
-      />
-    ),
-  },
-  {
-    id: '7',
-    icon: (
-      <MegazineIcon
-        width={25}
-        height={25}
-        color={isActive === '7' ? '#FFFFFF' : '#404041'}
-      />
-    ),
-  },
-  {
-    id: '8',
-    icon: (
-      <PencilTipIcon
-        width={25}
-        height={25}
-        color={isActive === '8' ? '#FFFFFF' : '#404041'}
-      />
-    ),
-  },
-  {
-    id: '9',
-    icon: (
-      <PhotoIcon
-        width={25}
-        height={25}
-        color={isActive === '9' ? '#FFFFFF' : '#404041'}
-      />
-    ),
-  },
-  {
-    id: '10',
-    icon: (
-      <HeartIcon
-        width={25}
-        height={25}
-        color={isActive === '10' ? '#FFFFFF' : '#404041'}
-      />
-    ),
-  },
-];
+const iconComponents = {
+  1: BrainIcon,
+  2: VideoIcon,
+  3: AlphabetIcon,
+  4: PaintBrustIcon,
+  5: CodeIcon,
+  6: NumberIcon,
+  7: MegazineIcon,
+  8: PencilTipIcon,
+  9: PhotoIcon,
+  10: HeartIcon,
+};
+
+export const typeOptions = (isActive, alwaysActive = false, size = 'sm') => {
+  return Object.keys(iconComponents).map((id) => {
+    const IconComponent = iconComponents[id];
+    return {
+      id,
+      label: IconComponent.displayName || id, // Using displayName as label fallback
+      icon: (
+        <IconComponent
+          width={size === 'lg' ? 45 : 25}
+          height={size === 'lg' ? 45 : 25}
+          color={isActive === id || alwaysActive ? '#FFFFFF' : '#404041'}
+        />
+      ),
+    };
+  });
+};

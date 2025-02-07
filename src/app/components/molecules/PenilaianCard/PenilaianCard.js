@@ -135,8 +135,16 @@ const PenilaianCard = ({ data = [] }) => {
             <Gap height={4} />
             <Box borderBottomWidth={3} borderColor="#AE445A" />
             <Gap height={4} />
-
+            <Flex justifyContent={'space-around'}>
+              <Text fontWeight="bold" color="#AE445A">
+                Average Score
+              </Text>
+              <Text fontWeight="bold" color="#AE445A">
+                {nilai}
+              </Text>
+            </Flex>
             <Gap height={4} />
+
             <Flex justify="flex-end">
               <Button style={styles.buttonSend} onClick={handleClick}>
                 {isLoading ? <Spinner size="sm" /> : 'Save'}
