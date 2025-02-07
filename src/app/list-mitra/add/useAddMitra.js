@@ -1,13 +1,8 @@
 import { useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { useToast } from '@chakra-ui/react';
+import { addMitra } from '@/app/api/mitra';
 
 const useAddMitra = () => {
-  const router = useRouter();
-  const toast = useToast();
-
   const [imageProfile, setImageProfile] = useState('');
-  const [loading, setLoading] = useState(false);
   const [profileImagePreview, setProfileImagePreview] = useState(
     '/images/company-dummy.jpeg'
   );
@@ -17,6 +12,9 @@ const useAddMitra = () => {
     username: '',
     email: '',
   });
+
+  // Menggunakan addMitra secara dinamis
+  const { mutate, isLoading } = addMitra();
 
   const onChangeText = (slug, value) => {
     setForm((prevData) => ({ ...prevData, [slug]: value }));
@@ -29,7 +27,7 @@ const useAddMitra = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setImageProfile('photo', file);
+      setImageProfile(file);
       setProfileImagePreview(URL.createObjectURL(file));
     }
   };
@@ -72,14 +70,29 @@ const useAddMitra = () => {
   };
 
   const onHandleSubmit = () => {
-    setLoading(true);
-    submitData();
+    // Membuat payload sesuai struktur yang diinginkan
+    const payload = {
+      mitra_data: [
+        {
+          mitra_name: form.name, // Nama mitra diambil dari form
+          member: [
+            {
+              name: form.username, // Username diambil dari form
+              email: form.email, // Email diambil dari form
+            },
+          ],
+        },
+      ],
+    };
+
+    // Kirim payload ke API
+    mutate(payload);
   };
 
   return {
     profileImagePreview,
     profileFileInputRef,
-    loading,
+    loading: isLoading,
     form,
     onChangeText,
     onClickProfile,

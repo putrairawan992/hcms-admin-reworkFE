@@ -4,7 +4,6 @@ import { noop } from '@/app/utils/helpers';
 import { Gap } from '../../atoms';
 
 const MitraListCard = ({ data = [], onPress = noop, isDetail = false }) => {
-  console.log({ data });
   return (
     <Box marginBottom={4}>
       {data?.map((item, index) => {
@@ -35,7 +34,7 @@ const MitraListCard = ({ data = [], onPress = noop, isDetail = false }) => {
               <Flex justify="space-between" alignItems="center">
                 <Box>
                   <Text color="#404041" fontWeight={400} fontSize={12}>
-                    Nama Mitra 1
+                    Nama Mitra
                   </Text>
                   <Text color="#404041" fontWeight={700} fontSize={12}>
                     {item?.name}

@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL_MITRA;
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const httpClient = axios.create({
   baseURL: `${baseURL}/api`,
@@ -20,7 +20,6 @@ httpClient.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log(error);
     return Promise.reject(error);
   }
 );

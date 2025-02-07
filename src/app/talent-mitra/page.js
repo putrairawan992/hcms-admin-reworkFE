@@ -1,31 +1,33 @@
 'use client';
-import {
-  Box,
-  Button,
-  Flex,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import styles from '../styles/inbox.module.css';
 import { useState } from 'react';
 import 'moment/locale/id';
 import { isEmpty } from 'lodash';
 import { TalentListCard } from '../components/molecules';
 import useTalentMitra from './useTalentMitra';
-import { Gap, SelectField } from '../components/atoms';
-import {
-  specializationOptions,
-  competenceOptions,
-  educationOptions,
-  experienceOptions,
-} from './Shared/General';
-import { AddIcon, Search2Icon } from '@chakra-ui/icons';
+import { Gap } from '../components/atoms';
+import { AddIcon } from '@chakra-ui/icons';
 import { ShareIcon } from '../components/icons';
 import Link from 'next/link';
-
+import SearchSection from '../components/molecules/TalentMitra/SearchSection';
+import { PenilaianCard } from '../components/molecules';
+const dummyData = [
+  {
+    talent_name: 'Roma',
+    status: 'Completed',
+    created_at: '2025-01-24T12:00:00Z',
+    employee_list: [
+      {
+        employee_type: 'Full-time',
+        module_name: 'Wawancara Mandiri',
+        duration: '00:05:42',
+        detail: 'Completed with 90% score',
+        score: 90,
+      },
+    ],
+  },
+];
 const TalentMitra = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [years, setYears] = useState('2024');
@@ -76,18 +78,6 @@ const TalentMitra = () => {
             <ShareIcon color="#FFFFFF" />
           </Button>
         </Flex>
-        <Box>
-          <InputGroup className={styles['input-container']}>
-            <Input
-              className={styles['admin-role-input']}
-              type="text"
-              placeholder="Cari kandidat"
-            />
-            <InputRightElement>
-              <Search2Icon />
-            </InputRightElement>
-          </InputGroup>
-        </Box>
       </Flex>
 
       <Gap height={6} />
@@ -101,15 +91,13 @@ const TalentMitra = () => {
           borderColor: '#EAEAEA',
           borderRadius: 16,
           padding: 32,
-        }}
-      >
+        }}>
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <Text
             className={styles['inbox-filter-text']}
             color="#AE445A"
             fontWeight={700}
-            fontSize={16}
-          >
+            fontSize={16}>
             Quick Summary
           </Text>
           <Gap height={4} />
@@ -122,8 +110,7 @@ const TalentMitra = () => {
                 borderColor: '#EAEAEA',
                 borderRadius: 8,
                 padding: 16,
-              }}
-            >
+              }}>
               <Text color="#292A2E" fontWeight={600} fontSize={11}>
                 Active Talent Pool
               </Text>
@@ -135,8 +122,7 @@ const TalentMitra = () => {
                   fontWeight={800}
                   alignSelf="flex-end"
                   flex={1}
-                  marginBottom={6}
-                >
+                  marginBottom={6}>
                   29
                 </Text>
               </Flex>
@@ -150,8 +136,7 @@ const TalentMitra = () => {
                 borderColor: '#EAEAEA',
                 borderRadius: 8,
                 padding: 16,
-              }}
-            >
+              }}>
               <Text color="#292A2E" fontWeight={600} fontSize={11}>
                 Total Registered Talents
               </Text>
@@ -163,8 +148,7 @@ const TalentMitra = () => {
                   fontWeight={800}
                   alignSelf="flex-end"
                   flex={1}
-                  marginBottom={6}
-                >
+                  marginBottom={6}>
                   29
                 </Text>
               </Flex>
@@ -178,8 +162,7 @@ const TalentMitra = () => {
                 borderColor: '#EAEAEA',
                 borderRadius: 8,
                 padding: 16,
-              }}
-            >
+              }}>
               <Text color="#292A2E" fontWeight={600} fontSize={11}>
                 Talent in hiring process
               </Text>
@@ -191,8 +174,7 @@ const TalentMitra = () => {
                   fontWeight={800}
                   alignSelf="flex-end"
                   flex={1}
-                  marginBottom={6}
-                >
+                  marginBottom={6}>
                   29
                 </Text>
               </Flex>
@@ -206,8 +188,7 @@ const TalentMitra = () => {
                 borderColor: '#EAEAEA',
                 borderRadius: 8,
                 padding: 16,
-              }}
-            >
+              }}>
               <Text color="#292A2E" fontWeight={600} fontSize={11}>
                 Hired Talents
               </Text>
@@ -219,8 +200,7 @@ const TalentMitra = () => {
                   fontWeight={800}
                   alignSelf="flex-end"
                   flex={1}
-                  marginBottom={6}
-                >
+                  marginBottom={6}>
                   29
                 </Text>
               </Flex>
@@ -234,8 +214,7 @@ const TalentMitra = () => {
                 borderColor: '#EAEAEA',
                 borderRadius: 8,
                 padding: 16,
-              }}
-            >
+              }}>
               <Text color="#292A2E" fontWeight={600} fontSize={11}>
                 Failed Talent Processing
               </Text>
@@ -247,8 +226,7 @@ const TalentMitra = () => {
                   fontWeight={800}
                   alignSelf="flex-end"
                   flex={1}
-                  marginBottom={6}
-                >
+                  marginBottom={6}>
                   29
                 </Text>
               </Flex>
@@ -260,37 +238,11 @@ const TalentMitra = () => {
       <Gap height={6} />
 
       <Flex marginBottom={4}>
-        <SelectField
-          label="Pendidikan"
-          options={educationOptions}
-          value={filters.digital_product}
-          slug="pendidikan"
-          onChange={onChangeSelect}
-        />
-        <SelectField
-          label="Pengalaman"
-          options={experienceOptions}
-          value={filters.document}
-          slug="pengalaman"
-          onChange={onChangeSelect}
-        />
-        <SelectField
-          label="Tes Kompetensi"
-          options={competenceOptions}
-          value={filters.document_tracking}
-          slug="test_kompetensi"
-          onChange={onChangeSelect}
-        />
-        <SelectField
-          label="Spesialisasi"
-          options={specializationOptions}
-          value={filters.selection_type}
-          slug="spesialisasi"
-          onChange={onChangeSelect}
-        />
+        <SearchSection />
       </Flex>
-      {/* {loading ? <ListEmpty /> : <RenderContent />} */}
-      <TalentListCard data={[]} onPress={onHandlePress} />
+      {dummyData?.map((item, index) => (
+        <PenilaianCard key={index} data={item} />
+      ))}
     </Box>
   );
 };
