@@ -1,190 +1,216 @@
 'use client';
-import { Box, Button, Divider, Flex, Input, Text } from '@chakra-ui/react';
+import { Box, Button, Divider, Flex, Text } from '@chakra-ui/react';
 import styles from '../../styles/inbox.module.css';
-import { ChooseLogo, QuestionSection } from '../../components/molecules';
-import useAddPretestMitra from './useAddPretestMitra';
-import { Gap, SelectField, TextArea } from '../../components/atoms';
-import { useMemo, useState } from 'react';
+import { Gap, SelectField, TextArea, Input } from '../../components/atoms';
+import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-
-const categories = [
-  { label: 'Wawancara Mandiri', value: 'Wawancara Mandiri' },
-  { label: 'Test Kepribadian', value: 'Test Kepribadian' },
-  { label: 'Tes Kompetensi', value: 'Tes Kompetensi' },
-];
-
-const durations = [
-  { label: '15 menit', value: 15 },
-  { label: '30 menit', value: 30 },
-  { label: '45 menit', value: 45 },
-  { label: '60 menit', value: 60 },
-  { label: '75 menit', value: 75 },
-  { label: '90 menit', value: 90 },
-  { label: '105 menit', value: 105 },
-  { label: '120 menit', value: 120 },
-];
-
+import useAddPretestMitra from './useAddPretestMitra';
+import { ChooseLogo, QuestionSection } from '@/app/components/molecules';
+import { map } from 'lodash';
+import axiosInstance from '@/app/api/axiosConfig';
 const initialForm = {
   title: '',
   instruction: '',
   category: '',
-  duration: 0,
+  duration: '',
   logo: '',
-  question: '',
+  question: [],
+  multiple_choice: [],
 };
+
 const PretestMitra = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const module = searchParams.get('module') || '';
-
-  const { data, questionData, category, addRowQuestion } = useAddPretestMitra();
+  const [module, setModule] = useState(searchParams.get('module') || '');
+  const [modulData, setModulData] = useState([]);
+  const [durations, setDurations] = useState([]);
   const [form, setForm] = useState(initialForm);
-  const RenderContentQuestion = useMemo(
-    () =>
-      questionData.map((item, index) => (
-        <QuestionSection questionNumber={index} key={index} />
-      )),
-    [questionData]
-  );
+  const {
+    questionData,
+    setQuestionData,
+    addRowQuestion,
+    postPretest,
+    getDetailPretest,
+  } = useAddPretestMitra();
 
-  const renderContentModuleLiveRecording = useMemo(
-    () => (
-      <>
-        <Text color="gray.800" fontWeight="bold" fontSize="lg">
-          Instruksi Tes
-        </Text>
-        <TextArea
-          placeholder="Masukkan deskripsi soal"
-          style={{ height: '150px' }}
-          className="bg-primary-100"
-          value={form.instruction}
-          onChange={(e) => setForm({ ...form, instruction: e })}
-        />
-        <Gap height={12} />
-        <Flex gap={4}>
-          <SelectField
-            label="Kategori"
-            onChange={(slug, value) => setForm({ ...form, [slug]: value })}
-            options={categories}
-            placeholder="Pilih kategori"
-            slug="category"
-            value={form.category}
-          />
-          <SelectField
-            placeholder="Durasi Waktu"
-            label="Durasi Waktu"
-            options={durations}
-            slug="duration"
-            value={form.duration}
-            onChange={(slug, value) => setForm({ ...form, [slug]: value })}
-          />
-        </Flex>
-        <Gap height={4} />
-        <Box>
-          <Text color="gray.800" fontWeight="bold" fontSize="lg">
-            Pilih logo
-          </Text>
-          <Gap height={2} />
-          <ChooseLogo />
-        </Box>
-        <Gap height={4} />
-        <Divider borderColor="gray.300" />
-        <Gap height={4} />
-        <Text color="gray.800" fontWeight="bold" fontSize="lg">
-          Soal 1
-        </Text>
-        <TextArea
-          placeholder="Masukkan pertanyaan"
-          style={{ height: '150px' }}
-          value={form.question}
-          onChange={(e) => setForm({ ...form, question: e })}
-        />
+  const pretestModulDetailId = searchParams.get('id') || '';
+  const isModuleMultipleChoice = module?.toLowerCase() === 'modul pilih ganda';
 
-        <div className="flex justify-center mt-16">
-          <Button className={styles['inbox-btn']} onClick={addRowQuestion}>
-            Tambah Pertanyaan
-          </Button>
-        </div>
-      </>
-    ),
-    [category, addRowQuestion]
-  );
+  const categoryOptions = map(modulData, (item) => ({
+    label: item.category_name,
+    value: item.id,
+  }));
 
-  const renderContentModuleGanda = useMemo(
-    () => (
-      <>
-        <Flex gap={4}>
-          <SelectField
-            placeholder="Pilih kategori"
-            label="Kategori"
-            options={category}
-          />
-          <SelectField placeholder="Durasi Waktu" label="Durasi Waktu" />
-        </Flex>
-        <Gap height={4} />
-        <Box>
-          <Text color="gray.800" fontWeight="bold" fontSize="lg">
-            Pilih logo
-          </Text>
-          <Gap height={2} />
-          <ChooseLogo />
-        </Box>
-        <Gap height={4} />
-        <Divider borderColor="gray.300" />
-        <Gap height={4} />
-        {RenderContentQuestion}
-        <Gap height={4} />
-        <Flex justify="center">
-          <Button className={styles['inbox-btn']} onClick={addRowQuestion}>
-            Tambah Pertanyaan
-          </Button>
-        </Flex>
-      </>
-    ),
-    [category, RenderContentQuestion, addRowQuestion]
-  );
+  const getDetail = async () => {
+    try {
+      const response = await getDetailPretest(pretestModulDetailId);
+      const data = response.data.data;
+      setModulData(data.master_data.master_category);
+      setDurations(data.master_data.master_duration);
+      if (data.type) {
+        setModule(data.type);
+      }
+      setForm({
+        title: data.title_test || '',
+        instruction: data.instructions || '',
+        category: data.category_id || '',
+        duration: data.duration || '',
+        logo: data.logo || '',
+        question: data.question || [],
+      });
+
+      setQuestionData(
+        data.question.map((q) => ({
+          id: q.id,
+          question: q.question,
+          options: q.options || [],
+        }))
+      );
+      return data;
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
+  };
+
+  useEffect(() => {
+    getDetail();
+  }, []);
+
+  const handleSave = async () => {
+    const payload = {
+      modul_name: module,
+      type: module,
+      title_test: form.title,
+      category_id: form.category,
+      instructions: form.instruction,
+      logo: form.logo,
+      duration: form.duration,
+      deadline: '2024-01-10',
+      question: isModuleMultipleChoice
+        ? []
+        : questionData.map((item) => item.question),
+      multiple_choice: isModuleMultipleChoice
+        ? questionData.map((item) => ({
+            question: item.question,
+            options: item.options,
+          }))
+        : [],
+    };
+
+    try {
+      if (pretestModulDetailId) {
+        // Jika ada ID, lakukan update
+        await axiosInstance.put(
+          `/api/admin/pretest?pretest_modul_detail_id=${pretestModulDetailId}`,
+          payload
+        );
+        alert('Pretest berhasil diupdate!');
+      } else {
+        // Jika tidak ada ID, lakukan create
+        await postPretest(payload);
+        alert('Pretest berhasil disimpan!');
+      }
+      router.back();
+    } catch (error) {
+      console.error('Error saving pretest:', error);
+      alert('Gagal menyimpan pretest.');
+    }
+  };
 
   return (
     <Box className={styles['inbox-container']}>
-      <Flex align="center" justify="space-between">
+      <Flex justify="space-between">
         <Box>
           <Text className={styles['inbox-title']}>{module}</Text>
-          <Text
-            fontSize="sm"
-            fontWeight="light"
-            color="gray.800"
-            fontStyle="italic">
+          <Text color="gray.500">
             Silahkan atur soal yang akan dijadikan Pre-Test bagi calon Karyawan
           </Text>
         </Box>
+
         <Button
-          className={styles['inbox-btn']}
-          px={8}
-          onClick={() => {
-            localStorage.setItem('save-pretest', true);
-            router.push('/pre-test-mitra');
-          }}>
+          style={{
+            background: 'linear-gradient(90deg, #f39f5a 0%, #ae445a 100%)',
+            color: 'white',
+          }}
+          onClick={handleSave}>
           Save
         </Button>
       </Flex>
       <Gap height={8} />
-      <Box>
-        <Box>
-          <Text color="gray.800" fontWeight="bold" fontSize="lg">
-            Judul tes
-          </Text>
-          <Gap height={2} />
-          <Input
-            className={styles['input-container']}
-            type="text"
-            placeholder="Masukkan judul tes"
-          />
-        </Box>
-        <Gap height={4} />
-        {module.toLowerCase() === 'modul live recording' &&
-          renderContentModuleLiveRecording}
-        {module.toLowerCase() === 'modul ganda' && renderContentModuleGanda}
-      </Box>
+
+      <Input
+        label="Judul Test"
+        type="text"
+        value={form.title}
+        onChange={(e) => setForm({ ...form, title: e.target.value })}
+        placeholder="Masukkan judul test"
+      />
+
+      <Gap height={4} />
+      <Text color="gray.800" fontWeight="bold" fontSize="lg">
+        Instruksi Tes
+      </Text>
+      <TextArea
+        placeholder="Masukkan deskripsi soal"
+        value={form.instruction}
+        onChange={(value) => setForm({ ...form, instruction: value })}
+        style={{ margin: '0px 0px 2rem 0px', height: '150px' }}
+      />
+      <Gap height={12} />
+
+      <Flex gap={4}>
+        <SelectField
+          label="Kategori"
+          onChange={(slug, value) => setForm({ ...form, [slug]: value })}
+          options={categoryOptions}
+          placeholder="Pilih kategori"
+          slug="category"
+          value={form.category}
+        />
+        <SelectField
+          placeholder="Durasi Waktu"
+          label="Durasi Waktu"
+          options={durations}
+          slug="duration"
+          value={form.duration}
+          onChange={(slug, value) => setForm({ ...form, [slug]: value })}
+        />
+      </Flex>
+
+      <Gap height={4} />
+      <ChooseLogo onClick={(item) => setForm({ ...form, logo: item.label })} />
+      <Gap height={4} />
+      <Divider borderColor="gray.300" />
+      <Gap height={4} />
+
+      {questionData.map((item, index) => (
+        <QuestionSection
+          key={index}
+          questionNumber={index + 1}
+          isMultipleChoice={isModuleMultipleChoice}
+          value={item}
+          onChange={(updatedData) => {
+            const newData = [...questionData];
+            newData[index] = { ...newData[index], ...updatedData };
+            setQuestionData(newData);
+          }}
+          onDelete={() => {
+            setQuestionData((prevData) =>
+              prevData.filter((_, i) => i !== index)
+            );
+          }}
+        />
+      ))}
+      <div className="flex justify-center">
+        <Button
+          style={{
+            background: 'linear-gradient(90deg, #f39f5a 0%, #ae445a 100%)',
+            color: 'white',
+          }}
+          onClick={addRowQuestion}>
+          Tambah Pertanyaan
+        </Button>
+      </div>
     </Box>
   );
 };
