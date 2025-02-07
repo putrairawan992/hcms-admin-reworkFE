@@ -341,7 +341,7 @@ const Home = () => {
             </Text>
             {monthLabelOptionsRecap.map((item) => (
               <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {dataRecap.newJoiner?.[item.key] || 0}
+                {/* {dataRecap.newJoiner?.[item.key] || 0} */} 0
               </Text>
             ))}
           </Flex>
@@ -352,7 +352,7 @@ const Home = () => {
             </Text>
             {monthLabelOptionsRecap.map((item) => (
               <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {dataRecap.resign?.[item.key] || 0}
+                {dataRecap.productDigital?.[item.key] || 0}
               </Text>
             ))}
           </Flex>
@@ -363,7 +363,7 @@ const Home = () => {
             </Text>
             {monthLabelOptionsRecap.map((item) => (
               <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {dataRecap.renewal?.[item.key] || 0}
+                {/* {dataRecap.renewal?.[item.key] || 0} */} 0
               </Text>
             ))}
           </Flex>
@@ -391,7 +391,7 @@ const Home = () => {
             </Text>
             {monthLabelOptionsRecap.map((item) => (
               <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {dataRecap.newJoiner?.[item.key] || 0}
+                {/* {dataRecap.newJoiner?.[item.key] || 0} */} 0
               </Text>
             ))}
           </Flex>
@@ -402,7 +402,7 @@ const Home = () => {
             </Text>
             {monthLabelOptionsRecap.map((item) => (
               <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {dataRecap.resign?.[item.key] || 0}
+                {/* {dataRecap.resign?.[item.key] || 0} */} 0
               </Text>
             ))}
           </Flex>
@@ -413,7 +413,7 @@ const Home = () => {
             </Text>
             {monthLabelOptionsRecap.map((item) => (
               <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {dataRecap.renewal?.[item.key] || 0}
+                {dataRecap.talentActive?.[item.value] || 0}
               </Text>
             ))}
           </Flex>
