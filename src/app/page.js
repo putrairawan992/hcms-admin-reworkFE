@@ -27,9 +27,6 @@ const Home = () => {
     onChangeSelectRecap,
   } = useDashboard();
 
-  console.log('dibawah ini dataRecap');
-  console.log(dataRecap);
-
   return (
     <React.Fragment>
       <Box className={styles['dashboard-container']}>
