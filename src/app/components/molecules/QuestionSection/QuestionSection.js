@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Gap } from '../../atoms';
 import {
   Box,
@@ -10,6 +9,7 @@ import {
   Input,
 } from '@chakra-ui/react';
 import 'react-quill/dist/quill.snow.css';
+import { TextArea } from '../../atoms';
 import dynamic from 'next/dynamic';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
@@ -22,14 +22,14 @@ const QuestionSection = ({
   onChange,
 }) => {
   const handleTextChange = (text) => {
-    onChange({ question: text });
+    onChange({ ...value, question: text });
   };
 
   const handleOptionChange = (optionIndex, optionText) => {
     const updatedOptions = value.options.map((option, index) =>
       index === optionIndex ? { ...option, text: optionText } : option
     );
-    onChange({ options: updatedOptions });
+    onChange({ ...value, options: updatedOptions }); // Tetap bawa ID
   };
 
   const handleCorrectAnswerChange = (correctAnswer) => {
@@ -39,7 +39,7 @@ const QuestionSection = ({
         option.alphabet.toUpperCase() === correctAnswer
       ).toString(),
     }));
-    onChange({ options: updatedOptions });
+    onChange({ ...value, options: updatedOptions }); // Tetap bawa ID
   };
 
   return (
@@ -58,8 +58,7 @@ const QuestionSection = ({
         </Button>
       </Flex>
       <Gap height={2} />
-      <ReactQuill
-        theme="snow"
+      <TextArea
         value={value.question}
         onChange={handleTextChange}
         style={{ margin: '0px 0px 2rem 0px', height: '150px' }}
@@ -110,4 +109,4 @@ const QuestionSection = ({
   );
 };
 
-export default memo(QuestionSection);
+export default QuestionSection;

@@ -10,10 +10,10 @@ const useAddPretestMitra = () => {
       question: '',
       answer: '',
       options: [
-        { alphabet: 'A', text: '', is_correction: 'false' },
-        { alphabet: 'B', text: '', is_correction: 'false' },
-        { alphabet: 'C', text: '', is_correction: 'false' },
-        { alphabet: 'D', text: '', is_correction: 'false' },
+        { id: null, alphabet: 'A', text: '', is_correction: 'false' },
+        { id: null, alphabet: 'B', text: '', is_correction: 'false' },
+        { id: null, alphabet: 'C', text: '', is_correction: 'false' },
+        { id: null, alphabet: 'D', text: '', is_correction: 'false' },
       ],
     },
   ]);
@@ -24,7 +24,7 @@ const useAddPretestMitra = () => {
         `/api/admin/pretest?job_specialist_id=${jobSpesialistId}`,
         data
       );
-      console.log(response);
+
       return response;
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -36,7 +36,19 @@ const useAddPretestMitra = () => {
       const response = await axiosInstance.get(
         `/api/admin/pretest_detail?pretest_modul_detail_id=${id}`
       );
-      console.log(response);
+
+      return response;
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
+  };
+  const updatePretest = async (data) => {
+    try {
+      const response = await axiosInstance.put(
+        `/api/admin/pretest?job_specialist_id=${jobSpesialistId}`,
+        data
+      );
+
       return response;
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -49,10 +61,10 @@ const useAddPretestMitra = () => {
       question: '',
       answer: '',
       options: [
-        { alphabet: 'A', text: '', is_correction: 'false' },
-        { alphabet: 'B', text: '', is_correction: 'false' },
-        { alphabet: 'C', text: '', is_correction: 'false' },
-        { alphabet: 'D', text: '', is_correction: 'false' },
+        { id: null, alphabet: 'A', text: '', is_correction: 'false' },
+        { id: null, alphabet: 'B', text: '', is_correction: 'false' },
+        { id: null, alphabet: 'C', text: '', is_correction: 'false' },
+        { id: null, alphabet: 'D', text: '', is_correction: 'false' },
       ],
     };
     setQuestionData([...questionData, newQuestion]);
@@ -64,7 +76,7 @@ const useAddPretestMitra = () => {
     postPretest,
     questionData,
     setQuestionData,
+    updatePretest,
   };
 };
-
 export default useAddPretestMitra;
