@@ -1,6 +1,6 @@
 import { Gap } from '../../atoms';
 import { Box, FormControl, FormLabel, Switch, Text } from '@chakra-ui/react';
-import { DeleteIcon } from '@chakra-ui/icons';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { useRouter } from 'next/navigation';
 
 const TalentListCard = ({
@@ -49,12 +49,12 @@ const TalentListCard = ({
           gap={3}
           display={'flex'}
           alignItems={'center'}>
-          {/* <EditIcon
+          <EditIcon
             color={'white'}
             fontSize={'12px'}
             className=" cursor-pointer"
             onClick={() => router.push(`/pre-test-mitra/add?id=${id}`)}
-          /> */}
+          />
           <DeleteIcon
             color={'white'}
             fontSize={'12px'}
