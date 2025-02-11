@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDisclosure, useToast } from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { httpClient } from '@/app/utils/network';
 
@@ -15,7 +15,7 @@ const useApprovalJobPost = () => {
     years: '',
     month: '',
     product_digital_name: '',
-    status: ''
+    status: '',
   });
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -34,13 +34,12 @@ const useApprovalJobPost = () => {
       const response = await httpClient({
         method: 'GET',
         url: '/admin/job_post',
-        params
+        params,
       });
 
       const responseData = response?.data?.data || [];
       setData(responseData);
       setLoading(false);
-
     } catch (error) {
       setLoading(false);
       console.error('Failed to fetch data:', error);
@@ -55,12 +54,10 @@ const useApprovalJobPost = () => {
       });
 
       const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(
-        ({ id, name }) => ({
-          id,
-          label: name,
-        })
-      );
+      const transformedData = responseData?.map(({ id, name }) => ({
+        id,
+        label: name,
+      }));
       setProductDigitalData(transformedData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -76,14 +73,28 @@ const useApprovalJobPost = () => {
   };
 
   useEffect(() => {
-    fetchData(filters)
+    fetchData(filters);
   }, [filters]);
 
   useEffect(() => {
     fetchDataPD();
   }, []);
 
-  return { data, filters, loading, productDigitalData, text, isOpen, isApprove, selectedId, onClose, toggleModal, onChangeSelect, onPressDetails };
+  return {
+    data,
+    filters,
+    loading,
+    productDigitalData,
+    text,
+    isOpen,
+    isApprove,
+    selectedId,
+    onClose,
+    toggleModal,
+    onChangeSelect,
+    onPressDetails,
+    fetchData,
+  };
 };
 
 export default useApprovalJobPost;

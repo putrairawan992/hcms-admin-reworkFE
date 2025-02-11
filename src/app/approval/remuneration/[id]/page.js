@@ -1,5 +1,4 @@
 'use client';
-import SidebarLayout from '@/app/components/sidebarLayout';
 import {
   Box,
   Button,
@@ -11,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import styles from '../../../styles/approvalRemuneration.module.css';
 import DummyImage from '../../../../../public/images/dummy-image.png';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/id';
 import dynamic from 'next/dynamic';
@@ -51,7 +50,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
   };
 
   return (
-    <>
+    <Fragment>
       <ConfirmationModalWithNoSSR
         modalText={text}
         isOpen={isOpen}
@@ -73,35 +72,33 @@ const ApprovalRemunerationDetails = ({ params }) => {
             <Flex
               className={
                 styles['approval-remuneration-details-subtitle-wrapper']
-              }
-            >
+              }>
               <Button
+                isDisabled={data?.is_status === 'approved'}
                 onClick={() =>
                   openNoteModalHandler(
                     'Anda menolak Pengajuan Remunerasi Digital Produk A. Berikan umpan balik pada  Pengajuan Remunerasi Digital Produk A (*wajib)',
                     false
                   )
                 }
-                className={styles['approval-remuneration-content-btn']}
-              >
+                className={styles['approval-remuneration-content-btn']}>
                 Reject
               </Button>
               <Button
+                isDisabled={data?.is_status === 'approved'}
                 onClick={() =>
                   openNoteModalHandler(
                     'Anda menyetujui Pengajuan Remunerasi Digital Produk A. Berikan umpan balik/catatan pada  Pengajuan Remunerasi Digital Produk A (*opsional)',
                     true
                   )
                 }
-                className={styles['approval-remuneration-content-btn']}
-              >
+                className={styles['approval-remuneration-content-btn']}>
                 Accept
               </Button>
             </Flex>
           </Flex>
           <Grid
-            className={styles['approval-remuneration-detail-header-container']}
-          >
+            className={styles['approval-remuneration-detail-header-container']}>
             <Box>
               <Text className={styles['approval-remuneration-filter-text']}>
                 Tahun
@@ -109,11 +106,11 @@ const ApprovalRemunerationDetails = ({ params }) => {
               <Box
                 className={
                   styles['approval-remuneration-details-header-wrapper']
-                }
-              >
+                }>
                 <Text
-                  className={styles['approval-remuneration-detail-header-text']}
-                >
+                  className={
+                    styles['approval-remuneration-detail-header-text']
+                  }>
                   {moment(data?.createdAt).format('YYYY')}
                 </Text>
               </Box>
@@ -125,11 +122,11 @@ const ApprovalRemunerationDetails = ({ params }) => {
               <Box
                 className={
                   styles['approval-remuneration-details-header-wrapper']
-                }
-              >
+                }>
                 <Text
-                  className={styles['approval-remuneration-detail-header-text']}
-                >
+                  className={
+                    styles['approval-remuneration-detail-header-text']
+                  }>
                   {moment(data?.createdAt).format('MMMM')}
                 </Text>
               </Box>
@@ -138,11 +135,11 @@ const ApprovalRemunerationDetails = ({ params }) => {
               <Box
                 className={
                   styles['approval-remuneration-details-header-wrapper']
-                }
-              >
+                }>
                 <Text
-                  className={styles['approval-remuneration-detail-header-text']}
-                >
+                  className={
+                    styles['approval-remuneration-detail-header-text']
+                  }>
                   Total Karyawan: {data?.total_employee} Orang
                 </Text>
               </Box>
@@ -151,11 +148,11 @@ const ApprovalRemunerationDetails = ({ params }) => {
               <Flex
                 className={
                   styles['approval-remuneration-details-subtitle-wrapper']
-                }
-              >
+                }>
                 <Button
-                  className={styles['approval-remuneration-details-header-btn']}
-                >
+                  className={
+                    styles['approval-remuneration-details-header-btn']
+                  }>
                   Attached
                 </Button>
               </Flex>
@@ -165,12 +162,10 @@ const ApprovalRemunerationDetails = ({ params }) => {
             {data?.list_remuneration?.map((item, index) => (
               <Flex
                 key={index}
-                className={styles['approval-remuneration-card']}
-              >
+                className={styles['approval-remuneration-card']}>
                 <Flex className={styles['approval-remuneration-card-inner']}>
                   <Box
-                    className={styles['approval-remuneration-image-wrapper']}
-                  >
+                    className={styles['approval-remuneration-image-wrapper']}>
                     <Image
                       className={styles['approval-remuneration-image']}
                       src={item.employee_photo || DummyImage}
@@ -178,94 +173,82 @@ const ApprovalRemunerationDetails = ({ params }) => {
                     />
                   </Box>
                   <Box
-                    className={styles['approval-remuneration-content-wrapper']}
-                  >
+                    className={styles['approval-remuneration-content-wrapper']}>
                     <Text>{item.employee_name}</Text>
                   </Box>
                   <Box
                     className={
                       styles['approval-remuneration-content-details-wrapper']
-                    }
-                  >
+                    }>
                     <Box
                       className={
                         styles[
-                        'approval-remuneration-content-details-wrapper-header'
+                          'approval-remuneration-content-details-wrapper-header'
                         ]
-                      }
-                    >
+                      }>
                       <Flex
                         className={
                           styles[
-                          'approval-remuneration-content-details-header-inner'
+                            'approval-remuneration-content-details-header-inner'
                           ]
-                        }
-                      >
+                        }>
                         <Text>Tipe Karyawan</Text>
                       </Flex>
                       <Flex
                         className={
                           styles[
-                          'approval-remuneration-content-details-header-inner'
+                            'approval-remuneration-content-details-header-inner'
                           ]
-                        }
-                      >
+                        }>
                         <Text>Take Home Pay</Text>
                       </Flex>
                       <Flex
                         className={
                           styles[
-                          'approval-remuneration-content-details-header-inner'
+                            'approval-remuneration-content-details-header-inner'
                           ]
-                        }
-                      >
+                        }>
                         <Text>Tanggal Masuk</Text>
                       </Flex>
                       <Flex
                         className={
                           styles[
-                          'approval-remuneration-content-details-header-inner'
+                            'approval-remuneration-content-details-header-inner'
                           ]
-                        }
-                      >
+                        }>
                         <Text>Tanggal Akhir</Text>
                       </Flex>
                       <Flex
                         className={
                           styles[
-                          'approval-remuneration-content-details-header-inner'
+                            'approval-remuneration-content-details-header-inner'
                           ]
-                        }
-                      >
+                        }>
                         <Text>Jenis Request</Text>
                       </Flex>
                     </Box>
                     <Box
                       className={
                         styles[
-                        'approval-remuneration-content-details-wrapper-inner'
+                          'approval-remuneration-content-details-wrapper-inner'
                         ]
-                      }
-                    >
+                      }>
                       <Flex
                         className={
                           styles['approval-remuneration-content-details-inner']
-                        }
-                      >
+                        }>
                         <Text>{item.type_karyawan}</Text>
                       </Flex>
                       <Flex
                         className={
                           styles['approval-remuneration-content-details-inner']
-                        }
-                      >
+                        }>
                         <Text>{item.take_home_pay}</Text>
                       </Flex>
                       <Flex
                         className={
                           styles['approval-remuneration-content-details-inner']
-                        }
-                      >
+                        }>
                         <Text>
                           {moment(item.start_date)
                             .utcOffset('+07:00')
@@ -275,8 +258,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                       <Flex
                         className={
                           styles['approval-remuneration-content-details-inner']
-                        }
-                      >
+                        }>
                         <Text>
                           {moment(item.end_date)
                             .utcOffset('+07:00')
@@ -286,8 +268,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                       <Flex
                         className={
                           styles['approval-remuneration-content-details-inner']
-                        }
-                      >
+                        }>
                         <Text>{item.request_type}</Text>
                       </Flex>
                     </Box>
@@ -299,8 +280,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
           <Box className={styles['approval-remuneration-details-footer']}>
             <Box>
               <Text
-                className={styles['approval-remuneration-details-footer-text']}
-              >
+                className={styles['approval-remuneration-details-footer-text']}>
                 Total Pengeluaran Budget:{' '}
               </Text>
               <Flex gap={'5px'}>
@@ -309,10 +289,9 @@ const ApprovalRemunerationDetails = ({ params }) => {
                     <Text
                       className={
                         styles[
-                        'approval-remuneration-details-footer-inner-text'
+                          'approval-remuneration-details-footer-inner-text'
                         ]
-                      }
-                    >
+                      }>
                       Bulan Ini: Rp. {data?.budget_this_month}
                     </Text>
                   </Flex>
@@ -322,10 +301,9 @@ const ApprovalRemunerationDetails = ({ params }) => {
                     <Text
                       className={
                         styles[
-                        'approval-remuneration-details-footer-inner-text'
+                          'approval-remuneration-details-footer-inner-text'
                         ]
-                      }
-                    >
+                      }>
                       Sisa Kontrak: Rp. {data?.budget_count_contract}
                     </Text>
                   </Flex>
@@ -334,8 +312,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
             </Box>
             <Box>
               <Text
-                className={styles['approval-remuneration-details-footer-text']}
-              >
+                className={styles['approval-remuneration-details-footer-text']}>
                 Total Pengeluaran Budget:
               </Text>
               <Flex gap={'5px'}>
@@ -346,11 +323,13 @@ const ApprovalRemunerationDetails = ({ params }) => {
                       className={
                         styles['approval-remuneration-details-footer-text']
                       }
-                      marginBottom={'0px'}
-                    >
+                      marginBottom={'0px'}>
                       {moment(data?.createdAt).format('MMMM YYYY')}
                     </Text>
-                    <Text fontSize={'12px'}>  {moment(data?.createdAt).format('DD MMM YYYY')}</Text>
+                    <Text fontSize={'12px'}>
+                      {' '}
+                      {moment(data?.createdAt).format('DD MMM YYYY')}
+                    </Text>
                     <Button
                       onClick={onHandleDownload}
                       className={styles['approval-remuneration-content-btn']}>
@@ -363,7 +342,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
           </Box>
         </Box>
       )}
-    </>
+    </Fragment>
   );
 };
 
