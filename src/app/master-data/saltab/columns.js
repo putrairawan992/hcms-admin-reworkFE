@@ -10,13 +10,13 @@ const columns = (page) => {
       width: '65px',
       wrap: true,
     },
-    {
-      name: 'Service',
-      selector: (row) => row.service,
-      sortable: true,
-      wrap: true,
-      width: '150px',
-    },
+    // {
+    //   name: 'Service',
+    //   selector: (row) => row.service,
+    //   sortable: true,
+    //   wrap: true,
+    //   width: '150px',
+    // },
     { name: 'Tahun', selector: (row) => row.tahun, sortable: true },
     { name: 'Bulan', selector: (row) => row.bulan, sortable: true },
     {
@@ -33,7 +33,7 @@ const columns = (page) => {
     },
     {
       name: 'Product Digital',
-      selector: (row) => row.product_digital,
+      selector: (row) => row.job_provider?.name,
       wrap: true,
       width: '185px',
     },
@@ -50,13 +50,18 @@ const columns = (page) => {
       wrap: true,
       width: '150px',
     },
+    // {
+    //   name: 'NIK KTP',
+    //   selector: (row) => row.nik_ktp,
+    //   wrap: true,
+    //   width: '150px',
+    // },
     {
-      name: 'NIK KTP',
-      selector: (row) => row.nik_ktp,
+      name: 'Nama',
+      selector: (row) => row.name,
       wrap: true,
-      width: '150px',
+      width: '200px',
     },
-    { name: 'Nama', selector: (row) => row.nama, wrap: true, width: '200px' },
     {
       name: (
         <>

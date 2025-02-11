@@ -73,6 +73,8 @@ const useSaltab = () => {
           isClosable: true,
         });
       } else {
+        fetchData(page);
+        setModalOpen(false);
         toast({
           title: 'Success',
           description: `Data synced successfully!`,
