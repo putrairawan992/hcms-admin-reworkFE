@@ -64,6 +64,7 @@ const useSaltab = () => {
       }
 
       if (response?.status !== 200) {
+        setModalOpen(false);
         toast({
           title: 'Error',
           description: `Something went wrong!`,
