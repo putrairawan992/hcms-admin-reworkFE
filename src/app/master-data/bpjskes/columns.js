@@ -9,13 +9,13 @@ const columns = (page) => {
       width: '65px',
       wrap: true,
     },
-    {
-      name: 'Service',
-      selector: (row) => row.service,
-      sortable: true,
-      wrap: true,
-      width: '150px',
-    },
+    // {
+    //   name: 'Service',
+    //   selector: (row) => row.service,
+    //   sortable: true,
+    //   wrap: true,
+    //   width: '150px',
+    // },
     { name: 'Tahun', selector: (row) => row.tahun, sortable: true },
     { name: 'Bulan', selector: (row) => row.bulan, sortable: true },
     {
@@ -32,11 +32,16 @@ const columns = (page) => {
     },
     {
       name: 'Product Digital',
-      selector: (row) => row.product_digital,
+      selector: (row) => row.job_provider?.name,
       wrap: true,
       width: '185px',
     },
-    { name: 'Skema', selector: (row) => row.skema, wrap: true, width: '150px' },
+    {
+      name: 'Skema',
+      selector: (row) => row.skema,
+      wrap: true,
+      width: '150px',
+    },
     {
       name: 'Employee Status',
       selector: (row) => row.employment_status,
@@ -49,19 +54,23 @@ const columns = (page) => {
       wrap: true,
       width: '150px',
     },
-    { name: 'Nama', selector: (row) => row.nama, wrap: true, width: '200px' },
-    {
-      name: 'NPP',
-      selector: (row) => row.npp || '-',
-      wrap: true,
-      width: '185px',
+    { name: 'Nama', 
+      selector: (row) => row.name, 
+      wrap: true, 
+      width: '200px' 
     },
-    {
-      name: 'Hubungan Keluarga',
-      selector: (row) => row.hubungan_keluarga || '-',
-      wrap: true,
-      width: '185px',
-    },
+    // {
+    //   name: 'NPP',
+    //   selector: (row) => row.npp || '-',
+    //   wrap: true,
+    //   width: '185px',
+    // },
+    // {
+    //   name: 'Hubungan Keluarga',
+    //   selector: (row) => row.hubungan_keluarga || '-',
+    //   wrap: true,
+    //   width: '185px',
+    // },
     {
       name: 'Premi Karyawan',
       selector: (row) => formatRupiah(row.premi_karyawan),
