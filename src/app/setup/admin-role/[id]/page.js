@@ -25,8 +25,8 @@ const AdminRoleDetail = () => {
           theme="up-down"
           placeholder="Masukan nama admin"
           onChangeText={onChangeText}
-          slug="username"
-          value={form.username}
+          slug="name"
+          value={form.name}
         />
         <Gap width={12} />
         <FormFields
