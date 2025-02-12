@@ -17,8 +17,16 @@ const columns = (page) => {
     //   wrap: true,
     //   width: '150px',
     // },
-    { name: 'Tahun', selector: (row) => row.tahun, sortable: true },
-    { name: 'Bulan', selector: (row) => row.bulan, sortable: true },
+    {
+      name: 'Tahun',
+      selector: (row) => row.tahun,
+      sortable: true,
+    },
+    {
+      name: 'Bulan',
+      selector: (row) => row.bulan,
+      sortable: true,
+    },
     {
       name: 'Jenis Client',
       selector: (row) => row.jenis_client,

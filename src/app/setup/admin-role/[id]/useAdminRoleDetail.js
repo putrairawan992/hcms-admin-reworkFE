@@ -17,7 +17,8 @@ const useAdminRoleDetail = () => {
 
   const [form, setForm] = useState({
     id: '',
-    username: '',
+    // username: '',
+    name: '',
     email: '',
     divisi: '',
     jabatan: '',
@@ -43,7 +44,8 @@ const useAdminRoleDetail = () => {
 
       setForm({
         id: responseData?.id || '',
-        username: responseData?.username || '',
+        // username: responseData?.username || '',
+        name: responseData?.name || '',
         email: responseData?.email || '',
         divisi: responseData?.divisi || '',
         jabatan: responseData?.jabatan || '',
