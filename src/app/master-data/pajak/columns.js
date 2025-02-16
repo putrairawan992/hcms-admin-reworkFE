@@ -40,7 +40,7 @@ const columns = (page) => {
     },
     {
       name: 'Product Digital',
-      selector: (row) => row.product_digital,
+      selector: (row) => row.job_provider?.name,
       wrap: true,
       width: '185px',
     },
@@ -63,11 +63,11 @@ const columns = (page) => {
     //   wrap: true,
     //   width: '150px',
     // },
-    { 
-      name: 'Nama', 
-      selector: (row) => row.name, 
-      wrap: true, 
-      width: '200px' 
+    {
+      name: 'Nama',
+      selector: (row) => row.name,
+      wrap: true,
+      width: '200px',
     },
     {
       name: 'Nilai',

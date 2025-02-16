@@ -10,8 +10,16 @@ const columns = (page) => {
       width: '65px',
       wrap: true,
     },
-    { name: 'Tahun', selector: (row) => row.tahun, sortable: true },
-    { name: 'Bulan', selector: (row) => row.bulan, sortable: true },
+    {
+      name: 'Tahun',
+      selector: (row) => row.tahun,
+      sortable: true,
+    },
+    {
+      name: 'Bulan',
+      selector: (row) => row.bulan,
+      sortable: true,
+    },
     {
       name: 'Jenis Client',
       selector: (row) => row.jenis_client,
@@ -26,7 +34,7 @@ const columns = (page) => {
     },
     {
       name: 'Product Digital',
-      selector: (row) => row.product_digital,
+      selector: (row) => row.job_provider_name,
       wrap: true,
       width: '185px',
     },
@@ -43,13 +51,14 @@ const columns = (page) => {
       wrap: true,
       width: '150px',
     },
+    // {
+
     {
-      name: 'NIK KTP',
-      selector: (row) => row.nik_ktp,
+      name: 'Nama',
+      selector: (row) => row.name,
+      width: '200px',
       wrap: true,
-      width: '150px',
     },
-    { name: 'Nama', selector: (row) => row.nama, wrap: true, width: '200px' },
     {
       name: (
         <>
@@ -101,36 +110,44 @@ const columns = (page) => {
             <span>{row.role || '-'}</span>
             <span>{formatRupiah(row.gaji_pokok || 0)}</span>
             <span>{formatRupiah(row.tunjangan_posisi || 0)}</span>
+            <span>{formatRupiah(row.tunjangan_kompetensi || 0)}</span>
             <span>{formatRupiah(row.overtime || 0)}</span>
-            <span>{formatRupiah(row.rapel || 0)}</span>
+            <span>{formatRupiah(row.rapel_gaji || 0)}</span>
             <span>{formatRupiah(row.kompensasi_akhir_kontrak || 0)}</span>
             <span>{formatRupiah(row.thr || 0)}</span>
-            <span>{formatRupiah(row.bonus || 0)}</span>
+            <span>{formatRupiah(row.performance_bonus || 0)}</span>
             <span>{formatRupiah(row.lain_lain || 0)}</span>
             <span>{formatRupiah(row.keterangan_lain_lain || 0)}</span>
-            <span>{formatRupiah(row.total_1 || 0)}</span>
+            <span>{formatRupiah(row.total_allowance || 0)}</span>
           </div>
           <div style={styles.cellDeduction}>
             <span>{formatRupiah(row.potongan_absen || 0)}</span>
             <span>{formatRupiah(row.pengiriman_fasilitas_kantor || 0)}</span>
-            <span>{formatRupiah(row.kliring || 0)}</span>
-            <span>{formatRupiah(row.lain_lain || 0)}</span>
-            <span>{formatRupiah(row.keterangan_lain_lain || 0)}</span>
-            <span>{formatRupiah(row.bpjstk_iuran_jht_2_00 || 0)}</span>
-            <span>{formatRupiah(row.bpjstk_iuran_jp_1_00 || 0)}</span>
-            <span>{formatRupiah(row.total_iuran_bpstk_karyawan || 0)}</span>
-            <span>{formatRupiah(row.premi_bpjskes || 0)}</span>
-            <span>{formatRupiah(row.total_2 || 0)}</span>
+            <span>{formatRupiah(row.kriling || 0)}</span>
+            <span>{formatRupiah(row.other_1 || 0)}</span>
+            <span>{formatRupiah(row.other_2 || 0)}</span>
+            <span>{formatRupiah(row.jht_karyawan || 0)}</span>
+            <span>{formatRupiah(row.jp_karyawan || 0)}</span>
+            <span>{formatRupiah(row.total_karyawan || 0)}</span>
+            <span>{formatRupiah(row.premi_karyawan || 0)}</span>
+            <span>{formatRupiah(row.total_deduction || 0)}</span>
           </div>
           <div style={styles.cellCompany}>
-            <span>{formatRupiah(row.bpjstk_iuran_jkk_0_24 || 0)}</span>
-            <span>{formatRupiah(row.bpjstk_iuran_jkm_0_30 || 0)}</span>
-            <span>{formatRupiah(row.bpjstk_iuran_jht_3_70 || 0)}</span>
-            <span>{formatRupiah(row.bpjstk_iuran_jp_2_00 || 0)}</span>
-            <span>{formatRupiah(row.total_iuran_bpstk_perusahaan || 0)}</span>
-            <span>{formatRupiah(row.premi_bpjskes_2 || 0)}</span>
+            <span>{formatRupiah(row.jkk_perusahaan || 0)}</span>
+            <span>{formatRupiah(row.jkm_perusahaan || 0)}</span>
+            <span>{formatRupiah(row.jht_perusahaan || 0)}</span>
+            <span>{formatRupiah(row.jp_perusahaan || 0)}</span>
+            <span>
+              {formatRupiah(
+                row.jkk_perusahaan +
+                  row.jkm_perusahaan +
+                  row.jht_perusahaan +
+                  row.jp_perusahaan || 0
+              )}
+            </span>
+            <span>{formatRupiah(row.premi_perusahaan || 0)}</span>
             <span>{formatRupiah(row.pajak || 0)}</span>
-            <span>{formatRupiah(row.total_3 || 0)}</span>
+            <span>{formatRupiah(row.tanggungan_perusahaan || 0)}</span>
           </div>
         </>
       ),
@@ -138,13 +155,13 @@ const columns = (page) => {
     },
     {
       name: 'Net Salary',
-      selector: (row) => formatRupiah(row.total_4) || '-',
+      selector: (row) => formatRupiah(row.nett_salary) || '-',
       wrap: true,
       width: '200px',
     },
     {
       name: 'TANI',
-      selector: (row) => formatRupiah(row.total_5) || '-',
+      selector: (row) => formatRupiah(row.total_biaya) || '-',
       wrap: true,
       width: '200px',
     },
