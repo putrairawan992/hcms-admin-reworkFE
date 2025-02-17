@@ -19,11 +19,17 @@ const useMergeAllTA = () => {
     setModalOpen(!modalOpen);
   };
 
-  const goToSpreadSheet = () => {
-    return window.open(
-      'https://docs.google.com/spreadsheets/d/184tpa1aindgaNbjdGA_GwfMNt9M6DVr6ImTmC0Zf6ZI/edit?gid=590502080#gid=590502080',
-      '_blank'
-    );
+  const goToSpreadSheet = async () => {
+    // Panggil onHandleSync dan tunggu sampai selesai
+    await onHandleSync();
+
+    // Gunakan setTimeout untuk memastikan window.open dipanggil setelah event asynchronous selesai
+    setTimeout(() => {
+      window.open(
+        'https://docs.google.com/spreadsheets/d/184tpa1aindgaNbjdGA_GwfMNt9M6DVr6ImTmC0Zf6ZI/edit?gid=1474706430#gid=1474706430',
+        '_blank'
+      );
+    }, 0); // Waktu delay 0 agar tidak terblokir oleh browser
   };
 
   const fetchData = async (page) => {
@@ -53,7 +59,7 @@ const useMergeAllTA = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/sheet/bpjskes/sync',
+        url: '/sheet/mergeTA/sync',
         signal: signal,
       });
 
@@ -64,6 +70,7 @@ const useMergeAllTA = () => {
       }
 
       if (response?.status !== 200) {
+        setModalOpen(false);
         toast({
           title: 'Error',
           description: `Something went wrong!`,
@@ -73,6 +80,7 @@ const useMergeAllTA = () => {
           isClosable: true,
         });
       } else {
+        setModalOpen(false);
         toast({
           title: 'Success',
           description: `Data synced successfully!`,
