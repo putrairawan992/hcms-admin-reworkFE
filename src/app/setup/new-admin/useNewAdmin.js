@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { httpClient } from '@/app/utils/network';
 import { useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
+import { isEmpty } from 'lodash';
 
 const useNewAdmin = () => {
   const router = useRouter();
@@ -150,10 +151,10 @@ const useNewAdmin = () => {
   };
 
   const onChangeCheckbox = (slug, label, value, slugParent) => {
-    if (slugParent === '') {
+    if (isEmpty(slug)) {
       setForm((prevData) => ({
         ...prevData,
-        [slug]: { ...prevData[slug], [label]: value },
+        [slugParent]: { ...prevData[slugParent], [label]: value },
       }));
     } else {
       setForm((prevData) => ({

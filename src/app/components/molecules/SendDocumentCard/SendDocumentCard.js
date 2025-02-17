@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Accordion,
   AccordionButton,
@@ -8,7 +8,6 @@ import {
   Button,
   Flex,
   Image,
-  Spinner,
   Text,
   VStack,
 } from '@chakra-ui/react';
@@ -16,7 +15,6 @@ import styles from './SendDocumentCard.styles';
 import {
   ChatIcon,
   CloseIcon,
-  DownloadIcon,
   EyeIcon,
   FileBadgeIcon,
   MessageIcon,
@@ -27,16 +25,30 @@ import { SettingsIcon } from '@chakra-ui/icons';
 import { noop } from '@/app/utils/helpers';
 import { useRouter } from 'next/navigation';
 
-const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, onClickSendAll = noop }) => {
+const SendDocumentCard = ({
+  data = {},
+  toggleModal = noop,
+  onPressIcon = noop,
+  onClickSendAll = noop,
+}) => {
   const router = useRouter();
-  const { product_digital_name, status, created_at, employee_list, document_type, type_setting_document, remuneration_id } = data;
+  const {
+    product_digital_name,
+    status,
+    created_at,
+    employee_list,
+    document_type,
+    type_setting_document,
+    remuneration_id,
+  } = data;
   const [documentTalent, setDocumentTalent] = useState('');
   const [employeeList, setEmployeeList] = useState(employee_list || []);
 
-  const documentAll = document_type?.map((item) => ({
-    id: item?.id,
-    label: item?.type_document
-  })) || [];
+  const documentAll =
+    document_type?.map((item) => ({
+      id: item?.id,
+      label: item?.type_document,
+    })) || [];
 
   const onHandleToggleModal = () => {
     toggleModal(data);
@@ -55,20 +67,20 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
   };
 
   const onHandleClickIcon = (type, screenData) => {
-    if (screenData?.temporary_status) {
-      const dataFormated = {
-        ...data,
-        employee: screenData
-      };
-      onPressIcon(dataFormated, type, documentTalent);
-    }
+    if (screenData?.temporary_status) return;
+
+    const dataFormated = {
+      ...data,
+      employee: screenData,
+    };
+    onPressIcon(dataFormated, type, documentTalent);
   };
 
   const onHandleClickSend = () => {
     onClickSendAll(remuneration_id);
   };
 
-  const onHandleMessage = () => { };
+  const onHandleMessage = () => {};
 
   const onHandleDetail = () => {
     router.push(`/approval/remuneration/${data?.remuneration_id}`);
@@ -78,7 +90,7 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
     <Accordion allowToggle>
       <AccordionItem border="none" key={1}>
         <AccordionButton background={'#8364BA'} style={styles.wrapper}>
-          <Flex alignItems="center" flex={1} justify='center'>
+          <Flex alignItems="center" flex={1} justify="center">
             <Box style={styles.imgWrapper}>
               <Image
                 style={styles.img}
@@ -91,15 +103,23 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
               <Text style={styles.title}>{product_digital_name}</Text>
             </Box>
           </Flex>
-          <Flex flex={1} justify='center' alignItems='center'>
+          <Flex flex={1} justify="center" alignItems="center">
             <Text style={styles.subtitle}>
               {moment(created_at).locale('en').format('MMMM YYYY')}
             </Text>
           </Flex>
-          <Flex flex={1} justify='center' alignItems='center'>
-            <EyeIcon color='#ae445a' onClick={onHandleDetail} style={{ cursor: 'pointer' }} />
+          <Flex flex={1} justify="center" alignItems="center">
+            <EyeIcon
+              color="#ae445a"
+              onClick={onHandleDetail}
+              style={{ cursor: 'pointer' }}
+            />
             <Gap width={4} />
-            <SettingsIcon color='#ae445a' onClick={onHandleToggleModal} cursor='pointer' />
+            <SettingsIcon
+              color="#ae445a"
+              onClick={onHandleToggleModal}
+              cursor="pointer"
+            />
           </Flex>
           <Box flex={1}>
             <Flex flex={1}>
@@ -108,8 +128,7 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
                 borderColor="#AE445A"
                 paddingX={6}
                 paddingY={2}
-                borderRadius={10}
-              >
+                borderRadius={10}>
                 <Text style={styles.subtitle}>{status}</Text>
               </Box>
             </Flex>
@@ -118,7 +137,9 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
             <ChatIcon style={{ width: 20, height: 20, cursor: 'pointer' }} />
           </Flex>
           <Flex align={'center'}>
-            <Button style={styles.buttonSend} onClick={onHandleClickSend}>Send All</Button>
+            <Button style={styles.buttonSend} onClick={onHandleClickSend}>
+              Send All
+            </Button>
           </Flex>
         </AccordionButton>
         <AccordionPanel
@@ -134,8 +155,7 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
               borderColor="#AE445A"
               alignItems="center"
               justifyContent="center"
-              paddingY={4}
-            >
+              paddingY={4}>
               <VStack flex={1}>
                 <Text fontWeight="bold" color="#AE445A">
                   Profil
@@ -162,19 +182,14 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
               <Flex flex={1} marginBottom={6} key={index}>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Box style={styles.imgWrapper}>
-                    <Image
-                      style={styles.img}
-                      src={item?.photo}
-                      alt="image"
-                    />
+                    <Image style={styles.img} src={item?.photo} alt="image" />
                   </Box>
                   <Gap width={3} />
                   <Box flex={1} alignItems="center" justifyContent="center">
                     <Text
                       fontSize={12}
                       fontWeight={700}
-                      textDecoration="underline"
-                    >
+                      textDecoration="underline">
                       {item?.employee_name}
                     </Text>
                     <Text fontSize={12} fontWeight={400}>
@@ -184,7 +199,14 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
                 </Flex>
                 <Flex alignItems="center" justifyContent="center" flex={1}>
                   <Box style={{ width: '200px' }}>
-                    <SelectField placeholder='Pilih document' options={documentAll} value={item?.temporary_type_document} onChange={(slug, value) => onHandleChange(value, index)} slug='document_type_employee' key={index} />
+                    <SelectField
+                      placeholder="Pilih document"
+                      options={documentAll}
+                      value={item?.temporary_type_document}
+                      onChange={(slug, value) => onHandleChange(value, index)}
+                      slug="document_type_employee"
+                      key={index}
+                    />
                   </Box>
                 </Flex>
                 <Flex
@@ -192,13 +214,37 @@ const SendDocumentCard = ({ data = {}, toggleModal = noop, onPressIcon = noop, o
                   alignItems="center"
                   justifyContent="space-around"
                   marginLeft={4}>
-                  <FileBadgeIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('file', item)} style={{ cursor: 'pointer' }} />
-                  <MessageIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('message', item)} style={{ cursor: 'pointer' }} />
-                  <CloseIcon color={item?.temporary_status ? '#AE445A' : '#B6B6B6'} onClick={() => onHandleClickIcon('close', item)} style={{ cursor: 'pointer' }} />
+                  <FileBadgeIcon
+                    color={item?.temporary_status ? '#B6B6B6' : '#AE445A'}
+                    onClick={() => onHandleClickIcon('file', item)}
+                    style={{
+                      cursor: item?.temporary_status
+                        ? 'not-allowed'
+                        : 'pointer',
+                    }}
+                  />
+                  <MessageIcon
+                    color={item?.temporary_status ? '#B6B6B6' : '#AE445A'}
+                    onClick={() => onHandleClickIcon('message', item)}
+                    style={{
+                      cursor: item?.temporary_status
+                        ? 'not-allowed'
+                        : 'pointer',
+                    }}
+                  />
+                  <CloseIcon
+                    color={item?.temporary_status ? '#B6B6B6' : '#AE445A'}
+                    onClick={() => onHandleClickIcon('close', item)}
+                    style={{
+                      cursor: item?.temporary_status
+                        ? 'not-allowed'
+                        : 'pointer',
+                    }}
+                  />
                 </Flex>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Text fontWeight="bold" color="#AE445A">
-                    None
+                    {item?.temporary_status ? 'Sent' : 'None'}
                   </Text>
                 </Flex>
               </Flex>

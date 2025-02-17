@@ -16,6 +16,7 @@ import 'moment/locale/id';
 import dynamic from 'next/dynamic';
 import { useGetApprovalRemunerationDetail } from '@/app/api/approval';
 import useRemunerationDetail from './useRemunerationDetail';
+import { formatMoney } from '@/hooks/money';
 
 moment.locale('id');
 
@@ -243,7 +244,13 @@ const ApprovalRemunerationDetails = ({ params }) => {
                         className={
                           styles['approval-remuneration-content-details-inner']
                         }>
-                        <Text>{item.take_home_pay}</Text>
+                        <Text>
+                          {formatMoney(
+                            item.take_home_pay,
+                            'IDR',
+                            'narrowSymbol'
+                          )}{' '}
+                        </Text>
                       </Flex>
                       <Flex
                         className={
@@ -292,7 +299,12 @@ const ApprovalRemunerationDetails = ({ params }) => {
                           'approval-remuneration-details-footer-inner-text'
                         ]
                       }>
-                      Bulan Ini: Rp. {data?.budget_this_month}
+                      Bulan Ini:{' '}
+                      {formatMoney(
+                        data?.budget_this_month,
+                        'IDR',
+                        'narrowSymbol'
+                      )}
                     </Text>
                   </Flex>
                 </Flex>
@@ -304,7 +316,12 @@ const ApprovalRemunerationDetails = ({ params }) => {
                           'approval-remuneration-details-footer-inner-text'
                         ]
                       }>
-                      Sisa Kontrak: Rp. {data?.budget_count_contract}
+                      Sisa Kontrak:{' '}
+                      {formatMoney(
+                        data?.budget_count_contract,
+                        'IDR',
+                        'narrowSymbol'
+                      )}
                     </Text>
                   </Flex>
                 </Flex>
