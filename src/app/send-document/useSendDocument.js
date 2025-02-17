@@ -21,7 +21,7 @@ const useSendDocument = () => {
   const [filters, setFilters] = useState({
     years: '',
     month: '',
-    product_digital_name: ''
+    product_digital_name: '',
   });
 
   const fetchData = async (filters) => {
@@ -30,7 +30,7 @@ const useSendDocument = () => {
       const response = await httpClient({
         method: 'GET',
         url: '/admin/document/send_document/list',
-        params: filters
+        params: filters,
       });
 
       const responseData = response?.data?.data || [];
@@ -50,12 +50,10 @@ const useSendDocument = () => {
       });
 
       const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(
-        ({ id, name }) => ({
-          id,
-          label: name,
-        })
-      );
+      const transformedData = responseData?.map(({ id, name }) => ({
+        id,
+        label: name,
+      }));
       setProductDigitalData(transformedData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -70,14 +68,11 @@ const useSendDocument = () => {
       });
 
       const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(
-        ({ id, type }) => ({
-          value: id,
-          label: type,
-        })
-      );
+      const transformedData = responseData?.map(({ id, type }) => ({
+        value: id,
+        label: type,
+      }));
       setSettingDocument(transformedData);
-
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
@@ -88,7 +83,7 @@ const useSendDocument = () => {
       const response = await httpClient({
         method: 'GET',
         url: `/admin/document/preview/send_document/detail`,
-        params: { document_id }
+        params: { document_id },
       });
 
       const responseData = response?.data?.data || [];
@@ -108,7 +103,7 @@ const useSendDocument = () => {
       await httpClient({
         method: 'POST',
         url: '/admin/document/setting_document/update',
-        data
+        data,
       });
 
       toast({
@@ -119,11 +114,11 @@ const useSendDocument = () => {
         position: 'top',
         isClosable: true,
       });
-      setLoadingSubmit(prevData => (!prevData));
+      setLoadingSubmit((prevData) => !prevData);
       toggleModal();
       fetchData(filters);
     } catch (error) {
-      setLoadingSubmit(prevData => (!prevData));
+      setLoadingSubmit((prevData) => !prevData);
       toggleModal();
       toast({
         title: 'Error',
@@ -141,7 +136,7 @@ const useSendDocument = () => {
       await httpClient({
         method: 'DELETE',
         url: '/admin/remuneration/detail',
-        data: { remuneration_id }
+        data: { remuneration_id },
       });
 
       toast({
@@ -169,34 +164,41 @@ const useSendDocument = () => {
   };
 
   const onChangeSelectDocumentType = (slug, value) => {
-    const docTypes = settingDocument.find(item => item.value === value);
+    const docTypes = settingDocument.find((item) => item.value === value);
     setDocumentTypeValue(docTypes);
   };
 
   const toggleModal = () => {
-    setModalOpen(prevData => (!prevData));
+    setModalOpen((prevData) => !prevData);
   };
 
   const toggleModalOpen = (data) => {
-    setModalOpen(prevData => (!prevData));
-    const docTypes = settingDocument.find(item => item.label === data?.type_setting_document);
+    setModalOpen((prevData) => !prevData);
+    const docTypes = settingDocument.find(
+      (item) => item.label === data?.type_setting_document
+    );
     setDocumentDetails(data);
     setDocumentTypeValue(docTypes);
   };
 
   const onSubmitSettingDocument = () => {
-    setLoadingSubmit(prevData => (!prevData));
+    setLoadingSubmit((prevData) => !prevData);
     const payload = {
       setting_document_id: documentTypeValue?.value || '',
       remuneration_id: documentDetails?.remuneration_id,
-      employee_list: documentDetails?.employee_list?.map(item => item.user_id)
-    }
+      employee_list: documentDetails?.employee_list?.map(
+        (item) => item.user_id
+      ),
+    };
     submitSettingDocument(payload);
   };
 
   const onPressIcon = (data, type, docTalent) => {
+    console.log('data', data);
     if (data?.type_setting_document === 'contract_template') {
-      const docTypes = data?.document_type?.find((item) => item.type_document === docTalent);
+      const docTypes = data?.document_type?.find(
+        (item) => item.type_document === docTalent
+      );
       fetchDocumentPreview(docTypes?.id, type, docTalent, data);
     } else {
       setModalType(type);
@@ -205,11 +207,10 @@ const useSendDocument = () => {
       setModalDocType(data?.type_setting_document);
       toggleModalOpenDoc();
     }
-
   };
 
   const toggleModalOpenDoc = () => {
-    setModalOpenDoc(prevData => (!prevData));
+    setModalOpenDoc((prevData) => !prevData);
   };
 
   const onChangeSelectType = (data) => {
@@ -221,7 +222,7 @@ const useSendDocument = () => {
       await httpClient({
         method: 'POST',
         url: '/admin/document/send_document/sendall',
-        data: { batch_remuneration_id }
+        data: { batch_remuneration_id },
       });
 
       toast({
@@ -268,7 +269,35 @@ const useSendDocument = () => {
     fetchDataDocument();
   }, []);
 
-  return { data, employeeDetail, loading, loadingSubmit, modalOpen, productDigital, filters, settingDocument, documentTypeValue, onChangeSelect, toggleModal, onSubmitSettingDocument, toggleModalOpen, onChangeSelectDocumentType, onPressIcon, modalOpenDoc, toggleModalOpenDoc, modalType, modalDocType, onChangeSelectType, selectedDocumentTalent, onClickSendAll, onSubmit, previewData, onDelete };
+  return {
+    data,
+    documentDetails,
+    documentTypeValue,
+
+    employeeDetail,
+    filters,
+    loading,
+    loadingSubmit,
+    modalDocType,
+    modalOpen,
+    modalOpenDoc,
+    modalType,
+    onChangeSelect,
+    onChangeSelectDocumentType,
+    onChangeSelectType,
+    onClickSendAll,
+    onDelete,
+    onPressIcon,
+    onSubmit,
+    onSubmitSettingDocument,
+    previewData,
+    productDigital,
+    selectedDocumentTalent,
+    settingDocument,
+    toggleModal,
+    toggleModalOpen,
+    toggleModalOpenDoc,
+  };
 };
 
 export default useSendDocument;
