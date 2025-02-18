@@ -28,18 +28,18 @@ export const monthOptions = [
 ];
 
 export const monthLabelOptions = [
-  { value: 'January', label: 'Januari' },
-  { value: 'February', label: 'Februari' },
-  { value: 'Maret', label: 'Maret' },
-  { value: 'March', label: 'April' },
-  { value: 'May', label: 'Mei' },
-  { value: 'June', label: 'Juni' },
-  { value: 'July', label: 'Juli' },
-  { value: 'August', label: 'Agustus' },
+  { value: 'January', label: 'January' },
+  { value: 'February', label: 'February' },
+  { value: 'March', label: 'March' },
+  { value: 'April', label: 'April' },
+  { value: 'May', label: 'May' },
+  { value: 'June', label: 'June' },
+  { value: 'July', label: 'July' },
+  { value: 'August', label: 'August' },
   { value: 'September', label: 'September' },
-  { value: 'October', label: 'Oktober' },
+  { value: 'October', label: 'October' },
   { value: 'November', label: 'November' },
-  { value: 'December', label: 'Desember' },
+  { value: 'December', label: 'December' },
 ];
 export const monthLabelOptionsRecap = [
   { key: 'jan', value: 'January', label: 'Jan' },
