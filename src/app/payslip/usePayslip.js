@@ -27,7 +27,7 @@ const usePayslip = () => {
       const response = await httpClient({
         method: 'GET',
         url: '/admin/payslip/list',
-        params
+        params,
       });
 
       const responseData = response?.data?.data || [];
@@ -47,12 +47,10 @@ const usePayslip = () => {
       });
 
       const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(
-        ({ id, name }) => ({
-          id,
-          label: name,
-        })
-      );
+      const transformedData = responseData?.map(({ id, name }) => ({
+        value: id,
+        label: name,
+      }));
       setProductDigitalData(transformedData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
