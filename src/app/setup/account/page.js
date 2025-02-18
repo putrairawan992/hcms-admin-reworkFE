@@ -19,11 +19,28 @@ import columns from './columns';
 
 const AccountSetup = () => {
   const router = useRouter();
-  const { data, screenData, loading, keyword, modalOpen, modalOpenDelete, loadingModalDelete, toggleModalDelete, onSubmitEdit, loadingModal, toggleModal, onChangeText, onHandlePress, onSubmitDelete } = useSetupAccount();
+  const {
+    data,
+    screenData,
+    loading,
+    keyword,
+    modalOpen,
+    modalOpenDelete,
+    loadingModalDelete,
+    toggleModalDelete,
+    onSubmitEdit,
+    loadingModal,
+    toggleModal,
+    onChangeText,
+    onHandlePress,
+    onSubmitDelete,
+  } = useSetupAccount();
 
   return (
     <Box className={styles['account-role-container']}>
-      <Text className={styles['account-role-title']}>Setup - Account</Text>
+      <Text className={styles['account-role-title']}>
+        Setup - Account Product Digital
+      </Text>
       <Flex align={'end'} margin={'2rem 0'}>
         <Box>
           <Text className={styles['account-role-search-text']}>Cari</Text>
@@ -42,8 +59,7 @@ const AccountSetup = () => {
         </Box>
         <Button
           onClick={() => router.push('/setup/new-account')}
-          className={styles['account-role-search-btn']}
-        >
+          className={styles['account-role-search-btn']}>
           <AddIcon w={'10px'} height={'10px'} mr={'5px'} />
           New Account
         </Button>
