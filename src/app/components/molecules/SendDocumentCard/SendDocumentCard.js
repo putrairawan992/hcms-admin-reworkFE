@@ -11,6 +11,8 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
+import { IoIosWalk } from 'react-icons/io';
+import { useRouter } from 'next/navigation';
 import styles from './SendDocumentCard.styles';
 import {
   ChatIcon,
@@ -23,7 +25,6 @@ import moment from 'moment';
 import { Gap, SelectField } from '../../atoms';
 import { SettingsIcon } from '@chakra-ui/icons';
 import { noop } from '@/app/utils/helpers';
-import { useRouter } from 'next/navigation';
 
 const SendDocumentCard = ({
   data = {},
@@ -67,6 +68,9 @@ const SendDocumentCard = ({
   };
 
   const onHandleClickIcon = (type, screenData) => {
+    if (type === 'tracking') {
+      router.push(`/data-talent/tracking-document/${screenData?.user_id}`);
+    }
     if (screenData?.temporary_status) return;
 
     const dataFormated = {
@@ -222,6 +226,11 @@ const SendDocumentCard = ({
                         ? 'not-allowed'
                         : 'pointer',
                     }}
+                  />
+                  <IoIosWalk
+                    color={'#AE445A'}
+                    size={22}
+                    onClick={() => onHandleClickIcon('tracking', item)}
                   />
                   <MessageIcon
                     color={item?.temporary_status ? '#B6B6B6' : '#AE445A'}

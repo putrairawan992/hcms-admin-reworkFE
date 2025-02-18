@@ -12,7 +12,7 @@ const columns = (page, onPress) => {
       wrap: true,
     },
     {
-      name: 'Digital Product',
+      name: 'Product Digital',
       selector: (row) => row.product_digital_name,
       wrap: true,
     },
@@ -30,12 +30,22 @@ const columns = (page, onPress) => {
       name: 'Action',
       cell: (row) => (
         <Flex alignItems="center" justify="space-between">
-          <Box cursor='pointer'>
-            <EditIcon width={4} height={4} color='#AE445A' onClick={() => onPress('EDIT', row)} />
+          <Box cursor="pointer">
+            <EditIcon
+              width={4}
+              height={4}
+              color="#AE445A"
+              onClick={() => onPress('EDIT', row)}
+            />
           </Box>
           <Gap width={2} />
-          <Box cursor='pointer'>
-            <DeleteIcon width={4} height={4} color='#AE445A' onClick={() => onPress('DELETE', row)} />
+          <Box cursor="pointer">
+            <DeleteIcon
+              width={4}
+              height={4}
+              color="#AE445A"
+              onClick={() => onPress('DELETE', row)}
+            />
           </Box>
         </Flex>
       ),
