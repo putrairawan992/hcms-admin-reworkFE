@@ -78,7 +78,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                 isDisabled={data?.is_status === 'approved'}
                 onClick={() =>
                   openNoteModalHandler(
-                    'Anda menolak Pengajuan Remunerasi Digital Produk A. Berikan umpan balik pada  Pengajuan Remunerasi Digital Produk A (*wajib)',
+                    'Anda menolak Pengajuan Remunerasi Digital Produk. Berikan umpan balik pada  Pengajuan Remunerasi Digital Produk (*wajib)',
                     false
                   )
                 }
@@ -89,7 +89,7 @@ const ApprovalRemunerationDetails = ({ params }) => {
                 isDisabled={data?.is_status === 'approved'}
                 onClick={() =>
                   openNoteModalHandler(
-                    'Anda menyetujui Pengajuan Remunerasi Digital Produk A. Berikan umpan balik/catatan pada  Pengajuan Remunerasi Digital Produk A (*opsional)',
+                    'Anda menyetujui Pengajuan Remunerasi Digital Produk. Berikan umpan balik/catatan pada  Pengajuan Remunerasi Digital Produk (*opsional)',
                     true
                   )
                 }
