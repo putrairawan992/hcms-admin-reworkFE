@@ -44,6 +44,7 @@ const SendDocumentCard = ({
   } = data;
   const [documentTalent, setDocumentTalent] = useState('');
   const [employeeList, setEmployeeList] = useState(employee_list || []);
+  const [selectedDocument, setSelectedDocument] = useState('');
 
   const documentAll =
     document_type?.map((item) => ({
@@ -56,11 +57,12 @@ const SendDocumentCard = ({
   };
 
   const onHandleChange = (value, index) => {
+    setSelectedDocument(value);
     const updatedList = [...employee_list];
     updatedList[index] = {
       ...updatedList[index],
       temporary_type_document: value,
-      temporary_status: value === '' ? false : true,
+      // temporary_status: value === '' ? false : true,
     };
 
     setEmployeeList(updatedList);
@@ -85,6 +87,14 @@ const SendDocumentCard = ({
   };
 
   const onHandleMessage = () => {};
+
+  const handleStatus = (status) => {
+    if (!status || status === null) return;
+    return status
+      .split('_')
+      ?.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
 
   const onHandleDetail = () => {
     router.push(`/approval/remuneration/${data?.remuneration_id}`);
@@ -133,7 +143,7 @@ const SendDocumentCard = ({
                 paddingX={6}
                 paddingY={2}
                 borderRadius={10}>
-                <Text style={styles.subtitle}>{status}</Text>
+                <Text style={styles.subtitle}>{handleStatus(status)}</Text>
               </Box>
             </Flex>
           </Box>
@@ -206,6 +216,7 @@ const SendDocumentCard = ({
                     <SelectField
                       placeholder="Pilih document"
                       options={documentAll}
+                      disabled={item?.temporary_status !== null}
                       value={item?.temporary_type_document}
                       onChange={(slug, value) => onHandleChange(value, index)}
                       slug="document_type_employee"
@@ -219,12 +230,15 @@ const SendDocumentCard = ({
                   justifyContent="space-around"
                   marginLeft={4}>
                   <FileBadgeIcon
-                    color={item?.temporary_status ? '#B6B6B6' : '#AE445A'}
+                    color={
+                      item?.temporary_status !== null ? '#B6B6B6' : '#AE445A'
+                    }
                     onClick={() => onHandleClickIcon('file', item)}
                     style={{
-                      cursor: item?.temporary_status
-                        ? 'not-allowed'
-                        : 'pointer',
+                      cursor:
+                        item?.temporary_status !== null
+                          ? 'not-allowed'
+                          : 'pointer',
                     }}
                   />
                   <IoIosWalk
@@ -233,27 +247,35 @@ const SendDocumentCard = ({
                     onClick={() => onHandleClickIcon('tracking', item)}
                   />
                   <MessageIcon
-                    color={item?.temporary_status ? '#B6B6B6' : '#AE445A'}
+                    color={
+                      item?.temporary_status !== null ? '#B6B6B6' : '#AE445A'
+                    }
                     onClick={() => onHandleClickIcon('message', item)}
                     style={{
-                      cursor: item?.temporary_status
-                        ? 'not-allowed'
-                        : 'pointer',
+                      cursor:
+                        item?.temporary_status !== null
+                          ? 'not-allowed'
+                          : 'pointer',
                     }}
                   />
                   <CloseIcon
-                    color={item?.temporary_status ? '#B6B6B6' : '#AE445A'}
+                    color={
+                      item?.temporary_status !== null ? '#B6B6B6' : '#AE445A'
+                    }
                     onClick={() => onHandleClickIcon('close', item)}
                     style={{
-                      cursor: item?.temporary_status
-                        ? 'not-allowed'
-                        : 'pointer',
+                      cursor:
+                        item?.temporary_status !== null
+                          ? 'not-allowed'
+                          : 'pointer',
                     }}
                   />
                 </Flex>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Text fontWeight="bold" color="#AE445A">
-                    {item?.temporary_status ? 'Sent' : 'None'}
+                    {item?.temporary_status
+                      ? handleStatus(item?.temporary_status)
+                      : ''}
                   </Text>
                 </Flex>
               </Flex>
