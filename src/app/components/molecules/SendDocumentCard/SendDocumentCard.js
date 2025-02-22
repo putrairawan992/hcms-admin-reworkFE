@@ -63,6 +63,7 @@ const SendDocumentCard = ({
       ...updatedList[index],
       temporary_type_document: value,
       // temporary_status: value === '' ? false : true,
+      temporary_status: value === '' ? true : false,
     };
 
     setEmployeeList(updatedList);
@@ -216,7 +217,7 @@ const SendDocumentCard = ({
                     <SelectField
                       placeholder="Pilih document"
                       options={documentAll}
-                      disabled={item?.temporary_status !== null}
+                      // disabled={item?.temporary_status !== null}
                       value={item?.temporary_type_document}
                       onChange={(slug, value) => onHandleChange(value, index)}
                       slug="document_type_employee"
@@ -230,15 +231,19 @@ const SendDocumentCard = ({
                   justifyContent="space-around"
                   marginLeft={4}>
                   <FileBadgeIcon
-                    color={
-                      item?.temporary_status !== null ? '#B6B6B6' : '#AE445A'
-                    }
+                    // color={
+                    //   item?.temporary_status !== null ? '#B6B6B6' : '#AE445A'
+                    // }
+                    color={'#AE445A'}
                     onClick={() => onHandleClickIcon('file', item)}
+                    // style={{
+                    //   cursor:
+                    //     item?.temporary_status !== null
+                    //       ? 'not-allowed'
+                    //       : 'pointer',
+                    // }}
                     style={{
-                      cursor:
-                        item?.temporary_status !== null
-                          ? 'not-allowed'
-                          : 'pointer',
+                      cursor: 'pointer',
                     }}
                   />
                   <IoIosWalk
@@ -273,9 +278,10 @@ const SendDocumentCard = ({
                 </Flex>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Text fontWeight="bold" color="#AE445A">
-                    {item?.temporary_status
+                    {/* {item?.temporary_status
                       ? handleStatus(item?.temporary_status)
-                      : ''}
+                      : ''} */}
+                    {item?.temporary_status}
                   </Text>
                 </Flex>
               </Flex>
