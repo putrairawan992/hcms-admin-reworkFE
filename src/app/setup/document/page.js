@@ -53,8 +53,7 @@ const SetupDocument = () => {
           <Button
             onClick={() => onHandleSubmit()}
             className={styles['inbox-btn']}
-            disabled={true}
-          >
+            disabled={true}>
             Continue
           </Button>
         </Box>
@@ -68,7 +67,6 @@ const SetupDocument = () => {
             onChange={onHandleChange}
             value={form.productDigital}
             slug="productDigital"
-            disabled={true}
           />
           <Gap height={2} />
           <Box
@@ -76,8 +74,7 @@ const SetupDocument = () => {
             borderColor="#AE445A"
             borderRadius={10}
             height={628}
-            paddingTop={8}
-          >
+            paddingTop={8}>
             <DocumentFormField
               isActive={form.documentType}
               onPress={onHandlePress}
@@ -93,8 +90,7 @@ const SetupDocument = () => {
           borderTopWidth={70}
           borderTopColor="#F39F5A"
           overflowX="auto"
-          height={706}
-        >
+          height={706}>
           <Gap height={2} />
           <RenderContent />
         </Box>

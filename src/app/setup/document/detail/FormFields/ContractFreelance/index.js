@@ -28,14 +28,22 @@ const ReactQuill = dynamic(() => import('react-quill'), {
   ),
 });
 
-const INITIAL_FORM = {
-  responsible_person: '',
-  responsible_role: '',
-  responsible_level: '',
-};
+// const INITIAL_FORM = {
+//   responsible_person: '',
+//   responsible_role: '',
+//   responsible_level: '',
+// };
 
-const FormFieldsContractFreelance = ({ loading = false, onClick = noop }) => {
-  const [form, setForm] = useState(INITIAL_FORM);
+const FormFieldsContractFreelance = ({
+  loading = false,
+  onClick = noop,
+  data,
+}) => {
+  const [form, setForm] = useState({
+    responsible_person: data.responsible_person || '',
+    responsible_role: data.responsible_role || '',
+    responsible_level: data.responsible_level || '',
+  });
   const [errors, setErrors] = useState({});
   const toast = useToast();
 

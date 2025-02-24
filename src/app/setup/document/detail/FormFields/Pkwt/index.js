@@ -23,8 +23,14 @@ const INITIAL_FORM = {
   clause_9: '',
 };
 
-const FormFieldsPKWT = ({ loading = false, onClick = noop }) => {
-  const [form, setForm] = useState(INITIAL_FORM);
+const FormFieldsPKWT = ({ loading = false, onClick = noop, data }) => {
+  const [form, setForm] = useState({
+    responsible_person: data.responsible_person || '',
+    power_of_attorney_number: data.power_of_attorney_number || '',
+    power_of_attorney_date: data.power_of_attorney_date || '',
+    consideration: data.consideration || '',
+    clause_9: data.clause_9 || '',
+  });
   const [errors, setErrors] = useState({});
   const toast = useToast();
 
