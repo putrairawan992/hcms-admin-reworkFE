@@ -55,11 +55,12 @@ const RenderForm = memo(({ data, form, onChangeText }) => {
 const FormFieldsOfferingLatterKhusus = ({
   loading = false,
   onClick = noop,
+  data,
 }) => {
   const [form, setForm] = useState({
-    responsible_person: '',
-    responsible_role: '',
-    responsible_level: '',
+    responsible_person: data.responsible_person || '',
+    responsible_role: data.responsible_role || '',
+    responsible_level: data.responsible_level || '',
   });
 
   const onHandleSubmit = () => {
