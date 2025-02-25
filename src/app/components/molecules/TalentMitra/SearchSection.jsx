@@ -1,99 +1,167 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Search2Icon } from '@chakra-ui/icons';
-import CustomDropdown from '../../atoms/CustomDropdown';
+import { Box, Flex, Button, Input } from '@chakra-ui/react';
+import SelectField from '../../atoms/SelectField';
 
-const competencyOptions = [
-  { value: 'TOEIC', label: 'TOEIC' },
-  { value: 'TOEFL', label: 'TOEFL' },
-  { value: 'IELTS', label: 'IELTS' },
-  { value: 'GMAT', label: 'GMAT' },
-];
-const educationOptions = [
-  { value: 'sma', label: 'SMA/SMK' },
-  { value: 'd3', label: 'D3' },
-  { value: 's1', label: 'S1' },
-  { value: 's2', label: 'S2' },
-];
-const experienceOptions = [
-  { value: 'fresh', label: 'Fresh Graduate' },
-  { value: '1-3', label: '1-3 Tahun' },
-  { value: '3-5', label: '3-5 Tahun' },
-  { value: '5+', label: '5+ Tahun' },
-];
-
-const SearchSection = () => {
-  const [selectedEducation, setSelectedEducation] = useState('');
-  const [selectedExperience, setSelectedExperience] = useState('');
-  const [selectedCompetency, setSelectedCompetency] = useState('');
-  const [selectedSpecialization, setSelectedSpecialization] = useState('');
+const SearchSection = ({
+  masterData = {},
+  onChangeSelect,
+  onSearch,
+  filters = {},
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const searchCandidates = () => {
-    console.log({
-      education: selectedEducation,
-      experience: selectedExperience,
-      competencyTest: selectedCompetency,
-      specialization: selectedSpecialization,
-      searchQuery,
-    });
+  // Set search query from filters when component mounts or filters change
+  useEffect(() => {
+    if (filters.key_search) {
+      setSearchQuery(filters.key_search);
+    }
+  }, [filters.key_search]);
+
+  // Transform master data for dropdown usage using useMemo
+  const educationOptions = useMemo(
+    () =>
+      masterData.education?.map((item) => ({
+        value: item.id.toString(),
+        label: item.education_name,
+      })) || [],
+    [masterData.education]
+  );
+
+  const experienceOptions = useMemo(
+    () =>
+      masterData.experience?.map((item) => ({
+        value: item.id,
+        label: item.experience_name,
+      })) || [],
+    [masterData.experience]
+  );
+
+  const competenceOptions = useMemo(
+    () =>
+      masterData.competence?.map((item) => ({
+        value: item.id,
+        label: item.experience_name,
+      })) || [],
+    [masterData.competence]
+  );
+
+  const specializationOptions = useMemo(
+    () =>
+      masterData.job_specialist?.map((item) => ({
+        value: item.id.toString(),
+        label: item.job_specialist_name,
+      })) || [],
+    [masterData.job_specialist]
+  );
+
+  const handleSearch = () => {
+    onSearch(searchQuery);
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  // Reset all filters
+  const resetFilters = () => {
+    setSearchQuery('');
+
+    // Reset all filters in parent component
+    onChangeSelect('education_id', '');
+    onChangeSelect('experience_id', '');
+    onChangeSelect('competence_test_id', '');
+    onChangeSelect('job_specialist_id', '');
+    onSearch('');
+  };
+
+  console.log({ filters });
   return (
-    <div className="container mt-5 p-4  shadow-lg rounded-lg">
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-        <div className="form-group">
-          <label className="text-[#AE445A] font-bold">Pendidikan</label>
-          <CustomDropdown
-            value={selectedEducation}
-            setValue={setSelectedEducation}
-            options={educationOptions}
-          />
-        </div>
-        <div className="form-group">
-          <label className="text-[#AE445A] font-bold">Pengalaman</label>
-          <CustomDropdown
-            value={selectedExperience}
-            setValue={setSelectedExperience}
-            options={experienceOptions}
-          />
-        </div>
-        <div className="form-group">
-          <label className="text-[#AE445A] font-bold">Tes Kompetensi</label>
-          <CustomDropdown
-            value={selectedCompetency}
-            setValue={setSelectedCompetency}
-            options={competencyOptions}
-          />
-        </div>
-        <div className="form-group">
-          <label className="text-[#AE445A] font-bold">Spesialisasi</label>
-          <CustomDropdown
-            value={selectedSpecialization}
-            setValue={setSelectedSpecialization}
-            options={competencyOptions}
-          />
-        </div>
-        <div className="form-group">
-          <label className="text-[#AE445A] font-bold">Cari Kandidat</label>
-          <div className="relative">
-            <input
-              type="text"
+    <Box width="100%" bg="white" p={4} boxShadow="lg" borderRadius="lg">
+      <Flex direction={{ base: 'column', md: 'row' }} gap={4}>
+        <SelectField
+          label="Pendidikan"
+          slug="education_id"
+          value={filters.education_id || ''}
+          options={educationOptions}
+          onChange={onChangeSelect}
+          placeholder="Pilih Pendidikan"
+        />
+        <SelectField
+          label="Pengalaman"
+          slug="experience_id"
+          value={filters.experience_id || ''}
+          options={experienceOptions}
+          onChange={onChangeSelect}
+          placeholder="Pilih Pengalaman"
+        />
+        <SelectField
+          label="Tes Kompetensi"
+          slug="competence_test_id"
+          value={filters.competence_test_id || ''}
+          options={competenceOptions}
+          onChange={onChangeSelect}
+          placeholder="Pilih Tes Kompetensi"
+        />
+        <SelectField
+          label="Spesialisasi"
+          slug="job_specialist_id"
+          value={filters.job_specialist_id || ''}
+          options={specializationOptions}
+          onChange={onChangeSelect}
+          placeholder="Pilih Spesialisasi"
+        />
+        <Box flex={1}>
+          <Box
+            as="label"
+            display="block"
+            fontWeight="bold"
+            color="#AE445A"
+            mb={2}>
+            Cari Kandidat
+          </Box>
+          <Flex>
+            <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyPress}
               placeholder="Cari Kandidat"
-              className="w-full p-2 border border-[#AE445A] rounded-lg text-sm outline-none"
+              borderColor="#AE445A"
+              borderRadius="lg"
+              borderRightRadius="0"
+              _focus={{ borderColor: '#953A4D' }}
             />
-            <button
-              onClick={searchCandidates}
-              className="absolute right-0 top-0 bottom-0 px-3 bg-[#AE445A] text-white rounded-r-lg">
+            <Button
+              onClick={handleSearch}
+              bg="#AE445A"
+              color="white"
+              borderRadius="lg"
+              borderLeftRadius="0"
+              _hover={{ bg: '#953A4D' }}
+              px={3}>
               <Search2Icon />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+            </Button>
+          </Flex>
+        </Box>
+      </Flex>
+
+      {/* Reset Filters Button */}
+      <Flex justify="flex-end" mt={4}>
+        <Button
+          onClick={resetFilters}
+          color="#AE445A"
+          borderColor="#AE445A"
+          variant="outline"
+          size="sm"
+          _hover={{ bg: '#AE445A', color: 'white' }}>
+          Reset Filter
+        </Button>
+      </Flex>
+    </Box>
   );
 };
 

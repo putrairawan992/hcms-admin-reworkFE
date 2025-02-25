@@ -1,32 +1,21 @@
-import {
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Icon,
-  Image,
-  Switch,
-  Text,
-} from '@chakra-ui/react';
-import React from 'react';
-import styles from './TalentListCard.styles';
-import Icons, { DownloadIcon, EditIcon, EyeIcon } from '../../icons';
-import { employeeTypeOptions } from './shared/general';
+import { Box, Flex, Text, Image } from '@chakra-ui/react';
 import { noop } from '@/app/utils/helpers';
 import { Gap } from '../../atoms';
 
-const TalentListCard = ({ data = [], onPress = noop }) => {
-  const { employee_id, employee_type, username, photo } = data;
-
-  console.log(photo);
-
-  const employeeTypeBadge = employeeTypeOptions.find(
-    (item) => item.id === employee_type
-  );
+const TalentListCard = ({ data = {}, onPress = noop }) => {
+  const {
+    id,
+    name,
+    photo,
+    salary_expectation,
+    experience,
+    education,
+    created_at,
+    score_average,
+  } = data;
 
   const onHandlePress = () => {
-    onPress(employee_id);
+    onPress(id);
   };
 
   return (
@@ -40,29 +29,35 @@ const TalentListCard = ({ data = [], onPress = noop }) => {
           padding: 16,
         }}
         alignItems="center"
-      >
+        onClick={onHandlePress}
+        cursor="pointer">
         <Image
-          style={{ width: 80, height: 80, borderRadius: 5 }}
-          src="/images/dummy-avatar.jpeg"
-          alt="image"
+          style={{ width: 80, height: 80, borderRadius: 5, objectFit: 'cover' }}
+          src={photo || '/images/profile.png'}
+          alt={name || 'Talent photo'}
+          fallbackSrc="/images/profile.png"
         />
         <Gap width={4} />
         <Box flex={1}>
           <Text color="#404041" fontWeight={700} fontSize={16}>
-            Maudy Ayunda
+            {name || 'Unnamed Talent'}
           </Text>
           <Text color="#404041" fontWeight={400} fontSize={12}>
-            Diploma/Sarjana S1
+            {education || 'No education data'}
           </Text>
           <Text color="#404041" fontWeight={400} fontSize={12}>
-            0 - 2 tahun
+            {experience || 'No experience data'}
           </Text>
           <Text color="#404041" fontWeight={400} fontSize={12}>
-            Skor: 85
+            Skor: {score_average || 0}
+          </Text>
+          <Text color="#404041" fontWeight={400} fontSize={12}>
+            Ekspektasi Gaji: Rp{' '}
+            {salary_expectation?.toLocaleString('id-ID') || '0'}
           </Text>
         </Box>
         <Text color="#404041" fontWeight={400} fontSize={14}>
-          2 Mei 2023 | 09:00 WIB
+          {created_at || 'No date available'}
         </Text>
       </Flex>
     </Flex>

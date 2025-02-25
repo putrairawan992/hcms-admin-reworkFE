@@ -1,5 +1,12 @@
 'use client';
-import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Text,
+  useDisclosure,
+  Spinner,
+} from '@chakra-ui/react';
 import styles from '../styles/inbox.module.css';
 import { useState } from 'react';
 import 'moment/locale/id';
@@ -11,28 +18,9 @@ import { AddIcon } from '@chakra-ui/icons';
 import { ShareIcon } from '../components/icons';
 import Link from 'next/link';
 import SearchSection from '../components/molecules/TalentMitra/SearchSection';
-import { PenilaianCard } from '../components/molecules';
-const dummyData = [
-  {
-    talent_name: 'Roma',
-    status: 'Completed',
-    created_at: '2025-01-24T12:00:00Z',
-    employee_list: [
-      {
-        employee_type: 'Full-time',
-        module_name: 'Wawancara Mandiri',
-        duration: '00:05:42',
-        detail: 'Completed with 90% score',
-        score: 90,
-      },
-    ],
-  },
-];
+
 const TalentMitra = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [years, setYears] = useState('2024');
-  const [month, setMonth] = useState('10');
-  const [currentData, setCurrentData] = useState();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
@@ -41,20 +29,31 @@ const TalentMitra = () => {
     data,
     filters,
     loading,
+    summaryData,
+    masterData,
     productDigitalData,
     onHandlePress,
     onChangeSelect,
+    onSearch,
   } = useTalentMitra();
 
   const RenderContent = () => {
+    if (loading) {
+      return (
+        <Flex align="center" justify="center" height="200px">
+          <Spinner size="xl" color="#AE445A" />
+        </Flex>
+      );
+    }
+
     if (!isEmpty(data)) {
-      return data.map((item) => {
-        return <TalentListCard data={item} onPress={onHandlePress} />;
-      });
+      return data.map((item, index) => (
+        <TalentListCard key={index} data={item} onPress={onHandlePress} />
+      ));
     } else {
       return (
-        <Flex align={'center'} justify={'center'}>
-          <Text>Tidak ada data inbox</Text>
+        <Flex align="center" justify="center" height="200px">
+          <Text>Tidak ada data talent</Text>
         </Flex>
       );
     }
@@ -62,7 +61,7 @@ const TalentMitra = () => {
 
   return (
     <Box className={styles['inbox-container']}>
-      <Flex align={'center'} justify={'space-between'}>
+      <Flex align="center" justify="space-between">
         <Text className={styles['inbox-title']}>Talent List</Text>
       </Flex>
       <Gap height={6} />
@@ -123,7 +122,7 @@ const TalentMitra = () => {
                   alignSelf="flex-end"
                   flex={1}
                   marginBottom={6}>
-                  29
+                  {summaryData.total_active_talent || 0}
                 </Text>
               </Flex>
             </Box>
@@ -149,7 +148,7 @@ const TalentMitra = () => {
                   alignSelf="flex-end"
                   flex={1}
                   marginBottom={6}>
-                  29
+                  {summaryData.total_registered_talent || 0}
                 </Text>
               </Flex>
             </Box>
@@ -175,7 +174,7 @@ const TalentMitra = () => {
                   alignSelf="flex-end"
                   flex={1}
                   marginBottom={6}>
-                  29
+                  {summaryData.total_talent_in_hirring_process || 0}
                 </Text>
               </Flex>
             </Box>
@@ -201,7 +200,7 @@ const TalentMitra = () => {
                   alignSelf="flex-end"
                   flex={1}
                   marginBottom={6}>
-                  29
+                  {summaryData.total_talent_hired || 0}
                 </Text>
               </Flex>
             </Box>
@@ -227,7 +226,7 @@ const TalentMitra = () => {
                   alignSelf="flex-end"
                   flex={1}
                   marginBottom={6}>
-                  29
+                  {summaryData.total_talent_failed_process || 0}
                 </Text>
               </Flex>
             </Box>
@@ -238,11 +237,15 @@ const TalentMitra = () => {
       <Gap height={6} />
 
       <Flex marginBottom={4}>
-        <SearchSection />
+        <SearchSection
+          masterData={masterData}
+          onChangeSelect={onChangeSelect}
+          onSearch={onSearch}
+          filters={filters}
+        />
       </Flex>
-      {dummyData?.map((item, index) => (
-        <PenilaianCard key={index} data={item} />
-      ))}
+
+      <RenderContent />
     </Box>
   );
 };
