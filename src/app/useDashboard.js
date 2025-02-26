@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { httpClient } from './utils/network';
 import { useRouter } from 'next/navigation';
+import { useDisclosure } from '@chakra-ui/react';
 
 const useDashboard = () => {
   const router = useRouter();
@@ -16,6 +17,7 @@ const useDashboard = () => {
   const [filtersRecap, setFiltersRecap] = useState({
     year: '',
   });
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const fetchData = useCallback(
     async (params) => {
@@ -106,6 +108,9 @@ const useDashboard = () => {
     onHandlePress,
     onChangeSelect,
     onChangeSelectRecap,
+    onClose,
+    isOpen,
+    onOpen,
   };
 };
 

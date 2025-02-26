@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Flex, Text, Image, Divider } from '@chakra-ui/react';
 import styles from './styles/dashboard.module.css';
 import moment from 'moment';
@@ -11,8 +11,10 @@ import {
   monthOptions,
   yearOptions,
   monthLabelOptionsRecap,
+  months,
 } from '@/shared/general';
 import useDashboard from './useDashboard';
+import ModalTalentCostAll from './components/molecules/ModalDashboard/ModalTalentCost';
 
 moment.locale('id');
 
@@ -25,10 +27,15 @@ const Home = () => {
     productDigitalData,
     onChangeSelect,
     onChangeSelectRecap,
+    onOpen,
+    onClose,
+    isOpen,
   } = useDashboard();
 
   return (
     <React.Fragment>
+      <ModalTalentCostAll isOpen={isOpen} onClose={onClose} data={dataRecap} />
+
       <Box className={styles['dashboard-container']}>
         <SelectField
           label="Tahun"
@@ -52,7 +59,9 @@ const Home = () => {
           onChange={onChangeSelect}
         />
       </Box>
+
       <Gap height={3} />
+
       <Flex align={'flex-start'} width={'100%'}>
         <Box
           className={styles['dashboard-content-container']}
@@ -64,7 +73,9 @@ const Home = () => {
             Orang
           </Text>
         </Box>
+
         <Gap width={2} />
+
         <Box
           className={styles['dashboard-content-container']}
           flex={1}
@@ -78,7 +89,9 @@ const Home = () => {
           </Text>
         </Box>
       </Flex>
+
       <Gap height={3} />
+
       <Flex align={'flex-start'} width={'100%'}>
         <Flex
           className={styles['dashboard-content-container']}
@@ -104,7 +117,9 @@ const Home = () => {
           <Image src="/images/dashboard/rate.png" height={65} />
         </Flex>
       </Flex>
+
       <Gap height={3} />
+
       <Flex align={'flex-start'} width={'100%'}>
         <Box className={styles['dashboard-content-container2']} flex={1}>
           <Text color="#AE445A" fontWeight="900" fontSize={22}>
@@ -231,94 +246,168 @@ const Home = () => {
           </Flex>
         </Box>
         <Gap height={8} />
+
+        {/* Talent Cost */}
         <Box>
-          <Flex gap={2}>
-            <Text color="#AE445A" fontSize={18} fontWeight="bold">
-              Talent Cost
-            </Text>
-            <Text color="#5a6a85" fontSize={18} fontWeight="normal">
-              (dalam ribuan)
+          <Flex gap={2} justifyContent={'space-between'}>
+            <Flex gap={2}>
+              <Text color="#AE445A" fontSize={18} fontWeight="bold">
+                Talent Cost
+              </Text>
+              <Text color="#5a6a85" fontSize={18} fontWeight="normal">
+                (dalam ribuan)
+              </Text>
+            </Flex>
+
+            <Text
+              color="#AE445A"
+              fontSize={16}
+              fontWeight="bold"
+              cursor={'pointer'}
+              className="hover:underline"
+              onClick={onOpen}>
+              View All
             </Text>
           </Flex>
+
           <Gap height={4} />
+
           <Flex flex={1}>
             <Text color="#404041" fontSize={12} fontWeight="bold" flex={1}>
               Status
             </Text>
-            {monthLabelOptionsRecap.map((item) => (
-              <Text flex={1} color="#404041" fontSize={12} fontWeight="bold">
+            {months.map((item) => (
+              <Text
+                flex={1}
+                color="#404041"
+                fontSize={12}
+                align={'center'}
+                fontWeight="bold">
                 {item?.label}
               </Text>
             ))}
           </Flex>
+
           <Divider borderWidth={1} borderColor="#AE445A" marginY={3} />
+
           <Flex flex={1}>
             <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
               THP
             </Text>
-            {monthLabelOptionsRecap.map((item) => (
-              <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {Math.round(
-                  (dataRecap.talent_cost?.[item.value]?.gaji_pokok || 0) / 1000
-                ).toLocaleString('en-EN')}
+            {months.map((month) => (
+              <Text
+                flex={1}
+                color="#404041"
+                fontSize={10}
+                fontWeight="bold"
+                align={'right'}
+                key={month.key}>
+                {dataRecap?.talent_cost?.[month.key]?.gaji_pokok
+                  ? Math.round(
+                      dataRecap.talent_cost[month.key].gaji_pokok
+                    )?.toLocaleString('en-EN')
+                  : 0}
               </Text>
             ))}
           </Flex>
+
           <Gap height={2} />
+
           <Flex flex={1}>
             <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
               KAK
             </Text>
-            {monthLabelOptionsRecap.map((item) => (
-              <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {Math.round(
-                  (dataRecap.talent_cost?.[item.value]
-                    ?.kompensasi_akhir_kontrak || 0) / 1000
-                ).toLocaleString('en-EN')}
+            {months.map((month) => (
+              <Text
+                flex={1}
+                color="#404041"
+                fontSize={10}
+                fontWeight="bold"
+                align={'right'}
+                key={month.key}>
+                {dataRecap?.talent_cost?.[month.key]?.kompensasi_akhir_kontrak
+                  ? Math.round(
+                      dataRecap.talent_cost[month.key].kompensasi_akhir_kontrak
+                    )?.toLocaleString('en-EN')
+                  : 0}
               </Text>
             ))}
           </Flex>
+
           <Gap height={2} />
+
           <Flex flex={1}>
             <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
               Pajak
             </Text>
-            {monthLabelOptionsRecap.map((item) => (
-              <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {Math.round(
-                  (dataRecap.talent_cost?.[item.value]?.pajak || 0) / 1000
-                ).toLocaleString('en-EN')}
+            {months.map((month) => (
+              <Text
+                flex={1}
+                color="#404041"
+                fontSize={10}
+                fontWeight="bold"
+                align={'right'}
+                key={month.key}>
+                {dataRecap?.talent_cost?.[month.key]?.pajak
+                  ? Math.round(
+                      dataRecap.talent_cost[month.key].pajak
+                    )?.toLocaleString('en-EN')
+                  : 0}
               </Text>
             ))}
           </Flex>
+
           <Gap height={2} />
+
           <Flex flex={1}>
             <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
               Other
             </Text>
-            {monthLabelOptionsRecap.map((item) => (
-              <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {Math.round(
-                  (dataRecap.talent_cost?.[item.value]?.other || 0) / 1000
-                ).toLocaleString('en-EN')}
+            {months.map((month) => (
+              <Text
+                flex={1}
+                color="#404041"
+                fontSize={10}
+                fontWeight="bold"
+                align={'right'}
+                key={month.key}>
+                {dataRecap?.talent_cost?.[month.key]?.other
+                  ? Math.round(
+                      dataRecap.talent_cost[month.key].other
+                    ).toLocaleString('en-EN')
+                  : 0}
               </Text>
             ))}
           </Flex>
+
           <Divider borderWidth={1} borderColor="#AE445A" marginY={3} />
+
           <Flex flex={1}>
             <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
               Total Biaya
             </Text>
-            {monthLabelOptionsRecap.map((item) => (
-              <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {Math.round(
-                  (dataRecap.talent_cost?.[item.value]?.grand_total || 0) / 1000
-                ).toLocaleString('en-EN')}
+            {months.map((month) => (
+              <Text
+                flex={1}
+                color="#404041"
+                fontSize={10}
+                fontWeight="bold"
+                align={'right'}
+                key={month.key}>
+                {dataRecap?.talent_cost?.[month.key]?.grand_total
+                  ? Math.round(
+                      dataRecap.talent_cost[month.key].grand_total
+                    ).toLocaleString('en-EN')
+                  : 0}
               </Text>
             ))}
           </Flex>
         </Box>
+        {/* Talent Cost End */}
+
         <Gap height={8} />
+
+        {/* User Per Akun */}
         <Box>
           <Text color="#AE445A" fontSize={18} fontWeight="bold">
             User Per Akun
@@ -341,7 +430,7 @@ const Home = () => {
             </Text>
             {monthLabelOptionsRecap.map((item) => (
               <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {/* {dataRecap.newJoiner?.[item.key] || 0} */} 0
+                {dataRecap.UPA_client?.[item.key] || 0}
               </Text>
             ))}
           </Flex>
@@ -352,7 +441,7 @@ const Home = () => {
             </Text>
             {monthLabelOptionsRecap.map((item) => (
               <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {dataRecap.productDigital?.[item.key] || 0}
+                {dataRecap.UPA_productDigital?.[item.key] || 0}
               </Text>
             ))}
           </Flex>
@@ -363,12 +452,16 @@ const Home = () => {
             </Text>
             {monthLabelOptionsRecap.map((item) => (
               <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {/* {dataRecap.renewal?.[item.key] || 0} */} 0
+                {dataRecap.UPA_talent?.[item.key] || 0}
               </Text>
             ))}
           </Flex>
         </Box>
+        {/* User Per Akun End */}
+
         <Gap height={8} />
+
+        {/* User Per Data Payroll */}
         <Box>
           <Text color="#AE445A" fontSize={18} fontWeight="bold">
             User Per Data Payroll
@@ -379,7 +472,12 @@ const Home = () => {
               Status
             </Text>
             {monthLabelOptionsRecap.map((item) => (
-              <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
+              <Text
+                flex={1}
+                color="#404041"
+                fontSize={10}
+                align={'center'}
+                fontWeight="bold">
                 {item?.label}
               </Text>
             ))}
@@ -391,7 +489,7 @@ const Home = () => {
             </Text>
             {monthLabelOptionsRecap.map((item) => (
               <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {/* {dataRecap.newJoiner?.[item.key] || 0} */} 0
+                {dataRecap.UPDP_client?.[item.key] || 0}
               </Text>
             ))}
           </Flex>
@@ -402,7 +500,7 @@ const Home = () => {
             </Text>
             {monthLabelOptionsRecap.map((item) => (
               <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {/* {dataRecap.resign?.[item.key] || 0} */} 0
+                {dataRecap.UPDP_productDigital?.[item.key] || 0}
               </Text>
             ))}
           </Flex>
@@ -413,11 +511,12 @@ const Home = () => {
             </Text>
             {monthLabelOptionsRecap.map((item) => (
               <Text flex={1} color="#404041" fontSize={10} fontWeight="bold">
-                {dataRecap.talentActive?.[item.value] || 0}
+                {dataRecap.UPDP_talentActive?.[item.value] || 0}
               </Text>
             ))}
           </Flex>
         </Box>
+        {/* User Per Data Payroll End */}
       </Box>
     </React.Fragment>
   );

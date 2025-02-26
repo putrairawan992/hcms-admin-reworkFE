@@ -566,3 +566,18 @@ export const jobPostOptions = [
   },
   { label: 'Tingkat Pekerjaan', value: 'work_level', prefix: 'job_level_name' },
 ];
+
+export const months = [
+  { key: 'jan', label: 'Jan' },
+  { key: 'feb', label: 'Feb' },
+  { key: 'mar', label: 'Mar' },
+  { key: 'apr', label: 'Apr' },
+  { key: 'may', label: 'Mei' },
+  { key: 'jun', label: 'Jun' },
+  { key: 'jul', label: 'Jul' },
+  { key: 'aug', label: 'Ags' },
+  { key: 'sep', label: 'Sep' },
+  { key: 'oct', label: 'Okt' },
+  { key: 'nov', label: 'Nov' },
+  { key: 'dec', label: 'Des' },
+];
