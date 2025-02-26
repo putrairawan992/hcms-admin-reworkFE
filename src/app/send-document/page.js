@@ -102,7 +102,7 @@ const SendDocument = () => {
                 Perlu Ditinjau:{' '}
               </Text>
               <Text marginRight={3} color="#AE445A" fontWeight="bold">
-                1
+                {data?.filter((item) => item.status !== 'approved').length}
               </Text>
               <Text fontWeight="bold">Submit</Text>
             </Flex>

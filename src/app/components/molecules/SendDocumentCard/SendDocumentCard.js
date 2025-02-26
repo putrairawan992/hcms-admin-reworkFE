@@ -231,19 +231,11 @@ const SendDocumentCard = ({
                   justifyContent="space-around"
                   marginLeft={4}>
                   <FileBadgeIcon
-                    // color={
-                    //   item?.temporary_status !== null ? '#B6B6B6' : '#AE445A'
-                    // }
-                    color={'#AE445A'}
+                    color={selectedDocument === '' ? '#B6B6B6' : '#AE445A'}
                     onClick={() => onHandleClickIcon('file', item)}
-                    // style={{
-                    //   cursor:
-                    //     item?.temporary_status !== null
-                    //       ? 'not-allowed'
-                    //       : 'pointer',
-                    // }}
                     style={{
-                      cursor: 'pointer',
+                      cursor:
+                        selectedDocument === '' ? 'not-allowed' : 'pointer',
                     }}
                   />
                   <IoIosWalk
