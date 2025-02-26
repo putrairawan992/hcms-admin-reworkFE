@@ -31,7 +31,7 @@ export const addMitra = () => {
     onError: (error) => {
       toast({
         title: 'Error',
-        description: error.response?.data?.message || 'Something went wrong!',
+        description: error.response?.data?.errors || 'Something went wrong!',
         duration: 3000,
         status: 'error',
         position: 'top',
