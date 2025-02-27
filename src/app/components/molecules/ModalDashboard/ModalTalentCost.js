@@ -73,9 +73,9 @@ const ModalTalentCostAll = ({
                   fontWeight="bold"
                   align={'right'}
                   key={month.key}>
-                  {data?.talent_cost?.[month.key]?.gaji_pokok
+                  {data?.talent_cost?.[month.key]?.thp
                     ? Math.round(
-                        data.talent_cost[month.key].gaji_pokok
+                        data.talent_cost[month.key].thp
                       )?.toLocaleString('en-EN')
                     : 0}
                 </Text>
@@ -96,56 +96,10 @@ const ModalTalentCostAll = ({
                   fontWeight="bold"
                   align={'right'}
                   key={month.key}>
-                  {data?.talent_cost?.[month.key]?.kompensasi_akhir_kontrak
+                  {data?.talent_cost?.[month.key]?.kak
                     ? Math.round(
-                        data.talent_cost[month.key].kompensasi_akhir_kontrak
+                        data.talent_cost[month.key].kak
                       )?.toLocaleString('en-EN')
-                    : 0}
-                </Text>
-              ))}
-            </Flex>
-
-            <Gap height={2} />
-
-            <Flex flex={1}>
-              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
-                Pajak
-              </Text>
-              {months.map((month) => (
-                <Text
-                  flex={1}
-                  color="#404041"
-                  fontSize={10}
-                  fontWeight="bold"
-                  align={'right'}
-                  key={month.key}>
-                  {data?.talent_cost?.[month.key]?.pajak
-                    ? Math.round(
-                        data.talent_cost[month.key].pajak
-                      )?.toLocaleString('en-EN')
-                    : 0}
-                </Text>
-              ))}
-            </Flex>
-
-            <Gap height={2} />
-
-            <Flex flex={1}>
-              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
-                Other
-              </Text>
-              {months.map((month) => (
-                <Text
-                  flex={1}
-                  color="#404041"
-                  fontSize={10}
-                  fontWeight="bold"
-                  align={'right'}
-                  key={month.key}>
-                  {data?.talent_cost?.[month.key]?.other
-                    ? Math.round(
-                        data.talent_cost[month.key].other
-                      ).toLocaleString('en-EN')
                     : 0}
                 </Text>
               ))}
@@ -168,52 +122,6 @@ const ModalTalentCostAll = ({
                   {data?.talent_cost?.[month.key]?.overtime
                     ? Math.round(
                         data.talent_cost[month.key].overtime
-                      ).toLocaleString('en-EN')
-                    : 0}
-                </Text>
-              ))}
-            </Flex>
-
-            <Gap height={2} />
-
-            <Flex flex={1}>
-              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
-                BPJSKES
-              </Text>
-              {months.map((month) => (
-                <Text
-                  flex={1}
-                  color="#404041"
-                  fontSize={10}
-                  fontWeight="bold"
-                  align={'right'}
-                  key={month.key}>
-                  {data?.talent_cost?.[month.key]?.bpjskes
-                    ? Math.round(
-                        data.talent_cost[month.key].bpjskes
-                      ).toLocaleString('en-EN')
-                    : 0}
-                </Text>
-              ))}
-            </Flex>
-
-            <Gap height={2} />
-
-            <Flex flex={1}>
-              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
-                BPJSTK
-              </Text>
-              {months.map((month) => (
-                <Text
-                  flex={1}
-                  color="#404041"
-                  fontSize={10}
-                  fontWeight="bold"
-                  align={'right'}
-                  key={month.key}>
-                  {data?.talent_cost?.[month.key]?.bpjstk
-                    ? Math.round(
-                        data.talent_cost[month.key].bpjstk
                       ).toLocaleString('en-EN')
                     : 0}
                 </Text>
@@ -289,7 +197,283 @@ const ModalTalentCostAll = ({
               ))}
             </Flex>
 
-            <Divider borderWidth={1} borderColor="#AE445A" marginY={3} />
+            <Gap height={2} />
+
+            <Flex flex={1}>
+              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
+                Lain-lain
+              </Text>
+              {months.map((month) => (
+                <Text
+                  flex={1}
+                  color="#404041"
+                  fontSize={10}
+                  fontWeight="bold"
+                  align={'right'}
+                  key={month.key}>
+                  {data?.talent_cost?.[month.key]?.lain_lain
+                    ? Math.round(
+                        data.talent_cost[month.key].lain_lain
+                      ).toLocaleString('en-EN')
+                    : 0}
+                </Text>
+              ))}
+            </Flex>
+
+            <Gap height={2} />
+
+            <Flex flex={1}>
+              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
+                Total Iuran BPSTK
+              </Text>
+              {months.map((month) => (
+                <Text
+                  flex={1}
+                  color="#404041"
+                  fontSize={10}
+                  fontWeight="bold"
+                  align={'right'}
+                  key={month.key}>
+                  {data?.talent_cost?.[month.key]?.total_iuran_bpstk_karyawan
+                    ? Math.round(
+                        data.talent_cost[month.key].total_iuran_bpstk_karyawan
+                      ).toLocaleString('en-EN')
+                    : 0}
+                </Text>
+              ))}
+            </Flex>
+
+            <Gap height={2} />
+
+            <Flex flex={1}>
+              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
+                Premi BPJSKES
+              </Text>
+              {months.map((month) => (
+                <Text
+                  flex={1}
+                  color="#404041"
+                  fontSize={10}
+                  fontWeight="bold"
+                  align={'right'}
+                  key={month.key}>
+                  {data?.talent_cost?.[month.key]?.premi_bpjskes_karyawan
+                    ? Math.round(
+                        data.talent_cost[month.key].premi_bpjskes_karyawan
+                      ).toLocaleString('en-EN')
+                    : 0}
+                </Text>
+              ))}
+            </Flex>
+
+            <Gap height={2} />
+
+            <Flex flex={1}>
+              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
+                Total Iuran BPSTK
+              </Text>
+              {months.map((month) => (
+                <Text
+                  flex={1}
+                  color="#404041"
+                  fontSize={10}
+                  fontWeight="bold"
+                  align={'right'}
+                  key={month.key}>
+                  {data?.talent_cost?.[month.key]?.total_iuran_bpstk_perusahaan
+                    ? Math.round(
+                        data.talent_cost[month.key].total_iuran_bpstk_perusahaan
+                      ).toLocaleString('en-EN')
+                    : 0}
+                </Text>
+              ))}
+            </Flex>
+
+            <Gap height={2} />
+
+            <Flex flex={1}>
+              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
+                Premi BPJSKES
+              </Text>
+              {months.map((month) => (
+                <Text
+                  flex={1}
+                  color="#404041"
+                  fontSize={10}
+                  fontWeight="bold"
+                  align={'right'}
+                  key={month.key}>
+                  {data?.talent_cost?.[month.key]?.premi_bpjskes_perusahaan
+                    ? Math.round(
+                        data.talent_cost[month.key].premi_bpjskes_perusahaan
+                      ).toLocaleString('en-EN')
+                    : 0}
+                </Text>
+              ))}
+            </Flex>
+
+            <Gap height={2} />
+
+            <Flex flex={1}>
+              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
+                Pajak
+              </Text>
+              {months.map((month) => (
+                <Text
+                  flex={1}
+                  color="#404041"
+                  fontSize={10}
+                  fontWeight="bold"
+                  align={'right'}
+                  key={month.key}>
+                  {data?.talent_cost?.[month.key]?.pajak
+                    ? Math.round(
+                        data.talent_cost[month.key].pajak
+                      )?.toLocaleString('en-EN')
+                    : 0}
+                </Text>
+              ))}
+            </Flex>
+
+            <Gap height={2} />
+
+            <Flex flex={1}>
+              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
+                Potongan Absen
+              </Text>
+              {months.map((month) => (
+                <Text
+                  flex={1}
+                  color="#404041"
+                  fontSize={10}
+                  fontWeight="bold"
+                  align={'right'}
+                  key={month.key}>
+                  {data?.talent_cost?.[month.key]?.potongan_absen
+                    ? Math.round(
+                        data.talent_cost[month.key].potongan_absen
+                      )?.toLocaleString('en-EN')
+                    : 0}
+                </Text>
+              ))}
+            </Flex>
+
+            <Gap height={2} />
+
+            <Flex flex={1}>
+              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
+                Pengiriman Fasilitas Kantor
+              </Text>
+              {months.map((month) => (
+                <Text
+                  flex={1}
+                  color="#404041"
+                  fontSize={10}
+                  fontWeight="bold"
+                  align={'right'}
+                  key={month.key}>
+                  {data?.talent_cost?.[month.key]?.pengiriman_fasilitas_kantor
+                    ? Math.round(
+                        data.talent_cost[month.key].pengiriman_fasilitas_kantor
+                      )?.toLocaleString('en-EN')
+                    : 0}
+                </Text>
+              ))}
+            </Flex>
+
+            <Gap height={2} />
+
+            <Flex flex={1}>
+              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
+                Kliring
+              </Text>
+              {months.map((month) => (
+                <Text
+                  flex={1}
+                  color="#404041"
+                  fontSize={10}
+                  fontWeight="bold"
+                  align={'right'}
+                  key={month.key}>
+                  {data?.talent_cost?.[month.key]?.kliring
+                    ? Math.round(
+                        data.talent_cost[month.key].kliring
+                      )?.toLocaleString('en-EN')
+                    : 0}
+                </Text>
+              ))}
+            </Flex>
+
+            <Gap height={2} />
+
+            <Flex flex={1}>
+              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
+                Lain-lain
+              </Text>
+              {months.map((month) => (
+                <Text
+                  flex={1}
+                  color="#404041"
+                  fontSize={10}
+                  fontWeight="bold"
+                  align={'right'}
+                  key={month.key}>
+                  {data?.talent_cost?.[month.key]?.lain_lain_perusahaan
+                    ? Math.round(
+                        data.talent_cost[month.key].lain_lain_perusahaan
+                      )?.toLocaleString('en-EN')
+                    : 0}
+                </Text>
+              ))}
+            </Flex>
+
+            <Gap height={2} />
+
+            <Flex flex={1}>
+              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
+                Total 4
+              </Text>
+              {months.map((month) => (
+                <Text
+                  flex={1}
+                  color="#404041"
+                  fontSize={10}
+                  fontWeight="bold"
+                  align={'right'}
+                  key={month.key}>
+                  {data?.talent_cost?.[month.key]?.nett_salary
+                    ? Math.round(
+                        data.talent_cost[month.key].nett_salary
+                      )?.toLocaleString('en-EN')
+                    : 0}
+                </Text>
+              ))}
+            </Flex>
+
+            <Gap height={2} />
+
+            <Flex flex={1}>
+              <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
+                Total 5
+              </Text>
+              {months.map((month) => (
+                <Text
+                  flex={1}
+                  color="#404041"
+                  fontSize={10}
+                  fontWeight="bold"
+                  align={'right'}
+                  key={month.key}>
+                  {data?.talent_cost?.[month.key]?.total_biaya
+                    ? Math.round(
+                        data.talent_cost[month.key].total_biaya
+                      )?.toLocaleString('en-EN')
+                    : 0}
+                </Text>
+              ))}
+            </Flex>
+
+            {/* <Divider borderWidth={1} borderColor="#AE445A" marginY={3} />
 
             <Flex flex={1}>
               <Text color="#404041" fontSize={10} fontWeight="bold" flex={1}>
@@ -310,7 +494,7 @@ const ModalTalentCostAll = ({
                     : 0}
                 </Text>
               ))}
-            </Flex>
+            </Flex> */}
           </Box>
         </ModalBody>
       </ModalContent>
