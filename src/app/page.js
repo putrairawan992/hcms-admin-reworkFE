@@ -302,9 +302,9 @@ const Home = () => {
                 fontWeight="bold"
                 align={'right'}
                 key={month.key}>
-                {dataRecap?.talent_cost?.[month.key]?.gaji_pokok
+                {dataRecap?.talent_cost?.[month.key]?.thp
                   ? Math.round(
-                      dataRecap.talent_cost[month.key].gaji_pokok
+                      dataRecap.talent_cost[month.key].thp
                     )?.toLocaleString('en-EN')
                   : 0}
               </Text>
@@ -325,9 +325,9 @@ const Home = () => {
                 fontWeight="bold"
                 align={'right'}
                 key={month.key}>
-                {dataRecap?.talent_cost?.[month.key]?.kompensasi_akhir_kontrak
+                {dataRecap?.talent_cost?.[month.key]?.kak
                   ? Math.round(
-                      dataRecap.talent_cost[month.key].kompensasi_akhir_kontrak
+                      dataRecap.talent_cost[month.key].kak
                     )?.toLocaleString('en-EN')
                   : 0}
               </Text>
@@ -394,9 +394,9 @@ const Home = () => {
                 fontWeight="bold"
                 align={'right'}
                 key={month.key}>
-                {dataRecap?.talent_cost?.[month.key]?.grand_total
+                {dataRecap?.talent_cost?.[month.key]?.total_biaya
                   ? Math.round(
-                      dataRecap.talent_cost[month.key].grand_total
+                      dataRecap.talent_cost[month.key].total_biaya
                     ).toLocaleString('en-EN')
                   : 0}
               </Text>
