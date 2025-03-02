@@ -130,7 +130,7 @@ const TrackingDocument = () => {
     if (isEmpty(data)) return false;
 
     const lastItem = data[data.length - 1];
-    return lastItem?.status === 'employee_signed';
+    return lastItem?.status === 'employee signed';
   };
 
   return (

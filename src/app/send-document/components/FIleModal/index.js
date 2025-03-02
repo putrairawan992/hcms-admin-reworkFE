@@ -6,16 +6,59 @@ import FileExistingContractModal from './ExistingContract';
 import FileAllModal from './All';
 import FileContractTemplateModal from './ContractTemplate';
 
-const FileModal = ({ type = '', isOpen = false, onClose = noop, typeDocTalent = '', data = {}, onSubmit = noop, previewData = {}, jobProviderId = '' }) => {
+const FileModal = ({
+  type = '',
+  isOpen = false,
+  onClose = noop,
+  typeDocTalent = '',
+  data = {},
+  onSubmit = noop,
+  previewData = {},
+  jobProviderId = '',
+  dataSetup = {},
+}) => {
   switch (type) {
     case 'contract_manual':
-      return <FileManualModal isOpen={isOpen} onClose={onClose} typeDocTalent={typeDocTalent} data={data} onSubmit={onSubmit} />
+      return (
+        <FileManualModal
+          isOpen={isOpen}
+          onClose={onClose}
+          typeDocTalent={typeDocTalent}
+          data={data}
+          onSubmit={onSubmit}
+        />
+      );
     case 'existing_contract':
-      return <FileExistingContractModal isOpen={isOpen} onClose={onClose} typeDocTalent={typeDocTalent} data={data} onSubmit={onSubmit} />
+      return (
+        <FileExistingContractModal
+          isOpen={isOpen}
+          onClose={onClose}
+          typeDocTalent={typeDocTalent}
+          data={data}
+          onSubmit={onSubmit}
+        />
+      );
     case 'contract_template':
-      return <FileContractTemplateModal isOpen={isOpen} onClose={onClose} typeDocTalent={typeDocTalent} data={previewData} onSubmit={onSubmit} jobProviderId={jobProviderId} />
+      return (
+        <FileContractTemplateModal
+          isOpen={isOpen}
+          onClose={onClose}
+          typeDocTalent={typeDocTalent}
+          data={previewData}
+          onSubmit={onSubmit}
+          jobProviderId={jobProviderId}
+          dataSetup={dataSetup}
+        />
+      );
     default:
-      return <FileAllModal isOpen={isOpen} onClose={onClose} typeDocTalent={typeDocTalent} onSubmit={onSubmit} />
+      return (
+        <FileAllModal
+          isOpen={isOpen}
+          onClose={onClose}
+          typeDocTalent={typeDocTalent}
+          onSubmit={onSubmit}
+        />
+      );
   }
 };
 

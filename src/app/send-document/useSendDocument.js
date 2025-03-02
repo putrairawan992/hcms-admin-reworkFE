@@ -24,10 +24,6 @@ const useSendDocument = () => {
     product_digital_name: '',
   });
   const [dataSetup, setDataSetup] = useState({});
-  const [filtersSetup, setFiltersSetup] = useState({
-    job_provider_id: '',
-    type_document: '',
-  });
 
   const fetchData = async (filters) => {
     setLoading(true);
@@ -47,15 +43,18 @@ const useSendDocument = () => {
     }
   };
 
-  const fetchSetupDocumentDetail = async (filtersSetup) => {
+  const fetchSetupDocumentDetail = async (jobProviderId, documentType) => {
     try {
       const response = await httpClient({
         method: 'GET',
         url: '/admin/document/setup_document',
-        params: filtersSetup,
+        params: {
+          job_provider_id: jobProviderId,
+          type_document: documentType,
+        },
       });
 
-      setDataSetup(response?.data?.data);
+      setDataSetup(response?.data?.data?.data?.[0]);
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
@@ -283,28 +282,41 @@ const useSendDocument = () => {
   }, [filters]);
 
   useEffect(() => {
-    fetchSetupDocumentDetail(filtersSetup);
-  }, [filtersSetup]);
-
-  useEffect(() => {
     fetchDataPD();
     fetchDataDocument();
   }, []);
 
+  useEffect(() => {
+    if (employeeDetail?.product_digital_id && selectedDocumentTalent) {
+      let selectedDocument;
+      if (selectedDocumentTalent.includes('Offering Letter Normal')) {
+        selectedDocument = 'Offering Latter Normal';
+      } else {
+        selectedDocument = selectedDocumentTalent;
+      }
+
+      fetchSetupDocumentDetail(
+        employeeDetail?.product_digital_id,
+        selectedDocument
+      );
+    }
+  }, [employeeDetail, documentTypeValue]);
+
   return {
     data,
+    dataSetup,
     documentDetails,
     documentTypeValue,
 
     employeeDetail,
     filters,
-    filtersSetup,
     loading,
     loadingSubmit,
     modalDocType,
     modalOpen,
     modalOpenDoc,
     modalType,
+    fetchSetupDocumentDetail,
     onChangeSelect,
     onChangeSelectDocumentType,
     onChangeSelectType,

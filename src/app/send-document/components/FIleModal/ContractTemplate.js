@@ -16,7 +16,7 @@ import styles from '../../../styles/confirmationModal.module.css';
 import { noop } from '@/app/utils/helpers';
 import { Gap } from '@/app/components/atoms';
 import { contractTemplateOptions } from './Shared';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import { httpClient } from '@/app/utils/network';
@@ -30,36 +30,13 @@ const FileContractTemplateModal = ({
   onSubmit = noop,
   typeDocTalent = '',
   jobProviderId = '',
+  dataSetup = {},
 }) => {
   const toast = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dataFormFields = contractTemplateOptions.find(
     (item) => item.type === typeDocTalent
   );
-
-  const [form, setForm] = useState({
-    type_document: typeDocTalent,
-    job_provider_id: jobProviderId,
-    letter_no: '',
-    scope: '',
-    clause_1: data?.clause_1,
-    clause_6: data?.clause_6,
-    clause_9: data?.clause_9,
-    consideration: data?.consideration,
-    power_of_attorney_date: data?.power_of_attorney_date,
-    power_of_attorney_number: data?.power_of_attorney_number,
-    responsible_level: data?.responsible_level,
-    responsible_person: data?.responsible_person,
-    responsible_role: data?.responsible_role,
-    type_document: data?.type_document,
-    age: '',
-    birth_of_date: '',
-    thp: '',
-    gaji_pokok: '',
-    tunjangan_posisi: '',
-    durasi_kontrak: '',
-    pasal_8: '',
-  });
 
   const onChangeText = (slug, value) => {
     setForm((prevData) => ({ ...prevData, [slug]: value }));
@@ -100,6 +77,55 @@ const FileContractTemplateModal = ({
     submitData();
     onSubmit();
   };
+
+  const [form, setForm] = useState({
+    type_document: '',
+    job_provider_id: '',
+    letter_no: '',
+    scope: '',
+    clause_1: '',
+    clause_6: '',
+    clause_9: '',
+    consideration: '',
+    power_of_attorney_date: '',
+    power_of_attorney_number: '',
+    responsible_level: '',
+    responsible_person: '',
+    responsible_role: '',
+    age: '',
+    birth_of_date: '',
+    thp: '',
+    gaji_pokok: '',
+    tunjangan_posisi: '',
+    durasi_kontrak: '',
+    pasal_8: '',
+  });
+
+  useEffect(() => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      type_document: typeDocTalent || dataSetup?.type_document || '',
+      job_provider_id: jobProviderId || '',
+      letter_no: dataSetup?.letter_no || '',
+      scope: dataSetup?.scope || '',
+      clause_1: dataSetup?.clause_1 || '',
+      clause_6: dataSetup?.clause_6 || '',
+      clause_9: dataSetup?.clause_9 || '',
+      consideration: dataSetup?.consideration || '',
+      power_of_attorney_date: dataSetup?.power_of_attorney_date || '',
+      power_of_attorney_number: dataSetup?.power_of_attorney_number || '',
+      responsible_level: dataSetup?.responsible_level || '',
+      responsible_person: dataSetup?.responsible_person || '',
+      responsible_role: dataSetup?.responsible_role || '',
+      age: dataSetup?.age || '',
+      birth_of_date: dataSetup?.birth_of_date || '',
+      thp: dataSetup?.thp || '',
+      gaji_pokok: dataSetup?.gaji_pokok || '',
+      tunjangan_posisi: dataSetup?.tunjangan_posisi || '',
+      durasi_kontrak: dataSetup?.durasi_kontrak || '',
+      pasal_8: dataSetup?.pasal_8 || '',
+    }));
+  }, [dataSetup, typeDocTalent, jobProviderId]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={size} isCentered keepMounted>
@@ -143,7 +169,7 @@ const FileContractTemplateModal = ({
                                 borderRadius={10}
                                 padding="8px 16px"
                                 type="text"
-                                value={form[row?.field]}
+                                value={form[row?.field] || ''} // Add a default empty string
                                 onChange={(e) =>
                                   onChangeText(row?.field, e.target.value)
                                 }
