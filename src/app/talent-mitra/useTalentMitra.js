@@ -88,7 +88,7 @@ const useTalentMitra = () => {
   };
 
   const onHandlePress = (talentId) => {
-    router.push(`/data-talent/${talentId}`);
+    router.push(`/talent-mitra/${talentId}`);
   };
 
   const onChangeSelect = (slug, value) => {

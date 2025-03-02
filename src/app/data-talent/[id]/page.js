@@ -1,30 +1,13 @@
 'use client';
-import {
-  Box,
-  Button,
-  Flex,
-  Select,
-  Text,
-  Image,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Text, Image } from '@chakra-ui/react';
 import styles from '../../styles/inbox.module.css';
-import { useState } from 'react';
-import moment from 'moment';
 import 'moment/locale/id';
-import { isEmpty } from 'lodash';
 
-import {
-  DataTalentCard,
-  HistoryTalentCard,
-  BiodataField,
-  AttachmentFileList,
-} from '../../components/molecules';
+import { BiodataField, AttachmentFileList } from '../../components/molecules';
 import useDataTalentDetail from './useDataTalentDetail';
-import { formatDate, moveScreen } from '@/app/utils/helpers';
+import { formatDate } from '@/app/utils/helpers';
 import style from './styles';
-import { DownloadIcon, FileIcon, ShareIcon } from '@/app/components/icons';
+import { DownloadIcon, ShareIcon } from '@/app/components/icons';
 import { Gap } from '@/app/components/atoms';
 
 const DataTalentDetail = () => {
