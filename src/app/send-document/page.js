@@ -30,6 +30,7 @@ const SendDocument = () => {
     data,
     documentDetails,
     documentTypeValue,
+    dataSetup,
 
     employeeDetail,
     filters,
@@ -55,7 +56,6 @@ const SendDocument = () => {
     toggleModalOpen,
     toggleModalOpenDoc,
   } = useSendDocument();
-  // console.log(documentDetails);
 
   const isDisabledModalDocumentType = useMemo(() => {
     return documentDetails?.employee_list?.some(
@@ -253,10 +253,11 @@ const SendDocument = () => {
           onClose={toggleModalOpenDoc}
           typeDocTalent={selectedDocumentTalent}
           data={employeeDetail}
+          dataSetup={dataSetup}
           onSubmit={onSubmit}
           previewData={previewData}
           onDelete={onDelete}
-          jobProviderId={employeeDetail?.job_provider_id}
+          jobProviderId={employeeDetail?.product_digital_id}
         />
       </Box>
     </React.Fragment>

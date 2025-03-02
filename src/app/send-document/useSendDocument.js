@@ -23,6 +23,7 @@ const useSendDocument = () => {
     month: '',
     product_digital_name: '',
   });
+  const [dataSetup, setDataSetup] = useState({});
 
   const fetchData = async (filters) => {
     setLoading(true);
@@ -39,6 +40,23 @@ const useSendDocument = () => {
     } catch (error) {
       console.error('Failed to fetch data:', error);
       setLoading(false);
+    }
+  };
+
+  const fetchSetupDocumentDetail = async (jobProviderId, documentType) => {
+    try {
+      const response = await httpClient({
+        method: 'GET',
+        url: '/admin/document/setup_document',
+        params: {
+          job_provider_id: jobProviderId,
+          type_document: documentType,
+        },
+      });
+
+      setDataSetup(response?.data?.data?.data?.[0]);
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
     }
   };
 
@@ -194,7 +212,6 @@ const useSendDocument = () => {
   };
 
   const onPressIcon = (data, type, docTalent) => {
-    console.log('data', data);
     if (data?.type_setting_document === 'contract_template') {
       const docTypes = data?.document_type?.find(
         (item) => item.type_document === docTalent
@@ -269,8 +286,25 @@ const useSendDocument = () => {
     fetchDataDocument();
   }, []);
 
+  useEffect(() => {
+    if (employeeDetail?.product_digital_id && selectedDocumentTalent) {
+      let selectedDocument;
+      if (selectedDocumentTalent.includes('Offering Letter Normal')) {
+        selectedDocument = 'Offering Latter Normal';
+      } else {
+        selectedDocument = selectedDocumentTalent;
+      }
+
+      fetchSetupDocumentDetail(
+        employeeDetail?.product_digital_id,
+        selectedDocument
+      );
+    }
+  }, [employeeDetail, documentTypeValue]);
+
   return {
     data,
+    dataSetup,
     documentDetails,
     documentTypeValue,
 
@@ -282,6 +316,7 @@ const useSendDocument = () => {
     modalOpen,
     modalOpenDoc,
     modalType,
+    fetchSetupDocumentDetail,
     onChangeSelect,
     onChangeSelectDocumentType,
     onChangeSelectType,
