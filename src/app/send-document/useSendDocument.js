@@ -23,6 +23,11 @@ const useSendDocument = () => {
     month: '',
     product_digital_name: '',
   });
+  const [dataSetup, setDataSetup] = useState({});
+  const [filtersSetup, setFiltersSetup] = useState({
+    job_provider_id: '',
+    type_document: '',
+  });
 
   const fetchData = async (filters) => {
     setLoading(true);
@@ -39,6 +44,20 @@ const useSendDocument = () => {
     } catch (error) {
       console.error('Failed to fetch data:', error);
       setLoading(false);
+    }
+  };
+
+  const fetchSetupDocumentDetail = async (filtersSetup) => {
+    try {
+      const response = await httpClient({
+        method: 'GET',
+        url: '/admin/document/setup_document',
+        params: filtersSetup,
+      });
+
+      setDataSetup(response?.data?.data);
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
     }
   };
 
@@ -194,7 +213,6 @@ const useSendDocument = () => {
   };
 
   const onPressIcon = (data, type, docTalent) => {
-    console.log('data', data);
     if (data?.type_setting_document === 'contract_template') {
       const docTypes = data?.document_type?.find(
         (item) => item.type_document === docTalent
@@ -265,6 +283,10 @@ const useSendDocument = () => {
   }, [filters]);
 
   useEffect(() => {
+    fetchSetupDocumentDetail(filtersSetup);
+  }, [filtersSetup]);
+
+  useEffect(() => {
     fetchDataPD();
     fetchDataDocument();
   }, []);
@@ -276,6 +298,7 @@ const useSendDocument = () => {
 
     employeeDetail,
     filters,
+    filtersSetup,
     loading,
     loadingSubmit,
     modalDocType,

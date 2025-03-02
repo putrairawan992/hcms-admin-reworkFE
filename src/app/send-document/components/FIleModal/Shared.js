@@ -9,8 +9,8 @@ export const contractTemplateOptions = [
             label: 'No. Surat:',
             type: 'text',
             isDisabled: false,
-            field: 'letter_no'
-          }
+            field: 'letter_no',
+          },
         ],
       },
       {
@@ -20,32 +20,32 @@ export const contractTemplateOptions = [
             label: 'Ruang Lingkup:',
             type: 'textarea',
             isDisabled: false,
-            field: 'scope'
+            field: 'scope',
           },
           {
             label: 'Nama Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_person'
+            field: 'responsible_person',
           },
           {
             label: 'Role Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_role'
+            field: 'responsible_role',
           },
           {
             label: 'Level Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_level'
+            field: 'responsible_level',
           },
         ],
       },
     ],
   },
   {
-    type: 'Offering Letter Khusus',
+    type: 'Offering Latter Khusus',
     data: [
       {
         title: 'Judul Offering Letter Skema Khusus',
@@ -54,8 +54,8 @@ export const contractTemplateOptions = [
             label: 'No. Surat:',
             type: 'text',
             isDisabled: false,
-            field: 'letter_no'
-          }
+            field: 'letter_no',
+          },
         ],
       },
       {
@@ -65,32 +65,32 @@ export const contractTemplateOptions = [
             label: 'Ruang Lingkup:',
             type: 'textarea',
             isDisabled: false,
-            field: 'scope'
+            field: 'scope',
           },
           {
             label: 'Nama Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_person'
+            field: 'responsible_person',
           },
           {
             label: 'Role Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_role'
+            field: 'responsible_role',
           },
           {
             label: 'Level Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_level'
+            field: 'responsible_level',
           },
         ],
       },
     ],
   },
   {
-    type: 'PKWT',
+    type: 'PKWT Khusus & Normal',
     data: [
       {
         title: 'Judul PKWT Skema Khusus/Normal',
@@ -99,8 +99,8 @@ export const contractTemplateOptions = [
             label: 'Nomor Surat PKWT:',
             type: 'text',
             isDisabled: false,
-            field: 'letter_no'
-          }
+            field: 'letter_no',
+          },
         ],
       },
       {
@@ -110,77 +110,77 @@ export const contractTemplateOptions = [
             label: 'Nama Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_person'
+            field: 'responsible_person',
           },
           {
             label: 'Nomor Surat Kuasa PJ:',
             type: 'text',
             isDisabled: true,
-            field: 'power_of_attorney_number'
+            field: 'power_of_attorney_number',
           },
           {
             label: 'Tanggal Surat Kuasa PJ:',
             type: 'text',
             isDisabled: true,
-            field: 'power_of_attorney_date'
+            field: 'power_of_attorney_date',
           },
           {
             label: 'Usia',
             type: 'text',
             isDisabled: false,
-            field: 'age'
+            field: 'age',
           },
           {
             label: 'Tempat Lahir:',
             type: 'text',
             isDisabled: false,
-            field: 'age'
+            field: 'age',
           },
           {
             label: 'Tanggal Lahir:',
             type: 'date',
             isDisabled: false,
-            field: 'birth_of_date'
+            field: 'birth_of_date',
           },
           {
             label: 'Poin-poin Pertimbangan:',
             type: 'textarea',
             isDisabled: true,
-            field: 'consideration'
+            field: 'consideration',
           },
 
           {
             label: 'THP (Terbilang):',
             type: 'text',
             isDisabled: false,
-            field: 'thp'
+            field: 'thp',
           },
 
           {
             label: 'Gaji Pokok (Terbilang):',
             type: 'text',
             isDisabled: false,
-            field: 'gaji_pokok'
+            field: 'gaji_pokok',
           },
 
           {
             label: 'Tunj. Posisi (Terbilang):',
             type: 'text',
             isDisabled: false,
-            field: 'tunjangan_posisi'
+            field: 'tunjangan_posisi',
           },
 
           {
             label: 'Durasi Kontrak Bulan (Terbilang):',
             type: 'text',
             isDisabled: false,
-            field: 'durasi_kontrak'
+            field: 'durasi_kontrak',
           },
           {
             label: 'Pasal 8 Berakhinya Perjanjian atau Pemutusan Perjanjian:',
             type: 'text',
             isDisabled: false,
-            field: 'pasal_8'
+            field: 'pasal_8',
           },
         ],
       },
@@ -191,8 +191,8 @@ export const contractTemplateOptions = [
             label: 'Ruang Lingkup:',
             type: 'textarea',
             isDisabled: false,
-            field: 'scope'
-          }
+            field: 'scope',
+          },
         ],
       },
     ],
@@ -207,8 +207,8 @@ export const contractTemplateOptions = [
             label: 'No. Surat:',
             type: 'text',
             isDisabled: false,
-            field: 'letter_no'
-          }
+            field: 'letter_no',
+          },
         ],
       },
       {
@@ -218,28 +218,118 @@ export const contractTemplateOptions = [
             label: 'Ruang Lingkup:',
             type: 'date',
             isDisabled: false,
-            field: 'scope'
+            field: 'scope',
           },
           {
             label: 'Nama Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_person'
+            field: 'responsible_person',
           },
           {
             label: 'Role Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_role'
+            field: 'responsible_role',
           },
           {
             label: 'Level Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_level'
+            field: 'responsible_level',
           },
         ],
-      }
+      },
+    ],
+  },
+  {
+    type: 'Kontrak Internship',
+    data: [
+      {
+        title: 'Judul Kontrak Freelance',
+        formField: [
+          {
+            label: 'No. Surat:',
+            type: 'text',
+            isDisabled: false,
+            field: 'letter_no',
+          },
+        ],
+      },
+      {
+        title: 'Isi Kontrak Freelance',
+        formField: [
+          {
+            label: 'Ruang Lingkup:',
+            type: 'date',
+            isDisabled: false,
+            field: 'scope',
+          },
+          {
+            label: 'Nama Penanggung Jawab:',
+            type: 'text',
+            isDisabled: true,
+            field: 'responsible_person',
+          },
+          {
+            label: 'Role Penanggung Jawab:',
+            type: 'text',
+            isDisabled: true,
+            field: 'responsible_role',
+          },
+          {
+            label: 'Level Penanggung Jawab:',
+            type: 'text',
+            isDisabled: true,
+            field: 'responsible_level',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'Kontrak Freelance',
+    data: [
+      {
+        title: 'Judul Kontrak Freelance',
+        formField: [
+          {
+            label: 'No. Surat:',
+            type: 'text',
+            isDisabled: false,
+            field: 'letter_no',
+          },
+        ],
+      },
+      {
+        title: 'Isi Kontrak Freelance',
+        formField: [
+          {
+            label: 'Ruang Lingkup:',
+            type: 'date',
+            isDisabled: false,
+            field: 'scope',
+          },
+          {
+            label: 'Nama Penanggung Jawab:',
+            type: 'text',
+            isDisabled: true,
+            field: 'responsible_person',
+          },
+          {
+            label: 'Role Penanggung Jawab:',
+            type: 'text',
+            isDisabled: true,
+            field: 'responsible_role',
+          },
+          {
+            label: 'Level Penanggung Jawab:',
+            type: 'text',
+            isDisabled: true,
+            field: 'responsible_level',
+          },
+        ],
+      },
     ],
   },
 ];

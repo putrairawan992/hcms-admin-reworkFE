@@ -22,10 +22,20 @@ import 'react-quill/dist/quill.snow.css';
 import { httpClient } from '@/app/utils/network';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-const FileContractTemplateModal = ({ data = {}, isOpen = false, onClose = noop, size = 'xl', onSubmit = noop, typeDocTalent = '', jobProviderId = '' }) => {
+const FileContractTemplateModal = ({
+  data = {},
+  isOpen = false,
+  onClose = noop,
+  size = 'xl',
+  onSubmit = noop,
+  typeDocTalent = '',
+  jobProviderId = '',
+}) => {
   const toast = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const dataFormFields = contractTemplateOptions.find((item) => item.type === typeDocTalent);
+  const dataFormFields = contractTemplateOptions.find(
+    (item) => item.type === typeDocTalent
+  );
 
   const [form, setForm] = useState({
     type_document: typeDocTalent,
@@ -48,11 +58,11 @@ const FileContractTemplateModal = ({ data = {}, isOpen = false, onClose = noop, 
     gaji_pokok: '',
     tunjangan_posisi: '',
     durasi_kontrak: '',
-    pasal_8: ''
+    pasal_8: '',
   });
 
   const onChangeText = (slug, value) => {
-    setForm(prevData => ({ ...prevData, [slug]: value }));
+    setForm((prevData) => ({ ...prevData, [slug]: value }));
   };
 
   const submitData = async () => {
@@ -60,7 +70,7 @@ const FileContractTemplateModal = ({ data = {}, isOpen = false, onClose = noop, 
       await httpClient({
         method: 'POST',
         url: '/admin/document/setup_document',
-        data: form
+        data: form,
       });
 
       toast({
@@ -97,75 +107,90 @@ const FileContractTemplateModal = ({ data = {}, isOpen = false, onClose = noop, 
       <ModalContent borderRadius={14}>
         <ModalBody className={styles['modal-wrapper-2']}>
           <Box style={{ padding: '12px 0px' }}>
-            {
-              dataFormFields?.data?.map((item, index) => {
-                return (
-                  <Box key={index}>
-                    <Text fontSize={26} fontWeight='900' color='#AE445A'>{item?.title}</Text>
-                    {item?.formField?.map((row, index) => {
-                      return (
-                        <>
-                          <Gap height={2} />
-                          <Flex
-                            key={index}
-                            flex={1}
-                            alignItems={row?.type === 'textarea' ? 'flex-start' : 'center'}
-                            marginBottom={2}>
-                            <Box flex={0.5}>
-                              <Text fontSize={12} fontWeight="bold" color="#404041">
-                                {row?.label}
-                              </Text>
-                            </Box>
-                            <Flex flex={1}>
-                              {row?.type === 'text' ? (
-                                <Input
-                                  key={row?.field}
-                                  id={row?.field}
-                                  flex={1}
-                                  borderWidth={1}
-                                  borderColor="#AE445A"
-                                  borderRadius={10}
-                                  padding="8px 16px"
-                                  type="text"
-                                  value={form[row?.field]}
-                                  onChange={(e) => onChangeText(row?.field, e.target.value)}
-                                  disabled={row?.isDisabled}
-                                />
-                              ) : row?.type === 'textarea' ? (
-                                <ReactQuill
-                                  theme="snow"
-                                  key={row?.field}
-                                  id={row?.field}
-                                  style={{ height: '150px', flex: 1, marginBottom: 60 }}
-                                  value={form[row?.field]}
-                                  onChange={(value) => onChangeText(row?.field, value)}
-                                  readOnly={row?.isDisabled}
-                                />
-                              ) : row?.type === 'date' ? (
-                                <Input
-                                  key={row?.field}
-                                  id={row?.field}
-                                  flex={1}
-                                  borderWidth={1}
-                                  borderColor="#AE445A"
-                                  borderRadius={10}
-                                  padding="8px 16px"
-                                  type="date"
-                                  value={form[row?.field]}
-                                  onChange={(e) => onChangeText(row?.field, e.target.value)}
-                                  disabled={row?.isDisabled}
-                                />
-                              ) : null}
-                            </Flex>
+            {dataFormFields?.data?.map((item, index) => {
+              return (
+                <Box key={index}>
+                  <Text fontSize={26} fontWeight="900" color="#AE445A">
+                    {item?.title}
+                  </Text>
+                  {item?.formField?.map((row, index) => {
+                    return (
+                      <>
+                        <Gap height={2} />
+                        <Flex
+                          key={index}
+                          flex={1}
+                          alignItems={
+                            row?.type === 'textarea' ? 'flex-start' : 'center'
+                          }
+                          marginBottom={2}>
+                          <Box flex={0.5}>
+                            <Text
+                              fontSize={12}
+                              fontWeight="bold"
+                              color="#404041">
+                              {row?.label}
+                            </Text>
+                          </Box>
+                          <Flex flex={1}>
+                            {row?.type === 'text' ? (
+                              <Input
+                                key={row?.field}
+                                id={row?.field}
+                                flex={1}
+                                borderWidth={1}
+                                borderColor="#AE445A"
+                                borderRadius={10}
+                                padding="8px 16px"
+                                type="text"
+                                value={form[row?.field]}
+                                onChange={(e) =>
+                                  onChangeText(row?.field, e.target.value)
+                                }
+                                disabled={row?.isDisabled}
+                              />
+                            ) : row?.type === 'textarea' ? (
+                              <ReactQuill
+                                theme="snow"
+                                key={row?.field}
+                                id={row?.field}
+                                style={{
+                                  height: '150px',
+                                  flex: 1,
+                                  marginBottom: 60,
+                                }}
+                                value={form[row?.field]}
+                                onChange={(value) =>
+                                  onChangeText(row?.field, value)
+                                }
+                                readOnly={row?.isDisabled}
+                              />
+                            ) : row?.type === 'date' ? (
+                              <Input
+                                key={row?.field}
+                                id={row?.field}
+                                flex={1}
+                                borderWidth={1}
+                                borderColor="#AE445A"
+                                borderRadius={10}
+                                padding="8px 16px"
+                                type="date"
+                                value={form[row?.field]}
+                                onChange={(e) =>
+                                  onChangeText(row?.field, e.target.value)
+                                }
+                                disabled={row?.isDisabled}
+                              />
+                            ) : null}
                           </Flex>
-                          <Gap height={2} />
-                        </>
-                      );
-                    })}
-                  </Box>
-                );
-              })
-            }
+                        </Flex>
+                        <Gap height={2} />
+                      </>
+                    );
+                  })}
+                </Box>
+              );
+            })}
             <Gap height={6} />
             <Flex align={'center'} justify={'center'}>
               <Button onClick={onClose} className={styles['modal-reject']}>
@@ -174,7 +199,7 @@ const FileContractTemplateModal = ({ data = {}, isOpen = false, onClose = noop, 
               <Button
                 onClick={onSubmitHandler}
                 className={styles['modal-approve']}>
-                {isSubmitting ? <Spinner size="sm" /> : "Kirim"}
+                {isSubmitting ? <Spinner size="sm" /> : 'Kirim'}
               </Button>
             </Flex>
           </Box>

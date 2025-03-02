@@ -55,7 +55,6 @@ const SendDocument = () => {
     toggleModalOpen,
     toggleModalOpenDoc,
   } = useSendDocument();
-  // console.log(documentDetails);
 
   const isDisabledModalDocumentType = useMemo(() => {
     return documentDetails?.employee_list?.some(
