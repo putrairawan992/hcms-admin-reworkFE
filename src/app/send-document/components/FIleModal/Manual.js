@@ -18,13 +18,18 @@ import { Gap } from '@/app/components/atoms';
 import { useState } from 'react';
 import { httpClient } from '@/app/utils/network';
 
-const FileManualModal = ({ isOpen = false, onClose = noop, size = 'sm', onSubmit = noop, data = {} }) => {
+const FileManualModal = ({
+  isOpen = false,
+  onClose = noop,
+  size = 'sm',
+  onSubmit = noop,
+  data = {},
+}) => {
   const toast = useToast();
-  const [fileName, setFileName] = useState("Browse File To Upload");
+  const [fileName, setFileName] = useState('Browse File To Upload');
   const [selectedFile, setSelectedFile] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-
 
   const onSubmitHandler = async () => {
     if (!selectedFile) {
@@ -41,12 +46,18 @@ const FileManualModal = ({ isOpen = false, onClose = noop, size = 'sm', onSubmit
 
     try {
       setIsSubmitting(true); // Tampilkan loading
-      setErrorMessage(""); // Reset error
+      setErrorMessage(''); // Reset error
 
       const formData = new FormData();
-      formData.append("file", selectedFile);
-      formData.append("employee_id", data?.employee?.user_id);
-      formData.append("remuneration_id", data?.remuneration_id);
+      formData.append('file', selectedFile);
+      formData.append(
+        'employee_id',
+        data?.employee?.user_id || data?.employee_id
+      );
+      formData.append(
+        'remuneration_id',
+        data?.remuneration_id || data?.batch_remuneration_id
+      );
 
       await httpClient({
         method: 'POST',
@@ -66,10 +77,11 @@ const FileManualModal = ({ isOpen = false, onClose = noop, size = 'sm', onSubmit
         isClosable: true,
       });
       setIsSubmitting(false);
-      setFileName("Browse File To Upload"); // Reset nama file
+      setFileName('Browse File To Upload'); // Reset nama file
       setSelectedFile(null); // Reset file
-      setErrorMessage(""); // Clear error jika valid
+      setErrorMessage(''); // Clear error jika valid
       onSubmit();
+      onClose();
     } catch (error) {
       toast({
         title: 'Error',
@@ -80,9 +92,9 @@ const FileManualModal = ({ isOpen = false, onClose = noop, size = 'sm', onSubmit
         isClosable: true,
       });
       setIsSubmitting(false);
-      setFileName("Browse File To Upload"); // Reset nama file
+      setFileName('Browse File To Upload'); // Reset nama file
       setSelectedFile(null); // Reset file
-      setErrorMessage(""); // Clear error jika valid
+      setErrorMessage(''); // Clear error jika valid
       onSubmit();
     }
   };
@@ -93,11 +105,11 @@ const FileManualModal = ({ isOpen = false, onClose = noop, size = 'sm', onSubmit
     if (file) {
       // Validasi ukuran file (maksimal 2MB)
       if (file.size > 2 * 1024 * 1024) {
-        setErrorMessage("File size exceeds 2MB. Please choose a smaller file.");
-        setFileName("Browse File To Upload"); // Reset nama file
+        setErrorMessage('File size exceeds 2MB. Please choose a smaller file.');
+        setFileName('Browse File To Upload'); // Reset nama file
         setSelectedFile(null); // Reset file
       } else {
-        setErrorMessage(""); // Clear error jika valid
+        setErrorMessage(''); // Clear error jika valid
         setFileName(file.name); // Set nama file
         setSelectedFile(file); // Simpan file untuk dikirim
       }
@@ -124,18 +136,17 @@ const FileManualModal = ({ isOpen = false, onClose = noop, size = 'sm', onSubmit
               borderStyle="dotted"
               borderColor="#F39F5A"
               position="relative"
-              cursor="pointer"
-            >
+              cursor="pointer">
               <input
                 type="file"
                 style={{
                   opacity: 0,
-                  position: "absolute",
+                  position: 'absolute',
                   top: 0,
                   left: 0,
-                  width: "100%",
-                  height: "100%",
-                  cursor: "pointer",
+                  width: '100%',
+                  height: '100%',
+                  cursor: 'pointer',
                 }}
                 onChange={handleFileChange}
               />
@@ -159,7 +170,7 @@ const FileManualModal = ({ isOpen = false, onClose = noop, size = 'sm', onSubmit
                 onClick={onSubmitHandler}
                 isDisabled={!selectedFile || isSubmitting}
                 className={styles['modal-approve']}>
-                {isSubmitting ? <Spinner size="sm" /> : "Kirim"}
+                {isSubmitting ? <Spinner size="sm" /> : 'Kirim'}
               </Button>
             </Flex>
           </Box>

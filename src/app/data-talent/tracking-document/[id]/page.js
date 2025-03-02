@@ -7,6 +7,8 @@ import { useParams, useRouter } from 'next/navigation';
 import { httpClient } from '@/app/utils/network';
 import { ListEmpty } from '@/app/components/molecules';
 import { isEmpty } from 'lodash';
+import FileManualModal from '@/app/send-document/components/FIleModal/Manual';
+import useSendDocument from '@/app/send-document/useSendDocument';
 
 const TrackingDocument = () => {
   const router = useRouter();
@@ -14,6 +16,10 @@ const TrackingDocument = () => {
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedDocumentData, setSelectedDocumentData] = useState(null);
+
+  const { onOpen, onClose, typeDocTalent, onSubmit } = useSendDocument();
 
   const extractFileName = (fileUrl) => {
     if (!fileUrl) return '-';
@@ -42,11 +48,11 @@ const TrackingDocument = () => {
       const responseData = response?.data?.data || [];
 
       // Sort data by createdAt (oldest first)
-      const sortedData = [...responseData].sort(
-        (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-      );
+      // const sortedData = [...responseData].sort(
+      //   (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+      // );
 
-      setData(sortedData);
+      setData(responseData);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -102,7 +108,7 @@ const TrackingDocument = () => {
                   fontWeight="700"
                   color="#404041"
                   textAlign="right">
-                  {moment(item?.createdAt).format('DD MMM YYYY') || '-'}
+                  {moment.utc(item?.createdAt).format('DD MMM YYYY') || '-'}
                 </Text>
               </Box>
             </Flex>
@@ -130,7 +136,17 @@ const TrackingDocument = () => {
     if (isEmpty(data)) return false;
 
     const lastItem = data[data.length - 1];
-    return lastItem?.status === 'employee signed';
+    return (
+      lastItem?.status === 'employee signed' ||
+      lastItem?.status === 'full_signed'
+    );
+  };
+
+  const handleAddDocumentClick = () => {
+    // Get the last document in the cycle that needs a new document
+    const lastItem = data[data.length - 1];
+    setSelectedDocumentData(lastItem);
+    setIsOpen(true);
   };
 
   return (
@@ -145,7 +161,11 @@ const TrackingDocument = () => {
         <Box>
           <Flex gap={4}>
             {handleAddDocument() && (
-              <Button className={styles['inbox-btn']}>Add Document</Button>
+              <Button
+                className={styles['inbox-btn']}
+                onClick={handleAddDocumentClick}>
+                Add Document
+              </Button>
             )}
 
             <Button
@@ -156,6 +176,14 @@ const TrackingDocument = () => {
           </Flex>
         </Box>
       </Flex>
+
+      <FileManualModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        typeDocTalent={typeDocTalent}
+        data={selectedDocumentData}
+        onSubmit={onSubmit}
+      />
     </Box>
   );
 };
