@@ -92,8 +92,7 @@ const NewAdmin = () => {
       <Flex width={'100%'} justify={'end'} marginTop={'2rem'}>
         <Button
           className={styles['admin-new-admin-btn']}
-          onClick={onHandleSubmit}
-        >
+          onClick={onHandleSubmit}>
           {loading ? <Spinner size="sm" /> : 'Save'}
         </Button>
       </Flex>

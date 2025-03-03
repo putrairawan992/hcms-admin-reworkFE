@@ -230,9 +230,11 @@ export const formFieldsAdminOptions = [
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Create',
+        value_key: 'create',
       },
     ],
   },
@@ -242,61 +244,70 @@ export const formFieldsAdminOptions = [
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Edit',
+        value_key: 'edit',
       },
       {
         label: 'Delete',
+        value_key: 'delete',
       },
       {
         label: 'Upload',
+        value_key: 'upload',
       },
       {
         label: 'Download',
+        value_key: 'download',
       },
     ],
   },
   {
     label: 'Setup',
     slug: 'setup',
-    children: [
+    sections: [
       {
         label: 'Admin',
-        slug: 'admin',
         checkbox: [
           {
             label: 'View',
+            value_key: 'admin_view',
           },
           {
             label: 'Create',
+            value_key: 'admin_create',
           },
         ],
       },
       {
         label: 'Account',
-        slug: 'account',
         checkbox: [
           {
             label: 'View',
+            value_key: 'account_view',
           },
           {
             label: 'Create',
+            value_key: 'account_create',
           },
           {
             label: 'Delete',
+            value_key: 'account_delete',
           },
         ],
       },
       {
         label: 'Job Post',
-        slug: 'job_post',
         checkbox: [
           {
             label: 'View',
+            value_key: 'job_post_view',
           },
           {
             label: 'Create',
+            value_key: 'job_post_create',
           },
         ],
       },
@@ -304,77 +315,84 @@ export const formFieldsAdminOptions = [
   },
   {
     label: 'Blast Notification',
-    slug: 'blash_notif',
+    slug: 'blast_notification',
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Create',
+        value_key: 'create',
       },
     ],
   },
   {
     label: 'Master Data',
-    slug: 'master_data',
-    children: [
+    slug: 'masterdata',
+    sections: [
       {
         label: 'BPJSKES',
-        slug: 'bpjskes',
         checkbox: [
           {
             label: 'View',
+            value_key: 'bpjskes_view',
           },
           {
             label: 'Create',
+            value_key: 'bpjskes_create',
           },
         ],
       },
       {
         label: 'BPJSTK',
-        slug: 'bpjstk',
         checkbox: [
           {
             label: 'View',
+            value_key: 'bpjstk_view',
           },
           {
             label: 'Create',
+            value_key: 'bpjstk_create',
           },
         ],
       },
       {
         label: 'SALTAB',
-        slug: 'saltab',
         checkbox: [
           {
             label: 'View',
+            value_key: 'saltab_view',
           },
           {
             label: 'Create',
+            value_key: 'saltab_create',
           },
         ],
       },
       {
         label: 'Pajak',
-        slug: 'pajak',
         checkbox: [
           {
             label: 'View',
+            value_key: 'pajak_view',
           },
           {
             label: 'Create',
+            value_key: 'pajak_create',
           },
         ],
       },
       {
         label: 'Merge',
-        slug: 'merge',
         checkbox: [
           {
             label: 'View',
+            value_key: 'merge_view',
           },
           {
             label: 'Create',
+            value_key: 'merge_create',
           },
         ],
       },
@@ -386,52 +404,58 @@ export const formFieldsAdminOptions = [
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Create',
+        value_key: 'create',
       },
     ],
   },
   {
     label: 'Middle Level',
     slug: 'middle_level',
-    children: [
+    sections: [
       {
         label: 'Company',
-        slug: 'company',
         checkbox: [
           {
             label: 'View',
+            value_key: 'company_view',
           },
           {
             label: 'Upload',
+            value_key: 'company_upload',
           },
           {
             label: 'Download',
+            value_key: 'company_download',
           },
         ],
       },
       {
         label: 'Talent',
-        slug: 'talent',
         checkbox: [
           {
             label: 'View',
+            value_key: 'talent_view',
           },
           {
             label: 'Upload',
+            value_key: 'talent_upload',
           },
           {
             label: 'Download',
+            value_key: 'talent_download',
           },
         ],
       },
       {
         label: 'Renewal',
-        slug: 'renewal',
         checkbox: [
           {
             label: 'View',
+            value_key: 'renewal_view',
           },
         ],
       },
@@ -443,30 +467,37 @@ export const formFieldsAdminOptions = [
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Share',
+        value_key: 'share',
       },
       {
         label: 'Approve',
+        value_key: 'approve',
       },
       {
         label: 'Reject',
+        value_key: 'reject',
       },
     ],
   },
   {
     label: 'Approval Remuneration',
-    slug: 'approval_remun',
+    slug: 'approval_remuneration',
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Save',
+        value_key: 'save',
       },
       {
         label: 'Comment',
+        value_key: 'comment',
       },
     ],
   },
@@ -476,36 +507,45 @@ export const formFieldsAdminOptions = [
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Create',
+        value_key: 'create',
       },
       {
         label: 'Edit',
+        value_key: 'edit',
       },
       {
         label: 'Delete',
+        value_key: 'delete',
       },
       {
         label: 'Send',
+        value_key: 'send',
       },
       {
         label: 'Download',
+        value_key: 'download',
       },
       {
         label: 'Message',
+        value_key: 'message',
       },
     ],
   },
   {
     label: 'Data Talent',
-    slug: 'talent',
+    slug: 'data_talent',
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Download',
+        value_key: 'download',
       },
     ],
   },
@@ -515,26 +555,10 @@ export const formFieldsAdminOptions = [
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
     ],
   },
-  // {
-  //   label: "Form",
-  //   checkbox: [
-  //     {
-  //       label: "View"
-  //     },
-  //     {
-  //       label: "Create"
-  //     },
-  //     {
-  //       label: "Add"
-  //     },
-  //     {
-  //       label: "Update"
-  //     },
-  //   ]
-  // },
 ];
 
 export const colors = [
