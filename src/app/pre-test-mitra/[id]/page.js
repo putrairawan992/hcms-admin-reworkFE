@@ -46,6 +46,7 @@ const TestSeries = () => {
   };
 
   useEffect(() => {
+    setJobSpesialistId(id);
     fetchData();
   }, []);
 

@@ -17,41 +17,34 @@ import { Gap } from '../../atoms';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
-const PenilaianCard = ({ data = [] }) => {
+
+const PenilaianCard = ({ data = {}, onClick }) => {
   const toast = useToast();
   const router = useRouter();
   const nilai = localStorage.getItem('nilai');
-  const { talent_name, status, created_at, employee_list } = data;
   const [isLoading, setIsLoading] = useState(false);
-  const handleClick = () => {
-    setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
-      toast({
-        title: 'success',
-        description: 'Nilai berhasil disimpan',
-        duration: 3000,
-        status: 'success',
-        position: 'top',
-        isClosable: true,
-      });
-    }, 2000);
+  // Get average score from the data
+  const getAverageScore = () => {
+    if (!data.score || data.score.length === 0) return 0;
+    const totalScore = data.score.reduce((sum, item) => sum + item.score, 0);
+    return (totalScore / data.score.length).toFixed(1);
   };
+
   return (
     <Accordion allowToggle>
-      <AccordionItem border="none" key={1}>
+      <AccordionItem border="none" key={data.id || 1}>
         <AccordionButton background={'#8364BA'} style={styles.wrapper}>
           <Flex alignItems="center" justifyContent="center">
             <Box style={styles.imgWrapper}>
               <Image
                 style={styles.img}
-                src="/images/company-dummy.jpeg"
-                alt="image"
+                src={data.photo || '/images/company-dummy.jpeg'}
+                alt="candidate profile"
               />
             </Box>
             <Gap width={6} />
-            <Text style={styles.title}>{talent_name}</Text>
+            <Text style={styles.title}>{data.name || 'Candidate Name'}</Text>
           </Flex>
 
           <Box>
@@ -60,7 +53,7 @@ const PenilaianCard = ({ data = [] }) => {
             </Flex>
           </Box>
           <Text style={styles.subtitle}>
-            {moment(created_at).locale('en').format('DD MMMM YYYY')}
+            {moment(data.created_at).locale('en').format('DD MMMM YYYY')}
           </Text>
         </AccordionButton>
         <AccordionPanel
@@ -98,18 +91,18 @@ const PenilaianCard = ({ data = [] }) => {
               </VStack>
             </Flex>
             <Gap height={30} />
-            {employee_list?.map((item, index) => (
+            {data.score?.map((item, index) => (
               <Flex flex={1} marginBottom={6} key={index}>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Gap width={3} />
                   <Box flex={1} alignItems="center" justifyContent="center">
                     <Text fontSize={16} fontWeight={600}>
-                      {item?.module_name}
+                      {item?.title_test || 'Module Test'}
                     </Text>
                   </Box>
                 </Flex>
                 <Flex flex={1} alignItems="center" justifyContent="center">
-                  <Box>{item?.duration}</Box>
+                  <Box>{item?.duration || '00:00:00'}</Box>
                 </Flex>
 
                 <Flex
@@ -120,14 +113,16 @@ const PenilaianCard = ({ data = [] }) => {
                   <Button
                     style={styles.buttonSend}
                     onClick={() =>
-                      router.push('/penilaian-pre-test/wawancara-mandiri')
+                      router.push(
+                        `/penilaian-pre-test/${data.job_seeker_id}?pretest-modul-id=${item.id}`
+                      )
                     }>
                     Detail
                   </Button>
                 </Flex>
                 <Flex flex={1} alignItems="center" justifyContent="center">
                   <Text fontWeight="bold" color="#AE445A">
-                    {nilai}
+                    {item?.score || nilai || 0}
                   </Text>
                 </Flex>
               </Flex>
@@ -140,13 +135,13 @@ const PenilaianCard = ({ data = [] }) => {
                 Average Score
               </Text>
               <Text fontWeight="bold" color="#AE445A">
-                {nilai}
+                {getAverageScore() || nilai || 0}
               </Text>
             </Flex>
             <Gap height={4} />
 
             <Flex justify="flex-end">
-              <Button style={styles.buttonSend} onClick={handleClick}>
+              <Button style={styles.buttonSend} onClick={onClick}>
                 {isLoading ? <Spinner size="sm" /> : 'Save'}
               </Button>
             </Flex>

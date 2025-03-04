@@ -6,6 +6,7 @@ import { useState, useEffect, memo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useAddPretestMitra from './useAddPretestMitra';
 import { QuestionSection, ChooseLogo } from '@/app/components/molecules';
+import usePretestStore from '@/stores/pretestStore';
 import { map } from 'lodash';
 const initialForm = {
   title_test: '',
@@ -34,6 +35,8 @@ const PretestMitra = () => {
     setQuestionData,
     updatePretest,
   } = useAddPretestMitra();
+  const { jobSpesialistId } = usePretestStore();
+  console.log({ jobSpesialistId });
 
   const pretestModulDetailId = searchParams.get('id') || '';
   const isModuleMultipleChoice =
