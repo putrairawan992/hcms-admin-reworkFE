@@ -1,15 +1,12 @@
 'use client';
-
 import { useMemo } from 'react';
-import { Box, Button, Divider, Flex, Input, Text } from '@chakra-ui/react';
-import styles from '../../styles/inbox.module.css';
+import { Box, Text } from '@chakra-ui/react';
 import {
-  ChooseLogo,
   PenilaianDocumentCard,
   QuestionSection,
 } from '../../components/molecules';
 import useDetailPenilaianPretest from './useDetailPenilaianPretest';
-import { Gap, SelectField } from '../../components/atoms';
+import { Gap } from '../../components/atoms';
 
 const UploadDocument = () => {
   const { data, questionData, addRowQuestion } = useDetailPenilaianPretest();

@@ -22,7 +22,7 @@ const PretestMitra = () => {
 
   const getData = async () => {
     const payload = {
-      limit: 10,
+      limit: 100,
       paginate: 1,
       key_search: '',
     };
