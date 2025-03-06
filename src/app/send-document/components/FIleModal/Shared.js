@@ -26,19 +26,19 @@ export const contractTemplateOptions = [
             label: 'Nama Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_person',
+            field: 'sd_responsible_person',
           },
           {
             label: 'Role Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_role',
+            field: 'sd_responsible_role',
           },
           {
             label: 'Level Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_level',
+            field: 'sd_responsible_level',
           },
         ],
       },
@@ -71,19 +71,19 @@ export const contractTemplateOptions = [
             label: 'Nama Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_person',
+            field: 'sd_responsible_person',
           },
           {
             label: 'Role Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_role',
+            field: 'sd_responsible_role',
           },
           {
             label: 'Level Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_level',
+            field: 'sd_responsible_level',
           },
         ],
       },
@@ -110,7 +110,7 @@ export const contractTemplateOptions = [
             label: 'Nama Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_person',
+            field: 'sd_responsible_person',
           },
           {
             label: 'Nomor Surat Kuasa PJ:',
@@ -134,7 +134,7 @@ export const contractTemplateOptions = [
             label: 'Tempat Lahir:',
             type: 'text',
             isDisabled: false,
-            field: 'age',
+            field: 'place_of_birth',
           },
           {
             label: 'Tanggal Lahir:',
@@ -216,7 +216,7 @@ export const contractTemplateOptions = [
         formField: [
           {
             label: 'Ruang Lingkup:',
-            type: 'date',
+            type: 'textarea',
             isDisabled: false,
             field: 'scope',
           },
@@ -224,19 +224,19 @@ export const contractTemplateOptions = [
             label: 'Nama Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_person',
+            field: 'sd_responsible_person',
           },
           {
             label: 'Role Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_role',
+            field: 'sd_responsible_role',
           },
           {
             label: 'Level Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_level',
+            field: 'sd_responsible_level',
           },
         ],
       },
@@ -246,7 +246,7 @@ export const contractTemplateOptions = [
     type: 'Kontrak Internship',
     data: [
       {
-        title: 'Judul Kontrak Freelance',
+        title: 'Judul Kontrak Internship',
         formField: [
           {
             label: 'No. Surat:',
@@ -257,11 +257,11 @@ export const contractTemplateOptions = [
         ],
       },
       {
-        title: 'Isi Kontrak Freelance',
+        title: 'Isi Kontrak Internship',
         formField: [
           {
             label: 'Ruang Lingkup:',
-            type: 'date',
+            type: 'textarea',
             isDisabled: false,
             field: 'scope',
           },
@@ -269,19 +269,19 @@ export const contractTemplateOptions = [
             label: 'Nama Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_person',
+            field: 'sd_responsible_person',
           },
           {
             label: 'Role Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_role',
+            field: 'sd_responsible_role',
           },
           {
             label: 'Level Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_level',
+            field: 'sd_responsible_level',
           },
         ],
       },
@@ -306,7 +306,7 @@ export const contractTemplateOptions = [
         formField: [
           {
             label: 'Ruang Lingkup:',
-            type: 'date',
+            type: 'textarea',
             isDisabled: false,
             field: 'scope',
           },
@@ -314,19 +314,19 @@ export const contractTemplateOptions = [
             label: 'Nama Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_person',
+            field: 'sd_responsible_person',
           },
           {
             label: 'Role Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_role',
+            field: 'sd_responsible_role',
           },
           {
             label: 'Level Penanggung Jawab:',
             type: 'text',
             isDisabled: true,
-            field: 'responsible_level',
+            field: 'sd_responsible_level',
           },
         ],
       },
