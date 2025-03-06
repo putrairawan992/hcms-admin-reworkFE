@@ -43,18 +43,23 @@ const useSendDocument = () => {
     }
   };
 
-  const fetchSetupDocumentDetail = async (jobProviderId, documentType) => {
+  const fetchSetupDocumentDetail = async (
+    jobProviderId,
+    documentType,
+    employee_id
+  ) => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: '/admin/document/setup_document',
+        url: '/admin/document/setting_document/list_contract_templete',
         params: {
           job_provider_id: jobProviderId,
           type_document: documentType,
+          employee_id: employee_id,
         },
       });
 
-      setDataSetup(response?.data?.data?.data?.[0]);
+      setDataSetup(response.data.data[0]);
     } catch (error) {
       console.error('Failed to fetch data:', error);
     }
@@ -287,17 +292,11 @@ const useSendDocument = () => {
   }, []);
 
   useEffect(() => {
-    if (employeeDetail?.product_digital_id && selectedDocumentTalent) {
-      let selectedDocument;
-      if (selectedDocumentTalent.includes('Offering Letter Normal')) {
-        selectedDocument = 'Offering Latter Normal';
-      } else {
-        selectedDocument = selectedDocumentTalent;
-      }
-
+    if (employeeDetail && selectedDocumentTalent) {
       fetchSetupDocumentDetail(
         employeeDetail?.product_digital_id,
-        selectedDocument
+        selectedDocumentTalent,
+        employeeDetail?.employee.user_id
       );
     }
   }, [employeeDetail, documentTypeValue]);
