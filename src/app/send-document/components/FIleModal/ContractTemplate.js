@@ -176,13 +176,21 @@ const FileContractTemplateModal = ({
                             row?.type === 'textarea' ? 'flex-start' : 'center'
                           }
                           marginBottom={2}>
-                          <Box flex={0.5}>
+                          <Box flex={0.5} marginRight={2}>
                             <Text
                               fontSize={12}
                               fontWeight="bold"
                               color="#404041">
                               {row?.label}
                             </Text>
+                            {row.isDisabled && (
+                              <Text
+                                fontSize={12}
+                                fontStyle="italic"
+                                color="#404041">
+                                (Dapat diubah pada menu Setup {'>'} Document)
+                              </Text>
+                            )}
                           </Box>
                           <Flex flex={1}>
                             {row?.type === 'text' ? (
@@ -209,7 +217,7 @@ const FileContractTemplateModal = ({
                                 style={{
                                   height: '150px',
                                   flex: 1,
-                                  marginBottom: 60,
+                                  marginBottom: 80,
                                 }}
                                 value={form[row?.field]}
                                 onChange={(value) =>
