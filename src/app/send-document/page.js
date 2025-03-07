@@ -254,6 +254,7 @@ const SendDocument = () => {
           typeDocTalent={selectedDocumentTalent}
           data={employeeDetail}
           dataSetup={dataSetup}
+          employeeDetail={employeeDetail}
           onSubmit={onSubmit}
           previewData={previewData}
           onDelete={onDelete}

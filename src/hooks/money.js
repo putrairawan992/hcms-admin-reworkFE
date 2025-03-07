@@ -9,7 +9,7 @@ export const formatMoney = (
   position
 ) => {
   const num = Number(value);
-  console.log(value);
+  // console.log(value);
   const language = localStorage.getItem('locale');
   const isCurrencyIdr = currency === 'IDR';
   const isCurrencyNotDefined = currency === '' || isUndefined(currency);

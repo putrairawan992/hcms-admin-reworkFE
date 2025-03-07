@@ -16,6 +16,7 @@ const ModalSendDocument = ({
   onDelete = noop,
   jobProviderId = '',
   dataSetup = {},
+  employeeDetail = {},
 }) => {
   switch (type) {
     case 'file':
@@ -28,6 +29,7 @@ const ModalSendDocument = ({
           data={data}
           onSubmit={onSubmit}
           previewData={previewData}
+          employeeDetail={employeeDetail}
           jobProviderId={jobProviderId}
           dataSetup={dataSetup}
         />

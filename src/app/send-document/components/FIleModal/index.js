@@ -16,6 +16,7 @@ const FileModal = ({
   previewData = {},
   jobProviderId = '',
   dataSetup = {},
+  employeeDetail = {},
 }) => {
   switch (type) {
     case 'contract_manual':
@@ -41,6 +42,7 @@ const FileModal = ({
     case 'contract_template':
       return (
         <FileContractTemplateModal
+          employeeDetail={employeeDetail}
           isOpen={isOpen}
           onClose={onClose}
           typeDocTalent={typeDocTalent}
