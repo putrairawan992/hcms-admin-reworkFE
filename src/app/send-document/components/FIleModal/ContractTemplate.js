@@ -23,7 +23,7 @@ import { httpClient } from '@/app/utils/network';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const FileContractTemplateModal = ({
-  data = {},
+  employeeDetail = {},
   isOpen = false,
   onClose = noop,
   size = 'xl',
@@ -44,10 +44,27 @@ const FileContractTemplateModal = ({
 
   const submitData = async () => {
     try {
+      const formData = {};
+
+      Object.entries(form).forEach(([key, value]) => {
+        if (
+          value !== null &&
+          value !== undefined &&
+          String(value).trim() !== ''
+        ) {
+          if (!key.startsWith('sd_')) {
+            formData[key] = value;
+          } else {
+            const newKey = key.replace('sd_', '');
+            formData[newKey] = value;
+          }
+        }
+      });
+
       await httpClient({
         method: 'POST',
         url: '/admin/document/setup_document',
-        data: form,
+        data: formData,
       });
 
       toast({
@@ -81,6 +98,11 @@ const FileContractTemplateModal = ({
   const [form, setForm] = useState({
     type_document: '',
     job_provider_id: '',
+    employee_id: '',
+    remuneration_id: '',
+    remuneration_detail_id: '',
+    ruang_lingkup: '',
+    no_surat: '',
     sd_letter_no: '',
     sd_scope: '',
     sd_clause_1: '',
@@ -106,6 +128,10 @@ const FileContractTemplateModal = ({
       ...prevForm,
       type_document: typeDocTalent || dataSetup?.type_document || '',
       job_provider_id: jobProviderId || '',
+      employee_id: employeeDetail?.employee?.user_id || '',
+      remuneration_id: employeeDetail?.remuneration_id || '',
+      remuneration_detail_id:
+        employeeDetail?.employee?.remuneration_detail_id || '',
       sd_letter_no: dataSetup?.sd_letter_no || '',
       sd_scope: dataSetup?.sd_scope || '',
       sd_clause_1: dataSetup?.sd_clause_1 || '',
@@ -150,13 +176,21 @@ const FileContractTemplateModal = ({
                             row?.type === 'textarea' ? 'flex-start' : 'center'
                           }
                           marginBottom={2}>
-                          <Box flex={0.5}>
+                          <Box flex={0.5} marginRight={2}>
                             <Text
                               fontSize={12}
                               fontWeight="bold"
                               color="#404041">
                               {row?.label}
                             </Text>
+                            {row.isDisabled && (
+                              <Text
+                                fontSize={12}
+                                fontStyle="italic"
+                                color="#404041">
+                                (Dapat diubah pada menu Setup {'>'} Document)
+                              </Text>
+                            )}
                           </Box>
                           <Flex flex={1}>
                             {row?.type === 'text' ? (
@@ -169,7 +203,7 @@ const FileContractTemplateModal = ({
                                 borderRadius={10}
                                 padding="8px 16px"
                                 type="text"
-                                value={form[row?.field] || ''} // Add a default empty string
+                                value={form[row?.field] || ''}
                                 onChange={(e) =>
                                   onChangeText(row?.field, e.target.value)
                                 }
@@ -183,7 +217,7 @@ const FileContractTemplateModal = ({
                                 style={{
                                   height: '150px',
                                   flex: 1,
-                                  marginBottom: 60,
+                                  marginBottom: 80,
                                 }}
                                 value={form[row?.field]}
                                 onChange={(value) =>
