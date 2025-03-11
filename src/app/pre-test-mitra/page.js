@@ -2,211 +2,73 @@
 import {
   Box,
   Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Image,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Select,
-  Switch,
+  Table,
   Text,
-  useDisclosure,
+  Th,
+  Thead,
+  Tr,
+  Td,
+  Tbody,
 } from '@chakra-ui/react';
-import styles from '../styles/inbox.module.css';
-import { useState } from 'react';
-import moment from 'moment';
-import 'moment/locale/id';
-import { isEmpty } from 'lodash';
-
-import { PretestCard, SendDocumentCard } from '../components/molecules';
+import styles from '../styles/setupJobPost.module.css';
+import { useEffect, useState } from 'react';
 import usePretestMitra from './usePretestMitra';
-import { moveScreen } from '../utils/helpers';
-import { Gap, SelectField } from '../components/atoms';
-import {
-  AlphabetIcon,
-  BrainIcon,
-  CodeIcon,
-  EyeIcon,
-  NumberIcon,
-  PhotoIcon,
-  VideoIcon,
-} from '../components/icons';
-import { ChevronRightIcon, Search2Icon } from '@chakra-ui/icons';
-
-moment.locale('id');
-
+import { useRouter } from 'next/navigation';
 const PretestMitra = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [years, setYears] = useState('2024');
-  const [month, setMonth] = useState('10');
-  const [currentData, setCurrentData] = useState();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const router = useRouter();
+  const [jobSpecialists, setJobSpecialists] = useState([]); // State untuk data job specialist
 
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const { getJobSpesialist } = usePretestMitra();
 
-  const { data } = usePretestMitra();
-
-  const renderData = () => {
-    return data.map((item) => {
-      return <SendDocumentCard data={item} />;
-    });
+  const getData = async () => {
+    const payload = {
+      limit: 100,
+      paginate: 1,
+      key_search: '',
+    };
+    try {
+      const response = await getJobSpesialist(payload);
+      console.log(response);
+      setJobSpecialists(response.data.job_specialist_data); // Simpan data ke state
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
   };
 
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
-    <Box className={styles['inbox-container']}>
-      <Flex align={'center'} justify={'space-between'}>
-        <Box>
-          <Text className={styles['inbox-title']}>Modul Rangkaian Tes</Text>
-          <Text
-            fontSize={12}
-            fontWeight={300}
-            color="#404041"
-            fontStyle="italic"
-          >
-            Silahkan atur soal yang akan dijadikan Pre-Test bagi calon Karyawan
-          </Text>
-        </Box>
-        <Button className={styles['inbox-btn']}>Save</Button>
-      </Flex>
-      <Gap height={4} />
-      <Flex justifyContent="center" alignItems="center">
-        <Box flex={1} alignItems="center">
-          <InputGroup className={styles['input-container']}>
-            <Input
-              className={styles['admin-role-input']}
-              type="text"
-              placeholder="Ketikkan Nama Modul Rangkaian Tes"
-            />
-          </InputGroup>
-        </Box>
-        <Gap width={2} />
-        <Box>
-          <SelectField placeholder="Buat Module Baru" />
-        </Box>
-        <Button className={styles['inbox-btn']}>Create</Button>
-      </Flex>
-      <Gap height={8} />
-      <Box flex={1}>
-        <Flex flex={1} flexDirection="column">
-          <Text color="#404041" fontWeight={700} fontSize={16}>
-            Kategori: Wawancara Mandiri
-          </Text>
-          <Gap height={4} />
-          <Flex>
-            <PretestCard
-              title="Interview Dasar"
-              placeholder="Pilih Interview Dasar"
-              icon={<VideoIcon color="#FFFFFF" />}
-            />
-            <Gap width={4} />
-            <PretestCard
-              title="Interview User"
-              placeholder="Pilih Interview User"
-              icon={<VideoIcon color="#FFFFFF" />}
-            />
-          </Flex>
-        </Flex>
-        <Gap height={6} />
-        <Flex flex={1} flexDirection="column">
-          <Text color="#404041" fontWeight={700} fontSize={16}>
-            Kategori: Tes Kepribadian
-          </Text>
-          <Gap height={4} />
-          <Flex>
-            <PretestCard
-              title="Tes Potensi Akademik"
-              placeholder="Pilih Tes Potensi Akademik"
-              icon={<AlphabetIcon color="#FFFFFF" />}
-              bgGradient="linear-gradient(90deg, #F39F5A 0%, #AE445A 100%)"
-            />
-            <Gap width={4} />
-            <PretestCard
-              title="Psikotest: DISC"
-              placeholder="Pilih Psikotest: Disc"
-              icon={<BrainIcon color="#FFFFFF" />}
-              bgGradient="linear-gradient(90deg, #F39F5A 0%, #AE445A 100%)"
-            />
-            <Gap width={4} />
-            <PretestCard
-              title="Tes IQ 2023"
-              placeholder="Pilih Tes IQ 2023"
-              icon={<BrainIcon color="#FFFFFF" />}
-              bgGradient="linear-gradient(90deg, #3B78C2 0%, #AE445A 100%)"
-            />
-            <Gap width={8} />
-            <Flex
-              alignItems="center"
-              display="flex"
-              justifyContent="center"
-              textAlign="center"
-              flexDirection="column"
-            >
-              <Box
-                bgGradient={'linear-gradient(90deg, #F39F5A 0%, #AE445A 100%)'}
-                borderRadius={100}
-                width={8}
-                height={8}
-                alignItems="center"
-                justifyContent="center"
-                display="flex"
-              >
-                <ChevronRightIcon color="#FFFFFF" fontSize={28} />
-              </Box>
-            </Flex>
-          </Flex>
-        </Flex>
-        <Gap height={6} />
-        <Flex flex={1} flexDirection="column">
-          <Text color="#404041" fontWeight={700} fontSize={16}>
-            Kategori: Tes Kompetensi
-          </Text>
-          <Gap height={4} />
-          <Flex>
-            <PretestCard
-              title="Tes Excel"
-              placeholder="Pilih Tes Excel"
-              icon={<NumberIcon color="#FFFFFF" />}
-              bgGradient="linear-gradient(90deg, #8364BA 0%, #AE445A 100%)"
-            />
-            <Gap width={4} />
-            <PretestCard
-              title="Tes Photoshop"
-              placeholder="Pilih Tes Photoshop"
-              icon={<PhotoIcon color="#FFFFFF" />}
-              bgGradient="linear-gradient(90deg, #8364BA 0%, #AE445A 100%)"
-            />
-            <Gap width={4} />
-            <PretestCard
-              title="Tes Coding"
-              placeholder="Pilih Tes Coding"
-              icon={<CodeIcon color="#FFFFFF" />}
-              bgGradient="linear-gradient(90deg, #404041 0%, #AE445A 100%)"
-            />
-            <Gap width={8} />
-            <Flex
-              alignItems="center"
-              display="flex"
-              justifyContent="center"
-              textAlign="center"
-              flexDirection="column"
-            >
-              <Box
-                bgGradient={'linear-gradient(90deg, #F39F5A 0%, #AE445A 100%)'}
-                borderRadius={100}
-                width={8}
-                height={8}
-                alignItems="center"
-                justifyContent="center"
-                display="flex"
-              >
-                <ChevronRightIcon color="#FFFFFF" fontSize={28} />
-              </Box>
-            </Flex>
-          </Flex>
-        </Flex>
-      </Box>
+    <Box className={styles['job-post-container']}>
+      <Text className={styles['job-post-title']}>Create Pre-test</Text>
+
+      <Table mt={'3rem'}>
+        <Thead>
+          <Tr className={styles['job-post-table-header-container']}>
+            <Th className={styles['job-post-table-header']}>No</Th>
+            <Th className={styles['job-post-table-header']}>Job Specialist</Th>
+            <Th className={styles['job-post-table-header']}>Action</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {jobSpecialists.map((item, index) => (
+            <Tr key={item.id}>
+              <Td className={styles['job-post-table-data']}>{index + 1}</Td>
+              <Td className={styles['job-post-table-data']}>
+                {item.job_specialist_name}
+              </Td>
+              <Td className={styles['job-post-table-data']}>
+                <Button
+                  onClick={() => router.push(`/pre-test-mitra/${item.id}`)}
+                  className={styles['job-post-search-btn']}>
+                  Create
+                </Button>
+              </Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
     </Box>
   );
 };

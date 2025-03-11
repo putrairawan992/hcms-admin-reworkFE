@@ -24,7 +24,7 @@ const styles = {
   },
 
   title: {
-    fontSize: '18px',
+    fontSize: '14px',
     fontWeight: 700,
     lineHeight: '24px',
     textAlign: 'left',

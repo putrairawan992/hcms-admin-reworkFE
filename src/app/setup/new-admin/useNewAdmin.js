@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { httpClient } from '@/app/utils/network';
 import { useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
+import { isEmpty } from 'lodash';
+import { formFieldsAdminOptions } from '@/shared/general';
 
 const useNewAdmin = () => {
   const router = useRouter();
   const toast = useToast();
-  const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalData, setTotalData] = useState(0);
-  const [keyword, setKeyword] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Initialize form with basic user information
   const [form, setForm] = useState({
     admin_id: '',
     nama: '',
@@ -19,132 +18,109 @@ const useNewAdmin = () => {
     divisi: '',
     jabatan: '',
     password: '',
-    dashboard: {
-      view: false,
-      create: false,
-    },
-    help_center: {
-      view: false,
-      edit: false,
-      delete: false,
-      upload: false,
-      download: false,
-    },
-    setup: {
-      admin: {
-        view: false,
-        create: false,
-      },
-      account: {
-        view: false,
-        create: false,
-      },
-      job_post: {
-        view: false,
-        create: false,
-      },
-    },
-    blash_notif: {
-      view: false,
-      create: false,
-    },
-    master_data: {
-      bpjskes: {
-        view: false,
-        create: false,
-      },
-      bpjstk: {
-        view: false,
-        create: false,
-      },
-      saltab: {
-        view: false,
-        create: false,
-      },
-      pajak: {
-        view: false,
-        create: false,
-      },
-      merge: {
-        view: false,
-        create: false,
-      },
-    },
-    high_level: {
-      view: false,
-      create: false,
-    },
-    middle_level: {
-      company: {
-        view: false,
-        upload: false,
-        download: false,
-      },
-      talent: {
-        view: false,
-        upload: false,
-        download: false,
-      },
-      renewal: {
-        view: false,
-      },
-    },
-    approval_job_post: {
-      view: false,
-      share: false,
-      approve: false,
-      reject: false,
-    },
-    approval_remun: {
-      view: false,
-      save: false,
-      comment: false,
-    },
-    send_document: {
-      view: false,
-      create: false,
-      edit: false,
-      delete: false,
-      send: false,
-      download: false,
-      message: false,
-    },
-    talent: {
-      view: false,
-      download: false,
-    },
-    payslip: {
-      view: false,
-    },
+    phone_number: '',
+    address: '',
+    permissions: generateInitialPermissions(formFieldsAdminOptions),
   });
+
+  // Generate initial permissions structure based on formFieldsAdminOptions
+  function generateInitialPermissions(options) {
+    return options.map((option) => {
+      const newOption = { ...option };
+
+      // Handle direct checkboxes
+      if (newOption.checkbox) {
+        newOption.checkbox = newOption.checkbox.map((item) => ({
+          ...item,
+          value: false,
+        }));
+      }
+
+      // Handle sections with nested checkboxes
+      if (newOption.sections) {
+        newOption.sections = newOption.sections.map((section) => {
+          const newSection = { ...section };
+
+          if (newSection.checkbox) {
+            newSection.checkbox = newSection.checkbox.map((item) => ({
+              ...item,
+              value: false,
+            }));
+          }
+
+          return newSection;
+        });
+      }
+
+      return newOption;
+    });
+  }
 
   const onChangeText = (slug, value) => {
     setForm((prevData) => ({ ...prevData, [slug]: value }));
   };
 
-  const fetchData = async () => {
-    try {
-      const response = await httpClient({
-        method: 'GET',
-        url: '/list/sheet1',
-        params: { page: 1, size: 10 },
-      });
+  // Prepare permissions data for submission to match API format
+  const preparePermissionsForSubmit = (permissions) => {
+    // Create an object to store flattened permissions
+    const permissionsData = {};
 
-      const responseData = response?.data?.data?.data || [];
-      setData(responseData);
-      setTotalData(response?.data?.total_items);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
+    // Process each section of permissions
+    permissions.forEach((section) => {
+      // Initialize an empty object for this section
+      const sectionData = {};
+
+      // Process checkboxes for this section (flat structure)
+      if (section.checkbox) {
+        section.checkbox.forEach((item) => {
+          sectionData[item.value_key] = item.value;
+        });
+      }
+
+      // Process nested sections if they exist
+      if (section.sections) {
+        section.sections.forEach((subsection) => {
+          if (subsection.checkbox) {
+            subsection.checkbox.forEach((item) => {
+              sectionData[item.value_key] = item.value;
+            });
+          }
+        });
+      }
+
+      // Add this section's data to the overall permissions
+      permissionsData[section.slug] = sectionData;
+    });
+
+    return permissionsData;
   };
 
   const submitData = async () => {
     try {
+      // Prepare data for submission
+      const formattedPermissions = preparePermissionsForSubmit(
+        form.permissions
+      );
+
+      // Create submission object
+      const formDataToSubmit = {
+        admin_id: form.admin_id,
+        nama: form.nama,
+        email: form.email,
+        divisi: form.divisi,
+        jabatan: form.jabatan,
+        password: form.password,
+        phone_number: form.phone_number,
+        address: form.address,
+        ...formattedPermissions, // Add all permissions at the top level
+      };
+
       await httpClient({
         method: 'POST',
         url: '/admin/account',
-        data: form,
+        data: formDataToSubmit,
       });
+
       setLoading(false);
 
       toast({
@@ -155,35 +131,64 @@ const useNewAdmin = () => {
         position: 'top',
         isClosable: true,
       });
+
       router.push('/setup/admin-role');
     } catch (error) {
       toast({
         title: 'Error',
-        description: 'Something went wrong!',
+        description: error?.response?.data?.errors || 'Something went wrong',
         duration: 3000,
         status: 'error',
         position: 'top',
         isClosable: true,
       });
+
       setLoading(false);
     }
   };
 
-  const onChangeCheckbox = (slug, label, value, slugParent) => {
-    if (slugParent === '') {
-      setForm((prevData) => ({
-        ...prevData,
-        [slug]: { ...prevData[slug], [label]: value },
-      }));
-    } else {
-      setForm((prevData) => ({
-        ...prevData,
-        [slugParent]: {
-          ...prevData[slugParent],
-          [slug]: { ...prevData[slugParent][slug], [label]: value },
-        },
-      }));
-    }
+  // Update checkbox values in the state
+  const onChangeCheckbox = (slug, valueKey, value, sectionLabel = null) => {
+    // console.log('Checkbox changed:', slug, valueKey, value, sectionLabel);
+
+    setForm((prevData) => ({
+      ...prevData,
+      permissions: prevData.permissions.map((item) => {
+        if (item.slug === slug) {
+          // If this is a flat structure (no sections)
+          if (!sectionLabel && item.checkbox) {
+            return {
+              ...item,
+              checkbox: item.checkbox.map((checkboxItem) =>
+                checkboxItem.value_key === valueKey
+                  ? { ...checkboxItem, value }
+                  : checkboxItem
+              ),
+            };
+          }
+
+          // If this is a nested structure (with sections)
+          if (sectionLabel && item.sections) {
+            return {
+              ...item,
+              sections: item.sections.map((section) =>
+                section.label === sectionLabel
+                  ? {
+                      ...section,
+                      checkbox: section.checkbox.map((checkboxItem) =>
+                        checkboxItem.value_key === valueKey
+                          ? { ...checkboxItem, value }
+                          : checkboxItem
+                      ),
+                    }
+                  : section
+              ),
+            };
+          }
+        }
+        return item;
+      }),
+    }));
   };
 
   const onHandleSubmit = () => {
@@ -191,17 +196,9 @@ const useNewAdmin = () => {
     submitData();
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return {
     form,
-    data,
     loading,
-    page,
-    totalData,
-    keyword,
     onChangeText,
     onHandleSubmit,
     onChangeCheckbox,

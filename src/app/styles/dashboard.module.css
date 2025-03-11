@@ -225,6 +225,14 @@
   padding: 1.5rem 2rem;
   height: 22rem;
 }
+.dashboard-content-container3 {
+  width: 100%;
+  background: linear-gradient(90deg, #f1f5fe 0%, #ffffff 98.82%);
+  box-shadow: 5px 0px 10px 0px #b3b9c5;
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  height: auto;
+}
 
 .dashboard-left-content-wrapper {
   display: flex;

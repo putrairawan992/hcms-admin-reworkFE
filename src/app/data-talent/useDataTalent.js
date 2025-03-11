@@ -30,6 +30,7 @@ const useDataTalent = () => {
         setData(responseData);
         setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.error('Failed to fetch data:', error);
       }
     },
@@ -55,22 +56,13 @@ const useDataTalent = () => {
       console.error('Failed to fetch data:', error);
     }
   };
-  const fetchDataPDS = async () => {
-    try {
-      const response = await httpClient({
-        method: 'GET',
-        url: '/admin/document/setting_document/list',
-      });
-
-      const responseData = response?.data?.data || [];
-      console.log(responseData);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
-  };
 
   const onHandlePress = (employeeId) => {
     router.push(`/data-talent/${employeeId}`);
+  };
+
+  const onHandlePressDetail = (employeeId) => {
+    router.push(`/data-talent/tracking-document/${employeeId}`);
   };
 
   const onChangeSelect = (slug, value) => {
@@ -78,7 +70,6 @@ const useDataTalent = () => {
   };
 
   useEffect(() => {
-    fetchDataPDS();
     fetchDataPD();
   }, []);
 
@@ -93,6 +84,7 @@ const useDataTalent = () => {
     productDigitalData,
     onHandlePress,
     onChangeSelect,
+    onHandlePressDetail
   };
 };
 

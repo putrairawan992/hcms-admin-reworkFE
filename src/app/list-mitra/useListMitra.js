@@ -1,98 +1,66 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { httpClient } from '../utils/network';
-import { useRouter } from 'next/navigation';
+import { debounce } from 'lodash';
 
 const useListMitra = () => {
-  const router = useRouter();
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [productDigitalData, setProductDigitalData] = useState([]);
+  const [data, setData] = useState({
+    mitra_list: [],
+    pages: 1,
+    paginate: [1],
+  });
+  const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState({
-    size: 10,
-    page: 1,
-    digital_product: '',
-    document: '',
-    document_tracking: '',
-    selection_type: '',
-    employee_type: '',
+    limit: 10,
+    paginate: 1,
+    key_search: '',
   });
 
-  const fetchData = useCallback(
-    async (params) => {
-      try {
-        const response = await httpClient({
-          method: 'GET',
-          url: '/admin/talent/list',
-          params,
-        });
+  const fetchData = useCallback(async (params) => {
+    setLoading(true);
+    try {
+      const response = await httpClient({
+        method: 'GET',
+        url: '/admin/mitra',
+        params,
+      });
 
-        const responseData = response?.data?.data || [];
-        setData(responseData);
-        setLoading(false);
-      } catch (error) {
-        console.error('Failed to fetch data:', error);
+      if (response?.data?.data) {
+        setData(response.data.data);
       }
-    },
-    [filters]
-  );
-
-  const fetchDataPD = async () => {
-    try {
-      const response = await httpClient({
-        method: 'GET',
-        url: '/common/list/product_digital',
-      });
-
-      const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(
-        ({ id, product_digital_name }) => ({
-          id,
-          label: product_digital_name,
-        })
-      );
-      setProductDigitalData(transformedData);
+      setLoading(false);
     } catch (error) {
       console.error('Failed to fetch data:', error);
+      setLoading(false);
     }
-  };
-  const fetchDataPDS = async () => {
-    try {
-      const response = await httpClient({
-        method: 'GET',
-        url: '/admin/document/setting_document/list',
-      });
-
-      const responseData = response?.data?.data || [];
-      console.log(responseData);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
-  };
-
-  const onHandlePress = (employeeId) => {
-    router.push(`/data-talent/${employeeId}`);
-  };
-
-  const onChangeSelect = (slug, value) => {
-    setFilters((prevFilters) => ({ ...prevFilters, [slug]: value }));
-  };
-
-  useEffect(() => {
-    fetchDataPDS();
-    fetchDataPD();
   }, []);
+
+  const handlePageChange = (page) => {
+    setFilters((prev) => ({
+      ...prev,
+      paginate: page,
+    }));
+  };
+
+  const handleSearch = debounce((searchTerm) => {
+    setFilters((prev) => ({
+      ...prev,
+      key_search: searchTerm,
+      paginate: 1, // Reset to first page when searching
+    }));
+  }, 3000);
 
   useEffect(() => {
     fetchData(filters);
-  }, [filters]);
+  }, [filters, fetchData]);
 
   return {
-    data,
+    data: data.mitra_list,
     loading,
     filters,
-    productDigitalData,
-    onHandlePress,
-    onChangeSelect,
+    totalPages: data.pages,
+    currentPage: filters.paginate,
+    handlePageChange,
+    handleSearch,
   };
 };
 

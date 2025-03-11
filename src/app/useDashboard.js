@@ -1,21 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
 import { httpClient } from './utils/network';
 import { useRouter } from 'next/navigation';
+import { useDisclosure } from '@chakra-ui/react';
 
 const useDashboard = () => {
   const router = useRouter();
   const [data, setData] = useState([]);
+  const [dataRecap, setDataRecap] = useState([]);
   const [loading, setLoading] = useState(true);
   const [productDigitalData, setProductDigitalData] = useState([]);
   const [filters, setFilters] = useState({
-    size: 10,
-    page: 1,
-    digital_product: '',
-    document: '',
-    document_tracking: '',
-    selection_type: '',
-    employee_type: '',
+    year: '',
+    month: '',
+    provider: '',
   });
+  const [filtersRecap, setFiltersRecap] = useState({
+    year: '',
+  });
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const fetchData = useCallback(
     async (params) => {
@@ -23,6 +25,7 @@ const useDashboard = () => {
         const response = await httpClient({
           method: 'GET',
           url: '/admin/dashboard/list',
+          params,
         });
 
         const responseData = response?.data?.data || [];
@@ -33,6 +36,23 @@ const useDashboard = () => {
       }
     },
     [filters]
+  );
+  const fetchRecapData = useCallback(
+    async (params) => {
+      try {
+        const response = await httpClient({
+          method: 'GET',
+          url: '/admin/dashboard/fluktuatif',
+          params,
+        });
+        const responseDataRecap = response?.data?.data || [];
+        setDataRecap(responseDataRecap);
+        setLoading(false);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      }
+    },
+    [filtersRecap]
   );
 
   const fetchDataPD = async () => {
@@ -54,19 +74,6 @@ const useDashboard = () => {
       console.error('Failed to fetch data:', error);
     }
   };
-  const fetchDataPDS = async () => {
-    try {
-      const response = await httpClient({
-        method: 'GET',
-        url: '/admin/document/setting_document/list',
-      });
-
-      const responseData = response?.data?.data || [];
-      console.log(responseData);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
-  };
 
   const onHandlePress = (employeeId) => {
     router.push(`/data-talent/${employeeId}`);
@@ -75,9 +82,11 @@ const useDashboard = () => {
   const onChangeSelect = (slug, value) => {
     setFilters((prevFilters) => ({ ...prevFilters, [slug]: value }));
   };
+  const onChangeSelectRecap = (slug, value) => {
+    setFiltersRecap((prevFilters) => ({ ...prevFilters, [slug]: value }));
+  };
 
   useEffect(() => {
-    fetchDataPDS();
     fetchDataPD();
   }, []);
 
@@ -85,13 +94,23 @@ const useDashboard = () => {
     fetchData(filters);
   }, [filters]);
 
+  useEffect(() => {
+    fetchRecapData(filtersRecap);
+  }, [filtersRecap]);
+
   return {
     data,
+    dataRecap,
     loading,
     filters,
+    filtersRecap,
     productDigitalData,
     onHandlePress,
     onChangeSelect,
+    onChangeSelectRecap,
+    onClose,
+    isOpen,
+    onOpen,
   };
 };
 

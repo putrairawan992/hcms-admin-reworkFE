@@ -4,6 +4,10 @@ export const documentTypeOptions = [
     name: 'Offering Latter Khusus',
   },
   {
+    label: 'OFFERING_LATTER',
+    name: 'Offering Latter Normal',
+  },
+  {
     label: 'PKWT',
     name: 'PKWT Khusus & Normal',
   },

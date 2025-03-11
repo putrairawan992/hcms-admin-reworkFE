@@ -8,14 +8,11 @@ import 'react-quill/dist/quill.snow.css';
 import { dataFormOfferingLatterNormal } from '../Shared/General';
 import { noop } from 'lodash';
 
-const FormFieldsOfferingLatterNormal = ({
-  loading = false,
-  onClick = noop,
-}) => {
+const FormFieldsOfferingLatterNormal = ({ loading, onClick = noop, data }) => {
   const [form, setForm] = useState({
-    responsible_person: '',
-    responsible_role: '',
-    responsible_level: '',
+    responsible_person: data.responsible_person || '',
+    responsible_role: data.responsible_role || '',
+    responsible_level: data.responsible_level || '',
   });
 
   const onHandleSubmit = () => {
@@ -66,53 +63,55 @@ const FormFieldsOfferingLatterNormal = ({
   };
 
   return (
-    <Box>
-      <Gap height={4} />
-      <Text fontSize={16} fontWeight="bold" color="#AE445A">
-        Offering Letter Skema Khusus
-      </Text>
-      <Gap height={4} />
-      <Flex>
-        <Box flex={1}>
-          {dataFormOfferingLatterNormal.map((item) => {
-            return (
-              <Flex
-                flex={1}
-                alignItems={item.type === 'textarea' ? 'flex-start' : 'center'}
-                marginBottom={2}
-              >
-                <Box flex={0.5}>
-                  <Text fontSize={14} fontWeight="bold" color="#404041">
-                    {item.label}:
-                  </Text>
-                </Box>
-                <Flex flex={1}>
-                  <RenderForm data={item} />
+    <>
+      <Box>
+        <Gap height={4} />
+        <Text fontSize={16} fontWeight="bold" color="#AE445A">
+          Offering Letter Skema Normal
+        </Text>
+        <Gap height={4} />
+        <Flex>
+          <Box flex={1}>
+            {dataFormOfferingLatterNormal.map((item) => {
+              return (
+                <Flex
+                  flex={1}
+                  alignItems={
+                    item.type === 'textarea' ? 'flex-start' : 'center'
+                  }
+                  marginBottom={2}>
+                  <Box flex={0.5}>
+                    <Text fontSize={14} fontWeight="bold" color="#404041">
+                      {item.label}:
+                    </Text>
+                  </Box>
+                  <Flex flex={1}>
+                    <RenderForm data={item} />
+                  </Flex>
                 </Flex>
-              </Flex>
-            );
-          })}
-        </Box>
-      </Flex>
-      <Gap height={6} />
-      <Flex flex={1} justifyContent="flex-end">
-        <Button
-          paddingX={10}
-          borderRadius={10}
-          background="linear-gradient(90deg, #f39f5a 0%, #ae445a 100%)"
-          fontSize={12}
-          color="#FFFFFF"
-          fontWeight="bold"
-          onClick={() => onHandleSubmit()}
-        >
-          {loading ? (
-            <Image src="/images/loading-white.gif" width={6} height={6} />
-          ) : (
-            'Save'
-          )}
-        </Button>
-      </Flex>
-    </Box>
+              );
+            })}
+          </Box>
+        </Flex>
+        <Gap height={6} />
+        <Flex flex={1} justifyContent="flex-end">
+          <Button
+            paddingX={10}
+            borderRadius={10}
+            background="linear-gradient(90deg, #f39f5a 0%, #ae445a 100%)"
+            fontSize={12}
+            color="#FFFFFF"
+            fontWeight="bold"
+            onClick={() => onHandleSubmit()}>
+            {loading ? (
+              <Image src="/images/loading-white.gif" width={6} height={6} />
+            ) : (
+              'Save'
+            )}
+          </Button>
+        </Flex>
+      </Box>
+    </>
   );
 };
 

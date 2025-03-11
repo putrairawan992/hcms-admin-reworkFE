@@ -1,21 +1,20 @@
 import { useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { useToast } from '@chakra-ui/react';
-import { httpClient } from '@/app/utils/network';
+import { addMitra } from '@/app/api/mitra';
 
 const useAddMitra = () => {
-  const router = useRouter();
-  const toast = useToast();
-
   const [imageProfile, setImageProfile] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [profileImagePreview, setProfileImagePreview] = useState('/images/company-dummy.jpeg');
+  const [profileImagePreview, setProfileImagePreview] = useState(
+    '/images/company-dummy.jpeg'
+  );
   const profileFileInputRef = useRef(null);
   const [form, setForm] = useState({
     name: '',
     username: '',
-    email: ''
+    email: '',
   });
+
+  // Menggunakan addMitra secara dinamis
+  const { mutate, isLoading } = addMitra();
 
   const onChangeText = (slug, value) => {
     setForm((prevData) => ({ ...prevData, [slug]: value }));
@@ -28,57 +27,40 @@ const useAddMitra = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setImageProfile("photo", file);
+      setImageProfile(file);
       setProfileImagePreview(URL.createObjectURL(file));
     }
   };
 
-  const submitData = async () => {
-    try {
-      await httpClient({
-        method: 'POST',
-        url: '/admin/mitra/account',
-        data: form,
-      });
-      setLoading(false);
-
-      toast({
-        title: 'success',
-        description: 'Admin has been updated',
-        duration: 3000,
-        status: 'success',
-        position: 'top',
-        isClosable: true,
-      });
-      router.push('/list-mitra');
-    } catch (error) {
-      console.log(error);
-      toast({
-        title: 'Error',
-        description: error?.response?.data?.errors || 'Something went wrong!',
-        duration: 3000,
-        status: 'error',
-        position: 'top',
-        isClosable: true,
-      });
-      setLoading(false);
-    }
-  };
-
   const onHandleSubmit = () => {
-    setLoading(true);
-    submitData();
+    // Membuat payload sesuai struktur yang diinginkan
+    const payload = {
+      mitra_data: [
+        {
+          mitra_name: form.name, // Nama mitra diambil dari form
+          member: [
+            {
+              name: form.username, // Username diambil dari form
+              email: form.email, // Email diambil dari form
+            },
+          ],
+        },
+      ],
+    };
+
+    // Kirim payload ke API
+    mutate(payload);
   };
 
   return {
     profileImagePreview,
     profileFileInputRef,
-    loading,
+    loading: isLoading,
     form,
     onChangeText,
     onClickProfile,
     handleFileChange,
-    onHandleSubmit
+    onHandleSubmit,
   };
 };
 

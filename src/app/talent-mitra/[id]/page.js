@@ -1,77 +1,31 @@
 'use client';
-import {
-  Box,
-  Button,
-  Flex,
-  Select,
-  Text,
-  Image,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Text, Image } from '@chakra-ui/react';
 import styles from '../../styles/inbox.module.css';
-import { useState } from 'react';
 import moment from 'moment';
 import 'moment/locale/id';
-import { isEmpty } from 'lodash';
 
-import {
-  DataTalentCard,
-  HistoryTalentCard,
-  BiodataField,
-} from '../../components/molecules';
-import useDataTalentDetail from './useDataTalentDetail';
-import { formatDate, moveScreen } from '@/app/utils/helpers';
+import { BiodataField } from '../../components/molecules';
+import { formatDate } from '@/app/utils/helpers';
 import style from './styles';
 import { DownloadIcon, ShareIcon } from '@/app/components/icons';
-import { Gap } from '@/app/components/atoms';
+import useDataTalentDetail from './useDataTalentDetail';
 
 moment.locale('id');
 
 const DataTalentDetail = () => {
-  const yearOptions = [
-    { value: '2024', label: '2024' },
-    { value: '2023', label: '2023' },
-    { value: '2022', label: '2022' },
-    { value: '2021', label: '2021' },
-    { value: '2020', label: '2020' },
-    { value: '2019', label: '2019' },
-    { value: '2018', label: '2018' },
-    { value: '2017', label: '2017' },
-    { value: '2016', label: '2016' },
-    { value: '2015', label: '2015' },
-  ];
-  const monthOptions = [
-    { value: '1', label: 'Januari' },
-    { value: '2', label: 'Februari' },
-    { value: '3', label: 'Maret' },
-    { value: '4', label: 'April' },
-    { value: '5', label: 'Mei' },
-    { value: '6', label: 'Juni' },
-    { value: '7', label: 'Juli' },
-    { value: '8', label: 'Agustus' },
-    { value: '9', label: 'September' },
-    { value: '10', label: 'Oktober' },
-    { value: '11', label: 'November' },
-    { value: '12', label: 'Desember' },
-  ];
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [years, setYears] = useState('2024');
-  const [month, setMonth] = useState('10');
-  const [currentData, setCurrentData] = useState();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-
   const { data } = useDataTalentDetail();
 
-  const renderData = () => {
-    <Flex>
-      {data.map((item) => {
-        return <HistoryTalentCard data={item} />;
-      })}
-    </Flex>;
+  // Format date for display
+  const formatBirthDate = (dateString) => {
+    if (!dateString) return '';
+    return moment(dateString).format('DD MMMM YYYY');
   };
 
+  if (!data) {
+    return <Box>Loading...</Box>;
+  }
+
+  console.log(data);
   return (
     <Box className={styles['inbox-container']}>
       <Flex align={'center'} justify={'space-between'}>
@@ -80,9 +34,10 @@ const DataTalentDetail = () => {
       <Flex marginBottom={4} marginTop={10}>
         <Box paddingX={2} paddingY={2}>
           <Image
-            src="https://api-hcms.productscala.online/public/upload/1727253276975PasPhoto_MeililaSyavira.png"
+            src={data.photo}
             height={200}
             width={150}
+            fallbackSrc="https://via.placeholder.com/150"
           />
           <Button style={style.button} marginTop={2}>
             Send Message
@@ -97,105 +52,128 @@ const DataTalentDetail = () => {
           </Flex>
         </Box>
         <Box marginRight={2} paddingX={2} paddingY={2} flex={1} marginLeft={12}>
-          <BiodataField title="Nama Lengkap" value={data?.username} />
+          <BiodataField title="Nama Lengkap" value={data.name} />
           <BiodataField
             title="Tempat Tanggal Lahir"
-            value={data?.place_birth}
-            additionalValue="28 December 1999"
+            value={data.job_seeker?.place_birth}
+            additionalValue={formatBirthDate(data.job_seeker?.date_birth)}
           />
-          <BiodataField title="Alamat E-Mail" value={data?.email} />
-          <BiodataField title="Alamat URL LinkedIn" value={data?.linkedin} />
-          <BiodataField title="Nomor Handphone" value={data?.handphone} />
+          <BiodataField title="Alamat E-Mail" value={data.email} />
+          <BiodataField
+            title="Alamat URL LinkedIn"
+            value={data.job_seeker?.linkedin}
+          />
+          <BiodataField
+            title="Nomor Handphone"
+            value={data.job_seeker?.handphone}
+          />
           <BiodataField
             title="Emergency Contact"
-            value={data?.emergency_name}
-            additionalValue={data?.emergency_number}
-            extraValue={data?.emergency_status}
+            value=""
+            additionalValue=""
+            extraValue=""
           />
         </Box>
       </Flex>
       <Box marginRight={2} paddingX={2} paddingY={2} flex={1}>
-        <BiodataField title="Jenis Kelamin" value={data?.gender} />
-        <BiodataField title="Status Pernikahan" value={data?.marital_status} />
+        <BiodataField title="Jenis Kelamin" value="" />
+        <BiodataField
+          title="Status Pernikahan"
+          value={data.job_seeker?.marital_status}
+        />
         <BiodataField
           title="Alamat Domisili"
-          value={data?.residential_address}
+          value={data.job_seeker?.residential_address}
         />
         <BiodataField
           title="Alamat Rumah (KTP)"
-          value={data?.address_on_identity_card}
+          value={data.job_seeker?.address_on_identity_card}
         />
         <BiodataField
           title="Nomor NIK"
-          value={data?.company_registration_number}
+          value={data.job_seeker?.identity_number}
         />
-        <BiodataField title="Status PTKP" value={data?.ptkp_status} />
-        <BiodataField title="Nomor NPWP" value={data?.npwp_number} />
-        <BiodataField title="Nomor BPJSKES" value={data?.bpjskes} />
-        <BiodataField title="Nomor BPJSTK" value={data?.bpjstik} />
+        <BiodataField title="Status PTKP" value="" />
+        <BiodataField title="Nomor NPWP" value={data.job_seeker?.npwp_number} />
+        <BiodataField title="Nomor BPJSKES" value={data.job_seeker?.bpjskes} />
+        <BiodataField title="Nomor BPJSTK" value={data.job_seeker?.bpjstik} />
         <BiodataField
           title="No. Rek Bank"
-          value={data?.bank_account_name}
-          additionalValue={data?.bank_account_number}
-          extraValue={data?.bank_name}
+          value=""
+          additionalValue={data.job_seeker?.bank_account_number}
+          extraValue=""
         />
-        <BiodataField title="NIK Perusahaan" value="12345" />
-        <BiodataField title="Role" value="Frontend Developer" />
-        <BiodataField title="Level" value="CEO" />
-        <BiodataField title="Jenis Kontrak" value="Karyawan Tetap" />
-        <BiodataField title="Take Home Pay" value={data?.salary} />
-        <BiodataField title="Kontrak" value={data?.employee_type} />
-        <BiodataField title="Bootcamp" value="Hacktiv" />
+        <BiodataField title="NIK Perusahaan" value="" />
+        <BiodataField title="Role" value={data.job_seeker?.work_position} />
+        <BiodataField title="Level" value="" />
+        <BiodataField title="Jenis Kontrak" value="" />
+        <BiodataField
+          title="Take Home Pay"
+          value={data.job_seeker?.salary_exspectation}
+        />
+        <BiodataField title="Kontrak" value="" />
+        <BiodataField title="Bootcamp" value={data.job_seeker?.bootcamp} />
       </Box>
       <Box borderWidth={1} borderColor="#AE445A" marginY={6} />
       <Box marginRight={2} paddingX={2} paddingY={2} flex={1}>
-        {data?.experience_job_seeker?.map((item) => (
-          <Box marginBottom={6}>
-            <BiodataField title="Pengalaman" value={item?.company_name} />
-            <BiodataField
-              title=""
-              value={item?.department}
-              additionalValue={item?.employment_contract}
-            />
-            <BiodataField
-              title=""
-              value={`${formatDate(item?.start_working)} - ${formatDate(item?.end_working)}`}
-              additionalValue={item?.location}
-            />
-          </Box>
-        ))}
+        {data.experience_data &&
+          data.experience_data.map((item, index) => (
+            <Box marginBottom={6} key={index}>
+              <BiodataField title="Pengalaman" value={item?.company_name} />
+              <BiodataField
+                title=""
+                value={item?.department}
+                additionalValue={item?.employment_contract}
+              />
+              <BiodataField
+                title=""
+                value={`${formatDate(item?.start_working)} - ${item.end_working ? formatDate(item?.end_working) : 'Sekarang'}`}
+                additionalValue={item?.location}
+              />
+            </Box>
+          ))}
       </Box>
       <Box borderWidth={1} borderColor="#AE445A" marginY={6} />
       <Box marginRight={2} paddingX={2} paddingY={2} flex={1}>
-        {data?.education_job_seeker?.map((item) => (
-          <Box marginBottom={6}>
-            <BiodataField title="Pendidikan" value={item?.institute_name} />
-            <BiodataField
-              title=""
-              value={item?.education_program}
-              additionalValue={item?.degree}
-            />
-            <BiodataField
-              title=""
-              value={`${formatDate(item?.start_study)} - ${formatDate(item?.end_study)}`}
-              additionalValue={item?.ipk}
-            />
-          </Box>
-        ))}
+        {data.education_data &&
+          data.education_data.map((item, index) => (
+            <Box marginBottom={6} key={index}>
+              <BiodataField title="Pendidikan" value={item?.institute_name} />
+              <BiodataField
+                title=""
+                value={item?.education_program}
+                additionalValue={item?.degree}
+              />
+              <BiodataField
+                title=""
+                value={`${formatDate(item?.start_study)} - ${item.end_study ? formatDate(item?.end_study) : 'Sekarang'}`}
+                additionalValue={item?.ipk}
+              />
+            </Box>
+          ))}
       </Box>
       <Box borderWidth={1} borderColor="#AE445A" marginY={6} />
       <Box marginRight={2} paddingX={2} paddingY={2} flex={1}>
-        {data?.certificate_job_seeker?.map((item) => (
+        {data.certificate_data && data.certificate_data.length > 0 ? (
+          data.certificate_data.map((item, index) => (
+            <Box marginBottom={6} key={index}>
+              <BiodataField title="Sertifikat" value={item?.certificate_name} />
+              <BiodataField title="" value={item?.organizer} />
+              <BiodataField
+                title=""
+                value={item?.scores}
+                additionalValue={item?.certificate_year}
+              />
+            </Box>
+          ))
+        ) : (
           <Box marginBottom={6}>
-            <BiodataField title="Sertifikat" value={item?.certificate_name} />
-            <BiodataField title="" value={item?.organizer} />
             <BiodataField
-              title=""
-              value={item?.scores}
-              additionalValue={item?.certificate_year}
+              title="Sertifikat"
+              value="Tidak ada data sertifikat"
             />
           </Box>
-        ))}
+        )}
       </Box>
     </Box>
   );

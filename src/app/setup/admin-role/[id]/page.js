@@ -4,14 +4,13 @@ import { Box, Button, Flex, Text, Divider, Spinner } from '@chakra-ui/react';
 import styles from '../../../styles/adminRole.module.css';
 
 import useAdminRoleDetail from './useAdminRoleDetail';
-import style from './styles';
 import { Gap } from '@/app/components/atoms';
 import { FormFields } from '@/app/components/molecules';
 import FormFieldsCheckbox from '@/app/components/molecules/FormFieldsCheckbox';
 import { formFieldsAdminOptions } from '@/shared/general';
 
 const AdminRoleDetail = () => {
-  const { form, loading, onChangeText, onHandleSubmit, onChangeCheckbox } =
+  const { data, form, loading, onChangeText, onHandleSubmit, onChangeCheckbox } =
     useAdminRoleDetail();
 
   return (
@@ -26,11 +25,10 @@ const AdminRoleDetail = () => {
           theme="up-down"
           placeholder="Masukan nama admin"
           onChangeText={onChangeText}
-          slug="username"
-          value={form.username}
+          slug="name"
+          value={form.name}
         />
-      </Flex>
-      <Flex flex={1} align={'center'} mb={'2rem'}>
+        <Gap width={12} />
         <FormFields
           label="Email"
           type="text"
@@ -40,7 +38,8 @@ const AdminRoleDetail = () => {
           slug="email"
           value={form.email}
         />
-        <Gap width={12} />
+      </Flex>
+      <Flex flex={1} align={'center'} mb={'2rem'}>
         <FormFields
           label="Divisi"
           type="text"
@@ -50,8 +49,7 @@ const AdminRoleDetail = () => {
           slug="divisi"
           value={form.divisi}
         />
-      </Flex>
-      <Flex flex={1} align={'center'} mb={'2rem'}>
+        <Gap width={12} />
         <FormFields
           label="Jabatan"
           type="text"
@@ -60,16 +58,6 @@ const AdminRoleDetail = () => {
           onChangeText={onChangeText}
           slug="jabatan"
           value={form.jabatan}
-        />
-        <Gap width={12} />
-        <FormFields
-          label="Password"
-          type="text"
-          theme="up-down"
-          placeholder="Masukan Password"
-          onChangeText={onChangeText}
-          slug="new_password"
-          value={form.new_password}
         />
       </Flex>
       <Flex flex={1} align={'center'} mb={'2rem'}>
@@ -96,18 +84,7 @@ const AdminRoleDetail = () => {
       <Divider className={styles['admin-new-admin-divider']} />
       <Box className={styles['admin-new-admin-bottom-wrapper']}>
         <Text className={styles['admin-role-title']}>Feature</Text>
-        <FormFieldsCheckbox
-          data={form.platformAccess}
-          form={form.platformAccess}
-          onChangeCheckbox={onChangeCheckbox}
-        />
-        <FormFieldsCheckbox
-          title='Dashboard'
-          label='dashboard'
-          onChangeCheckbox={onChangeCheckbox}
-          data={form.platformAccess.find((e) => e.slug === 'dashboard')?.checkbox}
-        />
-        <FormFieldsCheckbox title='Dashboard' label='Dashbord' withChildren={true} />
+        <FormFieldsCheckbox data={form.permissions} onChangeCheckbox={onChangeCheckbox} />
       </Box>
       <Flex width={'100%'} justify={'end'} marginTop={'2rem'}>
         <Button

@@ -1,40 +1,80 @@
 'use client';
-
-import { useMemo } from 'react';
-import { Box, Button, Divider, Flex, Input, Text } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Box, Button, Flex, Text, Spinner, useToast } from '@chakra-ui/react';
 import styles from '../../styles/inbox.module.css';
-import {
-  ChooseLogo,
-  PenilaianDocumentCard,
-  PenilaianMultipleChoiceCard,
-  QuestionSection,
-} from '../../components/molecules';
+import { PenilaianDocumentCard } from '../../components/molecules';
+import { Gap } from '../../components/atoms';
+import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import useDetailPenilaianPretest from './useDetailPenilaianPretest';
-import { Gap, SelectField } from '../../components/atoms';
-import UploadDocument from './UploadDocument';
 
 const PretestMitra = () => {
-  const { data, questionData, addRowQuestion } = useDetailPenilaianPretest();
+  const toast = useToast();
+  const router = useRouter();
+  const params = useParams();
+  const searchParams = useSearchParams();
 
-  const RenderContentQuestion = useMemo(() => {
-    return questionData.map((item, index) => {
-      return <QuestionSection questionNumber={index} key={index} />;
-    });
-  }, [questionData]);
+  const jobSeekerId = params?.id || '';
+
+  const pretestModulId = searchParams?.get('pretest-modul-id') || '';
+
+  const {
+    questionData,
+    isLoading: dataLoading,
+    submitScore,
+  } = useDetailPenilaianPretest(jobSeekerId, pretestModulId);
+  console.log(questionData);
+  const [nilai, setNilai] = useState(questionData[0]?.score || null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (dataLoading) {
+    return (
+      <Box className={styles['inbox-container']}>
+        <Flex justify="center" align="center" height="300px">
+          <Spinner size="xl" color="#AE445A" />
+        </Flex>
+      </Box>
+    );
+  }
+
+  const handleClick = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await submitScore(
+        questionData[0]?.apply_job_answer_id,
+        nilai
+      );
+      console.log(response);
+
+      toast({
+        title: 'Success',
+        description: 'Nilai berhasil disimpan.',
+        duration: 3000,
+        status: 'success',
+        position: 'top',
+        isClosable: true,
+      });
+      router.push('/penilaian-pre-test');
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: `${error.response.data.errors}`,
+        duration: 3000,
+        status: 'error',
+        position: 'top',
+        isClosable: true,
+      });
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Box className={styles['inbox-container']}>
       <Flex align={'center'} justify={'space-between'}>
         <Box>
-          <Text className={styles['inbox-title']}>Modul Pilihan Ganda</Text>
-          <Text
-            fontSize={12}
-            fontWeight={300}
-            color="#404041"
-            fontStyle="italic"
-          >
-            Silahkan atur soal yang akan dijadikan Pre-Test bagi calon Karyawan
-          </Text>
+          <Text className={styles['inbox-title']}>Wawancara Mandiri</Text>
         </Box>
       </Flex>
       <Gap height={8} />
@@ -44,19 +84,24 @@ const PretestMitra = () => {
             Soal dan Jawaban
           </Text>
           <Gap height={4} />
-          <PenilaianDocumentCard />
-          <Gap height={4} />
-          <PenilaianMultipleChoiceCard />
+          {questionData && questionData.length > 0 ? (
+            <PenilaianDocumentCard
+              data={questionData[0]}
+              setNilai={setNilai}
+              nilai={nilai}
+            />
+          ) : (
+            <Text>Tidak ada data pertanyaan</Text>
+          )}
         </Box>
       </Box>
       <Gap height={8} />
       <Flex flex={1} justify="flex-end">
         <Button
           className={styles['inbox-btn']}
-          onClick={addRowQuestion}
-          paddingX={10}
-        >
-          Save
+          onClick={handleClick}
+          paddingX={10}>
+          {isLoading ? <Spinner size="sm" /> : 'Save'}
         </Button>
       </Flex>
     </Box>

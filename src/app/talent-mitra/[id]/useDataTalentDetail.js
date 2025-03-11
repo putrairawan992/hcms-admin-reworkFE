@@ -13,10 +13,10 @@ const useDataTalentDetail = () => {
     try {
       const response = await httpClient({
         method: 'GET',
-        url: `/admin/talent/detail/${params?.id}`,
+        url: `/admin/mitra/talent/${params?.id}`,
       });
 
-      const responseData = response?.data?.data || [];
+      const responseData = response?.data?.data?.data || [];
       setData(responseData);
       console.log(responseData);
       setLoading(false);
@@ -26,7 +26,7 @@ const useDataTalentDetail = () => {
   };
 
   const onHandlePress = (employeeId) => {
-    router.push(`/data-talent/${employeeId}`);
+    router.push(`/talent-mitra/${employeeId}`);
   };
 
   useEffect(() => {

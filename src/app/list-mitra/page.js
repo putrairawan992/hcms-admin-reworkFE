@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import {
   Box,
   Button,
@@ -8,89 +7,81 @@ import {
   InputGroup,
   InputRightElement,
   Text,
-  useDisclosure,
 } from '@chakra-ui/react';
-import styles from '../styles/inbox.module.css';
-import { useState } from 'react';
-import 'moment/locale/id';
-import { isEmpty } from 'lodash';
-import {
-  TalentListCard,
-  MitraListCard,
-} from '../components/molecules';
-import useListMitra from './useListMitra';
-import { Gap } from '../components/atoms';
 import { AddIcon, Search2Icon } from '@chakra-ui/icons';
-import { ShareIcon } from '../components/icons';
 import Link from 'next/link';
+import styles from '../styles/inbox.module.css';
+import { MitraListCard, Pagination } from '../components/molecules';
+import { Gap } from '../components/atoms';
+import useListMitra from './useListMitra';
 
 const ListMitra = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [years, setYears] = useState('2024');
-  const [month, setMonth] = useState('10');
-  const [currentData, setCurrentData] = useState();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-
   const {
     data,
-    filters,
     loading,
-    productDigitalData,
-    onHandlePress,
-    onChangeSelect,
+    filters,
+    totalPages,
+    currentPage,
+    handlePageChange,
+    handleSearch,
   } = useListMitra();
-
-  const RenderContent = () => {
-    if (!isEmpty(data)) {
-      return data.map((item) => {
-        return <TalentListCard data={item} onPress={onHandlePress} />;
-      });
-    } else {
-      return (
-        <Flex align={'center'} justify={'center'}>
-          <Text>Tidak ada data inbox</Text>
-        </Flex>
-      );
-    }
-  };
 
   return (
     <Box className={styles['inbox-container']}>
       <Flex align={'center'} justify={'space-between'}>
         <Text className={styles['inbox-title']}>List Mitra</Text>
-      </Flex>
-      <Gap height={6} />
-      <Flex>
-        <Flex flex={1}>
-          <Box>
-            <InputGroup className={styles['input-container']}>
-              <Input
-                className={styles['admin-role-input']}
-                type="text"
-                placeholder="Cari mitra"
-              />
-              <InputRightElement>
-                <Search2Icon />
-              </InputRightElement>
-            </InputGroup>
-          </Box>
-          <Gap width={2} />
-          <Link href="/list-mitra/add">
-            <Button className={styles['inbox-btn']} marginRight={2}>
-              <AddIcon marginRight={4} />
-              Create Mitra Account
-            </Button>
-          </Link>
+        <Gap height={6} />
+        <Flex>
+          <Flex flex={1}>
+            <Box>
+              <InputGroup className={styles['input-container']}>
+                <Input
+                  className={styles['admin-role-input']}
+                  type="text"
+                  placeholder="Cari mitra"
+                  onChange={(e) => handleSearch(e.target.value)}
+                />
+                <InputRightElement>
+                  <Search2Icon />
+                </InputRightElement>
+              </InputGroup>
+            </Box>
+            <Gap width={2} />
+            <Link href="/list-mitra/add">
+              <Button className={styles['inbox-btn']} marginRight={2}>
+                <AddIcon marginRight={4} />
+                Create Mitra Account
+              </Button>
+            </Link>
+          </Flex>
         </Flex>
       </Flex>
 
       <Gap height={6} />
       <Box style={{ borderWidth: 1, borderColor: '#EAEAEA' }} />
       <Gap height={6} />
-      {/* {loading ? <ListEmpty /> : <RenderContent />} */}
-      <MitraListCard data={[]} onPress={onHandlePress} />
+
+      {loading ? (
+        <Flex align="center" justify="center">
+          <Text>Loading...</Text>
+        </Flex>
+      ) : data.length > 0 ? (
+        <MitraListCard data={data} />
+      ) : (
+        <Flex align="center" justify="center">
+          <Text>No data found</Text>
+        </Flex>
+      )}
+
+      {data.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+          totalItems={data.length}
+          itemsPerPage={filters.limit}
+        />
+      )}
     </Box>
   );
 };

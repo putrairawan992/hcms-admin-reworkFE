@@ -21,19 +21,21 @@ const usePayslip = () => {
     employee: '',
   });
 
-  const fetchData = async () => {
+  const fetchData = async (params) => {
+    setLoading(true);
     try {
       const response = await httpClient({
         method: 'GET',
         url: '/admin/payslip/list',
+        params,
       });
 
       const responseData = response?.data?.data || [];
-      console.log(responseData);
       setData(responseData);
       setLoading(false);
     } catch (error) {
       console.error('Failed to fetch data:', error);
+      setLoading(false);
     }
   };
 
@@ -45,12 +47,10 @@ const usePayslip = () => {
       });
 
       const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(
-        ({ id, product_digital_name }) => ({
-          id,
-          label: product_digital_name,
-        })
-      );
+      const transformedData = responseData?.map(({ id, name }) => ({
+        value: id,
+        label: name,
+      }));
       setProductDigitalData(transformedData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -126,6 +126,10 @@ const usePayslip = () => {
       });
     }
   };
+
+  useEffect(() => {
+    fetchData(filters);
+  }, [filters]);
 
   useEffect(() => {
     fetchData();

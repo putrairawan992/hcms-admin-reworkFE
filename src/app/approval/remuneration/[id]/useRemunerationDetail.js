@@ -32,10 +32,10 @@ const useRemunerationDetail = () => {
       });
 
       const responseData = response?.data?.data || [];
-      console.log(responseData?.list_remuneration);
       setData(responseData);
       setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error('Failed to fetch data:', error);
     }
   };
@@ -72,6 +72,15 @@ const useRemunerationDetail = () => {
     onOpenNote();
   };
 
+  const onHandleDownload = () => {
+    const link = document.createElement('a');
+    link.href = data?.excel;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+
   useEffect(() => {
     fetchData();
     fetchDataPD();
@@ -89,6 +98,7 @@ const useRemunerationDetail = () => {
     onClose,
     onCloseNote,
     isOpenNote,
+    onHandleDownload
   };
 };
 

@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { httpClient } from '@/app/utils/network';
-import { useRouter, useParams } from 'next/navigation';
 import { useToast } from '@chakra-ui/react';
 import { documentTypeOptions } from './Shared/General';
+import { useRouter } from 'next/navigation';
 
 const useSetupDocumentDetail = () => {
   const toast = useToast();
   const router = useRouter();
-  const params = useParams();
 
   const searchParams = new URLSearchParams(window.location.search);
   const documentType = searchParams.get('documentType');
@@ -15,7 +14,11 @@ const useSetupDocumentDetail = () => {
   const [data, setData] = useState([]);
   const [typeOptions, setTypeOptions] = useState([]);
   const [productDigital, setProductDigitalData] = useState([]);
-  const [loading, setLoading] = useState(false);
+
+  // Separate loading states for different operations
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [documentLoading, setDocumentLoading] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const [form, setForm] = useState({
     job_provider_id: '',
@@ -41,16 +44,22 @@ const useSetupDocumentDetail = () => {
       });
 
       const responseData = response?.data?.data || [];
-      const transformedData = responseData?.map(
-        ({ id, product_digital_name }) => ({
-          id,
-          label: product_digital_name,
-          value: id,
-        })
-      );
+      const transformedData = responseData?.map(({ id, name }) => ({
+        id,
+        label: name,
+        value: id,
+      }));
       setProductDigitalData(transformedData);
     } catch (error) {
-      console.error('Failed to fetch data:', error);
+      console.error('Failed to fetch product digital data:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load product digital options',
+        duration: 3000,
+        status: 'error',
+        position: 'top',
+        isClosable: true,
+      });
     }
   };
 
@@ -68,12 +77,20 @@ const useSetupDocumentDetail = () => {
       }));
       setTypeOptions(transformedData);
     } catch (error) {
-      console.error('Failed to fetch data:', error);
+      console.error('Failed to fetch document types:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load document type options',
+        duration: 3000,
+        status: 'error',
+        position: 'top',
+        isClosable: true,
+      });
     }
   };
 
   const onHandlePress = async (screenData) => {
-    setLoading(true);
+    setSubmitLoading(true);
     const formData = { ...screenData, ...form };
 
     try {
@@ -90,7 +107,6 @@ const useSetupDocumentDetail = () => {
         position: 'top',
         isClosable: true,
       });
-      setLoading(false);
     } catch (error) {
       toast({
         title: 'Error',
@@ -100,21 +116,23 @@ const useSetupDocumentDetail = () => {
         position: 'top',
         isClosable: true,
       });
-      console.error('Failed to fetch data:', error);
-      setLoading(false);
+      console.error('Failed to save data:', error);
+    } finally {
+      setSubmitLoading(false);
     }
   };
 
-  const cleanData = (data) => {
-    return Object.entries(data).reduce((acc, [key, value]) => {
-      if (value !== null) {
-        acc[key] = value;
-      }
-      return acc;
-    }, {});
-  };
-
   const fetchDocumentDetail = async (filters) => {
+    // Don't fetch if we don't have required filter values
+    if (!filters?.job_provider_id || !filters?.type_document) {
+      setData([]);
+      return;
+    }
+
+    // Set document loading state to true and clear previous data
+    setDocumentLoading(true);
+    setData([]);
+
     try {
       const response = await httpClient({
         method: 'GET',
@@ -128,33 +146,70 @@ const useSetupDocumentDetail = () => {
       const responseData = response?.data?.data || [];
       if (responseData?.data?.length > 0) {
         setData(responseData?.data[0]);
+      } else {
+        // Explicitly set data to empty if no results returned
+        setData([]);
       }
     } catch (error) {
-      console.error('Failed to fetch data:', error);
+      console.error('Failed to fetch document detail:', error);
+      // Clear data on error
+      setData([]);
+
+      // Show error toast for document fetch failures
+      toast({
+        title: 'Error',
+        description: `Failed to fetch document details for type: ${filters?.type_document}`,
+        duration: 3000,
+        status: 'error',
+        position: 'top',
+        isClosable: true,
+      });
+    } finally {
+      setDocumentLoading(false);
     }
   };
 
   const onChangeSelect = (slug, value) => {
+    // Update form state with new selection
     setForm((prevFilters) => ({ ...prevFilters, [slug]: value }));
+
+    // Navigate with updated params
+    if (slug === 'job_provider_id') {
+      router.push(`/setup/document/detail?productDigital=${value}`);
+    }
   };
 
   useEffect(() => {
-    fetchDataType();
-    fetchDataPD();
+    // Initialize by fetching dropdown data
+    const initializeData = async () => {
+      setInitialLoading(true);
+      await Promise.all([fetchDataType(), fetchDataPD()]);
+      setInitialLoading(false);
+    };
+
+    initializeData();
   }, []);
 
   useEffect(() => {
-    fetchDocumentDetail(form);
-    console.log(form);
+    // Only fetch when both required fields have values
+    if (form.job_provider_id && form.type_document) {
+      fetchDocumentDetail(form);
+    } else {
+      // Clear data if either field is empty
+      setData([]);
+    }
   }, [form]);
+
+  // Create a derived loading state for consumer components
+  const isLoading = initialLoading || documentLoading;
 
   return {
     data,
-    loading,
     form,
     typeOptions,
     productDigital,
-    loading,
+    loading: isLoading,
+    submitLoading,
     onHandlePress,
     onChangeSelect,
   };

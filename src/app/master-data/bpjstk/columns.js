@@ -10,13 +10,13 @@ const columns = (page) => {
       width: '65px',
       wrap: true,
     },
-    {
-      name: 'Service',
-      selector: (row) => row.service,
-      sortable: true,
-      wrap: true,
-      width: '150px',
-    },
+    // {
+    //   name: 'Service',
+    //   selector: (row) => row.service,
+    //   sortable: true,
+    //   wrap: true,
+    //   width: '150px',
+    // },
     { name: 'Tahun', selector: (row) => row.tahun, sortable: true },
     { name: 'Bulan', selector: (row) => row.bulan, sortable: true },
     {
@@ -33,7 +33,7 @@ const columns = (page) => {
     },
     {
       name: 'Product Digital',
-      selector: (row) => row.product_digital,
+      selector: (row) => row.job_provider?.name,
       wrap: true,
       width: '185px',
     },
@@ -50,7 +50,12 @@ const columns = (page) => {
       wrap: true,
       width: '150px',
     },
-    { name: 'Nama', selector: (row) => row.nama, wrap: true, width: '200px' },
+    {
+      name: 'Nama',
+      selector: (row) => row.name,
+      wrap: true,
+      width: '200px',
+    },
     {
       name: (
         <>
@@ -65,8 +70,8 @@ const columns = (page) => {
           </div>
           <div style={styles.tableEmployee}>
             <span style={styles.textTableEmployee}>Karyawan</span>
-            <span>Iuran JHT (3,70%)</span>
-            <span>Iuran JP (2,00%)</span>
+            <span>Iuran JHT (2,00%)</span>
+            <span>Iuran JP (1,00%)</span>
             <span>Total Iuran Karyawan</span>
           </div>
         </>

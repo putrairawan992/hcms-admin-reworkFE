@@ -71,7 +71,10 @@ const useBpjstk = () => {
           position: 'top',
           isClosable: true,
         });
+        setModalOpen(false);
       } else {
+        fetchData(page);
+        setModalOpen(false);
         toast({
           title: 'Success',
           description: `Data synced successfully!`,

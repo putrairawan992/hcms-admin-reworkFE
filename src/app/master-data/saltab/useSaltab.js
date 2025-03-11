@@ -64,6 +64,7 @@ const useSaltab = () => {
       }
 
       if (response?.status !== 200) {
+        setModalOpen(false);
         toast({
           title: 'Error',
           description: `Something went wrong!`,
@@ -73,6 +74,8 @@ const useSaltab = () => {
           isClosable: true,
         });
       } else {
+        fetchData(page);
+        setModalOpen(false);
         toast({
           title: 'Success',
           description: `Data synced successfully!`,

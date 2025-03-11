@@ -14,6 +14,7 @@ import {
   FormFieldsContractDays,
   FormFieldsPKWT,
 } from './FormFields';
+import Image from 'next/image';
 
 moment.locale('id');
 
@@ -29,16 +30,25 @@ const SetupDocumentDetails = () => {
   } = useSetupDocumentDetail();
 
   const RenderData = () => {
+    if (loading) {
+      return null;
+    }
+
     switch (form.type_document) {
       case 'Amandemen PKWT Khusus & Normal':
         return (
-          <FormFieldsAmandementPKWT onClick={onHandlePress} loading={loading} />
+          <FormFieldsAmandementPKWT
+            onClick={onHandlePress}
+            loading={loading}
+            data={data}
+          />
         );
       case 'Kontrak Freelance':
         return (
           <FormFieldsContractFreelance
             onClick={onHandlePress}
             loading={loading}
+            data={data}
           />
         );
       case 'Kontrak Internship':
@@ -46,6 +56,7 @@ const SetupDocumentDetails = () => {
           <FormFieldsContractInternship
             onClick={onHandlePress}
             loading={loading}
+            data={data}
           />
         );
       case 'Offering Latter Khusus':
@@ -53,6 +64,7 @@ const SetupDocumentDetails = () => {
           <FormFieldsOfferingLatterKhusus
             onClick={onHandlePress}
             loading={loading}
+            data={data}
           />
         );
       case 'Offering Latter Normal':
@@ -60,10 +72,17 @@ const SetupDocumentDetails = () => {
           <FormFieldsOfferingLatterNormal
             onClick={onHandlePress}
             loading={loading}
+            data={data}
           />
         );
       case 'PKWT Khusus & Normal':
-        return <FormFieldsPKWT onClick={onHandlePress} loading={loading} />;
+        return (
+          <FormFieldsPKWT
+            onClick={onHandlePress}
+            loading={loading}
+            data={data}
+          />
+        );
       case 'Kontrak Perjanjian Pekerja Harian Lepas':
         return (
           <FormFieldsContractDays
@@ -95,6 +114,7 @@ const SetupDocumentDetails = () => {
                 options={productDigital}
                 value={form.job_provider_id}
                 slug="job_provider_id"
+                placeholder="Pilih product digital"
                 onChange={onChangeSelect}
                 withOptionDefault={false}
               />
@@ -107,7 +127,17 @@ const SetupDocumentDetails = () => {
               />
             </Flex>
           </Flex>
-          <RenderData />
+
+          {loading ? (
+            <Flex
+              align={'center'}
+              justify={'center'}
+              className="mt-10 min-h-[100px]">
+              <Image src={'/images/loading.gif'} width={50} height={50} />
+            </Flex>
+          ) : (
+            <RenderData />
+          )}
         </Box>
       </Flex>
     </Box>

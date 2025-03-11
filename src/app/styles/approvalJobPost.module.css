@@ -3,8 +3,7 @@
   box-shadow: 5px 0px 10px 0px #b3b9c5;
   border-radius: 30px;
   width: 100%;
-  height: 869px;
-  padding: 3rem 3rem 2rem;
+  padding: 2rem;
 }
 
 .job-post-header {
@@ -107,16 +106,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 131px;
-  height: 131px;
+  width: 95px;
+  height: 95px;
   border: 3px solid #ae445a;
   border-radius: 100%;
   margin-right: 1.5rem;
 }
 
 .job-post-image {
-  width: 105px;
-  height: 105px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
   border-radius: 100%;
 }
@@ -178,4 +177,11 @@
 .job-post-button {
   align-items: center;
   justify-content: flex-end;
+}
+
+.reject-icon {
+  width: 16px;
+  height: 16px;
+  margin: 0 12px;
+  cursor: pointer;
 }

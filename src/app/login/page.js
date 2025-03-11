@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import {
   Box,
   Button,
@@ -8,6 +9,7 @@ import {
   Text,
   useToast,
   Image,
+  Spinner,
 } from '@chakra-ui/react';
 import styles from '../styles/loginPage.module.css';
 import { useRouter } from 'next/navigation';
@@ -43,6 +45,12 @@ const LoginPage = () => {
   };
 
   const loginHandler = () => {
+    if (!username && !password) {
+      return false;
+    }
+
+
+    setLoading(true);
     mutate(
       {
         username,
@@ -60,12 +68,11 @@ const LoginPage = () => {
           });
           document.cookie = `userToken=${res.data.token}; path=/; max-age=86400; SameSite=Lax`;
           fetchDataProfile();
-
-          setTimeout(() => {
-            router.push('/');
-          }, 1000);
+          setLoading(false);
+          router.push('/');
         },
         onError: () => {
+          setLoading(false);
           toast({
             title: 'Error',
             description: 'Email atau password salah, silahkan coba lagi',

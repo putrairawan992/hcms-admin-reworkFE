@@ -6,24 +6,8 @@ const HistoryTalentCard = ({ data = [] }) => {
   const { product_digital_name, total_employee } = data;
 
   return (
-    <Flex
-      style={{
-        borderWidth: 1,
-        flex: 1,
-        padding: '12px',
-        borderRadius: '10px',
-        borderColor: '#AE445A',
-        marginRight: '8px',
-      }}
-    >
-      <Box
-        style={{
-          borderWidth: 3,
-          borderColor: '#AE445A',
-          borderRadius: '50%',
-          padding: '2px',
-        }}
-      >
+    <Flex borderWidth={2} flex={1} padding={2} borderRadius={12} borderColor='#AE445A'>
+      <Box borderWidth={3} borderColor='#AE445A' borderRadius="50%" padding={1}>
         <Image
           src={
             'https://ffis3.is3.cloudhost.id/profile/photo/908/Maudy-Ayunda.jpg'

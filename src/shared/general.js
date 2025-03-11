@@ -1,4 +1,5 @@
 export const yearOptions = [
+  { value: '2025', label: '2025' },
   { value: '2024', label: '2024' },
   { value: '2023', label: '2023' },
   { value: '2022', label: '2022' },
@@ -27,23 +28,53 @@ export const monthOptions = [
 ];
 
 export const monthLabelOptions = [
-  { value: 'January', label: 'Januari' },
-  { value: 'February', label: 'Februari' },
-  { value: 'Maret', label: 'Maret' },
-  { value: 'March', label: 'April' },
-  { value: 'May', label: 'Mei' },
-  { value: 'June', label: 'Juni' },
-  { value: 'July', label: 'Juli' },
-  { value: 'August', label: 'Agustus' },
+  { value: 'January', label: 'January' },
+  { value: 'February', label: 'February' },
+  { value: 'March', label: 'March' },
+  { value: 'April', label: 'April' },
+  { value: 'May', label: 'May' },
+  { value: 'June', label: 'June' },
+  { value: 'July', label: 'July' },
+  { value: 'August', label: 'August' },
   { value: 'September', label: 'September' },
-  { value: 'October', label: 'Oktober' },
+  { value: 'October', label: 'October' },
   { value: 'November', label: 'November' },
-  { value: 'December', label: 'Desember' },
+  { value: 'December', label: 'December' },
+];
+export const monthLabelOptionsRecap = [
+  { key: 'jan', value: 'January', label: 'Jan' },
+  { key: 'feb', value: 'February', label: 'Feb' },
+  { key: 'mar', value: 'March', label: 'Mar' },
+  { key: 'apr', value: 'April', label: 'Apr' },
+  { key: 'may', value: 'May', label: 'Mei' },
+  { key: 'jun', value: 'June', label: 'Jun' },
+  { key: 'jul', value: 'July', label: 'Jul' },
+  { key: 'aug', value: 'August', label: 'Ags' },
+  { key: 'sep', value: 'September', label: 'Sep' },
+  { key: 'oct', value: 'October', label: 'Okt' },
+  { key: 'nov', value: 'November', label: 'Nov' },
+  { key: 'dec', value: 'December', label: 'Des' },
 ];
 
 export const statusRemunOptions = [
   { value: 'approved', label: 'Approved' },
   { value: 'rejected', label: 'Rejected' },
+];
+
+export const statusJobPostOptions = [
+  { value: 'Approved', label: 'Approved' },
+  { value: 'Onprogress', label: 'On Progress' },
+  { value: 'Pending', label: 'Pending' },
+];
+
+export const inboxSetupAccountOptions = [
+  { value: 'view', label: 'view' },
+  { value: 'reply', label: 'reply' },
+];
+
+export const schemaSetupAccountOptions = [
+  { value: 'normal', label: 'Approved' },
+  { value: 'khusus', label: 'khusus' },
 ];
 
 export const navbarDataOptions = [
@@ -86,10 +117,6 @@ export const navbarDataOptions = [
       {
         title: 'Remuneration',
         href: '/setup/remuneration',
-      },
-      {
-        title: 'Payslip',
-        href: '/setup/payslip',
       },
     ],
   },
@@ -203,9 +230,11 @@ export const formFieldsAdminOptions = [
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Create',
+        value_key: 'create',
       },
     ],
   },
@@ -215,61 +244,70 @@ export const formFieldsAdminOptions = [
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Edit',
+        value_key: 'edit',
       },
       {
         label: 'Delete',
+        value_key: 'delete',
       },
       {
         label: 'Upload',
+        value_key: 'upload',
       },
       {
         label: 'Download',
+        value_key: 'download',
       },
     ],
   },
   {
     label: 'Setup',
     slug: 'setup',
-    children: [
+    sections: [
       {
         label: 'Admin',
-        slug: 'admin',
         checkbox: [
           {
             label: 'View',
+            value_key: 'admin_view',
           },
           {
             label: 'Create',
+            value_key: 'admin_create',
           },
         ],
       },
       {
         label: 'Account',
-        slug: 'account',
         checkbox: [
           {
             label: 'View',
+            value_key: 'account_view',
           },
           {
             label: 'Create',
+            value_key: 'account_create',
           },
           {
             label: 'Delete',
+            value_key: 'account_delete',
           },
         ],
       },
       {
         label: 'Job Post',
-        slug: 'job_post',
         checkbox: [
           {
             label: 'View',
+            value_key: 'job_post_view',
           },
           {
             label: 'Create',
+            value_key: 'job_post_create',
           },
         ],
       },
@@ -277,77 +315,84 @@ export const formFieldsAdminOptions = [
   },
   {
     label: 'Blast Notification',
-    slug: 'blash_notif',
+    slug: 'blast_notification',
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Create',
+        value_key: 'create',
       },
     ],
   },
   {
     label: 'Master Data',
-    slug: 'master_data',
-    children: [
+    slug: 'masterdata',
+    sections: [
       {
         label: 'BPJSKES',
-        slug: 'bpjskes',
         checkbox: [
           {
             label: 'View',
+            value_key: 'bpjskes_view',
           },
           {
             label: 'Create',
+            value_key: 'bpjskes_create',
           },
         ],
       },
       {
         label: 'BPJSTK',
-        slug: 'bpjstk',
         checkbox: [
           {
             label: 'View',
+            value_key: 'bpjstk_view',
           },
           {
             label: 'Create',
+            value_key: 'bpjstk_create',
           },
         ],
       },
       {
         label: 'SALTAB',
-        slug: 'saltab',
         checkbox: [
           {
             label: 'View',
+            value_key: 'saltab_view',
           },
           {
             label: 'Create',
+            value_key: 'saltab_create',
           },
         ],
       },
       {
         label: 'Pajak',
-        slug: 'pajak',
         checkbox: [
           {
             label: 'View',
+            value_key: 'pajak_view',
           },
           {
             label: 'Create',
+            value_key: 'pajak_create',
           },
         ],
       },
       {
         label: 'Merge',
-        slug: 'merge',
         checkbox: [
           {
             label: 'View',
+            value_key: 'merge_view',
           },
           {
             label: 'Create',
+            value_key: 'merge_create',
           },
         ],
       },
@@ -359,52 +404,58 @@ export const formFieldsAdminOptions = [
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Create',
+        value_key: 'create',
       },
     ],
   },
   {
     label: 'Middle Level',
     slug: 'middle_level',
-    children: [
+    sections: [
       {
         label: 'Company',
-        slug: 'company',
         checkbox: [
           {
             label: 'View',
+            value_key: 'company_view',
           },
           {
             label: 'Upload',
+            value_key: 'company_upload',
           },
           {
             label: 'Download',
+            value_key: 'company_download',
           },
         ],
       },
       {
         label: 'Talent',
-        slug: 'talent',
         checkbox: [
           {
             label: 'View',
+            value_key: 'talent_view',
           },
           {
             label: 'Upload',
+            value_key: 'talent_upload',
           },
           {
             label: 'Download',
+            value_key: 'talent_download',
           },
         ],
       },
       {
         label: 'Renewal',
-        slug: 'renewal',
         checkbox: [
           {
             label: 'View',
+            value_key: 'renewal_view',
           },
         ],
       },
@@ -416,30 +467,37 @@ export const formFieldsAdminOptions = [
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Share',
+        value_key: 'share',
       },
       {
         label: 'Approve',
+        value_key: 'approve',
       },
       {
         label: 'Reject',
+        value_key: 'reject',
       },
     ],
   },
   {
     label: 'Approval Remuneration',
-    slug: 'approval_remun',
+    slug: 'approval_remuneration',
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Save',
+        value_key: 'save',
       },
       {
         label: 'Comment',
+        value_key: 'comment',
       },
     ],
   },
@@ -449,36 +507,45 @@ export const formFieldsAdminOptions = [
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Create',
+        value_key: 'create',
       },
       {
         label: 'Edit',
+        value_key: 'edit',
       },
       {
         label: 'Delete',
+        value_key: 'delete',
       },
       {
         label: 'Send',
+        value_key: 'send',
       },
       {
         label: 'Download',
+        value_key: 'download',
       },
       {
         label: 'Message',
+        value_key: 'message',
       },
     ],
   },
   {
     label: 'Data Talent',
-    slug: 'talent',
+    slug: 'data_talent',
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
       {
         label: 'Download',
+        value_key: 'download',
       },
     ],
   },
@@ -488,26 +555,10 @@ export const formFieldsAdminOptions = [
     checkbox: [
       {
         label: 'View',
+        value_key: 'view',
       },
     ],
   },
-  // {
-  //   label: "Form",
-  //   checkbox: [
-  //     {
-  //       label: "View"
-  //     },
-  //     {
-  //       label: "Create"
-  //     },
-  //     {
-  //       label: "Add"
-  //     },
-  //     {
-  //       label: "Update"
-  //     },
-  //   ]
-  // },
 ];
 
 export const colors = [
@@ -517,4 +568,40 @@ export const colors = [
   '#F39F5A',
   '#9C27B0',
   '#607D8B',
+];
+
+export const jobPostOptions = [
+  {
+    label: 'Lokasi Kerja',
+    value: 'work_location',
+    prefix: 'job_location_name',
+  },
+  {
+    label: 'Keuntungan dari Perusahaan',
+    value: 'benefits_company',
+    prefix: 'benefit_name',
+  },
+  { label: 'Pendidikan', value: 'education', prefix: 'education_name' },
+  { label: 'Pengalaman', value: 'experience', prefix: 'experience_name' },
+  {
+    label: 'Spesialisasi Pekerjaan',
+    value: 'job_specialization',
+    prefix: 'job_specialist_name',
+  },
+  { label: 'Tingkat Pekerjaan', value: 'work_level', prefix: 'job_level_name' },
+];
+
+export const months = [
+  { key: 'jan', label: 'Jan' },
+  { key: 'feb', label: 'Feb' },
+  { key: 'mar', label: 'Mar' },
+  { key: 'apr', label: 'Apr' },
+  { key: 'may', label: 'Mei' },
+  { key: 'jun', label: 'Jun' },
+  { key: 'jul', label: 'Jul' },
+  { key: 'aug', label: 'Ags' },
+  { key: 'sep', label: 'Sep' },
+  { key: 'oct', label: 'Okt' },
+  { key: 'nov', label: 'Nov' },
+  { key: 'dec', label: 'Des' },
 ];

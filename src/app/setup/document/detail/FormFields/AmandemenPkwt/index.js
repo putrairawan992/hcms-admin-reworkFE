@@ -1,74 +1,123 @@
 'use client';
-import { Gap } from '@/app/components/atoms';
-import { noop } from '@/app/utils/helpers';
-import { Box, Flex, Text, Input, Button, Image } from '@chakra-ui/react';
+
+import { useState, useCallback } from 'react';
+import {
+  Box,
+  Flex,
+  Text,
+  Input,
+  Button,
+  Image,
+  useToast,
+} from '@chakra-ui/react';
 import moment from 'moment';
 import 'moment/locale/id';
-import dynamic from 'next/dynamic';
-import { useState } from 'react';
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import { Gap } from '@/app/components/atoms';
+import { TextArea } from '@/app/components/atoms';
+import { noop } from '@/app/utils/helpers';
 import 'react-quill/dist/quill.snow.css';
 import { dataFormAmandemenPKWT } from '../Shared/General';
 
 moment.locale('id');
 
-const FormFieldsAmandementPKWT = ({ loading = false, onClick = noop }) => {
+const INITIAL_FORM = {
+  responsible_person: '',
+  power_of_attorney_number: '',
+  power_of_attorney_date: '',
+  consideration: '',
+  clause_6: '',
+  clause_1: '',
+  clause_9: '',
+};
+
+const FormFieldsAmandementPKWT = ({
+  loading = false,
+  onClick = noop,
+  data,
+}) => {
   const [form, setForm] = useState({
-    responsible_person: '',
-    power_of_attorney_number: '',
-    power_of_attorney_date: '',
-    consideration: '',
-    clause_6: '',
-    clause_1: '',
-    clause_9: '',
+    responsible_person: data.responsible_person || '',
+    power_of_attorney_number: data.power_of_attorney_number || '',
+    power_of_attorney_date: data.power_of_attorney_date || '',
+    consideration: data.consideration || '',
+    clause_6: data.clause_6 || '',
+    clause_1: data.clause_1 || '',
+    clause_9: data.clause_9 || '',
   });
+  const [errors, setErrors] = useState({});
+  const toast = useToast();
 
-  const onHandleSubmit = () => {
-    onClick(form);
-  };
+  const validateForm = useCallback(() => {
+    const newErrors = {};
+    let isValid = true;
 
-  const onChangeText = (slug, value) => {
-    setForm((prevData) => ({ ...prevData, [slug]: value }));
-  };
+    dataFormAmandemenPKWT.forEach((field) => {
+      if (field.required && !form[field.slug]) {
+        newErrors[field.slug] = `${field.label} harus diisi`;
+        isValid = false;
+      }
+    });
 
-  const RenderForm = ({ data = [] }) => {
-    if (data.type === 'text') {
-      return (
-        <Input
-          flex={1}
-          borderWidth={1}
-          borderColor="#AE445A"
-          borderRadius={10}
-          padding="8px 16px"
-          type="text"
-          value={form[data.slug]}
-          onChange={(e) => onChangeText(data.slug, e.target.value)}
-        />
-      );
-    } else if (data.type === 'textarea') {
-      return (
-        <ReactQuill
-          theme="snow"
-          style={{ height: '150px', flex: 1, marginBottom: 45 }}
-          value={form[data.slug]}
-          onChange={(value) => onChangeText(data.slug, value)}
-        />
-      );
-    } else if (data.type === 'date') {
-      return (
-        <Input
-          flex={1}
-          borderWidth={1}
-          borderColor="#AE445A"
-          borderRadius={10}
-          padding="8px 16px"
-          type="date"
-          value={form[data.slug]}
-          onChange={(e) => onChangeText(data.slug, e.target.value)}
-        />
-      );
+    setErrors(newErrors);
+    return isValid;
+  }, [form]);
+
+  const onHandleSubmit = useCallback(() => {
+    if (validateForm()) {
+      onClick(form);
+    } else {
+      toast({
+        title: 'Error',
+        description: 'Mohon lengkapi semua field yang diperlukan',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     }
-  };
+  }, [form, onClick, validateForm, toast]);
+
+  const onChangeText = useCallback(
+    (slug, value) => {
+      setForm((prev) => ({ ...prev, [slug]: value }));
+      if (errors[slug]) {
+        setErrors((prev) => ({ ...prev, [slug]: '' }));
+      }
+    },
+    [errors]
+  );
+
+  const renderField = useCallback(
+    (field) => {
+      const commonProps = {
+        flex: 1,
+        borderWidth: 1,
+        borderColor: errors[field.slug] ? 'red.500' : '#AE445A',
+        borderRadius: 10,
+        padding: '8px 16px',
+        placeholder: field.placeholder,
+        value: form[field.slug],
+      };
+
+      if (field.type === 'textarea') {
+        return (
+          <TextArea
+            {...commonProps}
+            style={{ height: '150px', flex: 1, marginBottom: 45 }}
+            onChange={(value) => onChangeText(field.slug, value)}
+          />
+        );
+      }
+
+      return (
+        <Input
+          {...commonProps}
+          type={field.type}
+          onChange={(e) => onChangeText(field.slug, e.target.value)}
+        />
+      );
+    },
+    [form, errors, onChangeText]
+  );
 
   return (
     <Box>
@@ -79,24 +128,33 @@ const FormFieldsAmandementPKWT = ({ loading = false, onClick = noop }) => {
       <Gap height={4} />
       <Flex>
         <Box flex={1}>
-          {dataFormAmandemenPKWT.map((item) => {
-            return (
-              <Flex
-                flex={1}
-                alignItems={item.type === 'textarea' ? 'flex-start' : 'center'}
-                marginBottom={2}
-              >
+          {dataFormAmandemenPKWT.map((field) => (
+            <Flex
+              key={field.slug}
+              flex={1}
+              alignItems={field.type === 'textarea' ? 'flex-start' : 'center'}
+              marginBottom={2}
+              direction="column">
+              <Flex width="100%" marginBottom={2} alignItems="center">
                 <Box flex={0.5}>
-                  <Text fontSize={14} fontWeight="bold" color="#404041">
-                    {item.label}:
+                  <Text fontSize={14} fontWeight="bold" color="#404041" gap={2}>
+                    {field.label}:
+                    {field.required && (
+                      <Text as="span" color="red.500">
+                        *
+                      </Text>
+                    )}
                   </Text>
                 </Box>
-                <Flex flex={1}>
-                  <RenderForm data={item} />
-                </Flex>
+                <Flex flex={1}>{renderField(field)}</Flex>
               </Flex>
-            );
-          })}
+              {errors[field.slug] && (
+                <Text fontSize={12} color="red.500" marginLeft="50%">
+                  {errors[field.slug]}
+                </Text>
+              )}
+            </Flex>
+          ))}
         </Box>
       </Flex>
       <Gap height={6} />
@@ -108,10 +166,15 @@ const FormFieldsAmandementPKWT = ({ loading = false, onClick = noop }) => {
           fontSize={12}
           color="#FFFFFF"
           fontWeight="bold"
-          onClick={() => onHandleSubmit()}
-        >
+          onClick={onHandleSubmit}
+          isDisabled={loading}>
           {loading ? (
-            <Image src="/images/loading-white.gif" width={6} height={6} />
+            <Image
+              src="/images/loading-white.gif"
+              width={6}
+              height={6}
+              alt="Loading"
+            />
           ) : (
             'Save'
           )}

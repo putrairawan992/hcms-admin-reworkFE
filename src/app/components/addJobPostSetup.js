@@ -9,37 +9,26 @@ import {
   ModalContent,
   ModalOverlay,
   Select,
+  Spinner,
   Text,
   useToast,
 } from '@chakra-ui/react';
 import styles from '../styles/setupJobPost.module.css';
 import { useState } from 'react';
 import { useSubmitJobPostSetup } from '../api/setup';
+import { jobPostOptions } from '@/shared/general';
 
-const AddJobPostSetup = ({ isOpen, onClose, title, option, refetch }) => {
+const AddJobPostSetup = ({ isOpen, onClose, title, option, reFetch }) => {
   const toast = useToast();
   const [name, setName] = useState('');
+  const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState('');
   const { mutate } = useSubmitJobPostSetup();
 
   const submitHandler = () => {
-    const data = {
-      status,
-    };
-
-    if (title === 'Pendidikan') {
-      data['education_name'] = name;
-    } else if (title === 'Lokasi Kerja') {
-      data['job_location_name'] = name;
-    } else if (title === 'Keuntungan dari Perusahaan') {
-      data['benefit_name'] = name;
-    } else if (title === 'Pengalaman') {
-      data['experience_name'] = name;
-    } else if (title === 'Spesialisasi Pekerjaan') {
-      data['job_specialist_name'];
-    } else if (title === 'Tingkat Pekerjaan') {
-      data['job_level_name'];
-    }
+    setLoading(true);
+    const prefix = jobPostOptions.find((item) => item.value === option)?.prefix;
+    const data = { status, [prefix]: name };
 
     mutate(
       { data, option },
@@ -53,11 +42,11 @@ const AddJobPostSetup = ({ isOpen, onClose, title, option, refetch }) => {
             position: 'top',
             isClosable: true,
           });
-          refetch();
+          setLoading(false);
           onClose();
+          reFetch();
         },
         onError: (err) => {
-          console.error(err);
           toast({
             title: 'Error',
             description: err?.response?.data?.errors || `Something went wrong!`,
@@ -66,6 +55,7 @@ const AddJobPostSetup = ({ isOpen, onClose, title, option, refetch }) => {
             position: 'top',
             isClosable: true,
           });
+          setLoading(false);
         },
       }
     );
@@ -100,7 +90,7 @@ const AddJobPostSetup = ({ isOpen, onClose, title, option, refetch }) => {
                   Pilih Status
                 </option>
                 <option value={'Active'}>Aktif</option>
-                <option value={'Inactive'}>Non - Aktif</option>
+                <option value={'Deactive'}>Non - Aktif</option>
               </Select>
             </Box>
           </Box>
@@ -108,9 +98,8 @@ const AddJobPostSetup = ({ isOpen, onClose, title, option, refetch }) => {
             <Button
               onClick={submitHandler}
               mr={'0'}
-              className={styles['job-post-search-btn']}
-            >
-              Create
+              className={styles['job-post-search-btn']}>
+              {loading ? <Spinner /> : 'Create'}
             </Button>
           </Flex>
         </ModalBody>
