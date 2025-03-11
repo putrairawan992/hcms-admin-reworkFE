@@ -27,6 +27,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
   const [emailForReset, setEmailForReset] = useState('');
+  const [loading, setLoading] = useState(false);
   const setProfile = useProfileStore((state) => state.setProfile);
 
   const fetchDataProfile = async () => {
