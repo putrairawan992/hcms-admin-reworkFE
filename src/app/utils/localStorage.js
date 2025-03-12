@@ -1,7 +1,7 @@
 export const saveUserData = (userData) => {
   try {
-    if (userData.username) {
-      localStorage.setItem('userName', userData.username);
+    if (userData.name) {
+      localStorage.setItem('userName', userData.name);
     }
     if (userData.email) {
       localStorage.setItem('userEmail', userData.email);

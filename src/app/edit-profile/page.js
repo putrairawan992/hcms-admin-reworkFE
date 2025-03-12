@@ -31,7 +31,7 @@ const EditProfile = () => {
   const { mutate } = useEditProfile();
   const { register, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
-      username: profile?.name || '', // Pastikan profil ada
+      name: profile?.name || '', // Pastikan profil ada
       email: profile?.email || '',
       phone_number: profile?.phone || '',
       address: profile?.address || '',
@@ -46,8 +46,10 @@ const EditProfile = () => {
   });
 
   useEffect(() => {
-    if (profile && !isEmpty(profile) && !watch('username')) {
-      setValue('username', profile.name || '-');
+    if (profile && !isEmpty(profile) && !watch('name')) {
+      console.log(profile);
+      
+      setValue('name', profile.name || '-');
       setValue('email', profile.email || '-');
       setValue('phone_number', profile.phone || '-');
       setValue('address', profile.address || '-');
@@ -81,7 +83,7 @@ const EditProfile = () => {
 
   const onSubmit = () => {
     const formData = new FormData();
-    formData.append('username', watch('username'));
+    formData.append('name', watch('name'));
     formData.append('email', watch('email'));
     formData.append('phone_number', watch('phone_number'));
     formData.append('address', watch('address'));
@@ -190,7 +192,7 @@ const EditProfile = () => {
                 <Input
                   className={styles['editProfile-input']}
                   type="text"
-                  {...register('username')}
+                  {...register('name')}
                 />
               </Flex>
               <Flex className={styles['editProfile-input-wrapper']}>
