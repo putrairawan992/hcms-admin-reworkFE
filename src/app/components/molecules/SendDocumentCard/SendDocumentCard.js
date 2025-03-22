@@ -101,6 +101,17 @@ const SendDocumentCard = ({
     router.push(`/approval/remuneration/${data?.remuneration_id}`);
   };
 
+  const formatStatus = (status) => {
+    if (!status) return '';
+
+    const withSpaces = status.replace(/_/g, ' ');
+
+    return withSpaces
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
+
   return (
     <Accordion allowToggle>
       <AccordionItem border="none" key={1}>
@@ -269,11 +280,13 @@ const SendDocumentCard = ({
                   />
                 </Flex>
                 <Flex flex={1} alignItems="center" justifyContent="center">
-                  <Text fontWeight="bold" color="#AE445A">
-                    {/* {item?.temporary_status
-                      ? handleStatus(item?.temporary_status)
-                      : ''} */}
-                    {item?.temporary_status}
+                  <Text
+                    fontWeight="bold"
+                    color="#AE445A"
+                    textTransform="capitalize">
+                    {item?.temporary_status
+                      ? formatStatus(item?.temporary_status)
+                      : ''}
                   </Text>
                 </Flex>
               </Flex>

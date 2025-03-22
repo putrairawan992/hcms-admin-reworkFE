@@ -168,8 +168,13 @@ const TrackingDocument = () => {
               </Button>
             )}
 
-            <Button
+            {/* <Button
               onClick={() => router.push('/data-talent')}
+              className={styles['inbox-btn']}>
+              Close
+            </Button> */}
+            <Button
+              onClick={() => router.push('/send-document')}
               className={styles['inbox-btn']}>
               Close
             </Button>

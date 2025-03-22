@@ -38,8 +38,24 @@ const FileContractTemplateModal = ({
     (item) => item.type === typeDocTalent
   );
 
+  // Fields that should only accept letters
+  const onlyLettersFields = ['thp', 'gaji_pokok', 'tunjangan_posisi'];
+
   const onChangeText = (slug, value) => {
-    setForm((prevData) => ({ ...prevData, [slug]: value }));
+    // If the field is in onlyLettersFields and should only accept letters
+    if (onlyLettersFields.includes(slug) || onlyLettersFields.includes(`sd_${slug}`)) {
+      // Regex to match only letters (including spaces and Indonesian characters)
+      const lettersOnly = /^[A-Za-zÀ-ÖØ-öø-ÿĀ-ž\s]+$/;
+      
+      // Only update if value is empty or contains only letters
+      if (value === '' || lettersOnly.test(value)) {
+        setForm((prevData) => ({ ...prevData, [slug]: value }));
+      }
+      // Otherwise ignore the input
+    } else {
+      // For other fields, process normally
+      setForm((prevData) => ({ ...prevData, [slug]: value }));
+    }
   };
 
   const submitData = async () => {
@@ -153,6 +169,13 @@ const FileContractTemplateModal = ({
     }));
   }, [dataSetup, typeDocTalent, jobProviderId]);
 
+  // Helper function to check if field should only accept letters
+  const isLettersOnlyField = (fieldName) => {
+    return fieldName.includes('thp') || 
+           fieldName.includes('gaji_pokok') || 
+           fieldName.includes('tunjangan_posisi');
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={size} isCentered keepMounted>
       <ModalOverlay />
@@ -189,6 +212,14 @@ const FileContractTemplateModal = ({
                                 fontStyle="italic"
                                 color="#404041">
                                 (Dapat diubah pada menu Setup {'>'} Document)
+                              </Text>
+                            )}
+                            {isLettersOnlyField(row?.field) && (
+                              <Text
+                                fontSize={12}
+                                fontStyle="italic"
+                                color="#404041">
+                                (Hanya menerima huruf)
                               </Text>
                             )}
                           </Box>
