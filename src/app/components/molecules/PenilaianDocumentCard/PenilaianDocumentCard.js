@@ -4,15 +4,15 @@ import { Gap } from '../../atoms';
 import styles from './PenilaianDocumentCard.styles';
 
 const PenilaianDocumentCard = ({
-  data = [],
+  data = {},
   onPress = noop,
   setNilai,
   nilai,
 }) => {
   const today = new Date();
-  const day = today.getDate(); // Returns the day of the month (1-31)
-  const month = today.getMonth(); // Returns the month (0-11)
-  const year = today.getFullYear(); // Returns the full year (e.g., 2025)
+  const day = today.getDate();
+  const month = today.getMonth();
+  const year = today.getFullYear();
 
   // Array of month names
   const monthNames = [
@@ -33,6 +33,21 @@ const PenilaianDocumentCard = ({
 
   const formattedDate = `${day} ${monthName} ${year}`;
 
+  // Function to safely strip HTML tags from text
+  const stripHtml = (html) => {
+    if (!html) return '';
+    return html.replace(/<[^>]*>/g, '');
+  };
+
+  // Get display filename from answer if it's a file
+  const getFileName = () => {
+    if (data.is_file && data.answer) {
+      const parts = data.answer.split('/');
+      return parts[parts.length - 1];
+    }
+    return null;
+  };
+
   return (
     <Box
       borderWidth={2}
@@ -41,26 +56,40 @@ const PenilaianDocumentCard = ({
       padding={4}
       flex={1}>
       <Flex>
-        <Text color="#404041" fontWeight={400} fontSize={12}>
-          1.{' '}
+        <Text color="#404041" fontWeight={700} fontSize={12}>
+          Pertanyaan:
         </Text>
-        <Gap width={2} />
+      </Flex>
+      <Gap height={2} />
+      <Flex>
         <Text color="#404041" fontWeight={400} fontSize={12}>
-          {data.question ? data.question.replace(/<[^>]*>/g, '') : 'test soal'}
+          {stripHtml(data.question) || 'Tidak ada pertanyaan'}
         </Text>
       </Flex>
       <Gap height={4} />
       <Flex>
         <Text color="#404041" fontWeight={700} fontSize={12}>
-          {data.is_file && data.answer
-            ? data.answer.split('/').pop()
-            : 'Jawaban_soal_1.mp4'}
-        </Text>
-        <Gap width={4} />
-        <Text color="#404041" fontWeight={400} fontSize={12}>
-          {formattedDate}
+          Jawaban:
         </Text>
       </Flex>
+      <Gap height={2} />
+      {data.is_file ? (
+        <Flex>
+          <Text color="#404041" fontWeight={700} fontSize={12}>
+            {getFileName() || 'File jawaban'}
+          </Text>
+          <Gap width={4} />
+          <Text color="#404041" fontWeight={400} fontSize={12}>
+            {formattedDate}
+          </Text>
+        </Flex>
+      ) : (
+        <Box>
+          <Text color="#404041" fontWeight={400} fontSize={12}>
+            {stripHtml(data.answer) || 'Tidak ada jawaban'}
+          </Text>
+        </Box>
+      )}
       <Gap height={4} />
       <Box borderWidth={1} borderColor="#AE445A" />
       <Gap height={4} />
@@ -73,9 +102,17 @@ const PenilaianDocumentCard = ({
         <Input
           style={styles.inputContainer}
           type="number"
-          placeholder="Masukan nilai - 100"
-          value={nilai}
-          onChange={(e) => setNilai(e.target.value)}
+          placeholder="Masukan nilai 0 - 100"
+          value={nilai !== null ? nilai : ''}
+          onChange={(e) => {
+            const value = e.target.value;
+            // Validate input is a number between 0-100
+            if (value === '' || (Number(value) >= 0 && Number(value) <= 100)) {
+              setNilai(value === '' ? null : Number(value));
+            }
+          }}
+          min={0}
+          max={100}
         />
       </Flex>
     </Box>
